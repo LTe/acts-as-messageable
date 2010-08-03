@@ -11,11 +11,11 @@ module ActsAsMessageable
                     :sent_messageable_id,
 
     def from
-      "#{self.messageable_type}".constantize.find(self.from_id)
+      "#{self.sent_messageable_type}".constantize.find(self.sent_messageable_id)
     end
 
     def to
-      "#{self.messageable_type}".constantize.find(self.to_id)
+      "#{self.received_messageable_type}".constantize.find(self.received_messageable_id)
     end
 
   end
