@@ -22,22 +22,25 @@ module ActsAsMessageable
 
         all = self.recv + self.sent
 
-        if args[:from] != nil && args[:to] == nil
-          all.reject do |m|
+        if args[:from]
+          all.reject! do |m|
             m.sent_messageable_id != args[:from].id
           end
-        elsif args[:from] == nil && args[:to] != nil
-          all.reject do |m|
-            m.received_messageable_id != args[:to].id
-          end
-        elsif args[:id] != nil
-          all.reject do |m|
-            m.id != args[:id]
-          end
-        else
-          all
         end
 
+        if args[:to]
+          all.reject! do |m|
+            m.received_messageable_id != args[:to].id
+          end
+        end
+
+        if args[:id] != nil
+          all.reject! do |m|
+            m.id != args[:id]
+          end
+        end
+
+        all
       end
 
       def recv
