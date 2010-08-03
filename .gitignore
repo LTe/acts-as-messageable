@@ -1,3 +1,4 @@
+.idea/*
 *.log
 *.sqlite3
 /pkg/*
