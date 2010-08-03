@@ -9,6 +9,17 @@ module ActsAsMessageable
                     :received_messageable_id,
                     :sent_messageable_type,
                     :sent_messageable_id,
+                    :opened
+
+    validates_presence_of :topic ,:body
+
+    def open?
+      self.opened?
+    end
+
+    def open
+      self.opened = true
+    end
 
     def from
       "#{self.sent_messageable_type}".constantize.find(self.sent_messageable_id)

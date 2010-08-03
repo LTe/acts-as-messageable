@@ -5,6 +5,7 @@ class CreateMessagesTable < ActiveRecord::Migration
       t.string :body
       t.references :received_messageable, :polymorphic => true
       t.references :sent_messageable, :polymorphic => true
+      t.boolean :opened, :default => false
     end
 
     add_index :messages, [:sent_messageable_id, :received_messageable_id]
