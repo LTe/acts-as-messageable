@@ -10,8 +10,6 @@ module ActsAsMessageable
       class_eval do
         has_many :received_messages, :as => :received_messageable, :class_name => "ActsAsMessageable::Message"
         has_many :sent_messages, :as => :sent_messageable, :class_name => "ActsAsMessageable::Message"
-
-        #attr_accessible :messages
       end
 
       include InstanceMethods
@@ -31,6 +29,10 @@ module ActsAsMessageable
         elsif args[:from] == nil && args[:to] != nil
           all.reject do |m|
             m.received_messageable_id != args[:to].id
+          end
+        elsif args[:id] != nil
+          all.reject do |m|
+            m.id != args[:id]
           end
         else
           all
