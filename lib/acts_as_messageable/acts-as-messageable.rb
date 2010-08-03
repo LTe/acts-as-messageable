@@ -3,44 +3,55 @@ module ActsAsMessageable
 
     def self.included(base)
       base.extend ClassMethods
-      base.send :include, InstanceMethods
     end
 
     module ClassMethods
       def acts_as_messageable
       class_eval do
-        has_many :messages, :as => :messageable, :class_name => "ActsAsMessageable::Message"
+        has_many :received_messages, :as => :received_messageable, :class_name => "ActsAsMessageable::Message"
+        has_many :sent_messages, :as => :sent_messageable, :class_name => "ActsAsMessageable::Message"
+
+        #attr_accessible :messages
       end
+
+      include InstanceMethods
     end
       
     end
 
     module InstanceMethods
-      def messages(args = {})
+      def msg(args = {})
+
+        all = self.recv + self.sent
+
         if args[:from] != nil && args[:to] == nil
-          base.where(%(#{ActsAsMessageable::Message.table_name}.from = ?), args[:from].id)
+          all.reject do |m|
+            m.sent_messageable_id != args[:from].id
+          end
         elsif args[:from] == nil && args[:to] != nil
-          base.where(%(#{ActsAsMessageable::Message.table_name}.to = ?), args[:to].id)
-        elsif args[:from] != nil && args[:to] != nil
-          base.where(%(#{ActsAsMessageable::Message.table_name}.from = ? AND
-                       #{ActsAsMessageable::Message.table_name}.to = ?),
-                       args[:from].id, args[:to].id)
+          all.reject do |m|
+            m.received_messageable_id != args[:to].id
+          end
         else
-          self.messages
+          all
         end
+
       end
 
-      def send_message(to, topic, body)
-        @message = ActsAsMessageable::Message.new
-        @message.from, @message.to = self.id, to.id
+      def recv
+        self.received_messages
+      end
+
+      def sent
+        self.sent_messages
+      end
+
+      def send_msg(to, topic, body)
+        @message = ActsAsMessageable::Message.create
         @message.topic, @message.body = topic, body
 
-        self.messages << @message
-        to.messages << @message
-
-        self.save
-        to.save
-        @message.save
+        self.sent_messages << @message
+        to.received_messages << @message 
       end
 
     end

@@ -4,8 +4,6 @@ module ActsAsMessageable
   class MigrationGenerator < Rails::Generators::Base
     include Rails::Generators::Migration
 
-    desc "Generates migration for Tag and Tagging models"
-
     def self.source_root
           @source_root ||= File.join(File.dirname(__FILE__), 'templates')
     end
