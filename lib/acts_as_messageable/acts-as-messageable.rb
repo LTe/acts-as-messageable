@@ -12,7 +12,7 @@ module ActsAsMessageable
         has_many :sent_messages, :as => :sent_messageable, :class_name => "ActsAsMessageable::Message"
       end
 
-      include InstanceMethods
+      include ActsAsMessageable::User::InstanceMethods
     end
       
     end
