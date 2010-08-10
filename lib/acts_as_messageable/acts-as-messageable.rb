@@ -36,7 +36,7 @@ module ActsAsMessageable
 
         if args[:id] != nil
           all.reject! do |m|
-            m.id != args[:id]
+            m.id != args[:id].to_i
           end
         end
 
