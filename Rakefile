@@ -1,3 +1,13 @@
+require 'rake'
+require 'rake/testtask'
+
+desc 'Test the acts-as-messageable plugin.'
+Rake::TestTask.new(:test) do |t|
+  t.libs << 'lib'
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = true
+end
+
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
