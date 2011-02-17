@@ -60,6 +60,19 @@ To use it, add it to your Gemfile:
         message.delete
     end
 
+    @user.messages(:from => @another_user) do |message|
+        message.delete
+    end
+
+    @user.messages(:to => @another_user) do |message|
+        messsage.delete
+    end
+
+    @user.send(:id => 10) do |message|
+        message.delete
+    end
+
+
     # Delete by hand
     @user.delete_message(@user.messages(:id => 10))
 
@@ -70,6 +83,12 @@ To use it, add it to your Gemfile:
     @user.messages(:from => @user2) # all messages from @user2
     @user.messages(:to => @user2) # all messages to @user2
     @user.messages(:id => 2) # message where message.id = 2
+
+== Blocks time ;-)
+
+    @user.messages do |messsage|
+        # message stuff...
+    end
 
 Copyright © 2011 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license
     

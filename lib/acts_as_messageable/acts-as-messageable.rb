@@ -69,7 +69,6 @@ module ActsAsMessageable
       def filter(result, options = {}, &block)
         current_user = self
 
-
         options.each do |key, value|
           case key
             when :from then
