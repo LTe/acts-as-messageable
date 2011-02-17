@@ -1,5 +1,5 @@
 module ActsAsMessageable
-  module User
+  module Model
 
     def self.included(base)
       base.extend ClassMethods
@@ -12,51 +12,69 @@ module ActsAsMessageable
         has_many :sent_messages, :as => :sent_messageable, :class_name => "ActsAsMessageable::Message"
       end
 
-      include ActsAsMessageable::User::InstanceMethods
+      include ActsAsMessageable::Model::InstanceMethods
     end
-      
+
     end
 
     module InstanceMethods
-      def msg(args = {})
+      def messages(options = {})
+        result = ActsAsMessageable::Message.scoped
+        current_user = self
 
-        all = self.recv + self.sent
-
-        if args[:from]
-          all.reject! do |m|
-            m.sent_messageable_id != args[:from].id
-          end
+        options.each do |key, value|
+          case key
+            when :from then
+              result = result.messages_from(value, current_user)
+            when :to then
+              result = result.messages_to(value, current_user)
+            when :id then
+              result = result.messsage_id(value)
+            else
+              result = self.received_messages + self.sent_messages
+            end
         end
 
-        if args[:to]
-          all.reject! do |m|
-            m.received_messageable_id != args[:to].id
-          end
-        end
+        result.each do |message|
+          yield message
+          delete_message(message) if message.delete_message
+        end if block_given?
 
-        if args[:id] != nil
-          all.reject! do |m|
-            m.id != args[:id].to_i
-          end
-        end
-
-        all
+        result
       end
 
-      def recv
-        self.received_messages
+      def received(options = {})
+        if options[:deleted] || options[:all]
+          self.received_messages
+        else
+          self.received_messages.where(:recipient_delete => false)
+        end
+
       end
 
       def sent
-        self.sent_messages
+        if options[:deleted] || options[:all]
+          self.sent_messages
+        else
+          self.sent_messages.where(:sender_delete => false)
+        end
       end
 
-      def send_msg(to, topic, body)
-        @message = ActsAsMessageable::Message.create
-        @message.topic, @message.body = topic, body
+      def send_message(to, topic, body)
+        @message = ActsAsMessageable::Message.create!(:topic => topic, :body => body)
 
         self.sent_messages << @message
-        to.received_messages << @message 
+        to.received_messages << @message
+      end
+
+      def delete_message(message)
+        current_user = self
+
+        if message.received_messageable == current_user
+          message.update_attributes!(:recipient_delete => true)
+        elsif message.sent_messageable == current_user
+          message.update_attributes!(:sender_delete => true)
+        end
       end
 
     end

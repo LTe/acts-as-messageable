@@ -8,5 +8,5 @@ require 'acts_as_messageable/message'
 $LOAD_PATH.shift
 
 if defined?(ActiveRecord::Base)
-  ActiveRecord::Base.send :include, ActsAsMessageable::User
+  ActiveRecord::Base.send :include, ActsAsMessageable::Model
 end

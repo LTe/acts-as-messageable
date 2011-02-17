@@ -9,7 +9,17 @@ module ActsAsMessageable
                     :received_messageable_id,
                     :sent_messageable_type,
                     :sent_messageable_id,
-                    :opened
+                    :opened,
+                    :recipient_delete,
+                    :sender_delete
+
+    attr_accessor :delete_message
+
+    scope :messages_from, lambda { |*args| where("sent_messageable_id = :sender", :sender => args.first).
+                                           where("received_messageable_id = :receiver", :receiver => args.last) }
+    scope :messages_to,   lambda { |*args| where("received_messageable_id = :receiver", :receiver => args.first).
+                                           where("sent_messageable_id = :sender", :sender => args.last)}
+    scope :message_id,    lambda { |*args| where("id = :id", :id => args.first) }
 
     validates_presence_of :topic ,:body
 
@@ -18,7 +28,19 @@ module ActsAsMessageable
     end
 
     def open
-      self.opened = true
+      update_attributes!(:opened => true)
+    end
+
+    def mark_as_read
+      open
+    end
+
+    def close
+      update_attributes!(:opened => false)
+    end
+
+    def mark_as_unread
+      close
     end
 
     def from
@@ -27,6 +49,10 @@ module ActsAsMessageable
 
     def to
       "#{self.received_messageable_type}".constantize.find(self.received_messageable_id)
+    end
+
+    def delete
+      self.delete_message = true
     end
 
   end
