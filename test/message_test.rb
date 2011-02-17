@@ -13,6 +13,9 @@ def create_db
       t.references :received_messageable, :polymorphic => true
       t.references :sent_messageable, :polymorphic => true
       t.boolean :opened, :default => false
+      t.boolean :opened, :default => false
+      t.boolean :recipient_delete, :default => false
+      t.boolean :sender_delete, :default => false
     end
 
     create_table :users do |t|
@@ -44,12 +47,12 @@ class MessageTest < Test::Unit::TestCase
     drop_db
   end
 
-  def test_send_msg
+  def test_send_message
     u1 = User.first
     u2 = User.last
 
-    u1.send_msg(u2, "Topic", "Body")
-    u2.send_msg(u1, "Topic2", "Body2")
+    u1.send_message(u2, "Topic", "Body")
+    u2.send_message(u1, "Topic2", "Body2")
 
     assert_equal ["Topic", "Topic2"], ActsAsMessageable::Message.find(:all).map(&:topic)
     assert_equal ["Body", "Body2"], ActsAsMessageable::Message.find(:all).map(&:body)
@@ -60,38 +63,52 @@ class MessageTest < Test::Unit::TestCase
     assert_equal u1.id, ActsAsMessageable::Message.find(:first, :conditions => { :topic => "Topic2" }).received_messageable_id
   end
 
-  def test_recv
+  def test_received
     u1 = User.first
     u2 = User.last
 
-    u1.send_msg(u2, "Topic", "Body")
-    u1.send_msg(u2, "Topic2", "Body2")
+    u1.send_message(u2, "Topic", "Body")
+    u1.send_message(u2, "Topic2", "Body2")
 
-    assert_equal ["Topic", "Topic2"], u2.recv.map(&:topic)
+    assert_equal ["Topic", "Topic2"], u2.received.map(&:topic)
   end
 
   def test_sent
     u1 = User.first
     u2 = User.last
 
-    u1.send_msg(u2, "Topic", "Body")
-    u1.send_msg(u2, "Topic2", "Body2")
+    u1.send_message(u2, "Topic", "Body")
+    u1.send_message(u2, "Topic2", "Body2")
 
     assert_equal ["Topic", "Topic2"], u1.sent.map(&:topic)
   end
 
-  def test_msg
+  def test_messages
     u1 = User.first
     u2 = User.last
 
-    u1.send_msg(u2, "Topic", "Body")
-    u1.send_msg(u2, "Topic2", "Body2")
+    u1.send_message(u2, "Topic", "Body")
+    u1.send_message(u2, "Topic2", "Body2")
 
-    assert_equal ["Topic", "Topic2"], u2.msg(:from => u1).map(&:topic)
-    assert_equal ["Topic", "Topic2"], u1.msg(:to => u2).map(&:topic)
-    assert_equal ["Topic", "Topic2"], u1.msg(:to => u2, :from => u1).map(&:topic)
-    assert_equal ["Topic"], u1.msg(:to => u2, :from => u1, :id => 1).map(&:topic)
-    assert_equal ["Topic2"], u1.msg(:id => 2).map(&:topic)
+    assert_equal ["Topic", "Topic2"], u2.messages(:from => u1).map(&:topic)
+    assert_equal ["Topic", "Topic2"], u1.messages(:to => u2).map(&:topic)
+    assert_equal ["Topic"], u1.messages(:to => u2, :id => 1).map(&:topic)
+    assert_equal ["Topic2"], u1.messages(:id => 2).map(&:topic)
+  end
+
+  def test_delete_message
+    u1 = User.first
+    u2 = User.last
+
+    u1.send_message(u2, "Topic", "Body")
+    u1.send_message(u2, "Topic2", "Body2")
+
+    u1.messages do |m|
+      m.delete
+    end
+
+    assert_equal [], u1.messages
+    assert_equal ["Topic", "Topic2"], u2.messages.map(&:topic)
   end
 
 end

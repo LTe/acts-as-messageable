@@ -19,7 +19,7 @@ module ActsAsMessageable
 
     module InstanceMethods
       def messages(options = {})
-        result = ActsAsMessageable::Message.scoped
+        result = options.blank? ?  (self.received + self.sent) : ActsAsMessageable::Message.scoped
         current_user = self
 
         options.each do |key, value|
@@ -29,10 +29,8 @@ module ActsAsMessageable
             when :to then
               result = result.messages_to(value, current_user)
             when :id then
-              result = result.messsage_id(value)
-            else
-              result = self.received_messages + self.sent_messages
-            end
+              result = result.message_id(value)
+          end
         end
 
         result.each do |message|
@@ -52,7 +50,7 @@ module ActsAsMessageable
 
       end
 
-      def sent
+      def sent(options = {})
         if options[:deleted] || options[:all]
           self.sent_messages
         else
