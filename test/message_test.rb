@@ -9,7 +9,7 @@ def create_db
   ActiveRecord::Schema.define(:version => 1) do
     create_table :messages do |t|
       t.string :topic
-      t.string :body
+      t.text :body
       t.references :received_messageable, :polymorphic => true
       t.references :sent_messageable, :polymorphic => true
       t.boolean :opened, :default => false

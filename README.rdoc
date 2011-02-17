@@ -17,23 +17,59 @@ To use it, add it to your Gemfile:
         acts_as_messageable
     end
 
-    @user1 = User.first
-    @user2 = User.last
+== Send message
 
     # user1 send message to user2
-    @user1.send_msg(@user2, "Message to user2", "Hi user 2!;-)")
-    @user2.send_msg(@user1, "Re: Message to user2", "Hi there!:)")
+    # user.send_message(another_user, topic, body)
+    @user1.send_message(@user2, "Message to user2", "Hi user 2!;-)")
+    @user2.send_message(@user1, "Re: Message to user2", "Hi there!:)")
+
+== Inbox/Outbox
 
     # Show inbox
-    @user1.recv
+    @user.received
+    # Show inbox trash
+    @user.received(:deleted => true)
+    # Show inbox with inbox trash
+    @user.received(:all => true)
+
     # Show outbox
-    @user1.sent
+    @user.sent
+    # Show outbox trash
+    @user.sent(:deleted => true)
+    # Show outbox with inbox trash
+    @user.sent(:all => true)
+
+    # Show trash
+    @user.messages(:deleted => true)
+    # Show all messages
+    @user.messages(:all => true)
+
+== Delete message
+
+    # Delete message with block
+    @user.messages do |message|
+        message.delete
+    end
+
+    @user.send do |message|
+        message.delete
+    end
+
+    @user.received do |message|
+        message.delete
+    end
+
+    # Delete by hand
+    @user.delete_message(@user.messages(:id => 10))
+
+== Search
 
     # Search message
-    @user1.msg # all messages (in and out)
-    @user1.msg(:from => @user2) # all messages from @user2
-    @user1.msg(:to => @user2) # all messages to @user2
-    @user1.msg(:id => 2) # message where message.id = 2
+    @user.messages # all messages (in and out)
+    @user.messages(:from => @user2) # all messages from @user2
+    @user.messages(:to => @user2) # all messages to @user2
+    @user.messages(:id => 2) # message where message.id = 2
 
-Copyright © 2010 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license
+Copyright © 2011 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license
     
