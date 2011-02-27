@@ -34,11 +34,11 @@ To use it, add it to your Gemfile:
     @user.received(:all => true)
 
     # Show outbox
-    @user.sent
+    @user.send
     # Show outbox trash
-    @user.sent(:deleted => true)
+    @user.send(:deleted => true)
     # Show outbox with inbox trash
-    @user.sent(:all => true)
+    @user.send(:all => true)
 
     # Show trash
     @user.messages(:deleted => true)
@@ -91,4 +91,3 @@ To use it, add it to your Gemfile:
     end
 
 Copyright © 2011 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license
-    
