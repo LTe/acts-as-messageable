@@ -44,11 +44,11 @@ module ActsAsMessageable
     end
 
     def from
-      "#{self.sent_messageable_type}".constantize.find(self.sent_messageable_id)
+      "#{self.sent_messageable_type}".constantize.find_by_id(self.sent_messageable_id)
     end
 
     def to
-      "#{self.received_messageable_type}".constantize.find(self.received_messageable_id)
+      "#{self.received_messageable_type}".constantize.find_by_id(self.received_messageable_id)
     end
 
     def delete

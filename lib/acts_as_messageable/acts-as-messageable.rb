@@ -8,8 +8,8 @@ module ActsAsMessageable
     module ClassMethods
       def acts_as_messageable
       class_eval do
-        has_many :received_messages, :as => :received_messageable, :class_name => "ActsAsMessageable::Message"
-        has_many :sent_messages, :as => :sent_messageable, :class_name => "ActsAsMessageable::Message"
+        has_many :received_messages, :as => :received_messageable, :class_name => "ActsAsMessageable::Message", :dependent => :nullify
+        has_many :sent_messages, :as => :sent_messageable, :class_name => "ActsAsMessageable::Message", :dependent => :nullify
       end
 
       include ActsAsMessageable::Model::InstanceMethods

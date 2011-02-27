@@ -4,3 +4,4 @@
 /pkg/*
 .bundle
 spec/database.yml
+./tags
