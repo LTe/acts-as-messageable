@@ -1,6 +1,6 @@
 class CreateMessagesTable < ActiveRecord::Migration
   def self.up
-    create_table :messages do |t|
+    create_table :<%= table_name %> do |t|
       t.string :topic
       t.text :body
       t.references :received_messageable, :polymorphic => true
@@ -11,10 +11,10 @@ class CreateMessagesTable < ActiveRecord::Migration
       t.boolean :sender_delete, :default => false
     end
 
-    add_index :messages, [:sent_messageable_id, :received_messageable_id], :name => "acts_as_messageable_ids"
+    add_index :<%= table_name %>, [:sent_messageable_id, :received_messageable_id], :name => "acts_as_messageable_ids"
   end
 
   def self.down
-    drop_table :messages
+    drop_table :<%= table_name %>
   end
 end

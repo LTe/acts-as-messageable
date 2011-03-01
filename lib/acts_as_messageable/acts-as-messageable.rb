@@ -6,11 +6,20 @@ module ActsAsMessageable
     end
 
     module ClassMethods
-      def acts_as_messageable
+      def acts_as_messageable(options = {})
       class_eval do
-        has_many :received_messages, :as => :received_messageable, :class_name => "ActsAsMessageable::Message", :dependent => :nullify
-        has_many :sent_messages, :as => :sent_messageable, :class_name => "ActsAsMessageable::Message", :dependent => :nullify
+        has_many  :received_messages, 
+                  :as => :received_messageable, 
+                  :class_name => "ActsAsMessageable::Message", 
+                  :dependent => :nullify
+        has_many  :sent_messages, 
+                  :as => :sent_messageable,
+                  :class_name => "ActsAsMessageable::Message", 
+                  :dependent => :nullify
       end
+      
+      table_name = %q{set_table_name "#{options[:table_name] || "messages"}"}
+      ActsAsMessageable::Message.class_eval(table_name)
 
       include ActsAsMessageable::Model::InstanceMethods
     end
