@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Piotr Nielacny"]
-  s.date = %q{2011-02-17}
+  s.date = %q{2011-03-01}
   s.email = %q{piotr.nielacny@gmail.com}
   s.extra_rdoc_files = [
     "README.rdoc"
@@ -20,10 +20,10 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "lib/acts-as-messageable.rb",
-    "lib/acts_as_messageable/acts-as-messageable.rb",
-    "lib/acts_as_messageable/message.rb",
-    "lib/generators/acts_as_messageable/migration/migration_generator.rb",
-    "lib/generators/acts_as_messageable/migration/templates/migration.rb",
+    "lib/acts-as-messageable/acts-as-messageable.rb",
+    "lib/acts-as-messageable/message.rb",
+    "lib/generators/acts-as-messageable/migration/migration_generator.rb",
+    "lib/generators/acts-as-messageable/migration/templates/migration.rb",
     "rails/init.rb"
   ]
   s.homepage = %q{http://github.com/LTe/acts_as_messageable}

@@ -8,13 +8,13 @@ To use it, add it to your Gemfile:
 
 == Post instalation
 
-1. rails g acts_as_messageable:migration
-2. rake db:migrate
+    rails g acts_as_messageable:migration [table_name] # default 'messages'
+    rake db:migrate
 
 == Usage
 
     class User < ActiveRecord::Base
-        acts_as_messageable
+        acts_as_messageable :table_name => "table_with_messages" # default 'messages'
     end
 
 == Send message
@@ -29,16 +29,18 @@ To use it, add it to your Gemfile:
     # Show inbox
     @user.received
     # Show inbox trash
+    @user.received(:trash => true)
     @user.received(:deleted => true)
     # Show inbox with inbox trash
     @user.received(:all => true)
 
     # Show outbox
-    @user.send
+    @user.sent
     # Show outbox trash
-    @user.send(:deleted => true)
+    @user.sent(:deleted => true)
+    @user.sent(:trash => true)
     # Show outbox with inbox trash
-    @user.send(:all => true)
+    @user.sent(:all => true)
 
     # Show trash
     @user.messages(:deleted => true)
@@ -52,7 +54,7 @@ To use it, add it to your Gemfile:
         message.delete
     end
 
-    @user.send do |message|
+    @user.sent do |message|
         message.delete
     end
 
@@ -68,7 +70,7 @@ To use it, add it to your Gemfile:
         messsage.delete
     end
 
-    @user.send(:id => 10) do |message|
+    @user.sent(:id => 10) do |message|
         message.delete
     end
 
@@ -76,18 +78,23 @@ To use it, add it to your Gemfile:
     # Delete by hand
     @user.delete_message(@user.messages(:id => 10))
 
-== Search
-
-    # Search message
-    @user.messages # all messages (in and out)
-    @user.messages(:from => @user2) # all messages from @user2
-    @user.messages(:to => @user2) # all messages to @user2
-    @user.messages(:id => 2) # message where message.id = 2
-
 == Blocks time ;-)
 
     @user.messages do |messsage|
         # message stuff...
     end
+
+    # works also with sent, received
+
+== Filters
+
+    # :from, :to, :id, :all, :deleted/:trash
+    # We can use with messages, sent and received methods
+
+    @user.messages(:from => @another_user, :deleted => true) # deleted messages from @another_user
+    @user.sent(:to => @another_user) # messages to @another_user (non-deleted)
+    @user.received(:from => @another_user, :all => true) # messages from @another_user from inbox and trash
+
+    @user.messages(:id => 10) # message with id == 10
 
 Copyright © 2011 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license

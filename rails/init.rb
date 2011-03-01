@@ -1,1 +1,1 @@
-require 'acts_as_messageable'
+require 'acts-as-messageable'

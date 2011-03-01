@@ -35,7 +35,7 @@ module ActsAsMessageable
       def received(options = {}, &block)
         if options[:all]
           result = self.received_messages
-        elsif options[:deleted]
+        elsif options[:deleted] || options[:trash]
           result = self.received_messages.where(:recipient_delete => true)
         else
           result = self.received_messages.where(:recipient_delete => false)
@@ -47,7 +47,7 @@ module ActsAsMessageable
       def sent(options = {}, &block)
         if options[:all]
           result = self.sent_messages
-        elsif options[:deleted]
+        elsif options[:deleted] || options[:trash]
           result = self.sent_messages.where(:sender_delete => true)
         else
           result = self.sent_messages.where(:sender_delete => false)

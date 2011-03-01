@@ -2,8 +2,8 @@ require "active_record"
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
-require 'acts_as_messageable/acts-as-messageable'
-require 'acts_as_messageable/message'
+require 'acts-as-messageable/acts-as-messageable'
+require 'acts-as-messageable/message'
 
 $LOAD_PATH.shift
 
