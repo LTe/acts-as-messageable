@@ -28,7 +28,8 @@ module ActsAsMessageable
 
     module InstanceMethods
       def messages(options = {}, &block)
-        result = options.blank? ?  (self.received + self.sent) : ActsAsMessageable::Message.scoped
+        result = ActsAsMessageable::Message.connected_with self
+
         filter(result, options, &block)
       end
 

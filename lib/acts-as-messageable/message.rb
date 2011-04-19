@@ -15,11 +15,26 @@ module ActsAsMessageable
 
     attr_accessor :delete_message
 
-    scope :messages_from, lambda { |*args| where("sent_messageable_id = :sender", :sender => args.first).
+    scope :messages_from,     lambda { |*args| where("sent_messageable_id = :sender", :sender => args.first).
                                            where("received_messageable_id = :receiver", :receiver => args.last) }
-    scope :messages_to,   lambda { |*args| where("received_messageable_id = :receiver", :receiver => args.first).
+    scope :messages_to,       lambda { |*args| where("received_messageable_id = :receiver", :receiver => args.first).
                                            where("sent_messageable_id = :sender", :sender => args.last)}
-    scope :message_id,    lambda { |*args| where("id = :id", :id => args.first) }
+    scope :message_id,        lambda { |*args| where("id = :id", :id => args.first) }
+  
+    scope :connected_with,    lambda { |*args|  where("(sent_messageable_type = :sent_type and
+                                                sent_messageable_id = :sent_id and
+                                                sender_delete = :deleted) or 
+                                                (received_messageable_type = :received_type and
+                                                received_messageable_id = :received_id and
+                                                recipient_delete = :deleted)",
+                                                :sent_type      => args.first.class.name, 
+                                                :sent_id        => args.first.id,
+                                                :received_type  => args.first.class.name,
+                                                :received_id    => args.first.id,
+                                                :deleted        => false)
+                                     } 
+
+                                  
 
     validates_presence_of :topic ,:body
 
@@ -44,11 +59,11 @@ module ActsAsMessageable
     end
 
     def from
-      "#{self.sent_messageable_type}".constantize.find_by_id(self.sent_messageable_id)
+      sent_messageable
     end
 
     def to
-      "#{self.received_messageable_type}".constantize.find_by_id(self.received_messageable_id)
+      received_messageable
     end
 
     def delete
