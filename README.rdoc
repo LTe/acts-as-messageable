@@ -1,3 +1,4 @@
+
 = ActsAsMessageable
 The Acts As Messageable allows communication between the models.
 
@@ -24,77 +25,16 @@ To use it, add it to your Gemfile:
     @user1.send_message(@user2, "Message to user2", "Hi user 2!;-)")
     @user2.send_message(@user1, "Re: Message to user2", "Hi there!:)")
 
-== Inbox/Outbox
+== New API
+		@user.messages -- all messages connected with @user
 
-    # Show inbox
-    @user.received
-    # Show inbox trash
-    @user.received(:trash => true)
-    @user.received(:deleted => true)
-    # Show inbox with inbox trash
-    @user.received(:all => true)
+		.are_from(another_user)
+		.are_to(another_user)
+		.id(id_of_message)
+		.readed
+		.unread
 
-    # Show outbox
-    @user.sent
-    # Show outbox trash
-    @user.sent(:deleted => true)
-    @user.sent(:trash => true)
-    # Show outbox with inbox trash
-    @user.sent(:all => true)
-
-    # Show trash
-    @user.messages(:deleted => true)
-    # Show all messages
-    @user.messages(:all => true)
-
-== Delete message
-
-    # Delete message with block
-    @user.messages do |message|
-        message.delete
-    end
-
-    @user.sent do |message|
-        message.delete
-    end
-
-    @user.received do |message|
-        message.delete
-    end
-
-    @user.messages(:from => @another_user) do |message|
-        message.delete
-    end
-
-    @user.messages(:to => @another_user) do |message|
-        messsage.delete
-    end
-
-    @user.sent(:id => 10) do |message|
-        message.delete
-    end
-
-
-    # Delete by hand
-    @user.delete_message(@user.messages(:id => 10))
-
-== Blocks time ;-)
-
-    @user.messages do |messsage|
-        # message stuff...
-    end
-
-    # works also with sent, received
-
-== Filters
-
-    # :from, :to, :id, :all, :deleted/:trash
-    # We can use with messages, sent and received methods
-
-    @user.messages(:from => @another_user, :deleted => true) # deleted messages from @another_user
-    @user.sent(:to => @another_user) # messages to @another_user (non-deleted)
-    @user.received(:from => @another_user, :all => true) # messages from @another_user from inbox and trash
-
-    @user.messages(:id => 10) # message with id == 10
+		@user.messages.are_from(another_user).readed
+		etc...
 
 Copyright © 2011 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license
