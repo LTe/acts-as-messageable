@@ -1,7 +1,7 @@
 module ActsAsMessageable
   class Message < ::ActiveRecord::Base
     belongs_to :received_messageable, :polymorphic => true
-    belongs_to :sent_messageable, :polymorphic => true
+    belongs_to :sent_messageable,     :polymorphic => true
 
     attr_accessible :topic,
                     :body,
@@ -27,10 +27,10 @@ module ActsAsMessageable
                                                 :sent_id        => args.first.id,
                                                 :received_type  => args.first.class.name,
                                                 :received_id    => args.first.id)
-                                     }
-    scope :readed,            lambda { where("opened = :opened", :opened => true) }
+                                      }
+    scope :readed,            lambda { where("opened = :opened", :opened => true)  }
     scope :unread,            lambda { where("opened = :opened", :opened => false) }
-
+    #scope :deleted,           lambda { where("sent_messageable_id = :sender", :sender => relation_context) }
 
     validates_presence_of :topic ,:body
 
@@ -64,6 +64,10 @@ module ActsAsMessageable
 
     def delete
       self.context.delete_message(self)
+    end
+
+    def self.deleted
+      puts self.inspect
     end
 
   end

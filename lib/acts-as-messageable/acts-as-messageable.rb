@@ -28,9 +28,15 @@ module ActsAsMessageable
 
     module InstanceMethods
       def messages(options = {}, &block)
-        ActsAsMessageable::Message.connected_with(self, false).each do |r|
+        result = ActsAsMessageable::Message.connected_with(self, false)
+
+        result.relation_context = self
+
+        result.each do |r|
           r.context = self
         end
+
+        result
       end
 
       def send_message(to, topic, body)
