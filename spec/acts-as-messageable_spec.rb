@@ -51,4 +51,11 @@ describe "ActsAsMessageable" do
     message_id = @bob.send_message(@alice, "Topic", "Message body").first.id
     @bob.messages.id(message_id).count.should == 1
   end
+
+  it "message should have proper topic" do
+    @bob.send_message(@alice, "Topic", "Message body")
+    @bob.messages.count.should == 1
+    @bob.messages.first.topic == "Topic"
+    @bob.messages.first.body == "Message body"
+  end
 end
