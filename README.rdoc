@@ -29,7 +29,7 @@ To use it, add it to your Gemfile:
 
 == New API
     @alice.messages -- all messages connected with @alice (inbox/outbox)
-    @alice.delete_messages -- all messages connected with @alice (trash)
+    @alice.deleted_messages -- all messages connected with @alice (trash)
 
     @alice.messages.are_from(@bob) -- all message form @bob
     @alice.messages.are_to(@bob) -- all message to @bob
