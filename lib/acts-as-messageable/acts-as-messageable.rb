@@ -6,6 +6,8 @@ module ActsAsMessageable
     end
 
     module ClassMethods
+      # Method make ActiveRecord::Base object messageable
+      # @param [Symbol] :table_name - table name for messages
       def acts_as_messageable(options = {})
       class_eval do
         has_many  :received_messages, 
@@ -21,24 +23,32 @@ module ActsAsMessageable
       table_name = %q{set_table_name "#{options[:table_name] || "messages"}"}
       ActsAsMessageable::Message.class_eval(table_name)
 
+      validation = %q{validates_presence_of options[:required] || [:topic ,:body]}
+      ActsAsMessageable::Message.class_eval(validation)
+
       include ActsAsMessageable::Model::InstanceMethods
     end
 
     end
 
     module InstanceMethods
-      def messages(options = {}, &block)
+      # Get all messages connected with user
+      # @param [Block] optional block
+      #
+      # @return [ActiveRecord::Relation] all messages connected with user
+      def messages(&block)
         result = ActsAsMessageable::Message.connected_with(self, false)
-
         result.relation_context = self
-
-        result.each do |r|
-          r.context = self
-        end
 
         result
       end
 
+      # Method sens message to another user
+      # @param [ActiveRecord::Base] to
+      # @param [String] topic
+      # @param [String] body
+      #
+      # @return [ActsAsMessageable::Message] the message object
       def send_message(to, topic, body)
         @message = ActsAsMessageable::Message.create!(:topic => topic, :body => body)
 

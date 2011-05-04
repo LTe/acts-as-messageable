@@ -13,8 +13,9 @@ module ActsAsMessageable
                     :recipient_delete,
                     :sender_delete
 
-    attr_accessor :context
+    attr_accessor :context, :removed
 
+    # Sample documentation for scope
     scope :are_from,          lambda { |*args| where("sent_messageable_id = :sender", :sender => args.first) }
     scope :are_to,            lambda { |*args| where("received_messageable_id = :receiver", :receiver => args.first) }
     scope :id,                lambda { |*args| where("id = :id", :id => args.first) }
@@ -27,12 +28,11 @@ module ActsAsMessageable
                                                 :sent_id        => args.first.id,
                                                 :received_type  => args.first.class.name,
                                                 :received_id    => args.first.id)
-                                      }
+                                     }
     scope :readed,            lambda { where("opened = :opened", :opened => true)  }
     scope :unread,            lambda { where("opened = :opened", :opened => false) }
-    #scope :deleted,           lambda { where("sent_messageable_id = :sender", :sender => relation_context) }
-
-    validates_presence_of :topic ,:body
+    scope :deleted,           lambda { where("recipient_delete = :r_delete AND sender_delete = :s_delete",
+                                              :r_delete => true, :s_delete => true)}
 
     def open?
       self.opened?
@@ -63,11 +63,7 @@ module ActsAsMessageable
     end
 
     def delete
-      self.context.delete_message(self)
-    end
-
-    def self.deleted
-      puts self.inspect
+      self.removed = true
     end
 
   end

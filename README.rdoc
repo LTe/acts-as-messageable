@@ -15,26 +15,33 @@ To use it, add it to your Gemfile:
 == Usage
 
     class User < ActiveRecord::Base
-        acts_as_messageable :table_name => "table_with_messages" # default 'messages'
+        acts_as_messageable :table_name => "table_with_messages", # default 'messages'
+                            :required   => :body                  # default [:topic, :body]
     end
 
 == Send message
 
-    # user1 send message to user2
-    # user.send_message(another_user, topic, body)
-    @user1.send_message(@user2, "Message to user2", "Hi user 2!;-)")
-    @user2.send_message(@user1, "Re: Message to user2", "Hi there!:)")
+    @alice = User.first
+    @bob   = User.last
+
+    @alice.send_message(@bob, "Message topic", "Hi bob!")
+    @bob.send_message(@alice, "Re: Message topic", "Hi alice!")
 
 == New API
-		@user.messages -- all messages connected with @user
+    @alice.messages -- all messages connected with @alice
 
-		.are_from(another_user)
-		.are_to(another_user)
-		.id(id_of_message)
-		.readed
-		.unread
+    .are_from(another_user)
+    .are_to(another_user)
+    .id(id_of_message)
+    .readed
+    .unread
+    .deleted
 
-		@user.messages.are_from(another_user).readed
-		etc...
+=== Delete message
+
+    @alice.messages.process do |message|
+        message.delete
+    end
+
 
 Copyright © 2011 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license
