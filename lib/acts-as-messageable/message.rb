@@ -21,13 +21,17 @@ module ActsAsMessageable
     scope :id,                lambda { |*args| where("id = :id", :id => args.first) }
 
     scope :connected_with,    lambda { |*args|  where("(sent_messageable_type = :sent_type and
-                                                sent_messageable_id = :sent_id) or 
+                                                sent_messageable_id = :sent_id and
+                                                sender_delete = :s_delete) or
                                                 (received_messageable_type = :received_type and
-                                                received_messageable_id = :received_id)",
-                                                :sent_type      => args.first.class.name, 
+                                                received_messageable_id = :received_id and
+                                                recipient_delete = :r_delete)",
+                                                :sent_type      => args.first.class.name,
                                                 :sent_id        => args.first.id,
                                                 :received_type  => args.first.class.name,
-                                                :received_id    => args.first.id)
+                                                :received_id    => args.first.id,
+                                                :r_delete       => args.last,
+                                                :s_delete       => args.last)
                                      }
     scope :readed,            lambda { where("opened = :opened", :opened => true)  }
     scope :unread,            lambda { where("opened = :opened", :opened => false) }

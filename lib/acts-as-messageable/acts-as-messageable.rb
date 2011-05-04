@@ -33,14 +33,16 @@ module ActsAsMessageable
 
     module InstanceMethods
       # Get all messages connected with user
-      # @param [Block] optional block
-      #
       # @return [ActiveRecord::Relation] all messages connected with user
-      def messages(&block)
-        result = ActsAsMessageable::Message.connected_with(self, false)
+      def messages(trash = false)
+        result = ActsAsMessageable::Message.connected_with(self, trash)
         result.relation_context = self
 
         result
+      end
+
+      def deleted_messages
+        messages true
       end
 
       # Method sens message to another user

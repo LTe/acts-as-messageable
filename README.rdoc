@@ -28,14 +28,19 @@ To use it, add it to your Gemfile:
     @bob.send_message(@alice, "Re: Message topic", "Hi alice!")
 
 == New API
-    @alice.messages -- all messages connected with @alice
+    @alice.messages -- all messages connected with @alice (inbox/outbox)
+    @alice.delete_messages -- all messages connected with @alice (trash)
 
-    .are_from(another_user)
-    .are_to(another_user)
-    .id(id_of_message)
-    .readed
-    .unread
-    .deleted
+    @alice.messages.are_from(@bob) -- all message form @bob
+    @alice.messages.are_to(@bob) -- all message to @bob
+    @alice.messages.id(@id_of_message) -- message with id id_of_message
+    @alice.messages.readed -- all readed @alice  messages
+    @alice.messages.unaded -- all unreaded @alice messages
+
+    You can use multiple filters at the same time
+
+    @alice.messages.are_from(@bob).are_to(@alice).readed -- all message from @bob to @alice and readed
+    @alice.deleted_message.are_from(@bob) -- all deleted messages from @bob
 
 === Delete message
 

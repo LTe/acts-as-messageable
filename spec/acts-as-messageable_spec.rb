@@ -36,6 +36,9 @@ describe "ActsAsMessageable" do
       m.recipient_delete.should == true
       m.sender_delete.should == false
     end
+
+    @bob.deleted_messages.count.should == 1
+    @bob.messages.count.should == 0
   end
 
   it "alice should have one unread message from bob" do
