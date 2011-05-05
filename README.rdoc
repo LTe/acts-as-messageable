@@ -9,7 +9,7 @@ To use it, add it to your Gemfile:
 
 == Post instalation
 
-    rails g acts_as_messageable:migration [table_name] # default 'messages'
+    rails g acts-as-messageable:migration [table_name] # default 'messages'
     rake db:migrate
 
 == Usage
@@ -37,7 +37,7 @@ To use it, add it to your Gemfile:
 
     @alice.messages.are_from(@bob) -- all message form @bob
     @alice.messages.are_to(@bob) -- all message to @bob
-    @alice.messages.id(@id_of_message) -- message with id id_of_message
+    @alice.messages.with_id(@id_of_message) -- message with id id_of_message
     @alice.messages.readed -- all readed @alice  messages
     @alice.messages.unaded -- all unreaded @alice messages
 
