@@ -49,7 +49,7 @@ describe "ActsAsMessageable" do
 
   it "should be in database message with id ..." do
     message_id = @bob.send_message(@alice, "Topic", "Message body").first.id
-    @bob.messages.id(message_id).count.should == 1
+    @bob.messages.with_id(message_id).count.should == 1
   end
 
   it "message should have proper topic" do
