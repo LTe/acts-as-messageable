@@ -2,6 +2,9 @@
 = ActsAsMessageable
 The Acts As Messageable allows communication between the models.
 
+http://travis-ci.org/LTe/acts-as-messageable.png
+
+
 == Usage
 To use it, add it to your Gemfile:
 
