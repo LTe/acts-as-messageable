@@ -9,9 +9,13 @@ class CreateMessagesTable < ActiveRecord::Migration
       t.boolean :opened, :default => false
       t.boolean :recipient_delete, :default => false
       t.boolean :sender_delete, :default => false
+
+      # ancestry
+      t.string :ancestry
     end
 
     add_index :<%= table_name %>, [:sent_messageable_id, :received_messageable_id], :name => "acts_as_messageable_ids"
+    add_index :<%= table_name %>, :ancestry
   end
 
   def self.down
