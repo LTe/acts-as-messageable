@@ -53,7 +53,7 @@ To use it, add it to your Gemfile:
 You can use multiple filters at the same time
 
   @alice.messages.are_from(@bob).are_to(@alice).readed # all message from @bob to @alice and readed
-  @alice.deleted_message.are_from(@bob) # all deleted messages from @bob
+  @alice.deleted_messages.are_from(@bob) # all deleted messages from @bob
 
 === Delete message
 
