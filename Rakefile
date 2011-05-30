@@ -16,7 +16,7 @@ Jeweler::Tasks.new do |gem|
   gem.name = "acts-as-messageable"
   gem.email = "piotr.nielacny@gmail.com"
   gem.summary = "Make user messageable!;-)"
-  gem.homepage = "http://github.com/LTe/acts_as_messageable"
+  gem.homepage = "http://github.com/LTe/acts-as-messageable"
   gem.authors = ["Piotr Nielacny"]
   # dependencies defined in Gemfile
 end
