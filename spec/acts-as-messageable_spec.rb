@@ -76,7 +76,7 @@ describe "ActsAsMessageable" do
     [@message, @reply_message, @reply_reply_message].each do |m|
       m.conversation.size.should == 3
     end
-    
+
     @message.conversation.last.should == @reply_reply_message
     @reply_reply_message.conversation.last.should == @reply_reply_message
   end

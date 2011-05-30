@@ -1,6 +1,6 @@
 require "active_record"
-require 'acts-as-messageable/acts-as-messageable'
 require 'acts-as-messageable/message'
+require 'acts-as-messageable/acts-as-messageable'
 require 'acts-as-messageable/relation'
 
 if defined?(ActiveRecord::Base)

@@ -9,7 +9,6 @@ module ActsAsMessageable
       # Method make ActiveRecord::Base object messageable
       # @param [Symbol] :table_name - table name for messages
       def acts_as_messageable(options = {})
-      class_eval do
         has_many  :received_messages, 
                   :as => :received_messageable, 
                   :class_name => "ActsAsMessageable::Message", 
@@ -18,15 +17,12 @@ module ActsAsMessageable
                   :as => :sent_messageable,
                   :class_name => "ActsAsMessageable::Message", 
                   :dependent => :nullify
-      end
-      
-      table_name = %q{set_table_name "#{options[:table_name] || "messages"}"}
-      ActsAsMessageable::Message.class_eval(table_name)
 
-      validation = %q{validates_presence_of options[:required] || [:topic ,:body]}
-      ActsAsMessageable::Message.class_eval(validation)
 
-      include ActsAsMessageable::Model::InstanceMethods
+        ActsAsMessageable::Message.set_table_name(options[:table_name] || "messages")
+        ActsAsMessageable::Message.validates_presence_of(options[:required] || [:topic ,:body])
+
+        include ActsAsMessageable::Model::InstanceMethods
     end
 
     end
