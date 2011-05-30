@@ -70,6 +70,10 @@ module ActsAsMessageable
       received_messageable
     end
 
+    def conversation
+      root.subtree
+    end
+
     def delete
       self.removed = true
     end

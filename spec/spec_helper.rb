@@ -36,6 +36,7 @@ def create_database
       t.boolean :opened, :default => false
       t.boolean :recipient_delete, :default => false
       t.boolean :sender_delete, :default => false
+      t.string :ancestry
     end
 
     create_table :users do |t|

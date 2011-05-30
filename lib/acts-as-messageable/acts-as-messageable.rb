@@ -56,6 +56,16 @@ module ActsAsMessageable
 
         self.sent_messages << @message
         to.received_messages << @message
+
+        @message
+      end
+
+      def reply_to(message, topic, body)
+        @message = send_message(self, topic, body)
+        @message.parent = message
+        @message.save
+
+        @message
       end
 
       def delete_message(message)

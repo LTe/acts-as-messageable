@@ -48,7 +48,7 @@ describe "ActsAsMessageable" do
   end
 
   it "should be in database message with id ..." do
-    message_id = @bob.send_message(@alice, "Topic", "Message body").first.id
+    message_id = @bob.send_message(@alice, "Topic", "Message body").id
     @bob.messages.with_id(message_id).count.should == 1
   end
 
@@ -57,5 +57,27 @@ describe "ActsAsMessageable" do
     @bob.messages.count.should == 1
     @bob.messages.first.topic == "Topic"
     @bob.messages.first.body == "Message body"
+  end
+
+  it "bob send message to alice, and alice reply to bob message and show proper tree" do
+    @message = @bob.send_message(@alice, "Topic", "Body")
+    @reply_message =  @alice.reply_to(@message, "Re: Topic", "Body")
+  
+    @reply_message.conversation.size.should == 2
+    @reply_message.conversation.first.topic.should == "Topic"
+    @reply_message.conversation.last.topic.should == "Re: Topic"
+  end
+
+  it "bob send message to alice, alice answer, and bob answer for alice answer" do
+    @message = @bob.send_message(@alice, "Topic", "Body")
+    @reply_message =  @alice.reply_to(@message, "Re: Topic", "Body")
+    @reply_reply_message = @bob.reply_to(@reply_message, "Re: Re: Topic", "Body")
+
+    [@message, @reply_message, @reply_reply_message].each do |m|
+      m.conversation.size.should == 3
+    end
+    
+    @message.conversation.last.should == @reply_reply_message
+    @reply_reply_message.conversation.last.should == @reply_reply_message
   end
 end

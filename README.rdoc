@@ -8,52 +8,58 @@ http://travis-ci.org/LTe/acts-as-messageable.png
 == Usage
 To use it, add it to your Gemfile:
 
-    gem 'acts-as-messageable'
+  gem 'acts-as-messageable'
 
 == Post instalation
 
-    rails g acts-as-messageable:migration [table_name] # default 'messages'
-    rake db:migrate
+  rails g acts-as-messageable:migration table_name # default 'messages'
+  rake db:migrate
 
 == Usage
 
-    class User < ActiveRecord::Base
-        acts_as_messageable :table_name => "table_with_messages", # default 'messages'
-                            :required   => :body                  # default [:topic, :body]
+  class User < ActiveRecord::Base
+    acts_as_messageable :table_name => "table_with_messages", # default 'messages'
+                        :required   => :body                  # default [:topic, :body]
     end
 
 == Send message
 
-    @alice = User.first
-    @bob   = User.last
+  @alice = User.first
+  @bob   = User.last
 
-    @alice.send_message(@bob, "Message topic", "Hi bob!")
-    @bob.send_message(@alice, "Re: Message topic", "Hi alice!")
+  @alice.send_message(@bob, "Message topic", "Hi bob!")
+  @bob.send_message(@alice, "Re: Message topic", "Hi alice!")
+
+== Conversation
+  @message = @alice.send_message(@bob, "Hello bob!", "How are you?")
+  @reply_message = @bob.reply_to(@message, "Re: Hello bob!", "I'm fine!")
+
+  @message.conversation #=> [@message, @reply_message]
+  @reply_message.conversation #=> [@message, @reply_message]
 
 == New API
+  @alice.messages # all messages connected with @alice (inbox/outbox)
+  @alice.received_messages # @alice inbox
+  @alice.sent_messages # @alice outbox
 
-    @alice.messages -- all messages connected with @alice (inbox/outbox)
-    @alice.received_messages -- @alice inbox
-    @alice.sent_messages -- @alice outbox
+  @alice.deleted_messages # all messages connected with @alice (trash)
 
-    @alice.deleted_messages -- all messages connected with @alice (trash)
+  @alice.messages.are_from(@bob) # all message form @bob
+  @alice.messages.are_to(@bob) # all message to @bob
+  @alice.messages.with_id(@id_of_message) # message with id id_of_message
+  @alice.messages.readed # all readed @alice  messages
+  @alice.messages.unaded # all unreaded @alice messages
 
-    @alice.messages.are_from(@bob) -- all message form @bob
-    @alice.messages.are_to(@bob) -- all message to @bob
-    @alice.messages.with_id(@id_of_message) -- message with id id_of_message
-    @alice.messages.readed -- all readed @alice  messages
-    @alice.messages.unaded -- all unreaded @alice messages
+You can use multiple filters at the same time
 
-    You can use multiple filters at the same time
-
-    @alice.messages.are_from(@bob).are_to(@alice).readed -- all message from @bob to @alice and readed
-    @alice.deleted_message.are_from(@bob) -- all deleted messages from @bob
+  @alice.messages.are_from(@bob).are_to(@alice).readed # all message from @bob to @alice and readed
+  @alice.deleted_message.are_from(@bob) # all deleted messages from @bob
 
 === Delete message
 
-    @alice.messages.process do |message|
-        message.delete
-    end
+  @alice.messages.process do |message|
+      message.delete
+  end
 
 
 Copyright © 2011 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license
