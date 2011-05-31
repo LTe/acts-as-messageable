@@ -30,6 +30,30 @@ To use it, add it to your Gemfile:
   @alice.send_message(@bob, "Message topic", "Hi bob!")
   @bob.send_message(@alice, "Re: Message topic", "Hi alice!")
 
+=== With hash
+
+  @alice.send_message(@bob, { :body => "Hash body", :topic => "Hash topic" })
+
+=== Custom required
+
+In User model
+  class User < ActiveRecord::Base
+    acts_as_messageable :required => :body
+  end
+
+  @alice.send_message(@bob, { :body => "Hash body" })
+or
+  @alice.send_message(@bob, "body")
+
+==== Required sequence
+
+
+  class User < ActiveRecord::Base
+    acts_as_messageable :required => [:body, :topic]
+  end
+
+  @alice.send_message(@bob, "body", "topic")
+
 == Conversation
   @message = @alice.send_message(@bob, "Hello bob!", "How are you?")
   @reply_message = @bob.reply_to(@message, "Re: Hello bob!", "I'm fine!")

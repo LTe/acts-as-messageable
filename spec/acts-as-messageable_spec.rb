@@ -18,7 +18,7 @@ describe "ActsAsMessageable" do
   end
 
   it "bob should have one open message from alice" do
-    @alice.send_message(@bob, "Topic", "Message body")
+    @message =  @alice.send_message(@bob, "Topic", "Message body")
     @bob.messages.are_from(@alice).process do |m|
       m.open
     end
@@ -79,5 +79,11 @@ describe "ActsAsMessageable" do
 
     @message.conversation.last.should == @reply_reply_message
     @reply_reply_message.conversation.last.should == @reply_reply_message
+  end
+
+  it "send message with hash" do
+    @message = @bob.send_message(@alice, {:body => "Body", :topic => "Topic"})
+    @message.topic.should == "Topic"
+    @message.body.should == "Body"
   end
 end

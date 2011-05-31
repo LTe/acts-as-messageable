@@ -17,7 +17,9 @@ module ActsAsMessageable
                     :recipient_delete,
                     :sender_delete
 
-    attr_accessor :context, :removed
+    attr_accessor :removed
+    cattr_accessor :required
+
 
     # Sample documentation for scope
     scope :are_from,          lambda { |*args| where("sent_messageable_id = :sender", :sender => args.first) }

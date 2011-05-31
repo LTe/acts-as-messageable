@@ -21,6 +21,7 @@ module ActsAsMessageable
 
         ActsAsMessageable::Message.set_table_name(options[:table_name] || "messages")
         ActsAsMessageable::Message.validates_presence_of(options[:required] || [:topic ,:body])
+        ActsAsMessageable::Message.required = options[:required] || [:topic, :body]
 
         include ActsAsMessageable::Model::InstanceMethods
     end
@@ -47,21 +48,31 @@ module ActsAsMessageable
       # @param [String] body
       #
       # @return [ActsAsMessageable::Message] the message object
-      def send_message(to, topic, body)
-        @message = ActsAsMessageable::Message.create!(:topic => topic, :body => body)
+      def send_message(to, *args)
+        case args.first
+          when String
+            message_attributes = {}
+            ActsAsMessageable::Message.required.each_with_index do |attribute, index|
+              message_attributes[attribute] = args[index]
+            end
+          when Hash
+            message_attributes = args.first
+        end
 
-        self.sent_messages << @message
-        to.received_messages << @message
+        message = ActsAsMessageable::Message.create! message_attributes
 
-        @message
+        self.sent_messages << message
+        to.received_messages << message
+
+        message
       end
 
       def reply_to(message, topic, body)
-        @message = send_message(self, topic, body)
-        @message.parent = message
-        @message.save
+        reply_message = send_message(self, topic, body)
+        reply_message.parent = message
+        reply_message.save
 
-        @message
+        reply_message
       end
 
       def delete_message(message)
