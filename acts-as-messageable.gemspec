@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{acts-as-messageable}
-  s.version = "0.2.1"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Piotr Nielacny"]
-  s.date = %q{2011-05-28}
+  s.date = %q{2011-05-31}
   s.email = %q{piotr.nielacny@gmail.com}
   s.extra_rdoc_files = [
     "README.rdoc"
@@ -33,7 +33,7 @@ Gem::Specification.new do |s|
     "spec/spec_helper.rb",
     "spec/support/user.rb"
   ]
-  s.homepage = %q{http://github.com/LTe/acts_as_messageable}
+  s.homepage = %q{http://github.com/LTe/acts-as-messageable}
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.6.2}
   s.summary = %q{Make user messageable!;-)}
