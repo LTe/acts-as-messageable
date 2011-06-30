@@ -20,7 +20,7 @@ module ActsAsMessageable
                   :class_name => options[:class_name] || "ActsAsMessageable::Message", 
                   :dependent => :nullify
                   
-        self.class_name = options[:class_name].constantize
+        self.class_name = (options[:class_name] || "ActsAsMessageable::Message").constantize
 
         self.class_name.set_table_name(options[:table_name] || "messages")
         self.class_name.validates_presence_of(options[:required] || [:topic ,:body])
@@ -35,7 +35,7 @@ module ActsAsMessageable
       # Get all messages connected with user
       # @return [ActiveRecord::Relation] all messages connected with user
       def messages(trash = false)
-        result = self.class_name.connected_with(self, trash)
+        result = self.class.class_name.connected_with(self, trash)
         result.relation_context = self
 
         result
@@ -55,14 +55,14 @@ module ActsAsMessageable
         case args.first
           when String
             message_attributes = {}
-            self.class_name.required.each_with_index do |attribute, index|
+            self.class.class_name.required.each_with_index do |attribute, index|
               message_attributes[attribute] = args[index]
             end
           when Hash
             message_attributes = args.first
         end
 
-        message = self.class_name.create! message_attributes
+        message = self.class.class_name.create! message_attributes
 
         self.sent_messages << message
         to.received_messages << message
