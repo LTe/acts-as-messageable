@@ -6,23 +6,26 @@ module ActsAsMessageable
     end
 
     module ClassMethods
+      mattr_accessor :class_name
+      
       # Method make ActiveRecord::Base object messageable
       # @param [Symbol] :table_name - table name for messages
       def acts_as_messageable(options = {})
         has_many  :received_messages, 
                   :as => :received_messageable, 
-                  :class_name => "ActsAsMessageable::Message", 
+                  :class_name => options[:class_name] || "ActsAsMessageable::Message", 
                   :dependent => :nullify
         has_many  :sent_messages, 
                   :as => :sent_messageable,
-                  :class_name => "ActsAsMessageable::Message", 
+                  :class_name => options[:class_name] || "ActsAsMessageable::Message", 
                   :dependent => :nullify
+                  
+        self.class_name = options[:class_name].constantize
 
-
-        ActsAsMessageable::Message.set_table_name(options[:table_name] || "messages")
-        ActsAsMessageable::Message.validates_presence_of(options[:required] || [:topic ,:body])
-        ActsAsMessageable::Message.required = options[:required] || [:topic, :body]
-
+        self.class_name.set_table_name(options[:table_name] || "messages")
+        self.class_name.validates_presence_of(options[:required] || [:topic ,:body])
+        self.class_name.required = options[:required] || [:topic, :body]
+        
         include ActsAsMessageable::Model::InstanceMethods
     end
 
@@ -32,7 +35,7 @@ module ActsAsMessageable
       # Get all messages connected with user
       # @return [ActiveRecord::Relation] all messages connected with user
       def messages(trash = false)
-        result = ActsAsMessageable::Message.connected_with(self, trash)
+        result = self.class_name.connected_with(self, trash)
         result.relation_context = self
 
         result
@@ -52,14 +55,14 @@ module ActsAsMessageable
         case args.first
           when String
             message_attributes = {}
-            ActsAsMessageable::Message.required.each_with_index do |attribute, index|
+            self.class_name.required.each_with_index do |attribute, index|
               message_attributes[attribute] = args[index]
             end
           when Hash
             message_attributes = args.first
         end
 
-        message = ActsAsMessageable::Message.create! message_attributes
+        message = self.class_name.create! message_attributes
 
         self.sent_messages << message
         to.received_messages << message
