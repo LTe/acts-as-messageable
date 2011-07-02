@@ -1,7 +1,10 @@
 require "active_record"
-require 'acts-as-messageable/message'
 require 'acts-as-messageable/acts-as-messageable'
-require 'acts-as-messageable/relation'
+
+module ActsAsMessageable
+  autoload :Message, "acts-as-messageable/message"
+  autoload :Relation, "acts-as-messageable/relation"
+end
 
 if defined?(ActiveRecord::Base)
   ActiveRecord::Base.send :include, ActsAsMessageable::Model
