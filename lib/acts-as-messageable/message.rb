@@ -24,7 +24,7 @@ module ActsAsMessageable
     # Sample documentation for scope
     scope :are_from,          lambda { |*args| where("sent_messageable_id = :sender", :sender => args.first) }
     scope :are_to,            lambda { |*args| where("received_messageable_id = :receiver", :receiver => args.first) }
-    scope :with_id,                lambda { |*args| where("id = :id", :id => args.first) }
+    scope :with_id,           lambda { |*args| where("id = :id", :id => args.first) }
 
     scope :connected_with,    lambda { |*args|  where("(sent_messageable_type = :sent_type and
                                                 sent_messageable_id = :sent_id and

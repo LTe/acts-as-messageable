@@ -21,7 +21,16 @@ module ActsAsMessageable
 
         ActsAsMessageable::Message.set_table_name(options[:table_name] || "messages")
         ActsAsMessageable::Message.validates_presence_of(options[:required] || [:topic ,:body])
-        ActsAsMessageable::Message.required = options[:required] || [:topic, :body]
+
+        if options[:required].is_a? Symbol
+          ActsAsMessageable::Message.required = [options[:required]]
+        elsif options[:required].is_a? Array
+          ActsAsMessageable::Message.required = options[:required]
+        else
+          ActsAsMessageable::Message.required = [:topic, :body]
+        end
+
+        ActsAsMessageable::Message.validates_presence_of ActsAsMessageable::Message.required
 
         include ActsAsMessageable::Model::InstanceMethods
     end
@@ -67,8 +76,8 @@ module ActsAsMessageable
         message
       end
 
-      def reply_to(message, topic, body)
-        reply_message = send_message(self, topic, body)
+      def reply_to(message, *args)
+        reply_message = send_message(message.from, *args)
         reply_message.parent = message
         reply_message.save
 

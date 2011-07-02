@@ -1,6 +1,15 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
+class User < ActiveRecord::Base
+  acts_as_messageable
+end
+
 describe "ActsAsMessageable" do
+
+  before(:all) do
+    User.acts_as_messageable
+  end
+
   it "should be two users in database" do
     User.count.should == 2
   end
