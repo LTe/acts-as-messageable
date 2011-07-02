@@ -57,6 +57,7 @@ or
 == Conversation
   @message = @alice.send_message(@bob, "Hello bob!", "How are you?")
   @reply_message = @bob.reply_to(@message, "Re: Hello bob!", "I'm fine!")
+  # or @bob.reply_to(@message, :topic => "Re: Hello bob!", :body => "I'm fine!")
 
   @message.conversation #=> [@message, @reply_message]
   @reply_message.conversation #=> [@message, @reply_message]
