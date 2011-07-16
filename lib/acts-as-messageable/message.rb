@@ -23,7 +23,7 @@ module ActsAsMessageable
     cattr_accessor :required
 
 
-    # Sample documentation for scopie
+    # Sample documentation for scope
     default_scope order(:created_at)
     scope :are_from,          lambda { |*args| where("sent_messageable_id = :sender", :sender => args.first) }
     scope :are_to,            lambda { |*args| where("received_messageable_id = :receiver", :receiver => args.first) }
