@@ -1,5 +1,6 @@
 require "active_record"
-require 'acts-as-messageable/acts-as-messageable'
+require "active_support/core_ext"
+require "acts-as-messageable/acts-as-messageable"
 
 module ActsAsMessageable
   autoload :Message, "acts-as-messageable/message"
