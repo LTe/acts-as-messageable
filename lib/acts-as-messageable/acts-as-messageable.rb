@@ -7,34 +7,31 @@ module ActsAsMessageable
 
     module ClassMethods
       mattr_accessor :class_name
-      
+
       # Method make ActiveRecord::Base object messageable
       # @param [Symbol] :table_name - table name for messages
       def acts_as_messageable(options = {})
         has_many  :received_messages, 
                   :as => :received_messageable, 
-                  :class_name => options[:class_name] || "ActsAsMessageable::Message", 
+                  :class_name => options[:class_name] || "ActsAsMessageable::Message",
                   :dependent => :nullify
         has_many  :sent_messages, 
                   :as => :sent_messageable,
-                  :class_name => options[:class_name] || "ActsAsMessageable::Message", 
+                  :class_name => options[:class_name] || "ActsAsMessageable::Message",
                   :dependent => :nullify
-                  
+
         self.class_name = (options[:class_name] || "ActsAsMessageable::Message").constantize
-
-
-        ActsAsMessageable::Message.set_table_name(options[:table_name] || "messages")
-        ActsAsMessageable::Message.validates_presence_of(options[:required] || [:topic ,:body])
+        self.class_name.set_table_name(options[:table_name] || "messages")
 
         if options[:required].is_a? Symbol
-          ActsAsMessageable::Message.required = [options[:required]]
+          self.class_name.required = [options[:required]]
         elsif options[:required].is_a? Array
-          ActsAsMessageable::Message.required = options[:required]
+          self.class_name.required = options[:required]
         else
-          ActsAsMessageable::Message.required = [:topic, :body]
+          self.class_name.required = [:topic, :body]
         end
 
-        ActsAsMessageable::Message.validates_presence_of ActsAsMessageable::Message.required
+        self.class_name.validates_presence_of self.class_name.required
 
         include ActsAsMessageable::Model::InstanceMethods
     end
