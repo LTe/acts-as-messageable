@@ -6,17 +6,21 @@ module ActsAsMessageable
     end
 
     module ClassMethods
+      mattr_accessor :class_name
+      
       # Method make ActiveRecord::Base object messageable
       # @param [Symbol] :table_name - table name for messages
       def acts_as_messageable(options = {})
         has_many  :received_messages, 
                   :as => :received_messageable, 
-                  :class_name => "ActsAsMessageable::Message", 
+                  :class_name => options[:class_name] || "ActsAsMessageable::Message", 
                   :dependent => :nullify
         has_many  :sent_messages, 
                   :as => :sent_messageable,
-                  :class_name => "ActsAsMessageable::Message", 
+                  :class_name => options[:class_name] || "ActsAsMessageable::Message", 
                   :dependent => :nullify
+                  
+        self.class_name = (options[:class_name] || "ActsAsMessageable::Message").constantize
 
 
         ActsAsMessageable::Message.set_table_name(options[:table_name] || "messages")
@@ -41,7 +45,7 @@ module ActsAsMessageable
       # Get all messages connected with user
       # @return [ActiveRecord::Relation] all messages connected with user
       def messages(trash = false)
-        result = ActsAsMessageable::Message.connected_with(self, trash)
+        result = self.class.class_name.connected_with(self, trash)
         result.relation_context = self
 
         result
@@ -61,14 +65,14 @@ module ActsAsMessageable
         case args.first
           when String
             message_attributes = {}
-            ActsAsMessageable::Message.required.each_with_index do |attribute, index|
+            self.class.class_name.required.each_with_index do |attribute, index|
               message_attributes[attribute] = args[index]
             end
           when Hash
             message_attributes = args.first
         end
 
-        message = ActsAsMessageable::Message.create! message_attributes
+        message = self.class.class_name.create! message_attributes
 
         self.sent_messages << message
         to.received_messages << message
