@@ -8,6 +8,7 @@ class CreateMessagesTable < ActiveRecord::Migration
       t.boolean :opened, :default => false
       t.boolean :recipient_delete, :default => false
       t.boolean :sender_delete, :default => false
+      t.timestamps
 
       # ancestry
       t.string :ancestry

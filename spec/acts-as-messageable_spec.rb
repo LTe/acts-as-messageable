@@ -95,4 +95,10 @@ describe "ActsAsMessageable" do
     @message.topic.should == "Topic"
     @message.body.should == "Body"
   end
+
+  it "messages should return in right order :created_at" do
+    @message = @bob.send_message(@alice, "Topic", "First message")
+    @message = @bob.send_message(@alice, "Topic", "Sec message")
+    @alice.messages.first.body.should == "First message"
+  end
 end

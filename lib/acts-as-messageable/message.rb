@@ -15,13 +15,16 @@ module ActsAsMessageable
                     :sent_messageable_id,
                     :opened,
                     :recipient_delete,
-                    :sender_delete
+                    :sender_delete,
+                    :created_at,
+                    :updated_at
 
     attr_accessor :removed
     cattr_accessor :required
 
 
-    # Sample documentation for scope
+    # Sample documentation for scopie
+    default_scope order(:created_at)
     scope :are_from,          lambda { |*args| where("sent_messageable_id = :sender", :sender => args.first) }
     scope :are_to,            lambda { |*args| where("received_messageable_id = :receiver", :receiver => args.first) }
     scope :with_id,           lambda { |*args| where("id = :id", :id => args.first) }

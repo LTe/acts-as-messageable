@@ -21,7 +21,7 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do
-    ActsAsMessageable::Message.destroy_all
+    User.class_name.destroy_all
   end
 end
 
@@ -36,6 +36,7 @@ def create_database
       t.boolean :recipient_delete, :default => false
       t.boolean :sender_delete, :default => false
       t.string :ancestry
+      t.timestamps
     end
 
     create_table :users do |t|
