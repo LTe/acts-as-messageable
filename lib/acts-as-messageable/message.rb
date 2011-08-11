@@ -16,6 +16,8 @@ module ActsAsMessageable
                     :opened,
                     :recipient_delete,
                     :sender_delete,
+                    :recipient_permanent_delete,
+                    :sender_permanent_delete,
                     :created_at,
                     :updated_at
 
@@ -31,16 +33,18 @@ module ActsAsMessageable
 
     scope :connected_with,    lambda { |*args|  where("(sent_messageable_type = :sent_type and
                                                 sent_messageable_id = :sent_id and
-                                                sender_delete = :s_delete) or
+                                                sender_delete = :s_delete and sender_permanent_delete = :s_perm_delete) or
                                                 (received_messageable_type = :received_type and
                                                 received_messageable_id = :received_id and
-                                                recipient_delete = :r_delete)",
+                                                recipient_delete = :r_delete and recipient_permanent_delete = :r_perm_delete)",
                                                 :sent_type      => args.first.class.name,
                                                 :sent_id        => args.first.id,
                                                 :received_type  => args.first.class.name,
                                                 :received_id    => args.first.id,
                                                 :r_delete       => args.last,
-                                                :s_delete       => args.last)
+                                                :s_delete       => args.last,
+                                                :r_perm_delete  => false,
+                                                :s_perm_delete  => false)
                                      }
     scope :readed,            lambda { where("opened = :opened", :opened => true)  }
     scope :unread,            lambda { where("opened = :opened", :opened => false) }

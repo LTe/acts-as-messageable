@@ -11,11 +11,11 @@ module ActsAsMessageable
       # Method make ActiveRecord::Base object messageable
       # @param [Symbol] :table_name - table name for messages
       def acts_as_messageable(options = {})
-        has_many  :received_messages, 
+        has_many  :received_messages_relation, 
                   :as => :received_messageable, 
                   :class_name => options[:class_name] || "ActsAsMessageable::Message",
                   :dependent => :nullify
-        has_many  :sent_messages, 
+        has_many  :sent_messages_relation, 
                   :as => :sent_messageable,
                   :class_name => options[:class_name] || "ActsAsMessageable::Message",
                   :dependent => :nullify
@@ -32,7 +32,6 @@ module ActsAsMessageable
         end
 
         self.class_name.validates_presence_of self.class_name.required
-
         include ActsAsMessageable::Model::InstanceMethods
     end
 
@@ -43,6 +42,20 @@ module ActsAsMessageable
       # @return [ActiveRecord::Relation] all messages connected with user
       def messages(trash = false)
         result = self.class.class_name.connected_with(self, trash)
+        result.relation_context = self
+
+        result
+      end
+
+      def received_messages
+        result = received_messages_relation.scoped.where(:recipient_delete => false)
+        result.relation_context = self
+
+        result
+      end
+
+      def sent_messages
+        result = sent_messages_relation.scoped.where(:sender_delete => false)
         result.relation_context = self
 
         result
@@ -71,8 +84,8 @@ module ActsAsMessageable
 
         message = self.class.class_name.create! message_attributes
 
-        self.sent_messages << message
-        to.received_messages << message
+        self.sent_messages_relation << message
+        to.received_messages_relation << message
 
         message
       end
@@ -89,9 +102,17 @@ module ActsAsMessageable
         current_user = self
 
         if message.received_messageable == current_user
-          message.update_attributes!(:recipient_delete => true)
+          unless message.recipient_delete
+            message.update_attributes!(:recipient_delete => true)
+          else
+            message.update_attributes!(:recipient_permanent_delete => true)
+          end
         elsif message.sent_messageable == current_user
-          message.update_attributes!(:sender_delete => true)
+          unless message.sender_delete
+            message.update_attributes!(:sender_delete => true)
+          else
+            message.update_attributes!(:sender_permanent_delete => true)
+          end
         end
       end
 

@@ -101,4 +101,43 @@ describe "ActsAsMessageable" do
     @message = @bob.send_message(@alice, "Topic", "Sec message")
     @alice.messages.first.body.should == "First message"
   end
+
+  it "message should permanent delete" do
+    @message = @bob.send_message(@alice, "Topic", "Message")
+    @alice.messages.process { |m| m.delete }
+    @alice.messages.count.should == 0
+
+    @alice.deleted_messages.count.should == 1
+    @alice.deleted_messages.process { |m| m.delete }
+    @alice.deleted_messages.count.should == 0
+
+    @message.reload
+    @message.recipient_permanent_delete.should == true
+
+    @bob.sent_messages.count.should == 1
+  end
+
+  it "received_messages should return ActiveRecord::Relation" do
+    @message = @bob.send_message(@alice, "Topic", "Message")
+    @alice.received_messages.class.should == ActiveRecord::Relation
+  end
+
+  it "sent_messages should return ActiveRecord::Relation" do
+    @message = @bob.send_message(@alice, "Topic", "Message")
+    @bob.sent_messages.class.should == ActiveRecord::Relation
+  end
+
+  it "received_messages and sent_messages should work with .process method" do
+    @message = @bob.send_message(@alice, "Helou", "Alice")
+
+    @bob.sent_messages.count.should == 1
+    @alice.received_messages.count.should == 1
+
+    @bob.sent_messages.process { |m| m.delete }
+    @bob.sent_messages.count.should == 0
+    @alice.received_messages.count.should == 1
+
+    @alice.received_messages.process { |m| m.delete }
+    @alice.received_messages.count.should == 0
+  end
 end
