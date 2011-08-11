@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{acts-as-messageable}
-  s.version = "0.3.1"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{Piotr Nielacny}]
@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
     "lib/acts-as-messageable/relation.rb",
     "lib/generators/acts-as-messageable/migration/migration_generator.rb",
     "lib/generators/acts-as-messageable/migration/templates/migration.rb",
+    "lib/generators/acts-as-messageable/migration/templates/migration_permanent.rb",
     "rails/init.rb",
     "spec/acts-as-messageable_spec.rb",
     "spec/custom-class_spec.rb",
