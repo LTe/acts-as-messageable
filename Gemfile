@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
-gem "activerecord", "~> 3.0.0"
-gem "activesupport", "~> 3.0.0"
+gem "activerecord", ">= 3.0.0"
+gem "activesupport", ">= 3.0.0"
 gem "ancestry", "~> 1.2.4"
 
 group :development do
