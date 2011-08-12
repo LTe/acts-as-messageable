@@ -27,11 +27,11 @@ Usage
 =====
 
 ```ruby
-  class User < ActiveRecord::Base
-    acts_as_messageable :table_name => "table_with_messages", # default 'messages'
-                        :required   => :body                  # default [:topic, :body]
-                        :class_name => "CustomMessages"       # default "ActsAsMessageable::Message"
-    end
+class User < ActiveRecord::Base
+  acts_as_messageable :table_name => "table_with_messages", # default 'messages'
+                      :required   => :body                  # default [:topic, :body]
+                      :class_name => "CustomMessages"       # default "ActsAsMessageable::Message"
+  end
 ```
 
 Upgrade
@@ -75,17 +75,17 @@ Custom required
 In User model
 
 ```ruby
-  class User < ActiveRecord::Base
-    acts_as_messageable :required => :body
-  end
+class User < ActiveRecord::Base
+  acts_as_messageable :required => :body
+end
 
-  @alice.send_message(@bob, { :body => "Hash body" })
+@alice.send_message(@bob, { :body => "Hash body" })
 ```
 
 or
 
 ```ruby
-  @alice.send_message(@bob, "body")
+@alice.send_message(@bob, "body")
 ```
 
 Required sequence
