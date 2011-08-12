@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   acts_as_messageable :table_name => "table_with_messages", # default 'messages'
                       :required   => :body                  # default [:topic, :body]
                       :class_name => "CustomMessages"       # default "ActsAsMessageable::Message"
-  end
+end
 ```
 
 Upgrade
@@ -111,7 +111,7 @@ Conversation
 @reply_message.conversation #=> [@message, @reply_message]
 ```
 
-API
+Search
 ===
 
 ```ruby
