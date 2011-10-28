@@ -48,7 +48,6 @@ And new migrations should be created.
 ```
 ~$ rails g acts-as-messageable:migration
     create  db/migrate/20110811223435_add_recipient_permanent_delete_and_sender_permanent_delete_to_messages.rb
-    Another migration is already named create_messages_table: /home/lite/work/acts_test/db/migrate/20110811184810_create_messages_table.rb
 ```
 
 Send message
