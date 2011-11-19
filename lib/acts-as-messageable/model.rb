@@ -6,7 +6,7 @@ module ActsAsMessageable
     end
 
     module ClassMethods
-      mattr_accessor :class_name
+      mattr_accessor :messages_class_name
 
       # Method make ActiveRecord::Base object messageable
       # @param [Symbol] :table_name - table name for messages
@@ -20,18 +20,18 @@ module ActsAsMessageable
                   :class_name => options[:class_name] || "ActsAsMessageable::Message",
                   :dependent => :nullify
 
-        self.class_name = (options[:class_name] || "ActsAsMessageable::Message").constantize
-        self.class_name.set_table_name(options[:table_name] || "messages")
+        self.messages_class_name = (options[:class_name] || "ActsAsMessageable::Message").constantize
+        self.messages_class_name.set_table_name(options[:table_name] || "messages")
 
         if options[:required].is_a? Symbol
-          self.class_name.required = [options[:required]]
+          self.messages_class_name.required = [options[:required]]
         elsif options[:required].is_a? Array
-          self.class_name.required = options[:required]
+          self.messages_class_name.required = options[:required]
         else
-          self.class_name.required = [:topic, :body]
+          self.messages_class_name.required = [:topic, :body]
         end
 
-        self.class_name.validates_presence_of self.class_name.required
+        self.messages_class_name.validates_presence_of self.messages_class_name.required
         include ActsAsMessageable::Model::InstanceMethods
     end
 
@@ -41,7 +41,7 @@ module ActsAsMessageable
       # Get all messages connected with user
       # @return [ActiveRecord::Relation] all messages connected with user
       def messages(trash = false)
-        result = self.class.class_name.connected_with(self, trash)
+        result = self.class.messages_class_name.connected_with(self, trash)
         result.relation_context = self
 
         result
@@ -75,14 +75,14 @@ module ActsAsMessageable
         case args.first
           when String
             message_attributes = {}
-            self.class.class_name.required.each_with_index do |attribute, index|
+            self.class.messages_class_name.required.each_with_index do |attribute, index|
               message_attributes[attribute] = args[index]
             end
           when Hash
             message_attributes = args.first
         end
 
-        message = self.class.class_name.create! message_attributes
+        message = self.class.messages_class_name.create! message_attributes
 
         self.sent_messages_relation << message
         to.received_messages_relation << message

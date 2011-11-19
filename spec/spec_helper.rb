@@ -21,7 +21,7 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do
-    User.class_name.destroy_all
+    User.messages_class_name.destroy_all
   end
 end
 
