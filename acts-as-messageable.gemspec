@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "acts-as-messageable"
-  s.version = "0.4.2"
+  s.version = "0.4.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Piotr Nielacny"]
-  s.date = "2011-11-19"
+  s.date = "2011-12-04"
   s.email = "piotr.nielacny@gmail.com"
   s.extra_rdoc_files = [
     "README.md"
@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
     "spec/custom-class_spec.rb",
     "spec/custom-required_spec.rb",
     "spec/spec_helper.rb",
+    "spec/support/admin.rb",
     "spec/support/user.rb"
   ]
   s.homepage = "http://github.com/LTe/acts-as-messageable"
