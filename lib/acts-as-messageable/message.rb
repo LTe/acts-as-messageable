@@ -27,8 +27,8 @@ module ActsAsMessageable
 
     # Sample documentation for scope
     default_scope order(:created_at)
-    scope :are_from,          lambda { |*args| where("sent_messageable_id = :sender", :sender => args.first) }
-    scope :are_to,            lambda { |*args| where("received_messageable_id = :receiver", :receiver => args.first) }
+    scope :are_from,          lambda { |*args| where("sent_messageable_id = :sender AND sent_messageable_type = :sender_type", :sender => args.first, :sender_type => args.first.class.to_s) }
+    scope :are_to,            lambda { |*args| where("received_messageable_id = :receiver AND received_messageable_type = :receiver_type", :receiver => args.first, :receiver_type => args.first.class.to_s) }
     scope :with_id,           lambda { |*args| where("id = :id", :id => args.first) }
 
     scope :connected_with,    lambda { |*args|  where("(sent_messageable_type = :sent_type and
