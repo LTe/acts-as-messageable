@@ -160,4 +160,24 @@ describe "ActsAsMessageable" do
     send_message
     @bob.sent_messages.class.should == ActiveRecord::Relation
   end
+
+  describe "send messages between two different models (the same id)" do
+    it "should have the same id" do
+      @alice.id.should be_equal(@admin.id)
+    end
+
+    it "bob send message to admin (different model) with the same id" do
+      @bob.send_message(@alice, "hello", "alice")
+      @alice.messages.are_to(@alice).size.should be_equal(1)
+      @alice.messages.are_to(@admin).size.should be_equal(0)
+    end
+
+    it "admin send message to bob" do
+      @admin.send_message(@bob, "hello", "bob")
+      @bob.messages.are_from(@admin).size.should be_equal(1)
+      @bob.messages.are_from(@alice).size.should be_equal(0)
+    end
+
+  end
+
 end

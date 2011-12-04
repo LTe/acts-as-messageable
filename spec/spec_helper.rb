@@ -12,8 +12,9 @@ RSpec.configure do |config|
     ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
     create_database
 
-    @alice = User.create :email => "alice@example.com"
-    @bob   = User.create :email => "bob@example.com"
+    @alice = User.create :email   => "alice@example.com"
+    @bob   = User.create :email   => "bob@example.com"
+    @admin = Admin.create :email  => "admin@example.com"
   end
 
   config.after(:all) do
@@ -42,6 +43,10 @@ def create_database
     end
 
     create_table :users do |t|
+      t.string :email
+    end
+
+    create_table :admins do |t|
       t.string :email
     end
   end
