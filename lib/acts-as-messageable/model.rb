@@ -91,11 +91,15 @@ module ActsAsMessageable
       end
 
       def reply_to(message, *args)
-        reply_message = send_message(message.from, *args)
-        reply_message.parent = message
-        reply_message.save
+        current_user = self
+        
+        if message.participant?(current_user)          
+          reply_message = send_message(message.from, *args)
+          reply_message.parent = message
+          reply_message.save
 
-        reply_message
+          reply_message
+        end
       end
 
       def delete_message(message)

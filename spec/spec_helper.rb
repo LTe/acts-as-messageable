@@ -14,6 +14,7 @@ RSpec.configure do |config|
 
     @alice = User.create :email   => "alice@example.com"
     @bob   = User.create :email   => "bob@example.com"
+    @pat   = User.create :email   => "pat@example.com"
     @admin = Admin.create :email  => "admin@example.com"
   end
 

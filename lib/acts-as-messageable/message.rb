@@ -79,6 +79,10 @@ module ActsAsMessageable
       received_messageable
     end
 
+    def participant?(user)
+      (to == user) || (from == user)
+    end
+
     def conversation
       root.subtree
     end
@@ -86,6 +90,9 @@ module ActsAsMessageable
     def delete
       self.removed = true
     end
-
+    
+    def reply(*args)
+      to.reply_to(self, *args)
+    end
   end
 end
