@@ -82,7 +82,7 @@ module ActsAsMessageable
             message_attributes = args.first
         end
 
-        message = self.class.messages_class_name.create! message_attributes
+        message = self.class.messages_class_name.create message_attributes
 
         self.sent_messages_relation << message
         to.received_messages_relation << message
