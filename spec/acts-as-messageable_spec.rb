@@ -16,7 +16,7 @@ describe "ActsAsMessageable" do
 
   describe "prepare for specs" do
     it "should be two users in database" do
-      User.count.should == 2
+      User.count.should == 3
     end
   end
 
@@ -45,6 +45,30 @@ describe "ActsAsMessageable" do
       send_message
       @alice.messages.are_from(@bob).process { |m| m.open }
       @alice.messages.readed.count.should == 1
+    end
+  end
+  
+  describe "reply to messages" do
+    it "pat should not be able to reply to a message from bob to alice" do
+      @message = send_message
+      @reply_message =  @pat.reply_to(@message, "Re: Topic", "Body")
+      @reply_message.should be_nil
+    end
+    
+    it "alice should be able to reply to a message from bob to alice" do
+      @message = send_message
+      @reply_message =  @alice.reply_to(@message, "Re: Topic", "Body")
+      @reply_message.should_not be_nil
+      @bob.messages.are_from(@alice).count.should == 1      
+      @alice.sent_messages.are_to(@bob).count.should == 1      
+    end    
+
+    it "alice should be able to reply to a message using the message object" do
+      @message = send_message
+      @reply_message =  @message.reply("Re: Topic", "Body")
+      @reply_message.should_not be_nil      
+      @bob.messages.are_from(@alice).count.should == 1      
+      @alice.sent_messages.are_to(@bob).count.should == 1      
     end
   end
 
