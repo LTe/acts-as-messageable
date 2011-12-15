@@ -4,10 +4,6 @@ class User < ActiveRecord::Base
   acts_as_messageable
 end
 
-def send_message(from=@bob, to=@alice, topic="Topic", body="Body")
-  from.send_message(to, topic, body)
-end
-
 describe "ActsAsMessageable" do
 
   before(:all) do
@@ -15,8 +11,8 @@ describe "ActsAsMessageable" do
   end
 
   describe "prepare for specs" do
-    it "should be two users in database" do
-      User.count.should == 3
+    it "should be 4 users in database" do
+      User.count.should == 4
     end
   end
 

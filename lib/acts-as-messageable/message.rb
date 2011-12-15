@@ -21,8 +21,8 @@ module ActsAsMessageable
                     :created_at,
                     :updated_at
 
-    attr_accessor :removed
-    cattr_accessor :required
+    attr_accessor   :removed
+    cattr_accessor  :required
 
 
     # Sample documentation for scope
