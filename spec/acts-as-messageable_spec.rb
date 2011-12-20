@@ -139,8 +139,8 @@ describe "ActsAsMessageable" do
       @reply_message =  @alice.reply_to(@message, "Re: Topic", "Body")
 
       @reply_message.conversation.size.should == 2
-      @reply_message.conversation.first.topic.should == "Topic"
-      @reply_message.conversation.last.topic.should == "Re: Topic"
+      @reply_message.conversation.last.topic.should == "Topic"
+      @reply_message.conversation.first.topic.should == "Re: Topic"
     end
 
     it "bob send message to alice, alice answer, and bob answer for alice answer" do
@@ -152,8 +152,8 @@ describe "ActsAsMessageable" do
         m.conversation.size.should == 3
       end
 
-      @message.conversation.last.should == @reply_reply_message
-      @reply_reply_message.conversation.last.should == @reply_reply_message
+      @message.conversation.first.should == @reply_reply_message
+      @reply_reply_message.conversation.first.should == @reply_reply_message
     end
   end
 
@@ -168,7 +168,7 @@ describe "ActsAsMessageable" do
   it "messages should return in right order :created_at" do
     @message = send_message
     @message = send_message(@bob, @alice, "Example", "Example Body")
-    @alice.messages.first.body.should == "Body"
+    @alice.messages.last.body.should == "Body"
   end
 
   it "received_messages should return ActiveRecord::Relation" do
