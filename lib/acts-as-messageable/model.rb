@@ -36,8 +36,7 @@ module ActsAsMessageable
     end
 
     def resolve_active_record_ancestor
-      ancestors_classes = (ancestors - included_modules)
-      ancestors_classes[ancestors_classes.index(ActiveRecord::Base)-1]
+      self.reflect_on_association(:received_messages_relation).active_record
     end
 
     end
