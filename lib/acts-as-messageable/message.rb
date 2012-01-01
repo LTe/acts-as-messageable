@@ -27,9 +27,9 @@ module ActsAsMessageable
 
     # Sample documentation for scope
     default_scope order("created_at desc")
-    scope :are_from,          lambda { |*args| where("sent_messageable_id = :sender AND sent_messageable_type = :sender_type", :sender => args.first, :sender_type => args.first.class.to_s) }
-    scope :are_to,            lambda { |*args| where("received_messageable_id = :receiver AND received_messageable_type = :receiver_type", :receiver => args.first, :receiver_type => args.first.class.to_s) }
-    scope :with_id,           lambda { |*args| where("id = :id", :id => args.first) }
+    scope :are_from,          lambda { |*args| where(:sent_messageable_id => args.first, :sent_messageable_type => args.first.class.name) }
+    scope :are_to,            lambda { |*args| where(:received_messageable_id => args.first, :received_messageable_type => args.first.class.name) }
+    scope :with_id,           lambda { |*args| where(:id => args.first) }
 
     scope :connected_with,    lambda { |*args|  where("(sent_messageable_type = :sent_type and
                                                 sent_messageable_id = :sent_id and
@@ -46,10 +46,9 @@ module ActsAsMessageable
                                                 :r_perm_delete  => false,
                                                 :s_perm_delete  => false)
                                      }
-    scope :readed,            lambda { where("opened = :opened", :opened => true)  }
-    scope :unread,            lambda { where("opened = :opened", :opened => false) }
-    scope :deleted,           lambda { where("recipient_delete = :r_delete AND sender_delete = :s_delete",
-                                              :r_delete => true, :s_delete => true)}
+    scope :readed,            lambda { where(:opened => true)  }
+    scope :unread,            lambda { where(:opened => false) }
+    scope :deleted,           lambda { where(:recipient_delete => true, :sender_delete => true) }
 
     def open?
       self.opened?
