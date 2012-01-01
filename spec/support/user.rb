@@ -4,4 +4,3 @@ end
 
 class Men < User
 end
-

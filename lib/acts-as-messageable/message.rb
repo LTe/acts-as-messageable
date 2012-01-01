@@ -37,9 +37,9 @@ module ActsAsMessageable
                                                 (received_messageable_type = :received_type and
                                                 received_messageable_id = :received_id and
                                                 recipient_delete = :r_delete and recipient_permanent_delete = :r_perm_delete)",
-                                                :sent_type      => args.first.class.name,
+                                                :sent_type      => args.first.class.resolve_active_record_ancestor.to_s,
                                                 :sent_id        => args.first.id,
-                                                :received_type  => args.first.class.name,
+                                                :received_type  => args.first.class.resolve_active_record_ancestor.to_s,
                                                 :received_id    => args.first.id,
                                                 :r_delete       => args.last,
                                                 :s_delete       => args.last,

@@ -35,6 +35,11 @@ module ActsAsMessageable
         include ActsAsMessageable::Model::InstanceMethods
     end
 
+		def resolve_active_record_ancestor
+			ancestors_classes = (ancestors - included_modules)
+			ancestors_classes[ancestors_classes.index(ActiveRecord::Base)-1]
+		end
+
     end
 
     module InstanceMethods
