@@ -6,7 +6,7 @@ gem "ancestry", "~> 1.2.4"
 gem "railties", ">= 3.0.0"
 
 group :development do
-  gem "rspec", "~> 2.6.0"
+  gem "rspec", "~> 2.7.0"
   gem "jeweler", "~> 1.6.0"
   gem "sqlite3-ruby"
 end
