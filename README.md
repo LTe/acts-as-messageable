@@ -85,13 +85,13 @@ class User < ActiveRecord::Base
 end
 ```
 
-## Normal
+## With hash
 
 ```ruby
 @alice.send_message(@bob, { :body => "Hash body" })
 ```
 
-## With hash
+## Normal
 
 ```ruby
 @alice.send_message(@bob, "body")
@@ -123,6 +123,12 @@ Conversation
 ```ruby
 @message = @alice.send_message(@bob, "Hello bob!", "How are you?")
 @message.reply("Re: Hello bob!", "I'm fine")
+```
+
+**Or with hash**
+
+```ruby
+@message.reply(:topic => "Re: Hello bob!", :body => "I'm fine")
 ```
 
 **Or in old style**
