@@ -11,12 +11,14 @@ Usage
 
 To use it, add it to your Gemfile:
 
-**Rails 3**
+### Rails 3
+
 ```ruby
 gem 'acts-as-messageable'
 ```
 
-**Rails 2**
+### Rails 2
+
 Use this [fork](http://github.com/openfirmware/acts-as-messageable)
 Thanks for [@openfirmware](http://github.com/openfirmware)
 
