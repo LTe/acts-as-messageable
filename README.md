@@ -4,7 +4,7 @@ ActsAsMessageable
 
 The Acts As Messageable allows communication between the models.
 
-[![Build Status](https://secure.travis-ci.org/LTe/acts-as-messageable.png)](http://github.com/LTe/acts-as-messageable)
+[![Build Status](https://secure.travis-ci.org/LTe/acts-as-messageable.png)](http://travis-ci.org/LTe/acts-as-messageable) [![Dependency Status](https://gemnasium.com/LTe/acts-as-messageable.png)](https://gemnasium.com/LTe/acts-as-messageable)
 
 Usage
 =====
