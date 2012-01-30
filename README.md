@@ -1,4 +1,3 @@
-
 ActsAsMessageable
 =================
 
@@ -21,6 +20,11 @@ gem 'acts-as-messageable'
 
 Use this [fork](http://github.com/openfirmware/acts-as-messageable)
 Thanks for [@openfirmware](http://github.com/openfirmware)
+
+```ruby
+gem 'acts-as-messageable', :git => 'git://github.com/openfirmware/acts-as-messageable.git', 
+                           :branch => 'rails2.3.11_compatible'
+```
 
 Post instalation
 ================
