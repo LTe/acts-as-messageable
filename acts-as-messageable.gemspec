@@ -5,17 +5,16 @@
 
 Gem::Specification.new do |s|
   s.name = "acts-as-messageable"
-  s.version = "0.4.4"
+  s.version = "0.4.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Piotr Nielacny"]
-  s.date = "2012-01-23"
+  s.date = "2012-02-08"
   s.email = "piotr.nielacny@gmail.com"
   s.extra_rdoc_files = [
     "README.md"
   ]
   s.files = [
-    ".README.md.swp",
     ".rspec",
     ".travis.yml",
     "Gemfile",
@@ -24,6 +23,9 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "acts-as-messageable.gemspec",
+    "gemfiles/Gemfile-3.0",
+    "gemfiles/Gemfile-3.1",
+    "gemfiles/Gemfile-3.2",
     "lib/acts-as-messageable.rb",
     "lib/acts-as-messageable/acts-as-messageable.rb",
     "lib/acts-as-messageable/message.rb",
@@ -44,7 +46,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "http://github.com/LTe/acts-as-messageable"
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.15"
   s.summary = "Make user messageable!;-)"
 
   if s.respond_to? :specification_version then
