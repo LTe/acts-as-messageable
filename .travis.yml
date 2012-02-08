@@ -3,3 +3,8 @@ rvm:
   - 1.9.2
   - rbx
   - ree
+gemfile:
+  - Gemfile
+  - gemfiles/Gemfile
+  - gemfiles/Gemfile-3.1
+  - gemfiles/Gemfile-3.2
