@@ -5,6 +5,6 @@ rvm:
   - ree
 gemfile:
   - Gemfile
-  - gemfiles/Gemfile
+  - gemfiles/Gemfile-3.0
   - gemfiles/Gemfile-3.1
   - gemfiles/Gemfile-3.2
