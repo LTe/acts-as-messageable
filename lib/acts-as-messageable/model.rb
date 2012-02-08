@@ -21,7 +21,13 @@ module ActsAsMessageable
                   :dependent => :nullify
 
         self.messages_class_name = (options[:class_name] || "ActsAsMessageable::Message").constantize
-        self.messages_class_name.set_table_name(options[:table_name] || "messages")
+
+        if self.messages_class_name.respond_to?(:table_name=)
+          self.messages_class_name.table_name = (options[:table_name] || "messages")
+        else
+          self.messages_class_name.set_table_name(options[:table_name] || "messages")
+          ActiveSupport::Deprecation.warn("Calling set_table_name is deprecated. Please use `self.table_name = 'the_name'` instead.")
+        end
 
         if options[:required].is_a? Symbol
           self.messages_class_name.required = [options[:required]]
