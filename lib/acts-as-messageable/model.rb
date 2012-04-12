@@ -29,15 +29,9 @@ module ActsAsMessageable
           ActiveSupport::Deprecation.warn("Calling set_table_name is deprecated. Please use `self.table_name = 'the_name'` instead.")
         end
 
-        if options[:required].is_a? Symbol
-          self.messages_class_name.required = [options[:required]]
-        elsif options[:required].is_a? Array
-          self.messages_class_name.required = options[:required]
-        else
-          self.messages_class_name.required = [:topic, :body]
-        end
-
+        self.messages_class_name.required = Array.wrap(options[:required] || [:topic, :body])
         self.messages_class_name.validates_presence_of self.messages_class_name.required
+
         include ActsAsMessageable::Model::InstanceMethods
     end
 
