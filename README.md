@@ -246,4 +246,18 @@ Message has been deleted **permanently**
 @alice.delete_message(@message) # @alice delete @message
 ```
 
+Restore message
+===============
+
+```ruby
+@alice.deleted_messages.process do |m|
+  m.restore # @alice restore 'm' message from trash
+end
+
+## Restore messagr without context
+
+```ruby
+@alice.restore_message(@message) # @alice restore message from trash
+```
+
 Copyright © 2011 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license

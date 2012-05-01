@@ -109,13 +109,13 @@ module ActsAsMessageable
       def delete_message(message)
         current_user = self
 
-        if message.received_messageable == current_user
+        if message.to == current_user
           unless message.recipient_delete
             message.update_attributes!(:recipient_delete => true)
           else
             message.update_attributes!(:recipient_permanent_delete => true)
           end
-        elsif message.sent_messageable == current_user
+        elsif message.from == current_user
           unless message.sender_delete
             message.update_attributes!(:sender_delete => true)
           else
@@ -124,7 +124,15 @@ module ActsAsMessageable
         end
       end
 
-    end
+      def restore_message(message)
+        current_user = self
 
+        if message.to == current_user
+          message.update_attributes!(:recipient_delete => false)
+        elsif message.from == current_user
+          message.update_attributes!(:sender_delete => false)
+        end
+      end
+    end
   end
 end

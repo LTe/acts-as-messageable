@@ -114,6 +114,25 @@ describe "ActsAsMessageable" do
     end
   end
 
+  describe "restore message" do
+    it "alice should restore message" do
+      @message = send_message
+
+      @alice.received_messages.process { |m| m.delete }
+      @alice.restore_message(@message.reload)
+      @alice.received_messages.count.should == 1
+    end
+
+    it "should works with relation" do
+      @message = send_message
+
+      @alice.received_messages.process { |m| m.delete }
+      @alice.received_messages.count.should == 0
+      @alice.deleted_messages.process { |m| m.restore }
+      @alice.received_messages.count.should == 1
+    end
+  end
+
   describe "read/unread feature" do
     it "alice should have one unread message from bob" do
       send_message

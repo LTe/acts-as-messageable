@@ -21,7 +21,7 @@ module ActsAsMessageable
                     :created_at,
                     :updated_at
 
-    attr_accessor   :removed
+    attr_accessor   :removed, :restored
     cattr_accessor  :required
 
 
@@ -88,6 +88,10 @@ module ActsAsMessageable
 
     def delete
       self.removed = true
+    end
+
+    def restore
+      self.restored = true
     end
     
     def reply(*args)
