@@ -253,8 +253,9 @@ Restore message
 @alice.deleted_messages.process do |m|
   m.restore # @alice restore 'm' message from trash
 end
+```
 
-## Restore messagr without context
+## Restore message without context
 
 ```ruby
 @alice.restore_message(@message) # @alice restore message from trash
