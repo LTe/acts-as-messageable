@@ -57,26 +57,17 @@ module ActsAsMessageable
     def open
       update_attributes!(:opened => true)
     end
-
-    def mark_as_read
-      open
-    end
+    alias :mark_as_read :open
+    alias :read         :open
 
     def close
       update_attributes!(:opened => false)
     end
+    alias :mark_as_unread :close
+    alias :unread         :close
 
-    def mark_as_unread
-      close
-    end
-
-    def from
-      sent_messageable
-    end
-
-    def to
-      received_messageable
-    end
+    alias :from :sent_messageable
+    alias :to   :received_messageable
 
     def participant?(user)
       (to == user) || (from == user)
