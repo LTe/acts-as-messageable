@@ -29,7 +29,10 @@ module ActsAsMessageable
     default_scope order("created_at desc")
     scope :are_from,          lambda { |*args| where(:sent_messageable_id => args.first, :sent_messageable_type => args.first.class.name) }
     scope :are_to,            lambda { |*args| where(:received_messageable_id => args.first, :received_messageable_type => args.first.class.name) }
-    scope :with_id,           lambda { |*args| where(:id => args.first) }
+    scope :with_id,           lambda { |*args|
+      ActiveSupport::Deprecation.warn("Calling with_id is deprecated. Please use `find` instead.")
+      where(:id => args.first)
+    }
 
     scope :connected_with,    lambda { |*args|  where("(sent_messageable_type = :sent_type and
                                                 sent_messageable_id = :sent_id and
