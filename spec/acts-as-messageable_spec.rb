@@ -139,6 +139,12 @@ describe "ActsAsMessageable" do
       @alice.messages.are_from(@bob).unread.count.should == 1
       @alice.messages.are_from(@bob).readed.count.should == 0
     end
+
+    it "alice should able to read message from bob" do
+      send_message
+      @alice.messages.are_from(@bob).first.read
+      @alice.messages.are_from(@bob).unread.count.should == 0
+    end
   end
 
   it "should be in database message with id ..." do
