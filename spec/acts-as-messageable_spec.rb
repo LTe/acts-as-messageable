@@ -152,6 +152,12 @@ describe "ActsAsMessageable" do
     @bob.messages.with_id(message_id).count.should == 1
   end
 
+  it "finds proper message" do
+    message     = send_message
+    message_id  = message.id
+    @bob.messages.find(message_id) == message
+  end
+
   it "message should have proper topic" do
     send_message
     @bob.messages.count.should == 1
