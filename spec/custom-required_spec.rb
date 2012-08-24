@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require 'spec_helper'
 
 describe "custom require" do
   before(:each) do
@@ -47,5 +47,4 @@ describe "custom require" do
       @alice.received_messages.first.body.should == "Hi Alice!"
     end
   end
-
 end
