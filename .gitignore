@@ -6,3 +6,4 @@
 spec/database.yml
 ./tags
 Gemfile.lock
+tags
