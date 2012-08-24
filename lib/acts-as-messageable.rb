@@ -4,4 +4,4 @@ module ActsAsMessageable
   autoload :Relation, 'acts-as-messageable/relation'
 end
 
-require 'acts-as-messageable/acts-as-messageable'
+require 'acts-as-messageable/railtie'
