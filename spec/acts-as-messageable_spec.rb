@@ -131,13 +131,19 @@ describe "ActsAsMessageable" do
 
   describe "read/unread feature" do
     it "alice should have one unread message from bob" do
-      @alice.messages.are_from(@bob).unread.count.should == 1
+      @alice.messages.are_from(@bob).unreaded.count.should == 1
       @alice.messages.are_from(@bob).readed.count.should == 0
     end
 
     it "alice should able to read message from bob" do
       @alice.messages.are_from(@bob).first.read
-      @alice.messages.are_from(@bob).unread.count.should == 0
+      @alice.messages.are_from(@bob).unreaded.count.should == 0
+    end
+
+    it "alice should able to unread message from bob" do
+      @alice.messages.are_from(@bob).first.read
+      @alice.messages.are_from(@bob).first.unread
+      @alice.messages.are_from(@bob).unreaded.count.should == 1
     end
   end
 

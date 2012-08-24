@@ -50,7 +50,7 @@ module ActsAsMessageable
                                                 :s_perm_delete  => false)
                                      }
     scope :readed,            lambda { where(:opened => true)  }
-    scope :unread,            lambda { where(:opened => false) }
+    scope :unreaded,          lambda { where(:opened => false) }
     scope :deleted,           lambda { where(:recipient_delete => true, :sender_delete => true) }
 
     def open?
