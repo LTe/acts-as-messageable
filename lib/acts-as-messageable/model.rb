@@ -10,15 +10,18 @@ module ActsAsMessageable
 
       # Method make ActiveRecord::Base object messageable
       # @param [Symbol] :table_name - table name for messages
+      # @param [String] :class_name - message class name
+      # @param [Array, Symbol] :required - required fields in message
+      # @param [Symbol] :dependent - dependent option from ActiveRecord has_many method
       def acts_as_messageable(options = {})
         has_many  :received_messages_relation, 
                   :as => :received_messageable, 
                   :class_name => options[:class_name] || "ActsAsMessageable::Message",
-                  :dependent => :nullify
+                  :dependent => options[:dependent] || :nullify
         has_many  :sent_messages_relation, 
                   :as => :sent_messageable,
                   :class_name => options[:class_name] || "ActsAsMessageable::Message",
-                  :dependent => :nullify
+                  :dependent => options[:dependent] || :nullify
 
         self.messages_class_name = (options[:class_name] || "ActsAsMessageable::Message").constantize
 
@@ -35,6 +38,8 @@ module ActsAsMessageable
         include ActsAsMessageable::Model::InstanceMethods
     end
 
+    # Method recognize real object class
+    # @return [ActiveRecord::Base] class or relation object
     def resolve_active_record_ancestor
       self.reflect_on_association(:received_messages_relation).active_record
     end
@@ -42,7 +47,6 @@ module ActsAsMessageable
     end
 
     module InstanceMethods
-      # Get all messages connected with user
       # @return [ActiveRecord::Relation] all messages connected with user
       def messages(trash = false)
         result = self.class.messages_class_name.connected_with(self, trash)
@@ -51,6 +55,7 @@ module ActsAsMessageable
         result
       end
 
+      # @return [ActiveRecord::Relation] returns all messages from inbox
       def received_messages
         result = received_messages_relation.scoped.where(:recipient_delete => false)
         result.relation_context = self
@@ -58,6 +63,7 @@ module ActsAsMessageable
         result
       end
 
+      # @return [ActiveRecord::Relation] returns all messages from outbox
       def sent_messages
         result = sent_messages_relation.scoped.where(:sender_delete => false)
         result.relation_context = self
@@ -65,6 +71,7 @@ module ActsAsMessageable
         result
       end
 
+      # @return [ActiveRecord::Relation] returns all messages from trash
       def deleted_messages
         messages true
       end
@@ -94,6 +101,12 @@ module ActsAsMessageable
         message
       end
 
+      # Reply to given message
+      # @param [ActsAsMessageable::Message] message
+      # @param [String] topic
+      # @param [String] body
+      #
+      # @return [ActsAsMessageable::Message] a message that is a response to a given message
       def reply_to(message, *args)
         current_user = self
 
@@ -106,6 +119,7 @@ module ActsAsMessageable
         end
       end
 
+      # Mark message as deleted
       def delete_message(message)
         current_user = self
 
@@ -124,6 +138,7 @@ module ActsAsMessageable
         end
       end
 
+      # Mark message as restored
       def restore_message(message)
         current_user = self
 
