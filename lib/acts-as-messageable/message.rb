@@ -87,7 +87,7 @@ module ActsAsMessageable
     def restore
       self.restored = true
     end
-    
+
     def reply(*args)
       to.reply_to(self, *args)
     end
