@@ -123,30 +123,32 @@ module ActsAsMessageable
       def delete_message(message)
         current_user = self
 
-        if message.to == current_user
-          unless message.recipient_delete
-            message.update_attributes!(:recipient_delete => true)
+        case current_user
+          when message.to
+            attribute = message.recipient_delete ? :recipient_permanent_delete : :recipient_delete
+          when message.from
+            attribute = message.sender_delete ? :sender_permanent_delete : :sender_delete
           else
-            message.update_attributes!(:recipient_permanent_delete => true)
-          end
-        elsif message.from == current_user
-          unless message.sender_delete
-            message.update_attributes!(:sender_delete => true)
-          else
-            message.update_attributes!(:sender_permanent_delete => true)
-          end
+            raise "#{current_user} can't delete this message"
         end
+
+        message.update_attributes!(attribute => true)
       end
 
       # Mark message as restored
       def restore_message(message)
         current_user = self
 
-        if message.to == current_user
-          message.update_attributes!(:recipient_delete => false)
-        elsif message.from == current_user
-          message.update_attributes!(:sender_delete => false)
+        case current_user
+          when message.to
+            attribute = :recipient_delete
+          when message.from
+            attribute = :sender_delete
+          else
+            raise "#{current_user} can't delete this message"
         end
+
+        message.update_attributes!(attribute => false)
       end
     end
   end

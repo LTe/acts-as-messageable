@@ -73,6 +73,7 @@ describe "ActsAsMessageable" do
   end
 
   describe "delete messages" do
+
     it "bob should have one deleted message from alice" do
       @bob.messages.process do |m|
         m.delete
@@ -112,6 +113,10 @@ describe "ActsAsMessageable" do
 
       @bob.sent_messages.count.should == 1
     end
+
+    it "pat should not able to delete message" do
+      lambda { @pat.delete_message(@message) }.should raise_error
+    end
   end
 
   describe "restore message" do
@@ -126,6 +131,10 @@ describe "ActsAsMessageable" do
       @alice.received_messages.count.should == 0
       @alice.deleted_messages.process { |m| m.restore }
       @alice.received_messages.count.should == 1
+    end
+
+    it "pat should not able to restore message" do
+      lambda { @pat.restore_message(@message) }.should raise_error
     end
   end
 
