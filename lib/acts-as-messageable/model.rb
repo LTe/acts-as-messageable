@@ -83,9 +83,10 @@ module ActsAsMessageable
       #
       # @return [ActsAsMessageable::Message] the message object
       def send_message(to, *args)
+        message_attributes = {}
+
         case args.first
           when String
-            message_attributes = {}
             self.class.messages_class_name.required.each_with_index do |attribute, index|
               message_attributes[attribute] = args[index]
             end
