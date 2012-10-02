@@ -95,9 +95,10 @@ module ActsAsMessageable
         end
 
         message = self.class.messages_class_name.create message_attributes
+        message.received_messageable = to
+        message.sent_messageable = self
 
-        self.sent_messages_relation << message
-        to.received_messages_relation << message
+        message.save
 
         message
       end
