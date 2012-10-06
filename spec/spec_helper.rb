@@ -1,7 +1,9 @@
+ENV["RAILS_ENV"] = "test"
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rspec'
 require 'acts-as-messageable'
+require 'dummy/config/environment'
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
