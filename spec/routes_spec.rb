@@ -1,13 +1,26 @@
 require 'spec_helper'
 
 describe "messages routes" do
-
   let(:default_controller) { "acts_as_messageable/messages" }
 
   it "GET /messages" do
     expect(:get => "/messages").to route_to(
       :controller => default_controller,
       :action => "index"
+    )
+  end
+
+  it "GET /messages/outbox" do
+    expect(:get => "/messages/outbox").to route_to(
+      :controller => default_controller,
+      :action => "outbox"
+    )
+  end
+
+  it "GET /messages/trash" do
+    expect(:get => "/messages/trash").to route_to(
+      :controller => default_controller,
+      :action => "trash"
     )
   end
 

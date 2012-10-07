@@ -13,6 +13,10 @@ module ActionDispatch::Routing
           get   :reply
           post  :reply
         end
+        collection do
+          get :outbox
+          get :trash
+        end
       end
     end
   end
