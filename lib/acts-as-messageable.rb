@@ -1,7 +1,8 @@
 module ActsAsMessageable
-  autoload :Model,    'acts-as-messageable/model'
-  autoload :Message,  'acts-as-messageable/message'
-  autoload :Relation, 'acts-as-messageable/relation'
+  autoload :Model,      'acts-as-messageable/model'
+  autoload :Message,    'acts-as-messageable/message'
+  autoload :Relation,   'acts-as-messageable/relation'
 end
 
 require 'acts-as-messageable/railtie'
+require 'acts-as-messageable/rails'
