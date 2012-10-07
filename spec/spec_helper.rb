@@ -1,9 +1,10 @@
 ENV["RAILS_ENV"] = "test"
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
-require 'rspec'
 require 'acts-as-messageable'
 require 'dummy/config/environment'
+require 'rspec'
+require 'rspec/rails'
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
@@ -28,6 +29,8 @@ RSpec.configure do |config|
   config.after(:each) do
     User.messages_class_name.destroy_all
   end
+
+  config.include(RSpec::Rails::RoutingExampleGroup)
 end
 
 def create_database
