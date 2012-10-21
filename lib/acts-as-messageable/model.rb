@@ -14,25 +14,33 @@ module ActsAsMessageable
       # @param [Array, Symbol] :required - required fields in message
       # @param [Symbol] :dependent - dependent option from ActiveRecord has_many method
       def acts_as_messageable(options = {})
-        has_many  :received_messages_relation, 
-                  :as => :received_messageable, 
-                  :class_name => options[:class_name] || "ActsAsMessageable::Message",
-                  :dependent => options[:dependent] || :nullify
-        has_many  :sent_messages_relation, 
-                  :as => :sent_messageable,
-                  :class_name => options[:class_name] || "ActsAsMessageable::Message",
-                  :dependent => options[:dependent] || :nullify
+        default_options = {
+          :table_name => "messages",
+          :class_name => "ActsAsMessageable::Message",
+          :required => [:topic, :body],
+          :dependent => :nullify,
+        }
+        options = default_options.merge(options)
 
-        self.messages_class_name = (options[:class_name] || "ActsAsMessageable::Message").constantize
+        has_many  :received_messages_relation,
+                  :as => :received_messageable,
+                  :class_name => options[:class_name],
+                  :dependent => options[:dependent]
+        has_many  :sent_messages_relation,
+                  :as => :sent_messageable,
+                  :class_name => options[:class_name],
+                  :dependent => options[:dependent]
+
+        self.messages_class_name = options[:class_name].constantize
 
         if self.messages_class_name.respond_to?(:table_name=)
-          self.messages_class_name.table_name = (options[:table_name] || "messages")
+          self.messages_class_name.table_name = options[:table_name]
         else
-          self.messages_class_name.set_table_name(options[:table_name] || "messages")
+          self.messages_class_name.set_table_name(options[:table_name])
           ActiveSupport::Deprecation.warn("Calling set_table_name is deprecated. Please use `self.table_name = 'the_name'` instead.")
         end
 
-        self.messages_class_name.required = Array.wrap(options[:required] || [:topic, :body])
+        self.messages_class_name.required = Array.wrap(options[:required])
         self.messages_class_name.validates_presence_of self.messages_class_name.required
 
         include ActsAsMessageable::Model::InstanceMethods
