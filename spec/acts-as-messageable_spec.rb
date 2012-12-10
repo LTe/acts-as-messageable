@@ -192,6 +192,25 @@ describe "ActsAsMessageable" do
     end
   end
 
+  describe "conversations" do
+    before do
+      @reply_message = @message.reply("Re: Topic", "Body")
+      @reply_reply_message = @reply_message.reply("Re: Re: Topic", "Body")
+    end
+
+    it "bob send message to alice and alice reply" do
+      @bob.messages.conversations.should == [@reply_reply_message]
+      @reply_message.conversation.should == [@reply_reply_message, @reply_message, @message]
+    end
+
+    it "show conversations in proper order" do
+      @sec_message = @bob.send_message(@alice, "Hi", "Alice!")
+      @sec_reply = @sec_message.reply("Re: Hi", "Fine!")
+      @bob.received_messages.conversations.should == [@sec_reply, @reply_reply_message]
+      @sec_reply.conversation.should == [@sec_reply, @sec_message]
+    end
+  end
+
   describe "send messages with hash" do
     it "send message with hash" do
       @message = @bob.send_message(@alice, {:body => "Body", :topic => "Topic"})
