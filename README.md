@@ -125,6 +125,19 @@ end
 Conversation
 ============
 
+You can get conversation list from messages scope. For example:
+
+```ruby
+@message = @alice.send_message(@bob, "Hello bob!", "How are you?")
+@reply_message = @bob.reply_to(@message, "Re: Hello bob!", "I'm fine!")
+
+@alice.received_messages.conversations # => [@reply_message]
+```
+
+should receive list of latest messages in conversations (like in facebook).
+
+To create conversation just reply to a message.
+
 ```ruby
 @message = @alice.send_message(@bob, "Hello bob!", "How are you?")
 @message.reply("Re: Hello bob!", "I'm fine")
@@ -143,7 +156,7 @@ Conversation
 @reply_message = @bob.reply_to(@message, "Re: Hello bob!", "I'm fine!")
 ```
 
-## Get conversiation
+## Get conversation for a specific message
 
 ```ruby
 @message.conversation       #=> [@message, @reply_message]
