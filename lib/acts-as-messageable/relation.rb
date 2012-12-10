@@ -9,5 +9,9 @@ module ActsAsMessageable
         context.restore_message(message)  if message.restored
       end
     end
+
+    def conversations
+      map { |r| r.root.subtree.order("id desc").first }.uniq
+    end
   end
 end
