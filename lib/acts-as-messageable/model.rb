@@ -32,6 +32,7 @@ module ActsAsMessageable
                   :dependent => options[:dependent]
 
         self.messages_class_name = options[:class_name].constantize
+        self.messages_class_name.has_ancestry
 
         if self.messages_class_name.respond_to?(:table_name=)
           self.messages_class_name.table_name = options[:table_name]

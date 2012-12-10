@@ -2,8 +2,6 @@ require 'ancestry'
 
 module ActsAsMessageable
   class Message < ::ActiveRecord::Base
-    has_ancestry
-
     belongs_to :received_messageable, :polymorphic => true
     belongs_to :sent_messageable,     :polymorphic => true
 
