@@ -193,7 +193,7 @@ Search
 @alice.messages.are_to(@bob) # all message to @bob
 @alice.messages.with_id(@id_of_message) # message with id id_of_message
 @alice.messages.readed # all readed @alice  messages
-@alice.messages.unread # all unreaded @alice messages
+@alice.messages.unreaded # all unreaded @alice messages
 ```
 
 
