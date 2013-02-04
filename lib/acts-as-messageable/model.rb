@@ -106,7 +106,6 @@ module ActsAsMessageable
         message = self.class.messages_class_name.create message_attributes
         message.received_messageable = to
         message.sent_messageable = self
-
         message.save
 
         message
@@ -122,7 +121,7 @@ module ActsAsMessageable
         current_user = self
 
         if message.participant?(current_user)
-          reply_message = send_message(message.from, *args)
+          reply_message = send_message(message.real_receiver(current_user), *args)
           reply_message.parent = message
           reply_message.save
 

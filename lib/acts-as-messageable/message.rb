@@ -70,6 +70,10 @@ module ActsAsMessageable
     alias :from :sent_messageable
     alias :to   :received_messageable
 
+    def real_receiver(user)
+      user == from ? to : from
+    end
+
     def participant?(user)
       (to == user) || (from == user)
     end

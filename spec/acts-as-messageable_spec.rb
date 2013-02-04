@@ -70,6 +70,12 @@ describe "ActsAsMessageable" do
       @bob.messages.are_from(@alice).count.should == 1
       @alice.sent_messages.are_to(@bob).count.should == 1
     end
+
+    it "alice try to add something to conversation" do
+      @reply_message = @bob.reply_to(@message, "Oh, I Forget", "1+1=2")
+      @reply_message.from.should  == @message.from
+      @reply_message.to.should    == @message.to
+    end
   end
 
   describe "delete messages" do
