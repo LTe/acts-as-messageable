@@ -1,6 +1,10 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rspec'
+require 'active_record/railtie'
+ActiveRecord::Base.logger = Logger.new(STDERR)
+ActiveRecord::Base.logger.level = 3
+
 require 'acts-as-messageable'
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
