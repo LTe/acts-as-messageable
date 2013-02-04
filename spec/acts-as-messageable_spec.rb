@@ -71,10 +71,17 @@ describe "ActsAsMessageable" do
       @alice.sent_messages.are_to(@bob).count.should == 1
     end
 
-    it "alice try to add something to conversation" do
+    it "bob try to add something to conversation" do
       @reply_message = @bob.reply_to(@message, "Oh, I Forget", "1+1=2")
       @reply_message.from.should  == @message.from
       @reply_message.to.should    == @message.to
+    end
+
+    it "bob try to add something to conversation and should receive proper order" do
+      @reply_message = @bob.reply_to(@message, "Oh, I Forget", "1+1=2")
+      @sec_message   = @alice.reply_to(@message, "Yeah, right", "1+1=3!")
+
+      @message.conversation.should == [@sec_message, @reply_message, @message]
     end
   end
 
