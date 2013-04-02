@@ -122,6 +122,35 @@ end
 @alice.send_message(@bob, "topic", "body")
 ```
 
+Custom class
+============
+
+You can use your own class that will represent the message object. First of all create custom class
+
+```ruby
+class CustomMessage < ActsAsMessageable::Message
+  def capitalize_title
+    title.capitalize
+  end
+end
+```
+
+After that you can sepcify custom class in options.
+
+```ruby
+class User
+  acts_as_messageable :class_name => "CustomClass"
+end
+```
+
+From now on, your message has custom class.
+
+```ruby
+@message = @alice.send_message(@bob, "hi!")
+@message # => #<CustomClass:0x000000024b6278>
+@message.capitalize_title # => "Hi!"
+```
+
 Conversation
 ============
 
