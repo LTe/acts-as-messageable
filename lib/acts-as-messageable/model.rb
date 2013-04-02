@@ -6,7 +6,7 @@ module ActsAsMessageable
     end
 
     module ClassMethods
-      mattr_accessor :messages_class_name
+      mattr_accessor :messages_class_name, :group_messages
 
       # Method make ActiveRecord::Base object messageable
       # @param [Symbol] :table_name - table name for messages
@@ -19,6 +19,7 @@ module ActsAsMessageable
           :class_name => "ActsAsMessageable::Message",
           :required => [:topic, :body],
           :dependent => :nullify,
+          :group_messages => false,
         }
         options = default_options.merge(options)
 
@@ -43,6 +44,7 @@ module ActsAsMessageable
 
         self.messages_class_name.required = Array.wrap(options[:required])
         self.messages_class_name.validates_presence_of self.messages_class_name.required
+        self.group_messages = options[:group_messages]
 
         include ActsAsMessageable::Model::InstanceMethods
     end

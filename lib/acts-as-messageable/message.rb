@@ -73,7 +73,7 @@ module ActsAsMessageable
     end
 
     def participant?(user)
-      (to == user) || (from == user)
+      user.class.group_messages || (to == user) || (from == user)
     end
 
     def conversation
