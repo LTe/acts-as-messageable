@@ -111,6 +111,17 @@ module ActsAsMessageable
         message
       end
 
+      # Method send message to another user
+      # and raise exception in case of validation errors
+      # @param [ActiveRecord::Base] to
+      # @param [String] topic
+      # @param [String] body
+      #
+      # @return [ActsAsMessageable::Message] the message object
+      def send_message!(to, *args)
+        send_message(to, *args).save!
+      end
+
       # Reply to given message
       # @param [ActsAsMessageable::Message] message
       # @param [String] topic

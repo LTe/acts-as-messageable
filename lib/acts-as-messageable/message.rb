@@ -15,9 +15,7 @@ module ActsAsMessageable
                     :recipient_delete,
                     :sender_delete,
                     :recipient_permanent_delete,
-                    :sender_permanent_delete,
-                    :created_at,
-                    :updated_at
+                    :sender_permanent_delete
 
     attr_accessor   :removed, :restored
     cattr_accessor  :required

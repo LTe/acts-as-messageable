@@ -29,6 +29,19 @@ describe "ActsAsMessageable" do
     end
   end
 
+  describe "send messages with bang" do
+    it "should raise exception" do
+      expect {
+        @alice.send_message!(@bob, :body => "body")
+      }.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
+    it "should return message object" do
+      @alice.send_message!(@bob, :body => "body", :topic => "topic").should 
+        be_kind_of ActsAsMessageable::Message
+    end
+  end
+
   describe "inheritance models" do
     it "men send message to alice" do
       send_message(@men, @alice)
