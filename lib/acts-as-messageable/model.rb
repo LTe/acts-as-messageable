@@ -155,7 +155,7 @@ module ActsAsMessageable
           when message.from
             attribute = :sender_delete
           else
-            raise "#{current_user} can't delete this message"
+            raise "#{current_user} can't restore this message"
         end
 
         message.update_attributes!(attribute => false)
