@@ -139,7 +139,7 @@ After that you can sepcify custom class in options.
 
 ```ruby
 class User
-  acts_as_messageable :class_name => "CustomClass"
+  acts_as_messageable :class_name => "CustomMessage"
 end
 ```
 
@@ -147,7 +147,7 @@ From now on, your message has custom class.
 
 ```ruby
 @message = @alice.send_message(@bob, "hi!")
-@message # => #<CustomClass:0x000000024b6278>
+@message # => #<CustomMessage:0x000000024b6278>
 @message.capitalize_title # => "Hi!"
 ```
 
