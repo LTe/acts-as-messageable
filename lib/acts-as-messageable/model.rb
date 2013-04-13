@@ -134,6 +134,7 @@ module ActsAsMessageable
         current_user = self
 
         if message.participant?(current_user)
+          message.open
           reply_message = send_message(message.real_receiver(current_user), *args)
           reply_message.parent = message
           reply_message.save
