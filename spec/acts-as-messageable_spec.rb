@@ -187,6 +187,12 @@ describe "ActsAsMessageable" do
       @alice.messages.are_from(@bob).first.unread
       @alice.messages.are_from(@bob).unreaded.count.should == 1
     end
+
+    it "alice should able to get datetime when he read bob message" do
+      @alice.messages.are_from(@bob).first.read
+      read_datetime = @alice.messages.are_from(@bob).first.updated_at
+      @alice.messages.read_since(@bob).should == read_datetime
+    end
   end
 
   it "should be in database message with id ..." do
