@@ -34,7 +34,7 @@ module ActsAsMessageable
     scope :readed,            lambda { where(:opened => true)  }
     scope :unreaded,          lambda { where(:opened => false) }
     scope :deleted,           lambda { where(:recipient_delete => true, :sender_delete => true) }
-    scope :read_since,        readed.order("updated_at asc").last
+    scope :read_since,        lambda { readed.reorder("updated_at asc").last }
 
     def open?
       self.opened?
