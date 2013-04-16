@@ -50,7 +50,7 @@ module ActsAsMessageable
     scope :deleted,           lambda { where(:recipient_delete => true, :sender_delete => true) }
     
     def self.read_since(user)
-       readed.reorder("updated_at asc").last.try("updated_at asc")
+       are_from(user).readed.reorder("updated_at asc").last.try("updated_at")
     end
 
     def open?
