@@ -332,4 +332,13 @@ end
 @message.people # => [@alice, @bob, @sukhi]
 ```
 
+Search
+======
+
+## Search text from messages
+
+```ruby
+@alice.messages.search("Search me")  @alice seach text "Search me" from all messages
+```
+
 Copyright © 2011-2012 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license
