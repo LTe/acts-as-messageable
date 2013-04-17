@@ -198,10 +198,10 @@ Search
 
 You can search text from messages and get the records where match exist. For example:
 
-## Search text from messages
+### Search text from messages
 
 ```ruby
-@alice.messages.search("Search me")  @alice seach text "Search me" from all messages
+records = @alice.messages.search("Search me")  @alice seach text "Search me" from all messages
 ```
 
 ### Inbox
