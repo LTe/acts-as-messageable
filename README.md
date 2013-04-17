@@ -195,6 +195,14 @@ To create conversation just reply to a message.
 Search
 ======
 
+You can search text from messages and get the records where match exist. For example:
+
+## Search text from messages
+
+```ruby
+@alice.messages.search("Search me")  @alice seach text "Search me" from all messages
+```
+
 ### Inbox
 ```ruby
 @alice.received_messages
@@ -303,10 +311,5 @@ end
 ```ruby
 @alice.restore_message(@message) # @alice restore message from trash
 ```
-
-## Search text from messages
-
-```ruby
-@alice.messages.search("Search me")  @alice seach text "Search me" from all messages
 
 Copyright © 2011 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license
