@@ -248,7 +248,22 @@ describe "ActsAsMessageable" do
       @bob.received_messages.conversations.should == [@sec_reply, @reply_reply_message]
       @sec_reply.conversation.should == [@sec_reply, @sec_message]
     end
+
   end
+
+  describe "search text from messages" do
+    
+    before do
+      @reply_message = @message.reply("Re: Topic", "Body : I am fine")
+      @reply_reply_message = @reply_message.reply("Re: Re: Topic", "Fine too")
+    end
+
+    it "bob should be able to search text from messages" do
+      recordset = @bob.messages.search("I am fine")
+      recordset.count.should == 1
+      recordset.should_not be_nil    
+    end
+  end  
 
   describe "send messages with hash" do
     it "send message with hash" do
