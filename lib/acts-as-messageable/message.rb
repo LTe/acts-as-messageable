@@ -91,5 +91,9 @@ module ActsAsMessageable
     def reply(*args)
       to.reply_to(self, *args)
     end
+
+    def people
+      conversation.map{|x| x.from}.uniq!
+    end    
   end
 end
