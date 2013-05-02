@@ -304,4 +304,25 @@ end
 @alice.restore_message(@message) # @alice restore message from trash
 ```
 
+Group message
+=============
+
+## How to join other users's conversation
+
+```ruby
+@message =  @alice.send_message(@bob, :topic => "Helou bob!", :body => "What's up?")
+@reply_message = @sukhi.reply_to(@message, "Hi there!", "I would like to join to this conversation!")
+@sec_reply_message = @bob.reply_to(@message, "Hi!", "Fine!")
+@third_reply_message = @alice.reply_to(@reply_message, "hi!", "no problem")
+```
+
+## Know the people involved in conversation
+
+```ruby
+@message.people #will give you participants users object
+
+@message.people #=> [@alice,@bob,@sukhi]
+```
+
+
 Copyright © 2011 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license
