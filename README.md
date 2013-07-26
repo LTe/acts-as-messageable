@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
                       :required   => :body                  # default [:topic, :body]
                       :class_name => "CustomMessages"       # default "ActsAsMessageable::Message",
                       :dependent  => :destroy               # default :nullify
+                      :group_messages => true               # default false
 end
 ```
 
@@ -307,6 +308,14 @@ end
 Group message
 =============
 
+## Enable group messages
+
+```ruby
+class User
+  acts_as_messageable :group_messages => true
+end
+```
+
 ## How to join other users's conversation
 
 ```ruby
@@ -319,10 +328,8 @@ Group message
 ## Know the people involved in conversation
 
 ```ruby
-@message.people #will give you participants users object
-
-@message.people #=> [@alice,@bob,@sukhi]
+@message.people # will give you participants users object
+@message.people # => [@alice, @bob, @sukhi]
 ```
 
-
-Copyright © 2011 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license
+Copyright © 2011-2012 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license
