@@ -8,7 +8,8 @@ module ActsAsMessageable
     attr_accessor   :removed, :restored
     cattr_accessor  :required
 
-    default_scope lambda { order("created_at desc") }
+    ActsAsMessageable.rails_api.new(self).default_scope("created_at desc")
+
     scope :are_from,          lambda { |*args| where(:sent_messageable_id => args.first, :sent_messageable_type => args.first.class.name) }
     scope :are_to,            lambda { |*args| where(:received_messageable_id => args.first, :received_messageable_type => args.first.class.name) }
     scope :search,            lambda { |*args|  where("body like :search_txt or topic like :search_txt",:search_txt => "%#{args.first}%")}
