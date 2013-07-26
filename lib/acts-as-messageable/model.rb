@@ -103,7 +103,7 @@ module ActsAsMessageable
             message_attributes = args.first
         end
 
-        message = self.class.messages_class_name.create message_attributes
+        message = self.class.messages_class_name.new message_attributes
         message.received_messageable = to
         message.sent_messageable = self
         message.save
