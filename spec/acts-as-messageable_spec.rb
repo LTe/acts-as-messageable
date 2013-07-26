@@ -65,6 +65,13 @@ describe "ActsAsMessageable" do
   end
 
   describe "reply to messages" do
+
+    it "bob message should be read when alice reply to that" do
+      @reply_message =  @alice.reply_to(@message, "Re: Topic", "Body")
+      @reply_message.should_not be be_nil
+      @message.opened.should == true       
+    end
+      
     it "pat should not be able to reply to a message from bob to alice" do
       @reply_message =  @pat.reply_to(@message, "Re: Topic", "Body")
       @reply_message.should be_nil
@@ -180,6 +187,12 @@ describe "ActsAsMessageable" do
       @alice.messages.are_from(@bob).first.unread
       @alice.messages.are_from(@bob).unreaded.count.should == 1
     end
+
+    it "alice should able to get datetime when he read bob message" do
+      @alice.messages.are_from(@bob).first.read
+      read_datetime = @alice.messages.are_from(@bob).first.updated_at
+      @alice.messages.read_since(@bob).should == read_datetime
+    end
   end
 
   it "should be in database message with id ..." do
@@ -235,7 +248,22 @@ describe "ActsAsMessageable" do
       @bob.received_messages.conversations.should == [@sec_reply, @reply_reply_message]
       @sec_reply.conversation.should == [@sec_reply, @sec_message]
     end
+
   end
+
+  describe "search text from messages" do
+    
+    before do
+      @reply_message = @message.reply("Re: Topic", "Body : I am fine")
+      @reply_reply_message = @reply_message.reply("Re: Re: Topic", "Fine too")
+    end
+
+    it "bob should be able to search text from messages" do
+      recordset = @bob.messages.search("I am fine")
+      recordset.count.should == 1
+      recordset.should_not be_nil    
+    end
+  end  
 
   describe "send messages with hash" do
     it "send message with hash" do

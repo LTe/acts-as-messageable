@@ -16,6 +16,8 @@ module ActsAsMessageable
       where(:id => args.first)
     }
 
+    scope :search,            lambda { |*args|  where("body like :search_txt or topic like :search_txt",:search_txt => "%#{args.first}%")}
+
     scope :connected_with,    lambda { |*args|  where("(sent_messageable_type = :sent_type and
                                                 sent_messageable_id = :sent_id and
                                                 sender_delete = :s_delete and sender_permanent_delete = :s_perm_delete) or
@@ -34,6 +36,10 @@ module ActsAsMessageable
     scope :readed,            lambda { where(:opened => true)  }
     scope :unreaded,          lambda { where(:opened => false) }
     scope :deleted,           lambda { where(:recipient_delete => true, :sender_delete => true) }
+    
+    def self.read_since(user)
+       are_from(user).readed.reorder("updated_at asc").last.try("updated_at")
+    end
 
     def open?
       self.opened?
