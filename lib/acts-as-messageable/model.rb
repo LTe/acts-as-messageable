@@ -68,7 +68,8 @@ module ActsAsMessageable
 
       # @return [ActiveRecord::Relation] returns all messages from inbox
       def received_messages
-        result = received_messages_relation.scoped.where(:recipient_delete => false)
+        result = ActsAsMessageable.rails_api.new(received_messages_relation)
+        result = result.scoped.where(:recipient_delete => false)
         result.relation_context = self
 
         result
@@ -76,7 +77,8 @@ module ActsAsMessageable
 
       # @return [ActiveRecord::Relation] returns all messages from outbox
       def sent_messages
-        result = sent_messages_relation.scoped.where(:sender_delete => false)
+        result = ActsAsMessageable.rails_api.new(sent_messages_relation)
+        result = result.scoped.where(:sender_delete => false)
         result.relation_context = self
 
         result

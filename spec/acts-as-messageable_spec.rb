@@ -189,11 +189,6 @@ describe "ActsAsMessageable" do
     end
   end
 
-  it "should be in database message with id ..." do
-    message_id = send_message.id
-    @bob.messages.with_id(message_id).count.should == 1
-  end
-
   it "finds proper message" do
     @bob.messages.find(@message.id) == @message
   end
