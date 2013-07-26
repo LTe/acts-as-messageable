@@ -250,12 +250,12 @@ describe "ActsAsMessageable" do
     @alice.messages.last.body.should == "Body"
   end
 
-  it "received_messages should return ActiveRecord::Relation" do
-    @alice.received_messages.class.should == ActiveRecord::Relation
+  it "received_messages should return unloaded messages" do
+    @alice.received_messages.loaded?.should be_false
   end
 
-  it "sent_messages should return ActiveRecord::Relation" do
-    @bob.sent_messages.class.should == ActiveRecord::Relation
+  it "sent_messages should return unloaded messages" do
+    @bob.sent_messages.loaded?.should be_false
   end
 
   describe "send messages between two different models (the same id)" do

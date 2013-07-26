@@ -5,23 +5,9 @@ module ActsAsMessageable
     belongs_to :received_messageable, :polymorphic => true
     belongs_to :sent_messageable,     :polymorphic => true
 
-    attr_accessible :topic,
-                    :body,
-                    :received_messageable_type,
-                    :received_messageable_id,
-                    :sent_messageable_type,
-                    :sent_messageable_id,
-                    :opened,
-                    :recipient_delete,
-                    :sender_delete,
-                    :recipient_permanent_delete,
-                    :sender_permanent_delete
-
     attr_accessor   :removed, :restored
     cattr_accessor  :required
 
-
-    # Sample documentation for scope
     default_scope order("created_at desc")
     scope :are_from,          lambda { |*args| where(:sent_messageable_id => args.first, :sent_messageable_type => args.first.class.name) }
     scope :are_to,            lambda { |*args| where(:received_messageable_id => args.first, :received_messageable_type => args.first.class.name) }
