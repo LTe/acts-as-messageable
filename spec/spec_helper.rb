@@ -5,6 +5,9 @@ require 'active_record/railtie'
 ActiveRecord::Base.logger = Logger.new(STDERR)
 ActiveRecord::Base.logger.level = 3
 
+require 'coveralls'
+Coveralls.wear!
+
 require 'acts-as-messageable'
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
