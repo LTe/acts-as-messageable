@@ -59,7 +59,7 @@ module ActsAsMessageable
     end
 
     def participant?(user)
-      (to == user) || (from == user)
+      user.class.group_messages || (to == user) || (from == user)
     end
 
     def conversation
@@ -77,5 +77,9 @@ module ActsAsMessageable
     def reply(*args)
       to.reply_to(self, *args)
     end
+
+    def people
+      conversation.map{|x| x.from}.uniq!
+    end    
   end
 end
