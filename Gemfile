@@ -9,5 +9,5 @@ group :development do
   gem "rspec", "~> 2.11.0"
   gem "jeweler", "~> 1.8.0"
   gem "sqlite3"
-  gem "coveralls", require: false
+  gem "coveralls", :require => false
 end
