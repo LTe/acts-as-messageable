@@ -66,11 +66,6 @@ describe "ActsAsMessageable" do
 
   describe "reply to messages" do
 
-    it "bob message should be read when alice reply to that" do
-      @reply_message =  @alice.reply_to(@message, "Re: Topic", "Body")
-      @reply_message.should_not be be_nil
-    end
-
     it "pat should not be able to reply to a message from bob to alice" do
       @reply_message =  @pat.reply_to(@message, "Re: Topic", "Body")
       @reply_message.should be_nil
