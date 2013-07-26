@@ -36,10 +36,6 @@ module ActsAsMessageable
     scope :readed,            lambda { where(:opened => true)  }
     scope :unreaded,          lambda { where(:opened => false) }
     scope :deleted,           lambda { where(:recipient_delete => true, :sender_delete => true) }
-    
-    def self.read_since(user)
-       readed.reorder("updated_at asc").last.try("updated_at asc")
-    end
 
     def open?
       self.opened?
@@ -85,7 +81,7 @@ module ActsAsMessageable
     end
 
     def people
-      conversation.map{|x| x.from}.uniq!
-    end    
+      conversation.map{ |x| x.from }.uniq!
+    end
   end
 end

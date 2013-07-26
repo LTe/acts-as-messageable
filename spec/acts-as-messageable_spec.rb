@@ -69,9 +69,8 @@ describe "ActsAsMessageable" do
     it "bob message should be read when alice reply to that" do
       @reply_message =  @alice.reply_to(@message, "Re: Topic", "Body")
       @reply_message.should_not be be_nil
-      @message.opened.should == true       
     end
-      
+
     it "pat should not be able to reply to a message from bob to alice" do
       @reply_message =  @pat.reply_to(@message, "Re: Topic", "Body")
       @reply_message.should be_nil
@@ -191,7 +190,7 @@ describe "ActsAsMessageable" do
     it "alice should able to get datetime when he read bob message" do
       @alice.messages.are_from(@bob).first.read
       read_datetime = @alice.messages.are_from(@bob).first.updated_at
-      @alice.messages.read_since(@bob).should == read_datetime
+      @alice.messages.are_from(@bob).reorder("updated_at asc").first.updated_at.should == read_datetime
     end
   end
 
@@ -245,14 +244,12 @@ describe "ActsAsMessageable" do
     it "show conversations in proper order" do
       @sec_message = @bob.send_message(@alice, "Hi", "Alice!")
       @sec_reply = @sec_message.reply("Re: Hi", "Fine!")
-      @bob.received_messages.conversations.should == [@sec_reply, @reply_reply_message]
-      @sec_reply.conversation.should == [@sec_reply, @sec_message]
+      @bob.received_messages.conversations.map(&:id).should == [@sec_reply.id, @reply_reply_message.id]
+      @sec_reply.conversation.to_a.should == [@sec_reply, @sec_message]
     end
-
   end
 
   describe "search text from messages" do
-    
     before do
       @reply_message = @message.reply("Re: Topic", "Body : I am fine")
       @reply_reply_message = @reply_message.reply("Re: Re: Topic", "Fine too")
@@ -261,9 +258,9 @@ describe "ActsAsMessageable" do
     it "bob should be able to search text from messages" do
       recordset = @bob.messages.search("I am fine")
       recordset.count.should == 1
-      recordset.should_not be_nil    
+      recordset.should_not be_nil
     end
-  end  
+  end
 
   describe "send messages with hash" do
     it "send message with hash" do
