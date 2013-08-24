@@ -9,8 +9,18 @@ describe "custom class" do
   let(:bob)   { User.find_by_email("bob@example.com") }
 
   before do
-    User.acts_as_messageable :class_name => "CustomMessage"
+    User.acts_as_messageable :class_name => "CustomMessage", :table_name => "custom_messages"
     @message = alice.send_message(bob, :topic => "Helou bob!", :body => "What's up?")
+  end
+
+  after { User.acts_as_messageable }
+
+  it "returns messages from alice with filter" do
+    bob.messages.are_from(alice).should include(@message)
+  end
+
+  it "uses new table name" do
+    CustomMessage.are_from(alice).should include(@message)
   end
 
   it "message should have CustomMessage class" do

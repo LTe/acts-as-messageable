@@ -290,5 +290,4 @@ describe "ActsAsMessageable" do
       @bob.messages.are_from(@alice).size.should be_equal(0)
     end
   end
-
 end
