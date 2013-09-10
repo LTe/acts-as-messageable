@@ -30,8 +30,8 @@ gem 'acts-as-messageable', :git => 'git://github.com/openfirmware/acts-as-messag
                            :branch => 'rails2.3.11_compatible'
 ```
 
-Post instalation
-================
+Post installation
+=================
 
 ```
 rails g acts-as-messageable:migration table_name # default 'messages'
