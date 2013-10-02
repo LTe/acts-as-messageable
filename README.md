@@ -26,7 +26,7 @@ Use this [fork](http://github.com/openfirmware/acts-as-messageable)
 Thanks for [@openfirmware](http://github.com/openfirmware)
 
 ```ruby
-gem 'acts-as-messageable', :git => 'git://github.com/openfirmware/acts-as-messageable.git', 
+gem 'acts-as-messageable', :git => 'git://github.com/openfirmware/acts-as-messageable.git',
                            :branch => 'rails2.3.11_compatible'
 ```
 
@@ -205,7 +205,8 @@ You can search text from messages and get the records where match exist. For exa
 ### Search text from messages
 
 ```ruby
-records = @alice.messages.search("Search me")  @alice seach text "Search me" from all messages
+records = @alice.messages.search("Search me")
+Seach the text "Search me" from @alice all messages
 ```
 
 ### Inbox
