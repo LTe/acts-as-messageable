@@ -354,3 +354,7 @@ Search
 ```
 
 Copyright © 2011-2012 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/LTe/acts-as-messageable/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
