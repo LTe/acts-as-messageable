@@ -10,5 +10,4 @@ group :development do
   gem "jeweler", "~> 1.8.0"
   gem "sqlite3"
   gem "coveralls", :require => false
-  gem "mime-types", '~> 1.25.1'
 end
