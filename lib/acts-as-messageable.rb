@@ -1,5 +1,6 @@
 module ActsAsMessageable
   autoload :Model,    'acts-as-messageable/model'
+  autoload :Scopes,   'acts-as-messageable/scopes'
   autoload :Message,  'acts-as-messageable/message'
   autoload :Relation, 'acts-as-messageable/relation'
   autoload :Rails3,   'acts-as-messageable/rails3'

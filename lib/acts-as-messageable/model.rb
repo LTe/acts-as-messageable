@@ -37,6 +37,7 @@ module ActsAsMessageable
 
         if self.messages_class_name.respond_to?(:table_name=)
           self.messages_class_name.table_name = options[:table_name]
+          self.messages_class_name.initialize_scopes
         else
           self.messages_class_name.set_table_name(options[:table_name])
           ActiveSupport::Deprecation.warn("Calling set_table_name is deprecated. Please use `self.table_name = 'the_name'` instead.")

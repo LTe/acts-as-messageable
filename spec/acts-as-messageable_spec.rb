@@ -37,7 +37,7 @@ describe "ActsAsMessageable" do
     end
 
     it "should return message object" do
-      @alice.send_message!(@bob, :body => "body", :topic => "topic").should 
+      @alice.send_message!(@bob, :body => "body", :topic => "topic").should
         be_kind_of ActsAsMessageable::Message
     end
   end
