@@ -5,7 +5,7 @@ module ActsAsMessageable
     end
 
     def default_scope(order_by)
-      @subject.default_scope { order(order_by) }
+      @subject.send(:default_scope) { order(order_by) }
     end
 
     def scoped
