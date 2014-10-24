@@ -9,8 +9,9 @@ Gem::Specification.new do |s|
   s.version = "0.4.9"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
+  s.require_paths = ["lib"]
   s.authors = ["Piotr Nielacny"]
-  s.date = "2013-11-25"
+  s.date = "2014-10-24"
   s.email = "piotr.nielacny@gmail.com"
   s.extra_rdoc_files = [
     "README.md"
@@ -19,6 +20,7 @@ Gem::Specification.new do |s|
     ".coveralls.yml",
     ".rspec",
     ".travis.yml",
+    "Appraisals",
     "Gemfile",
     "Gemfile.lock",
     "MIT-LICENSE",
@@ -26,10 +28,11 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "acts-as-messageable.gemspec",
-    "gemfiles/Gemfile-3.0",
-    "gemfiles/Gemfile-3.1",
-    "gemfiles/Gemfile-3.2",
-    "gemfiles/Gemfile-4.0",
+    "gemfiles/rails_3.0.gemfile",
+    "gemfiles/rails_3.1.gemfile",
+    "gemfiles/rails_3.2.gemfile",
+    "gemfiles/rails_4.0.gemfile",
+    "gemfiles/rails_4.1.gemfile",
     "lib/acts-as-messageable.rb",
     "lib/acts-as-messageable/message.rb",
     "lib/acts-as-messageable/model.rb",
@@ -51,8 +54,7 @@ Gem::Specification.new do |s|
     "spec/support/user.rb"
   ]
   s.homepage = "http://github.com/LTe/acts-as-messageable"
-  s.require_paths = ["lib"]
-  s.rubygems_version = "2.1.11"
+  s.rubygems_version = "2.2.2"
   s.summary = "Make user messageable!;-)"
 
   if s.respond_to? :specification_version then
@@ -67,6 +69,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.0"])
       s.add_development_dependency(%q<sqlite3>, [">= 0"])
       s.add_development_dependency(%q<coveralls>, [">= 0"])
+      s.add_development_dependency(%q<appraisal>, [">= 0"])
     else
       s.add_dependency(%q<activerecord>, [">= 3.0.0"])
       s.add_dependency(%q<activesupport>, [">= 3.0.0"])
@@ -76,6 +79,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<jeweler>, ["~> 1.8.0"])
       s.add_dependency(%q<sqlite3>, [">= 0"])
       s.add_dependency(%q<coveralls>, [">= 0"])
+      s.add_dependency(%q<appraisal>, [">= 0"])
     end
   else
     s.add_dependency(%q<activerecord>, [">= 3.0.0"])
@@ -86,6 +90,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<jeweler>, ["~> 1.8.0"])
     s.add_dependency(%q<sqlite3>, [">= 0"])
     s.add_dependency(%q<coveralls>, [">= 0"])
+    s.add_dependency(%q<appraisal>, [">= 0"])
   end
 end
 

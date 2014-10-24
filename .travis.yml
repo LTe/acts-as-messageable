@@ -1,25 +1,16 @@
 rvm:
-  - 1.8.7
   - 1.9.3
   - 2.0.0
+  - 2.1.0
   - ruby-head
-  - ree
-  - rbx-head
-  - rbx-head-d19
+  - rbx
 gemfile:
-  - gemfiles/Gemfile-3.0
-  - gemfiles/Gemfile-3.1
-  - gemfiles/Gemfile-3.2
-  - gemfiles/Gemfile-4.0
+  - gemfiles/rails_3.0.gemfile
+  - gemfiles/rails_3.1.gemfile
+  - gemfiles/rails_3.2.gemfile
+  - gemfiles/rails_4.0.gemfile
+  - gemfiles/rails_4.1.gemfile
 matrix:
   allow_failures:
     - rvm: ruby-head
     - rvm: rbx-head
-    - rvm: rbx-head-d19
-  exclude:
-    - rvm: 1.8.7
-      gemfile: gemfiles/Gemfile-4.0
-    - rvm: ree
-      gemfile: gemfiles/Gemfile-4.0
-    - rvm: rbx-head
-      gemfile: gemfiles/Gemfile-4.0
