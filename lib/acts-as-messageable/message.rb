@@ -10,7 +10,7 @@ module ActsAsMessageable
     attr_accessor   :removed, :restored
     cattr_accessor  :required
 
-    ActsAsMessageable.rails_api.new(self).default_scope("created_at desc")
+    #ActsAsMessageable.rails_api.new(self).default_scope("created_at desc")
 
     def open?
       self.opened?
