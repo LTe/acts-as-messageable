@@ -246,7 +246,7 @@ describe "ActsAsMessageable" do
     end
 
     it "bob should be able to search text from messages" do
-      recordset = @bob.messages.search("I am fine")
+      recordset = @bob.messages.text_search("I am fine")
       recordset.count.should == 1
       recordset.should_not be_nil
     end
