@@ -4,6 +4,12 @@ module ActsAsMessageable
       @subject = subject
     end
 
+    def attr_accessible(*args)
+      if defined?(ProtectedAttributes)
+        @subject.attr_accessible(*args)
+      end
+    end
+
     def default_scope(order_by)
       @subject.send(:default_scope) { order(order_by) }
     end

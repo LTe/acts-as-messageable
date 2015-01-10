@@ -8,6 +8,9 @@ ActiveRecord::Base.logger.level = 3
 require 'coveralls'
 Coveralls.wear!
 
+require 'bundler/setup'
+Bundler.require(:default)
+
 require 'acts-as-messageable'
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
