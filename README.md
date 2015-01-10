@@ -14,7 +14,7 @@ Usage
 
 To use it, add it to your Gemfile:
 
-### Rails 3
+### Rails >= 3
 
 ```ruby
 gem 'acts-as-messageable'
@@ -26,7 +26,7 @@ Use this [fork](http://github.com/openfirmware/acts-as-messageable)
 Thanks for [@openfirmware](http://github.com/openfirmware)
 
 ```ruby
-gem 'acts-as-messageable', :git => 'git://github.com/openfirmware/acts-as-messageable.git', 
+gem 'acts-as-messageable', :git => 'git://github.com/openfirmware/acts-as-messageable.git',
                            :branch => 'rails2.3.11_compatible'
 ```
 
