@@ -350,7 +350,23 @@ Search
 ## Search text from messages
 
 ```ruby
-@alice.messages.search("Search me")  @alice seach text "Search me" from all messages
+@alice.messages.search("Search me")  @alice search text "Search me" from all messages
+```
+
+## Custom search scope name
+
+in `config/initializers/acts-as-messageable.rb`
+
+```ruby
+ActsAsMessageable.search_scope_name = :text_search
+```
+
+or
+
+```ruby
+ActsAsMessageable.config do |config|
+  config.search_scope_name = :text_search
+end
 ```
 
 Copyright © 2011-2012 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license
