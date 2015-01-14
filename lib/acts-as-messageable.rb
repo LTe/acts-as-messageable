@@ -7,7 +7,7 @@ module ActsAsMessageable
   autoload :Rails4,   'acts-as-messageable/rails4'
 
   mattr_accessor :search_scope_name
-  @@search_scope_name = :search
+  self.search_scope_name = :search
 
   def self.config
     yield self
