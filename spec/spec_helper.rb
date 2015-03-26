@@ -47,7 +47,6 @@ def create_database
       t.text :body
       t.references :received_messageable, :polymorphic => true
       t.references :sent_messageable, :polymorphic => true
-      t.boolean :opened, :default => false
       t.datetime :opened_at
       t.boolean :recipient_delete, :default => false
       t.boolean :sender_delete, :default => false
@@ -62,7 +61,7 @@ def create_database
       t.text :body
       t.references :received_messageable, :polymorphic => true
       t.references :sent_messageable, :polymorphic => true
-      t.boolean :opened, :default => false
+      t.datetime :opened_at
       t.boolean :recipient_delete, :default => false
       t.boolean :sender_delete, :default => false
       t.boolean :recipient_permanent_delete, :default => false
