@@ -22,7 +22,12 @@ module ActsAsMessageable
       opened?
     end
 
+    def opened?
+      opened_at.present?
+    end
+
     def open
+      update_attributes!(:opened_at => DateTime.now)
       update_attributes!(opened: true)
     end
 
@@ -30,6 +35,7 @@ module ActsAsMessageable
     alias read open
 
     def close
+      update_attributes!(:opened_at => nil)
       update_attributes!(opened: false)
     end
 

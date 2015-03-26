@@ -180,6 +180,15 @@ describe 'ActsAsMessageable' do
       expect(@alice.messages.are_from(@bob).unreaded.count).to eq(1)
     end
 
+    it "alice should see the read_at updated" do
+      date_time_when_read = Time.new(2014, 9, 4, 15, 12, 34)
+      Timecop.freeze(date_time_when_read) do
+        @alice.messages.are_from(@bob).first.read
+        first_message = @alice.messages.are_from(@bob).first
+        expect(first_message.opened_at).to eql(date_time_when_read)
+      end
+    end
+
     it 'alice should able to get datetime when he read bob message' do
       @alice.messages.are_from(@bob).first.read
       read_datetime = @alice.messages.are_from(@bob).first.updated_at
@@ -269,6 +278,10 @@ describe 'ActsAsMessageable' do
 
   it 'sent_messages should return unloaded messages' do
     expect(@bob.sent_messages.loaded?).to be_falsey
+  end
+
+  it "sent_messages should return unloaded messages" do
+    @bob.sent_messages.loaded?.should be_falsey
   end
 
   describe 'send messages between two different models (the same id)' do
