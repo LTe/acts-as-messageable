@@ -17,13 +17,13 @@ module ActsAsMessageable
     end
 
     def open
-      update_attributes!(:opened => true)
+      update_attributes!(:opened => true, :opened_at => DateTime.now)
     end
     alias :mark_as_read :open
     alias :read         :open
 
     def close
-      update_attributes!(:opened => false)
+      update_attributes!(:opened => false, :opened_at => nil)
     end
     alias :mark_as_unread :close
     alias :unread         :close

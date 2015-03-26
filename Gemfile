@@ -11,4 +11,5 @@ group :development do
   gem "sqlite3"
   gem "coveralls", :require => false
   gem "appraisal"
+  gem "timecop"
 end

@@ -8,6 +8,8 @@ ActiveRecord::Base.logger.level = 3
 require 'coveralls'
 Coveralls.wear!
 
+require 'timecop'
+
 require 'bundler/setup'
 Bundler.require(:default)
 
@@ -46,6 +48,7 @@ def create_database
       t.references :received_messageable, :polymorphic => true
       t.references :sent_messageable, :polymorphic => true
       t.boolean :opened, :default => false
+      t.datetime :opened_at
       t.boolean :recipient_delete, :default => false
       t.boolean :sender_delete, :default => false
       t.boolean :recipient_permanent_delete, :default => false
