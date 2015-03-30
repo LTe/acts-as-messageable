@@ -186,7 +186,8 @@ describe "ActsAsMessageable" do
       date_time_when_read = Time.new(2014, 9, 4, 15, 12, 34)
       Timecop.freeze(date_time_when_read) do
         @alice.messages.are_from(@bob).first.read
-        expect(@alice.messages.are_from(@bob).first.opened_at).to eql(date_time_when_read)
+        first_message = @alice.messages.are_from(@bob).first
+        expect(first_message.opened_at).to eql(date_time_when_read)
       end
     end
 

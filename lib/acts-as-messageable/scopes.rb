@@ -28,7 +28,7 @@ module ActsAsMessageable
                                                   :r_perm_delete  => false,
                                                   :s_perm_delete  => false)
         }
-        scope :readed,            lambda { where.not(:opened_at => nil)  }
+        scope :readed,            lambda { where.not(:opened_at => nil) }
         scope :unreaded,          lambda { where(:opened_at => nil) }
         scope :deleted,           lambda { where(:recipient_delete => true, :sender_delete => true) }
       end
