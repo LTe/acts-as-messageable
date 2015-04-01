@@ -16,6 +16,10 @@ module ActsAsMessageable
       self.opened?
     end
 
+    def opened?
+      open.nil?
+    end
+
     def open
       update_attributes!(:opened_at => DateTime.now)
     end
