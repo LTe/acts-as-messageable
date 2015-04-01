@@ -17,7 +17,7 @@ module ActsAsMessageable
     end
 
     def opened?
-      open.nil?
+      opened_at.present?
     end
 
     def open
