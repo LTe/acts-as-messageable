@@ -7,6 +7,7 @@ module ActsAsMessageable
     belongs_to :received_messageable, :polymorphic => true
     belongs_to :sent_messageable,     :polymorphic => true
 
+    attr_accessible :topic, :body
     attr_accessor   :removed, :restored
     cattr_accessor  :required
 
