@@ -231,7 +231,7 @@ records = @alice.messages.search("Search me")  @alice search text "Search me" fr
 ==========
 
 ```ruby
-@alice.messages.are_from(@bob) # all message form @bob
+@alice.messages.are_from(@bob) # all message from @bob
 @alice.messages.are_to(@bob) # all message to @bob
 @alice.messages.with_id(@id_of_message) # message with id id_of_message
 @alice.messages.readed # all readed @alice  messages
