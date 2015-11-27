@@ -6,6 +6,13 @@ module ActsAsMessageable
   autoload :Rails3,   'acts-as-messageable/rails3'
   autoload :Rails4,   'acts-as-messageable/rails4'
 
+  mattr_accessor :search_scope_name
+  self.search_scope_name = :search
+
+  def self.config
+    yield self
+  end
+
   def self.rails_api
     if Rails::VERSION::MAJOR >= 4
       Rails4
