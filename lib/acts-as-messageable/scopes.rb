@@ -10,19 +10,13 @@ module ActsAsMessageable
 
     module ClassMethods
       def initialize_scopes
-        scope :are_from,          ->(*args) { where(sent_messageable_id: args.first,
-                                                    sent_messageable_type: args.first.class.name) }
-        scope :are_to,            ->(*args) { where(received_messageable_id: args.first,
-                                                    received_messageable_type: args.first.class.name) }
-
+        scope :are_from,          ->(*args) { where(sent_messageable_id: args.first, sent_messageable_type: args.first.class.name) }
+        scope :are_to,            ->(*args) { where(received_messageable_id: args.first, received_messageable_type: args.first.class.name) }
         if defined? search
-          scope :search_text,     ->(*args) { where("body like :search_txt or topic like :search_txt",
-                                                    search_txt: "%#{args.first}%") }
+          scope :search_text,     ->(*args) { where("body like :search_txt or topic like :search_txt", search_txt: "%#{args.first}%") }
         else
-          scope :search,          ->(*args) { where("body like :search_txt or topic like :search_txt",
-                                                    search_txt: "%#{args.first}%") }
+          scope :search,          ->(*args) { where("body like :search_txt or topic like :search_txt", search_txt: "%#{args.first}%") }
         end
-
         scope :connected_with,    lambda { |*args|
           where("(sent_messageable_type = :sent_type and
                                            sent_messageable_id = :sent_id and
