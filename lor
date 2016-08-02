@@ -1,0 +1,77 @@
+
+ActsAsMessageable
+[32m  finds proper message[0m
+[32m  message should have proper topic[0m
+[32m  messages should return in right order :created_at[0m
+[32m  received_messages should return unloaded messages[0m
+[32m  sent_messages should return unloaded messages[0m
+  send messages
+[32m    alice should have one message[0m
+[32m    alice should have one message from bob[0m
+[32m    bob should have one message[0m
+[32m    bob should have one message to alice in outbox[0m
+[32m    bob should have one open message from alice[0m
+  send messages with bang
+[32m    should raise exception[0m
+[32m    should return message object[0m
+  inheritance models
+[32m    men send message to alice[0m
+[32m    messages method should receive all messages connected with user[0m
+[32m    men send message and receive from alice[0m
+  reply to messages
+[32m    pat should not be able to reply to a message from bob to alice[0m
+[32m    alice should be able to reply to a message from bob to alice[0m
+[32m    alice should be able to reply to a message using the message object[0m
+[32m    bob try to add something to conversation[0m
+[32m    bob try to add something to conversation and should receive proper order[0m
+  delete messages
+[32m    bob should have one deleted message from alice[0m
+[32m    received_messages and sent_messages should work with .process method[0m
+[32m    message should permanent delete[0m
+[32m    pat should not able to delete message[0m
+  restore message
+[32m    alice should restore message[0m
+[32m    should works with relation[0m
+[32m    pat should not able to restore message[0m
+  read/unread feature
+[32m    alice should have one unread message from bob[0m
+[32m    alice should able to read message from bob[0m
+[32m    alice should able to unread message from bob[0m
+[32m    alice should able to get datetime when he read bob message[0m
+  conversation
+[32m    bob send message to alice, and alice reply to bob message and show proper tree[0m
+[32m    bob send message to alice, alice answer, and bob answer for alice answer[0m
+  conversations
+[32m    bob send message to alice and alice reply[0m
+[32m    show conversations in proper order[0m
+  search text from messages
+[32m    bob should be able to search text from messages[0m
+  send messages with hash
+[32m    send message with hash[0m
+  send messages between two different models (the same id)
+[32m    should have the same id[0m
+[32m    bob send message to admin (different model) with the same id[0m
+[32m    admin send message to bob[0m
+
+custom class
+[32m  returns messages from alice with filter[0m
+[32m  uses new table name[0m
+[32m  message should have CustomMessage class[0m
+[32m  responds to custom_method[0m
+[32m  return proper class with ancestry methods[0m
+
+custom require
+[32m  should work with non-array require[0m
+[32m  should work with array require[0m
+  only body
+[32m    alice should able to send message to bob only with body[0m
+[32m    alice should able to send message to bob with hash[0m
+[32m    alice send message to bob with body and bob reply to alice[0m
+[32m    alice send message to bob and bob reply with hash[0m
+
+group messages
+[32m  joins to conversation[0m
+[32m  alice,bob and pat should be involve into conversation[0m
+
+Finished in 0.75517 seconds
+[32m53 examples, 0 failures[0m

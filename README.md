@@ -205,7 +205,7 @@ You can search text from messages and get the records where match exist. For exa
 ### Search text from messages
 
 ```ruby
-records = @alice.messages.search("Search me")  @alice search text "Search me" from all messages
+records = @alice.messages.search_text("Search me")  @alice search text "Search me" from all messages
 ```
 
 ### Inbox
@@ -350,7 +350,7 @@ Search
 ## Search text from messages
 
 ```ruby
-@alice.messages.search("Search me")  @alice seach text "Search me" from all messages
+@alice.messages.search_text("Search me")  @alice seach text "Search me" from all messages
 ```
 
 Copyright © 2011-2012 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license

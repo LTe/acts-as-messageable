@@ -246,7 +246,7 @@ describe "ActsAsMessageable" do
     end
 
     it "bob should be able to search text from messages" do
-      recordset = @bob.messages.search("I am fine")
+      recordset = @bob.messages.search_text("I am fine")
       recordset.count.should == 1
       recordset.should_not be_nil
     end
@@ -266,11 +266,11 @@ describe "ActsAsMessageable" do
   end
 
   it "received_messages should return unloaded messages" do
-    @alice.received_messages.loaded?.should be_false
+    @alice.received_messages.loaded?.should be_falsy
   end
 
   it "sent_messages should return unloaded messages" do
-    @bob.sent_messages.loaded?.should be_false
+    @bob.sent_messages.loaded?.should be_falsy
   end
 
   describe "send messages between two different models (the same id)" do
