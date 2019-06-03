@@ -20,3 +20,6 @@ matrix:
   allow_failures:
     - rvm: ruby-head
     - rvm: rbx-head
+before_install:
+  - gem update --system
+  - gem install bundler
