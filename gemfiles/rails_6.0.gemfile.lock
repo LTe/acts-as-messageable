@@ -1,30 +1,30 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    actionpack (5.2.3)
-      actionview (= 5.2.3)
-      activesupport (= 5.2.3)
+    actionpack (6.0.0.rc1)
+      actionview (= 6.0.0.rc1)
+      activesupport (= 6.0.0.rc1)
       rack (~> 2.0)
       rack-test (>= 0.6.3)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    actionview (5.2.3)
-      activesupport (= 5.2.3)
+    actionview (6.0.0.rc1)
+      activesupport (= 6.0.0.rc1)
       builder (~> 3.1)
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
-    activemodel (5.2.3)
-      activesupport (= 5.2.3)
-    activerecord (5.2.3)
-      activemodel (= 5.2.3)
-      activesupport (= 5.2.3)
-      arel (>= 9.0)
-    activesupport (5.2.3)
+    activemodel (6.0.0.rc1)
+      activesupport (= 6.0.0.rc1)
+    activerecord (6.0.0.rc1)
+      activemodel (= 6.0.0.rc1)
+      activesupport (= 6.0.0.rc1)
+    activesupport (6.0.0.rc1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+      zeitwerk (~> 2.1, >= 2.1.4)
     addressable (2.4.0)
     ancestry (3.0.6)
       activerecord (>= 3.2.0)
@@ -32,7 +32,6 @@ GEM
       bundler
       rake
       thor (>= 0.14.0)
-    arel (9.0.0)
     builder (3.2.3)
     concurrent-ruby (1.1.5)
     coveralls (0.8.23)
@@ -101,12 +100,12 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.0.4)
       loofah (~> 2.2, >= 2.2.2)
-    railties (5.2.3)
-      actionpack (= 5.2.3)
-      activesupport (= 5.2.3)
+    railties (6.0.0.rc1)
+      actionpack (= 6.0.0.rc1)
+      activesupport (= 6.0.0.rc1)
       method_source
       rake (>= 0.8.7)
-      thor (>= 0.19.0, < 2.0)
+      thor (>= 0.20.3, < 2.0)
     rake (12.3.2)
     rdoc (6.1.1)
     rspec (3.8.0)
@@ -136,20 +135,21 @@ GEM
     tins (1.20.3)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
+    zeitwerk (2.1.6)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord (>= 3.0.0)
-  activesupport (>= 3.0.0)
+  activerecord (~> 6.0.0.rc1)
+  activesupport (~> 6.0.0.rc1)
   ancestry (>= 1.3.0)
   appraisal
   coveralls
   jeweler
-  railties (>= 3.0.0)
+  railties (~> 6.0.0.rc1)
   rspec
-  sqlite3
+  sqlite3 (~> 1.4.0)
 
 BUNDLED WITH
    2.0.1

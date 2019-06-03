@@ -1,5 +1,4 @@
 require 'active_record/railtie'
-require 'active_support/core_ext'
 
 module ActsAsMessageable
   class Railtie < Rails::Railtie

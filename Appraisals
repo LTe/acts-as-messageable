@@ -2,35 +2,78 @@ appraise "rails-3.0" do
   gem "activerecord", "~> 3.0.0"
   gem "activesupport", "~> 3.0.0"
   gem "railties", "~> 3.0.0"
+
+  group :development do
+    gem 'sqlite3', '~> 1.3.6'
+  end
 end
 
 appraise "rails-3.1" do
   gem "activerecord", "~> 3.1.0"
   gem "activesupport", "~> 3.1.0"
   gem "railties", "~> 3.1.0"
+
+  group :development do
+    gem 'sqlite3', '~> 1.3.6'
+  end
 end
 
 appraise "rails-3.2" do
   gem "activerecord", "~> 3.2.0"
   gem "activesupport", "~> 3.2.0"
   gem "railties", "~> 3.2.0"
+
+  group :development do
+    gem 'sqlite3', '~> 1.3.6'
+  end
 end
 
 appraise "rails-4.0" do
   gem "activerecord", "~> 4.0.0"
   gem "activesupport", "~> 4.0.0"
   gem "railties", "~> 4.0.0"
+
+  group :development do
+    gem 'sqlite3', '~> 1.3.6'
+  end
 end
 
 appraise "rails-4.1" do
   gem "activerecord", "~> 4.1.0"
   gem "activesupport", "~> 4.1.0"
   gem "railties", "~> 4.1.0"
+
+  group :development do
+    gem 'sqlite3', '~> 1.3.6'
+  end
 end
 
-appraise "rails-4.1-ProtectedAttributes" do
-  gem "activerecord", "~> 4.1.0"
-  gem "activesupport", "~> 4.1.0"
-  gem "railties", "~> 4.1.0"
-  gem 'protected_attributes'
+appraise 'rails-5.0' do
+  gem 'activerecord', '~> 5.0.0'
+  gem 'activesupport', '~> 5.0.0'
+  gem 'railties', '~> 5.0.0'
+
+  group :development do
+    gem 'sqlite3', '~> 1.3.6'
+  end
+end
+
+appraise 'rails-5.1' do
+  gem 'activerecord', '~> 5.2.0'
+  gem 'activesupport', '~> 5.2.0'
+  gem 'railties', '~> 5.2.0'
+
+  group :development do
+    gem 'sqlite3', '~> 1.3.6'
+  end
+end
+
+appraise 'rails-6.0' do
+  gem 'activerecord', '~> 6.0.0.rc1'
+  gem 'activesupport', '~> 6.0.0.rc1'
+  gem 'railties', '~> 6.0.0.rc1'
+
+  group :development do
+    gem 'sqlite3', '~> 1.4.0'
+  end
 end

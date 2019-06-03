@@ -1,6 +1,5 @@
 module ActsAsMessageable
   module Model
-
     def self.included(base)
       base.extend ClassMethods
     end
@@ -15,47 +14,46 @@ module ActsAsMessageable
       # @param [Symbol] :dependent - dependent option from ActiveRecord has_many method
       def acts_as_messageable(options = {})
         default_options = {
-          :table_name => "messages",
-          :class_name => "ActsAsMessageable::Message",
-          :required => [:topic, :body],
-          :dependent => :nullify,
-          :group_messages => false,
+          table_name: 'messages',
+          class_name: 'ActsAsMessageable::Message',
+          required: %i[topic body],
+          dependent: :nullify,
+          group_messages: false
         }
         options = default_options.merge(options)
 
         has_many  :received_messages_relation,
-                  :as => :received_messageable,
-                  :class_name => options[:class_name],
-                  :dependent => options[:dependent]
+                  as: :received_messageable,
+                  class_name: options[:class_name],
+                  dependent: options[:dependent]
         has_many  :sent_messages_relation,
-                  :as => :sent_messageable,
-                  :class_name => options[:class_name],
-                  :dependent => options[:dependent]
+                  as: :sent_messageable,
+                  class_name: options[:class_name],
+                  dependent: options[:dependent]
 
         self.messages_class_name = options[:class_name].constantize
-        self.messages_class_name.has_ancestry
+        messages_class_name.has_ancestry
 
-        if self.messages_class_name.respond_to?(:table_name=)
-          self.messages_class_name.table_name = options[:table_name]
-          self.messages_class_name.initialize_scopes
+        if messages_class_name.respond_to?(:table_name=)
+          messages_class_name.table_name = options[:table_name]
+          messages_class_name.initialize_scopes
         else
-          self.messages_class_name.set_table_name(options[:table_name])
+          messages_class_name.set_table_name(options[:table_name])
           ActiveSupport::Deprecation.warn("Calling set_table_name is deprecated. Please use `self.table_name = 'the_name'` instead.")
         end
 
-        self.messages_class_name.required = Array.wrap(options[:required])
-        self.messages_class_name.validates_presence_of self.messages_class_name.required
+        messages_class_name.required = Array.wrap(options[:required])
+        messages_class_name.validates_presence_of messages_class_name.required
         self.group_messages = options[:group_messages]
 
         include ActsAsMessageable::Model::InstanceMethods
     end
 
-    # Method recognize real object class
-    # @return [ActiveRecord::Base] class or relation object
-    def resolve_active_record_ancestor
-      self.reflect_on_association(:received_messages_relation).active_record
-    end
-
+      # Method recognize real object class
+      # @return [ActiveRecord::Base] class or relation object
+      def resolve_active_record_ancestor
+        reflect_on_association(:received_messages_relation).active_record
+      end
     end
 
     module InstanceMethods
@@ -70,7 +68,7 @@ module ActsAsMessageable
       # @return [ActiveRecord::Relation] returns all messages from inbox
       def received_messages
         result = ActsAsMessageable.rails_api.new(received_messages_relation)
-        result = result.scoped.where(:recipient_delete => false)
+        result = result.scoped.where(recipient_delete: false)
         result.relation_context = self
 
         result
@@ -79,7 +77,7 @@ module ActsAsMessageable
       # @return [ActiveRecord::Relation] returns all messages from outbox
       def sent_messages
         result = ActsAsMessageable.rails_api.new(sent_messages_relation)
-        result = result.scoped.where(:sender_delete => false)
+        result = result.scoped.where(sender_delete: false)
         result.relation_context = self
 
         result
@@ -100,12 +98,12 @@ module ActsAsMessageable
         message_attributes = {}
 
         case args.first
-          when String
-            self.class.messages_class_name.required.each_with_index do |attribute, index|
-              message_attributes[attribute] = args[index]
-            end
-          when Hash
-            message_attributes = args.first
+        when String
+          self.class.messages_class_name.required.each_with_index do |attribute, index|
+            message_attributes[attribute] = args[index]
+          end
+        when Hash
+          message_attributes = args.first
         end
 
         message = self.class.messages_class_name.new message_attributes
@@ -124,7 +122,9 @@ module ActsAsMessageable
       #
       # @return [ActsAsMessageable::Message] the message object
       def send_message!(to, *args)
-        send_message(to, *args).save!
+        send_message(to, *args).tap do |message|
+          message.save!
+        end
       end
 
       # Reply to given message
@@ -150,12 +150,12 @@ module ActsAsMessageable
         current_user = self
 
         case current_user
-          when message.to
-            attribute = message.recipient_delete ? :recipient_permanent_delete : :recipient_delete
-          when message.from
-            attribute = message.sender_delete ? :sender_permanent_delete : :sender_delete
-          else
-            raise "#{current_user} can't delete this message"
+        when message.to
+          attribute = message.recipient_delete ? :recipient_permanent_delete : :recipient_delete
+        when message.from
+          attribute = message.sender_delete ? :sender_permanent_delete : :sender_delete
+        else
+          raise "#{current_user} can't delete this message"
         end
 
         message.update_attributes!(attribute => true)
@@ -166,12 +166,12 @@ module ActsAsMessageable
         current_user = self
 
         case current_user
-          when message.to
-            attribute = :recipient_delete
-          when message.from
-            attribute = :sender_delete
-          else
-            raise "#{current_user} can't restore this message"
+        when message.to
+          attribute = :recipient_delete
+        when message.from
+          attribute = :sender_delete
+        else
+          raise "#{current_user} can't restore this message"
         end
 
         message.update_attributes!(attribute => false)

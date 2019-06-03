@@ -13,20 +13,20 @@ Bundler.require(:default)
 
 require 'acts-as-messageable'
 
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 ActiveRecord::Migration.verbose = false
 
 RSpec.configure do |config|
   config.before(:all) do
-    ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
+    ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: ':memory:')
     create_database
 
-    @alice = User.create  :email  => "alice@example.com"
-    @bob   = User.create  :email  => "bob@example.com"
-    @pat   = User.create  :email  => "pat@example.com"
-    @admin = Admin.create :email  => "admin@example.com"
-    @men   = Men.create   :email  => "men@example.com"
+    @alice = User.create  email: 'alice@example.com'
+    @bob   = User.create  email: 'bob@example.com'
+    @pat   = User.create  email: 'pat@example.com'
+    @admin = Admin.create email: 'admin@example.com'
+    @men   = Men.create   email: 'men@example.com'
   end
 
   config.after(:all) do
@@ -39,17 +39,17 @@ RSpec.configure do |config|
 end
 
 def create_database
-  ActiveRecord::Schema.define(:version => 1) do
+  ActiveRecord::Schema.define(version: 1) do
     create_table :messages do |t|
       t.string :topic
       t.text :body
-      t.references :received_messageable, :polymorphic => true
-      t.references :sent_messageable, :polymorphic => true
-      t.boolean :opened, :default => false
-      t.boolean :recipient_delete, :default => false
-      t.boolean :sender_delete, :default => false
-      t.boolean :recipient_permanent_delete, :default => false
-      t.boolean :sender_permanent_delete, :default => false
+      t.references :received_messageable, polymorphic: true, index: false
+      t.references :sent_messageable, polymorphic: true, index: false
+      t.boolean :opened, default: false
+      t.boolean :recipient_delete, default: false
+      t.boolean :sender_delete, default: false
+      t.boolean :recipient_permanent_delete, default: false
+      t.boolean :sender_permanent_delete, default: false
       t.string :ancestry
       t.timestamps
     end
@@ -57,13 +57,13 @@ def create_database
     create_table :custom_messages do |t|
       t.string :topic
       t.text :body
-      t.references :received_messageable, :polymorphic => true
-      t.references :sent_messageable, :polymorphic => true
-      t.boolean :opened, :default => false
-      t.boolean :recipient_delete, :default => false
-      t.boolean :sender_delete, :default => false
-      t.boolean :recipient_permanent_delete, :default => false
-      t.boolean :sender_permanent_delete, :default => false
+      t.references :received_messageable, polymorphic: true, index: false
+      t.references :sent_messageable, polymorphic: true, index: false
+      t.boolean :opened, default: false
+      t.boolean :recipient_delete, default: false
+      t.boolean :sender_delete, default: false
+      t.boolean :recipient_permanent_delete, default: false
+      t.boolean :sender_permanent_delete, default: false
       t.string :ancestry
       t.timestamps
     end

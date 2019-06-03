@@ -1,16 +1,20 @@
 rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1.0
+  - 2.1.10
+  - 2.2.10
+  - 2.3.8
+  - 2.4.6
+  - 2.5.5
+  - 2.6.3
   - ruby-head
-  - rbx
 gemfile:
   - gemfiles/rails_3.0.gemfile
   - gemfiles/rails_3.1.gemfile
   - gemfiles/rails_3.2.gemfile
   - gemfiles/rails_4.0.gemfile
   - gemfiles/rails_4.1.gemfile
-  - gemfiles/rails_4.1_ProtectedAttributes.gemfile
+  - gemfiles/rails_5.0.gemfile
+  - gemfiles/rails_5.1.gemfile
+  - gemfiles/rails_6.0.gemfile
 matrix:
   allow_failures:
     - rvm: ruby-head
