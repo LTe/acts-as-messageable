@@ -5,9 +5,7 @@ module ActsAsMessageable
     end
 
     def attr_accessible(*args)
-      if defined?(ProtectedAttributes)
-        @subject.attr_accessible(*args)
-      end
+      @subject.attr_accessible(*args) if defined?(ProtectedAttributes)
     end
 
     def default_scope(order_by)

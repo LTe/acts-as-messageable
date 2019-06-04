@@ -4,32 +4,32 @@ module ActsAsMessageable
   class Message < ::ActiveRecord::Base
     include ActsAsMessageable::Scopes
 
-    belongs_to :received_messageable, :polymorphic => true
-    belongs_to :sent_messageable,     :polymorphic => true
+    belongs_to :received_messageable, polymorphic: true
+    belongs_to :sent_messageable,     polymorphic: true
 
     attr_accessor   :removed, :restored
     cattr_accessor  :required
 
-    ActsAsMessageable.rails_api.new(self).default_scope("created_at desc")
+    ActsAsMessageable.rails_api.new(self).default_scope('created_at desc')
 
     def open?
-      self.opened?
+      opened?
     end
 
     def open
-      update_attributes!(:opened => true)
+      update_attributes!(opened: true)
     end
-    alias :mark_as_read :open
-    alias :read         :open
+    alias mark_as_read open
+    alias read         open
 
     def close
-      update_attributes!(:opened => false)
+      update_attributes!(opened: false)
     end
-    alias :mark_as_unread :close
-    alias :unread         :close
+    alias mark_as_unread close
+    alias unread         close
 
-    alias :from :sent_messageable
-    alias :to   :received_messageable
+    alias from sent_messageable
+    alias to   received_messageable
 
     def real_receiver(user)
       user == from ? to : from
@@ -56,7 +56,7 @@ module ActsAsMessageable
     end
 
     def people
-      conversation.map{ |x| x.from }.uniq!
+      conversation.map(&:from).uniq!
     end
   end
 end
