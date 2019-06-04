@@ -1,30 +1,19 @@
-gemfile:
-  - gemfiles/rails_3.2.gemfile
-  - gemfiles/rails_4.2.11.gemfile
-  - gemfiles/rails_5.2.gemfile
-  - gemfiles/rails_6.0.gemfile
 matrix:
   allow_failures:
     - rvm: ruby-head
   include:
     - rvm: 2.3.8
-      gemfile:
-        - gemfiles/rails_3.2.gemfile
+      gemfile: gemfiles/rails_3.2.gemfile
     - rvm: 2.3.8
-      gemfile:
-        - gemfiles/rails_4.2.11.gemfile
+      gemfile: gemfiles/rails_4.2.11.gemfile
     - rvm: 2.6.3
-      gemfile:
-        - gemfiles/rails_5.2.gemfile
+      gemfile: gemfiles/rails_5.2.gemfile
     - rvm: 2.6.3
-      gemfile:
-        - gemfiles/rails_6.0.gemfile
+      gemfile: gemfiles/rails_6.0.gemfile
     - rvm: ruby-head
-      gemfile:
-        - gemfiles/rails_5.2.gemfile
+      gemfile: gemfiles/rails_5.2.gemfile
     - rvm: ruby-head
-      gemfile:
-        - gemfiles/rails_6.0.gemfile
+      gemfile: gemfiles/rails_6.0.gemfile
 before_install:
   - gem update --system
   - gem install bundler
