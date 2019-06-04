@@ -1,293 +1,288 @@
 require 'spec_helper'
 
-describe "ActsAsMessageable" do
+describe 'ActsAsMessageable' do
   before do
     User.acts_as_messageable
     @message = send_message
   end
 
-  describe "send messages" do
-    it "alice should have one message" do
-      @alice.messages.count.should == 1
+  describe 'send messages' do
+    it 'alice should have one message' do
+      expect(@alice.messages.count).to eq(1)
     end
 
-    it "alice should have one message from bob" do
-      @alice.messages.are_from(@bob).count.should == 1
+    it 'alice should have one message from bob' do
+      expect(@alice.messages.are_from(@bob).count).to eq(1)
     end
 
-    it "bob should have one message" do
-      @bob.messages.count.should == 1
+    it 'bob should have one message' do
+      expect(@bob.messages.count).to eq(1)
     end
 
-    it "bob should have one message to alice in outbox" do
-      @bob.sent_messages.are_to(@alice).count.should == 1
+    it 'bob should have one message to alice in outbox' do
+      expect(@bob.sent_messages.are_to(@alice).count).to eq(1)
     end
 
-    it "bob should have one open message from alice" do
-      @alice.messages.are_from(@bob).process { |m| m.open }
-      @alice.messages.readed.count.should == 1
-    end
-  end
-
-  describe "send messages with bang" do
-    it "should raise exception" do
-      expect {
-        @alice.send_message!(@bob, :body => "body")
-      }.to raise_error(ActiveRecord::RecordInvalid)
-    end
-
-    it "should return message object" do
-      @alice.send_message!(@bob, :body => "body", :topic => "topic").should
-        be_kind_of ActsAsMessageable::Message
+    it 'bob should have one open message from alice' do
+      @alice.messages.are_from(@bob).process(&:open)
+      expect(@alice.messages.readed.count).to eq(1)
     end
   end
 
-  describe "inheritance models" do
-    it "men send message to alice" do
-      send_message(@men, @alice)
-      @men.sent_messages.size.should be_equal(1)
-      @alice.received_messages.size.should be_equal(2)
+  describe 'send messages with bang' do
+    it 'should raise exception' do
+      expect do
+        @alice.send_message!(@bob, body: 'body')
+      end.to raise_error(ActiveRecord::RecordInvalid)
     end
 
-    it "messages method should receive all messages connected with user" do
+    it 'should return message object' do
+      expect(@alice.send_message!(@bob, body: 'body', topic: 'topic')).to be_kind_of(ActsAsMessageable::Message)
+    end
+  end
+
+  describe 'inheritance models' do
+    it 'men send message to alice' do
       send_message(@men, @alice)
-      @men.messages.size.should be_equal(1)
+      expect(@men.sent_messages.size).to be_equal(1)
+      expect(@alice.received_messages.size).to be_equal(2)
     end
 
-    it "men send message and receive from alice" do
+    it 'messages method should receive all messages connected with user' do
+      send_message(@men, @alice)
+      expect(@men.messages.size).to be_equal(1)
+    end
+
+    it 'men send message and receive from alice' do
       send_message(@men, @alice)
       send_message(@alice, @men)
 
-      @men.messages.size.should be_equal(2)
-      @men.sent_messages.size.should be_equal(1)
-      @men.received_messages.size.should be_equal(1)
+      expect(@men.messages.size).to be_equal(2)
+      expect(@men.sent_messages.size).to be_equal(1)
+      expect(@men.received_messages.size).to be_equal(1)
     end
   end
 
-  describe "reply to messages" do
-
-    it "pat should not be able to reply to a message from bob to alice" do
-      @reply_message =  @pat.reply_to(@message, "Re: Topic", "Body")
-      @reply_message.should be_nil
+  describe 'reply to messages' do
+    it 'pat should not be able to reply to a message from bob to alice' do
+      @reply_message = @pat.reply_to(@message, 'Re: Topic', 'Body')
+      expect(@reply_message).to be_nil
     end
 
-    it "alice should be able to reply to a message from bob to alice" do
-      @reply_message =  @alice.reply_to(@message, "Re: Topic", "Body")
-      @reply_message.should_not be_nil
-      @bob.messages.are_from(@alice).count.should == 1
-      @alice.sent_messages.are_to(@bob).count.should == 1
+    it 'alice should be able to reply to a message from bob to alice' do
+      @reply_message =  @alice.reply_to(@message, 'Re: Topic', 'Body')
+      expect(@reply_message).not_to be_nil
+      expect(@bob.messages.are_from(@alice).count).to eq(1)
+      expect(@alice.sent_messages.are_to(@bob).count).to eq(1)
     end
 
-    it "alice should be able to reply to a message using the message object" do
-      @reply_message =  @message.reply("Re: Topic", "Body")
-      @reply_message.should_not be_nil
-      @bob.messages.are_from(@alice).count.should == 1
-      @alice.sent_messages.are_to(@bob).count.should == 1
+    it 'alice should be able to reply to a message using the message object' do
+      @reply_message =  @message.reply('Re: Topic', 'Body')
+      expect(@reply_message).not_to be_nil
+      expect(@bob.messages.are_from(@alice).count).to eq(1)
+      expect(@alice.sent_messages.are_to(@bob).count).to eq(1)
     end
 
-    it "bob try to add something to conversation" do
-      @reply_message = @bob.reply_to(@message, "Oh, I Forget", "1+1=2")
-      @reply_message.from.should  == @message.from
-      @reply_message.to.should    == @message.to
+    it 'bob try to add something to conversation' do
+      @reply_message = @bob.reply_to(@message, 'Oh, I Forget', '1+1=2')
+      expect(@reply_message.from).to  eq(@message.from)
+      expect(@reply_message.to).to    eq(@message.to)
     end
 
-    it "bob try to add something to conversation and should receive proper order" do
-      @reply_message = @bob.reply_to(@message, "Oh, I Forget", "1+1=2")
-      @sec_message   = @alice.reply_to(@message, "Yeah, right", "1+1=3!")
+    it 'bob try to add something to conversation and should receive proper order' do
+      @reply_message = @bob.reply_to(@message, 'Oh, I Forget', '1+1=2')
+      @sec_message   = @alice.reply_to(@message, 'Yeah, right', '1+1=3!')
 
-      @message.conversation.should == [@sec_message, @reply_message, @message]
+      expect(@message.conversation).to eq([@sec_message, @reply_message, @message])
     end
   end
 
-  describe "delete messages" do
-
-    it "bob should have one deleted message from alice" do
-      @bob.messages.process do |m|
-        m.delete
-      end
+  describe 'delete messages' do
+    it 'bob should have one deleted message from alice' do
+      @bob.messages.process(&:delete)
 
       @bob.messages.each do |m|
-        m.recipient_delete.should == true
-        m.sender_delete.should == false
+        expect(m.recipient_delete).to eq(true)
+        expect(m.sender_delete).to eq(false)
       end
 
-      @bob.deleted_messages.count.should == 1
-      @bob.messages.count.should == 0
+      expect(@bob.deleted_messages.count).to eq(1)
+      expect(@bob.messages.count).to eq(0)
     end
 
-    it "received_messages and sent_messages should work with .process method" do
-      @bob.sent_messages.count.should == 1
-      @alice.received_messages.count.should == 1
+    it 'received_messages and sent_messages should work with .process method' do
+      expect(@bob.sent_messages.count).to eq(1)
+      expect(@alice.received_messages.count).to eq(1)
 
-      @bob.sent_messages.process { |m| m.delete }
-      @bob.sent_messages.count.should == 0
-      @alice.received_messages.count.should == 1
+      @bob.sent_messages.process(&:delete)
+      expect(@bob.sent_messages.count).to eq(0)
+      expect(@alice.received_messages.count).to eq(1)
 
-      @alice.received_messages.process { |m| m.delete }
-      @alice.received_messages.count.should == 0
+      @alice.received_messages.process(&:delete)
+      expect(@alice.received_messages.count).to eq(0)
     end
 
-    it "message should permanent delete" do
-      @alice.messages.process { |m| m.delete }
-      @alice.messages.count.should == 0
+    it 'message should permanent delete' do
+      @alice.messages.process(&:delete)
+      expect(@alice.messages.count).to eq(0)
 
-      @alice.deleted_messages.count.should == 1
-      @alice.deleted_messages.process { |m| m.delete }
-      @alice.deleted_messages.count.should == 0
+      expect(@alice.deleted_messages.count).to eq(1)
+      @alice.deleted_messages.process(&:delete)
+      expect(@alice.deleted_messages.count).to eq(0)
 
       @message.reload
-      @message.recipient_permanent_delete.should == true
+      expect(@message.recipient_permanent_delete).to eq(true)
 
-      @bob.sent_messages.count.should == 1
+      expect(@bob.sent_messages.count).to eq(1)
     end
 
-    it "pat should not able to delete message" do
-      lambda { @pat.delete_message(@message) }.should raise_error
+    it 'pat should not able to delete message' do
+      expect { @pat.delete_message(@message) }.to raise_error(RuntimeError)
     end
   end
 
-  describe "restore message" do
-    it "alice should restore message" do
-      @alice.received_messages.process { |m| m.delete }
+  describe 'restore message' do
+    it 'alice should restore message' do
+      @alice.received_messages.process(&:delete)
       @alice.restore_message(@message.reload)
-      @alice.received_messages.count.should == 1
+      expect(@alice.received_messages.count).to eq(1)
     end
 
-    it "should works with relation" do
-      @alice.received_messages.process { |m| m.delete }
-      @alice.received_messages.count.should == 0
-      @alice.deleted_messages.process { |m| m.restore }
-      @alice.received_messages.count.should == 1
+    it 'should works with relation' do
+      @alice.received_messages.process(&:delete)
+      expect(@alice.received_messages.count).to eq(0)
+      @alice.deleted_messages.process(&:restore)
+      expect(@alice.received_messages.count).to eq(1)
     end
 
-    it "pat should not able to restore message" do
-      lambda { @pat.restore_message(@message) }.should raise_error
+    it 'pat should not able to restore message' do
+      expect { @pat.restore_message(@message) }.to raise_error(RuntimeError)
     end
   end
 
-  describe "read/unread feature" do
-    it "alice should have one unread message from bob" do
-      @alice.messages.are_from(@bob).unreaded.count.should == 1
-      @alice.messages.are_from(@bob).readed.count.should == 0
+  describe 'read/unread feature' do
+    it 'alice should have one unread message from bob' do
+      expect(@alice.messages.are_from(@bob).unreaded.count).to eq(1)
+      expect(@alice.messages.are_from(@bob).readed.count).to eq(0)
     end
 
-    it "alice should able to read message from bob" do
+    it 'alice should able to read message from bob' do
       @alice.messages.are_from(@bob).first.read
-      @alice.messages.are_from(@bob).unreaded.count.should == 0
+      expect(@alice.messages.are_from(@bob).unreaded.count).to eq(0)
     end
 
-    it "alice should able to unread message from bob" do
+    it 'alice should able to unread message from bob' do
       @alice.messages.are_from(@bob).first.read
       @alice.messages.are_from(@bob).first.unread
-      @alice.messages.are_from(@bob).unreaded.count.should == 1
+      expect(@alice.messages.are_from(@bob).unreaded.count).to eq(1)
     end
 
-    it "alice should able to get datetime when he read bob message" do
+    it 'alice should able to get datetime when he read bob message' do
       @alice.messages.are_from(@bob).first.read
       read_datetime = @alice.messages.are_from(@bob).first.updated_at
-      @alice.messages.are_from(@bob).reorder("updated_at asc").first.updated_at.should == read_datetime
+      expect(@alice.messages.are_from(@bob).reorder('updated_at asc').first.updated_at).to eq(read_datetime)
     end
   end
 
-  it "finds proper message" do
+  it 'finds proper message' do
     @bob.messages.find(@message.id) == @message
   end
 
-  it "message should have proper topic" do
-    @bob.messages.count.should == 1
-    @bob.messages.first.topic == "Topic"
+  it 'message should have proper topic' do
+    expect(@bob.messages.count).to eq(1)
+    @bob.messages.first.topic == 'Topic'
   end
 
-  describe "conversation" do
-    it "bob send message to alice, and alice reply to bob message and show proper tree" do
-      @reply_message =  @alice.reply_to(@message, "Re: Topic", "Body")
+  describe 'conversation' do
+    it 'bob send message to alice, and alice reply to bob message and show proper tree' do
+      @reply_message = @alice.reply_to(@message, 'Re: Topic', 'Body')
 
-      @reply_message.conversation.size.should == 2
-      @reply_message.conversation.last.topic.should == "Topic"
-      @reply_message.conversation.first.topic.should == "Re: Topic"
+      expect(@reply_message.conversation.size).to eq(2)
+      expect(@reply_message.conversation.last.topic).to eq('Topic')
+      expect(@reply_message.conversation.first.topic).to eq('Re: Topic')
     end
 
-    it "bob send message to alice, alice answer, and bob answer for alice answer" do
-      @reply_message = @alice.reply_to(@message, "Re: Topic", "Body")
-      @reply_reply_message = @bob.reply_to(@reply_message, "Re: Re: Topic", "Body")
+    it 'bob send message to alice, alice answer, and bob answer for alice answer' do
+      @reply_message = @alice.reply_to(@message, 'Re: Topic', 'Body')
+      @reply_reply_message = @bob.reply_to(@reply_message, 'Re: Re: Topic', 'Body')
 
       [@message, @reply_message, @reply_reply_message].each do |m|
-        m.conversation.size.should == 3
+        expect(m.conversation.size).to eq(3)
       end
 
-      @message.conversation.first.should == @reply_reply_message
-      @reply_reply_message.conversation.first.should == @reply_reply_message
+      expect(@message.conversation.first).to eq(@reply_reply_message)
+      expect(@reply_reply_message.conversation.first).to eq(@reply_reply_message)
     end
   end
 
-  describe "conversations" do
+  describe 'conversations' do
     before do
-      @reply_message = @message.reply("Re: Topic", "Body")
-      @reply_reply_message = @reply_message.reply("Re: Re: Topic", "Body")
+      @reply_message = @message.reply('Re: Topic', 'Body')
+      @reply_reply_message = @reply_message.reply('Re: Re: Topic', 'Body')
     end
 
-    it "bob send message to alice and alice reply" do
-      @bob.messages.conversations.should == [@reply_reply_message]
-      @reply_message.conversation.should == [@reply_reply_message, @reply_message, @message]
+    it 'bob send message to alice and alice reply' do
+      expect(@bob.messages.conversations).to eq([@reply_reply_message])
+      expect(@reply_message.conversation).to eq([@reply_reply_message, @reply_message, @message])
     end
 
-    it "show conversations in proper order" do
-      @sec_message = @bob.send_message(@alice, "Hi", "Alice!")
-      @sec_reply = @sec_message.reply("Re: Hi", "Fine!")
-      @bob.received_messages.conversations.map(&:id).should == [@sec_reply.id, @reply_reply_message.id]
-      @sec_reply.conversation.to_a.should == [@sec_reply, @sec_message]
+    it 'show conversations in proper order' do
+      @sec_message = @bob.send_message(@alice, 'Hi', 'Alice!')
+      @sec_reply = @sec_message.reply('Re: Hi', 'Fine!')
+      expect(@bob.received_messages.conversations.map(&:id)).to eq([@sec_reply.id, @reply_reply_message.id])
+      expect(@sec_reply.conversation.to_a).to eq([@sec_reply, @sec_message])
     end
   end
 
-  describe "search text from messages" do
+  describe 'search text from messages' do
     before do
-      @reply_message = @message.reply("Re: Topic", "Body : I am fine")
-      @reply_reply_message = @reply_message.reply("Re: Re: Topic", "Fine too")
+      @reply_message = @message.reply('Re: Topic', 'Body : I am fine')
+      @reply_reply_message = @reply_message.reply('Re: Re: Topic', 'Fine too')
     end
 
-    it "bob should be able to search text from messages" do
-      recordset = @bob.messages.search("I am fine")
-      recordset.count.should == 1
-      recordset.should_not be_nil
-    end
-  end
-
-  describe "send messages with hash" do
-    it "send message with hash" do
-      @message = @bob.send_message(@alice, {:body => "Body", :topic => "Topic"})
-      @message.topic.should == "Topic"
-      @message.body.should == "Body"
+    it 'bob should be able to search text from messages' do
+      recordset = @bob.messages.search('I am fine')
+      expect(recordset.count).to eq(1)
+      expect(recordset).not_to be_nil
     end
   end
 
-  it "messages should return in right order :created_at" do
-    @message = send_message(@bob, @alice, "Example", "Example Body")
-    @alice.messages.last.body.should == "Body"
+  describe 'send messages with hash' do
+    it 'send message with hash' do
+      @message = @bob.send_message(@alice, body: 'Body', topic: 'Topic')
+      expect(@message.topic).to eq('Topic')
+      expect(@message.body).to eq('Body')
+    end
   end
 
-  it "received_messages should return unloaded messages" do
-    @alice.received_messages.loaded?.should be_false
+  it 'messages should return in right order :created_at' do
+    @message = send_message(@bob, @alice, 'Example', 'Example Body')
+    expect(@alice.messages.last.body).to eq('Body')
   end
 
-  it "sent_messages should return unloaded messages" do
-    @bob.sent_messages.loaded?.should be_false
+  it 'received_messages should return unloaded messages' do
+    expect(@alice.received_messages.loaded?).to be_falsey
   end
 
-  describe "send messages between two different models (the same id)" do
-    it "should have the same id" do
-      @alice.id.should be_equal(@admin.id)
+  it 'sent_messages should return unloaded messages' do
+    expect(@bob.sent_messages.loaded?).to be_falsey
+  end
+
+  describe 'send messages between two different models (the same id)' do
+    it 'should have the same id' do
+      expect(@alice.id).to be_equal(@admin.id)
     end
 
-    it "bob send message to admin (different model) with the same id" do
-      @bob.send_message(@alice, "hello", "alice")
-      @alice.messages.are_to(@alice).size.should be_equal(2)
-      @alice.messages.are_to(@admin).size.should be_equal(0)
+    it 'bob send message to admin (different model) with the same id' do
+      @bob.send_message(@alice, 'hello', 'alice')
+      expect(@alice.messages.are_to(@alice).size).to be_equal(2)
+      expect(@alice.messages.are_to(@admin).size).to be_equal(0)
     end
 
-    it "admin send message to bob" do
-      @admin.send_message(@bob, "hello", "bob")
-      @bob.messages.are_from(@admin).size.should be_equal(1)
-      @bob.messages.are_from(@alice).size.should be_equal(0)
+    it 'admin send message to bob' do
+      @admin.send_message(@bob, 'hello', 'bob')
+      expect(@bob.messages.are_from(@admin).size).to be_equal(1)
+      expect(@bob.messages.are_from(@alice).size).to be_equal(0)
     end
   end
 end
