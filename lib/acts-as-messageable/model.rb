@@ -34,13 +34,8 @@ module ActsAsMessageable
         self.messages_class_name = options[:class_name].constantize
         messages_class_name.has_ancestry
 
-        if messages_class_name.respond_to?(:table_name=)
-          messages_class_name.table_name = options[:table_name]
-          messages_class_name.initialize_scopes
-        else
-          messages_class_name.set_table_name(options[:table_name])
-          ActiveSupport::Deprecation.warn("Calling set_table_name is deprecated. Please use `self.table_name = 'the_name'` instead.")
-        end
+        messages_class_name.table_name = options[:table_name]
+        messages_class_name.initialize_scopes
 
         messages_class_name.required = Array.wrap(options[:required])
         messages_class_name.validates_presence_of messages_class_name.required

@@ -4,10 +4,6 @@ module ActsAsMessageable
       @subject = subject
     end
 
-    def attr_accessible(*args)
-      @subject.attr_accessible(*args)
-    end
-
     def default_scope(order_by)
       @subject.send(:default_scope, order(order_by))
     end

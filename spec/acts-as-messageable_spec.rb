@@ -164,6 +164,7 @@ describe 'ActsAsMessageable' do
     it 'alice should have one unread message from bob' do
       expect(@alice.messages.are_from(@bob).unreaded.count).to eq(1)
       expect(@alice.messages.are_from(@bob).readed.count).to eq(0)
+      expect(@alice.messages.are_from(@bob).readed.all? { |message| message.open? }).to be_truthy
     end
 
     it 'alice should able to read message from bob' do
