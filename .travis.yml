@@ -20,5 +20,5 @@ before_install:
 
 cache:
   - bundler
-  directories:
+  - directories:
     - /home/travis/.rvm/
