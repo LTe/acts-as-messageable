@@ -17,3 +17,8 @@ matrix:
 before_install:
   - gem update --system
   - gem install bundler
+
+cache:
+  - bundler
+  directories:
+    - /home/travis/.rvm/
