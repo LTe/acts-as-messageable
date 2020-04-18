@@ -12,6 +12,7 @@ appraise "rails-4.2.11" do
   gem "activerecord", "~> 4.2.11"
   gem "activesupport", "~> 4.2.11"
   gem "railties", "~> 4.2.11"
+  gem "rdoc", "6.2.0"
 
   group :development do
     gem 'sqlite3', '~> 1.3.6'
@@ -29,11 +30,23 @@ appraise 'rails-5.2' do
 end
 
 appraise 'rails-6.0' do
-  gem 'activerecord', '~> 6.0.0.rc1'
-  gem 'activesupport', '~> 6.0.0.rc1'
-  gem 'railties', '~> 6.0.0.rc1'
+  gem 'activerecord', '~> 6'
+  gem 'activesupport', '~> 6'
+  gem 'railties', '~> 6'
 
   group :development do
     gem 'sqlite3', '~> 1.4.0'
+  end
+end
+
+appraise 'rails-master' do
+  git 'https://github.com/rails/rails.git', branch: :master do
+    gem 'activerecord'
+    gem 'activesupport'
+    gem 'railties'
+  end
+
+  group :development do
+    gem 'sqlite3'
   end
 end
