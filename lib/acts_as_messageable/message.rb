@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ancestry'
 
 module ActsAsMessageable
@@ -5,10 +7,10 @@ module ActsAsMessageable
     include ActsAsMessageable::Scopes
 
     belongs_to :received_messageable, polymorphic: true
-    belongs_to :sent_messageable,     polymorphic: true
+    belongs_to :sent_messageable, polymorphic: true
 
-    attr_accessor   :removed, :restored
-    cattr_accessor  :required
+    attr_accessor :removed, :restored
+    cattr_accessor :required
 
     ActsAsMessageable.rails_api.new(self).default_scope('created_at desc')
 
@@ -19,17 +21,19 @@ module ActsAsMessageable
     def open
       update_attributes!(opened: true)
     end
+
     alias mark_as_read open
-    alias read         open
+    alias read open
 
     def close
       update_attributes!(opened: false)
     end
+
     alias mark_as_unread close
-    alias unread         close
+    alias unread close
 
     alias from sent_messageable
-    alias to   received_messageable
+    alias to received_messageable
 
     def real_receiver(user)
       user == from ? to : from

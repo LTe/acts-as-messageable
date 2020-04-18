@@ -6,3 +6,6 @@
 spec/database.yml
 ./tags
 tags
+lor
+coverage
+gemfiles/*.lock

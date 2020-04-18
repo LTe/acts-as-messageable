@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActsAsMessageable
   class Rails4
     def initialize(subject)
@@ -13,7 +15,11 @@ module ActsAsMessageable
     end
 
     def method_missing(name, *args)
-      @subject.send(name, *args)
+      @subject.send(name, *args) || super
+    end
+
+    def respond_to_missing?(method_name, include_private = false)
+      %w[default_scope scoped].include?(method_name) || super
     end
   end
 end

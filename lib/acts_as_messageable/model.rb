@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActsAsMessageable
   module Model
     def self.included(base)
@@ -22,14 +24,14 @@ module ActsAsMessageable
         }
         options = default_options.merge(options)
 
-        has_many  :received_messages_relation,
-                  as: :received_messageable,
-                  class_name: options[:class_name],
-                  dependent: options[:dependent]
-        has_many  :sent_messages_relation,
-                  as: :sent_messageable,
-                  class_name: options[:class_name],
-                  dependent: options[:dependent]
+        has_many :received_messages_relation,
+                 as: :received_messageable,
+                 class_name: options[:class_name],
+                 dependent: options[:dependent]
+        has_many :sent_messages_relation,
+                 as: :sent_messageable,
+                 class_name: options[:class_name],
+                 dependent: options[:dependent]
 
         self.messages_class_name = options[:class_name].constantize
         messages_class_name.has_ancestry
@@ -42,7 +44,7 @@ module ActsAsMessageable
         self.group_messages = options[:group_messages]
 
         include ActsAsMessageable::Model::InstanceMethods
-    end
+      end
 
       # Method recognize real object class
       # @return [ActiveRecord::Base] class or relation object
@@ -117,9 +119,7 @@ module ActsAsMessageable
       #
       # @return [ActsAsMessageable::Message] the message object
       def send_message!(to, *args)
-        send_message(to, *args).tap do |message|
-          message.save!
-        end
+        send_message(to, *args).tap(&:save!)
       end
 
       # Reply to given message
@@ -131,13 +131,13 @@ module ActsAsMessageable
       def reply_to(message, *args)
         current_user = self
 
-        if message.participant?(current_user)
-          reply_message = send_message(message.real_receiver(current_user), *args)
-          reply_message.parent = message
-          reply_message.save
+        return unless message.participant?(current_user)
 
-          reply_message
-        end
+        reply_message = send_message(message.real_receiver(current_user), *args)
+        reply_message.parent = message
+        reply_message.save
+
+        reply_message
       end
 
       # Mark message as deleted
