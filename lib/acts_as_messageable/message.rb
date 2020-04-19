@@ -13,7 +13,7 @@ module ActsAsMessageable
     cattr_accessor :required
 
     ActsAsMessageable.rails_api.new(self).attr_accessible(
-      :topic, :body, :opened, :recipient_permanent_delete,
+      :topic, :body, :opened, :opened_at, :recipient_permanent_delete,
       :recipient_delete, :sender_permanent_delete, :sender_delete
     )
     ActsAsMessageable.rails_api.new(self).default_scope('created_at desc')
@@ -23,11 +23,11 @@ module ActsAsMessageable
     end
 
     def opened?
-      opened_at.present?
+      opened_at.present? || super
     end
 
     def open
-      update_attributes!(:opened_at => DateTime.now)
+      update_attributes!(opened_at: DateTime.now)
       update_attributes!(opened: true)
     end
 
@@ -35,7 +35,7 @@ module ActsAsMessageable
     alias read open
 
     def close
-      update_attributes!(:opened_at => nil)
+      update_attributes!(opened_at: nil)
       update_attributes!(opened: false)
     end
 
