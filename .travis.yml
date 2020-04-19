@@ -18,6 +18,11 @@ matrix:
       gemfile: gemfiles/rails_master.gemfile
     - rvm: ruby-head
       gemfile: gemfiles/rails_master.gemfile
+    - rvm: 2.7
+      stage: "Static analysis"
+      gemfile: gemfiles/rails_6.0.gemfile
+      name: "Rubocop"
+      script: rake rubocop
 before_install:
   - gem update --system
   - gem install bundler

@@ -1,0 +1,19 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  TargetRubyVersion: 2.7
+  Exclude:
+    - 'lib/generators/acts_as_messageable/migration/templates/*'
+    - 'vendor/**/*'
+    - 'gemfiles/vendor/**/*'
+  NewCops: enable
+
+Layout/LineLength:
+  Max: 120
+
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context']
+
+Naming/FileName:
+  Exclude:
+    - 'lib/acts-as-messageable.rb'

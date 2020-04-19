@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'custom require' do
   before(:each) do
     # Use clean version of Message class
     ActsAsMessageable.instance_eval { remove_const 'Message' }
-    load 'acts-as-messageable/message.rb'
+    load 'acts_as_messageable/message.rb'
   end
 
   it 'should work with non-array require' do

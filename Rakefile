@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rubygems'
 require 'bundler'
 begin
@@ -8,6 +10,7 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 require 'rake'
+require 'rubocop/rake_task'
 
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
@@ -19,6 +22,7 @@ Jeweler::Tasks.new do |gem|
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
+RuboCop::RakeTask.new
 
 require 'rspec/core'
 require 'rspec/core/rake_task'

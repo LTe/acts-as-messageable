@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'ActsAsMessageable' do
@@ -70,14 +72,14 @@ describe 'ActsAsMessageable' do
     end
 
     it 'alice should be able to reply to a message from bob to alice' do
-      @reply_message =  @alice.reply_to(@message, 'Re: Topic', 'Body')
+      @reply_message = @alice.reply_to(@message, 'Re: Topic', 'Body')
       expect(@reply_message).not_to be_nil
       expect(@bob.messages.are_from(@alice).count).to eq(1)
       expect(@alice.sent_messages.are_to(@bob).count).to eq(1)
     end
 
     it 'alice should be able to reply to a message using the message object' do
-      @reply_message =  @message.reply('Re: Topic', 'Body')
+      @reply_message = @message.reply('Re: Topic', 'Body')
       expect(@reply_message).not_to be_nil
       expect(@bob.messages.are_from(@alice).count).to eq(1)
       expect(@alice.sent_messages.are_to(@bob).count).to eq(1)
@@ -85,13 +87,13 @@ describe 'ActsAsMessageable' do
 
     it 'bob try to add something to conversation' do
       @reply_message = @bob.reply_to(@message, 'Oh, I Forget', '1+1=2')
-      expect(@reply_message.from).to  eq(@message.from)
-      expect(@reply_message.to).to    eq(@message.to)
+      expect(@reply_message.from).to eq(@message.from)
+      expect(@reply_message.to).to eq(@message.to)
     end
 
     it 'bob try to add something to conversation and should receive proper order' do
       @reply_message = @bob.reply_to(@message, 'Oh, I Forget', '1+1=2')
-      @sec_message   = @alice.reply_to(@message, 'Yeah, right', '1+1=3!')
+      @sec_message = @alice.reply_to(@message, 'Yeah, right', '1+1=3!')
 
       expect(@message.conversation).to eq([@sec_message, @reply_message, @message])
     end
@@ -164,7 +166,7 @@ describe 'ActsAsMessageable' do
     it 'alice should have one unread message from bob' do
       expect(@alice.messages.are_from(@bob).unreaded.count).to eq(1)
       expect(@alice.messages.are_from(@bob).readed.count).to eq(0)
-      expect(@alice.messages.are_from(@bob).readed.all? { |message| message.open? }).to be_truthy
+      expect(@alice.messages.are_from(@bob).readed.all?(&:open?)).to be_truthy
     end
 
     it 'alice should able to read message from bob' do

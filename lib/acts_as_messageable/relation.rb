@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActsAsMessageable
   module Relation
     attr_accessor :relation_context
@@ -5,8 +7,8 @@ module ActsAsMessageable
     def process(context = relation_context)
       each do |message|
         yield(message) if block_given?
-        context.delete_message(message)   if message.removed
-        context.restore_message(message)  if message.restored
+        context.delete_message(message) if message.removed
+        context.restore_message(message) if message.restored
       end
     end
 

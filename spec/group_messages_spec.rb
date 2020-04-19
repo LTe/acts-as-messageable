@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'group messages' do
   let(:alice) { User.find_by_email('alice@example.com') }
-  let(:bob)   { User.find_by_email('bob@example.com') }
-  let(:pat)   { User.find_by_email('pat@example.com') }
+  let(:bob) { User.find_by_email('bob@example.com') }
+  let(:pat) { User.find_by_email('pat@example.com') }
 
   before do
     User.acts_as_messageable group_messages: true

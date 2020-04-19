@@ -1,18 +1,20 @@
-appraise "rails-3.2" do
-  gem "activerecord", "~> 3.2.22"
-  gem "activesupport", "~> 3.2.22"
-  gem "railties", "~> 3.2.22"
+# frozen_string_literal: true
+
+appraise 'rails-3.2' do
+  gem 'activerecord', '~> 3.2.22'
+  gem 'activesupport', '~> 3.2.22'
+  gem 'railties', '~> 3.2.22'
 
   group :development do
     gem 'sqlite3', '~> 1.3.6'
   end
 end
 
-appraise "rails-4.2.11" do
-  gem "activerecord", "~> 4.2.11"
-  gem "activesupport", "~> 4.2.11"
-  gem "railties", "~> 4.2.11"
-  gem "rdoc", "6.2.0"
+appraise 'rails-4.2.11' do
+  gem 'activerecord', '~> 4.2.11'
+  gem 'activesupport', '~> 4.2.11'
+  gem 'railties', '~> 4.2.11'
+  gem 'rdoc', '6.2.0'
 
   group :development do
     gem 'sqlite3', '~> 1.3.6'
@@ -40,11 +42,9 @@ appraise 'rails-6.0' do
 end
 
 appraise 'rails-master' do
-  git 'https://github.com/rails/rails.git', branch: :master do
-    gem 'activerecord'
-    gem 'activesupport'
-    gem 'railties'
-  end
+  gem 'activerecord', git: 'https://github.com/rails/rails.git'
+  gem 'activesupport', git: 'https://github.com/rails/rails.git'
+  gem 'railties', git: 'https://github.com/rails/rails.git'
 
   group :development do
     gem 'sqlite3'
