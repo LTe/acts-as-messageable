@@ -14,6 +14,8 @@ module ActsAsMessageable
       @subject.scope
     end
 
+    def attr_accessible(*); end
+
     def method_missing(name, *args)
       @subject.send(name, *args) || super
     end
