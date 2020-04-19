@@ -14,13 +14,15 @@ module ActsAsMessageable
       # @param [String] :class_name - message class name
       # @param [Array, Symbol] :required - required fields in message
       # @param [Symbol] :dependent - dependent option from ActiveRecord has_many method
+      # @param [Symbol] :search_scope - name of a scope for a full text search
       def acts_as_messageable(options = {})
         default_options = {
           table_name: 'messages',
           class_name: 'ActsAsMessageable::Message',
           required: %i[topic body],
           dependent: :nullify,
-          group_messages: false
+          group_messages: false,
+          search_scope: :search
         }
         options = default_options.merge(options)
 
@@ -37,7 +39,7 @@ module ActsAsMessageable
         messages_class_name.has_ancestry
 
         messages_class_name.table_name = options[:table_name]
-        messages_class_name.initialize_scopes
+        messages_class_name.initialize_scopes(options[:search_scope])
 
         messages_class_name.required = Array.wrap(options[:required])
         messages_class_name.validates_presence_of messages_class_name.required

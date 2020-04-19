@@ -14,3 +14,7 @@ TABLE_SCHEMA = lambda do |t|
   t.string :ancestry
   t.timestamps
 end
+
+USER_SCHEMA = lambda do |t|
+  t.string :email
+end
