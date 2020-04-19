@@ -10,6 +10,8 @@ ActiveRecord::Base.logger.level = 3
 require 'coveralls'
 Coveralls.wear!
 
+require 'timecop'
+
 require 'bundler/setup'
 Bundler.require(:default)
 

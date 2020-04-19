@@ -37,8 +37,8 @@ module ActsAsMessageable
                 r_perm_delete: false,
                 s_perm_delete: false)
         }
-        scope :readed, -> { where(opened: true) }
-        scope :unreaded, -> { where(opened: false) }
+        scope :readed, -> { where('opened_at is not null OR opened = ?', true) }
+        scope :unreaded, -> { where('opened_at is null OR opened = ?', false) }
         scope :deleted, -> { where(recipient_delete: true, sender_delete: true) }
       end
     end

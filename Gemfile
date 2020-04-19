@@ -14,4 +14,5 @@ group :development do
   gem 'rspec'
   gem 'rubocop', require: false
   gem 'sqlite3'
+  gem 'timecop'
 end

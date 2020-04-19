@@ -18,15 +18,18 @@ module ActsAsMessageable
 
     def create_migration_file
       begin
-        migration_template('migration.rb', 'db/migrate/create_messages_table.rb')
+        migration_template 'migration.rb', 'db/migrate/create_messages_table.rb'
       rescue StandardError
         nil
       end
       begin
-        migration_template(
-          'migration_permanent.rb',
-          'db/migrate/add_recipient_permanent_delete_and_sender_permanent_delete_to_messages.rb'
-        )
+        migration_template 'migration_permanent.rb',
+                           'db/migrate/add_recipient_permanent_delete_and_sender_permanent_delete_to_messages.rb'
+      rescue StandardError
+        nil
+      end
+      begin
+        migration_template 'migration_opened_as_datetime.rb', 'db/migrate/add_opened_at_to_messages.rb'
       rescue StandardError
         nil
       end

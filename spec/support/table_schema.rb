@@ -10,6 +10,7 @@ TABLE_SCHEMA = lambda do |t|
   t.boolean :sender_delete, default: false
   t.boolean :recipient_permanent_delete, default: false
   t.boolean :sender_permanent_delete, default: false
+  t.datetime :opened_at, :datetime
   t.string :ancestry
   t.timestamps
 end
