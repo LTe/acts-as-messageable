@@ -288,4 +288,14 @@ describe 'ActsAsMessageable' do
       expect(@bob.messages.are_from(@alice).size).to be_equal(0)
     end
   end
+
+  describe 'mass assigment', skip: Rails::VERSION::MAJOR >= 4 do
+    it 'allows to mass assign topic and body attributes' do
+      @message = send_message(@bob, @alice, 'Example', 'Example Body')
+      @message.update_attributes!(topic: 'Changed topic', body: 'Changed body')
+
+      expect(@message.topic).to eq('Changed topic')
+      expect(@message.body).to eq('Changed body')
+    end
+  end
 end

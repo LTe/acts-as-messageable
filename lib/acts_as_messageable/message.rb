@@ -12,6 +12,10 @@ module ActsAsMessageable
     attr_accessor :removed, :restored
     cattr_accessor :required
 
+    ActsAsMessageable.rails_api.new(self).attr_accessible(
+      :topic, :body, :opened, :recipient_permanent_delete,
+      :recipient_delete, :sender_permanent_delete, :sender_delete
+    )
     ActsAsMessageable.rails_api.new(self).default_scope('created_at desc')
 
     def open?
