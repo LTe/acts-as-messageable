@@ -6,19 +6,15 @@ module ActsAsMessageable
   module Scopes
     extend ActiveSupport::Concern
 
-    included do
-      initialize_scopes
-    end
-
     module ClassMethods
-      def initialize_scopes
+      def initialize_scopes(search_scope)
         scope :are_from, lambda { |*args|
           where(sent_messageable_id: args.first, sent_messageable_type: args.first.class.name)
         }
         scope :are_to, lambda { |*args|
           where(received_messageable_id: args.first, received_messageable_type: args.first.class.name)
         }
-        scope :search, lambda { |*args|
+        scope search_scope, lambda { |*args|
           where('body like :search_txt or topic like :search_txt', search_txt: "%#{args.first}%")
         }
         scope :connected_with, lambda { |*args|

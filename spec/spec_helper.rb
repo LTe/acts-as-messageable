@@ -31,6 +31,7 @@ RSpec.configure do |config|
     @pat = User.create email: 'pat@example.com'
     @admin = Admin.create email: 'admin@example.com'
     @men = Men.create email: 'men@example.com'
+    @custom_search_user = CustomSearchUser.create email: 'custom@example.com'
   end
 
   config.after(:all) do
@@ -47,13 +48,9 @@ def create_database
     create_table(:messages, &TABLE_SCHEMA)
     create_table(:custom_messages, &TABLE_SCHEMA)
 
-    create_table :users do |t|
-      t.string :email
-    end
-
-    create_table :admins do |t|
-      t.string :email
-    end
+    create_table(:users, &USER_SCHEMA)
+    create_table(:admins, &USER_SCHEMA)
+    create_table(:custom_search_users, &USER_SCHEMA)
   end
 end
 

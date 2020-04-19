@@ -43,10 +43,11 @@ Usage
 ```ruby
 class User < ActiveRecord::Base
   acts_as_messageable :table_name => "table_with_messages", # default 'messages'
-                      :required   => :body                  # default [:topic, :body]
-                      :class_name => "CustomMessages"       # default "ActsAsMessageable::Message",
-                      :dependent  => :destroy               # default :nullify
-                      :group_messages => true               # default false
+                      :required   => :body,                 # default [:topic, :body]
+                      :class_name => "CustomMessages",      # default "ActsAsMessageable::Message",
+                      :dependent  => :destroy,              # default :nullify
+                      :group_messages => true,              # default false
+                      :search_scope => :custom_search       # default :search
 end
 ```
 
