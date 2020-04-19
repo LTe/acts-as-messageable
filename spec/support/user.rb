@@ -6,3 +6,6 @@ end
 
 class Men < User
 end
+
+class CustomSearchUser < ActiveRecord::Base
+end

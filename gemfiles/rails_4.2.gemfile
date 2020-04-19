@@ -4,10 +4,10 @@
 
 source 'http://rubygems.org'
 
-gem 'activerecord', '~> 4.2.11'
-gem 'activesupport', '~> 4.2.11'
+gem 'activerecord', '~> 4.2'
+gem 'activesupport', '~> 4.2'
 gem 'ancestry'
-gem 'railties', '~> 4.2.11'
+gem 'railties', '~> 4.2'
 gem 'rdoc', '6.2.0'
 
 group :development do
