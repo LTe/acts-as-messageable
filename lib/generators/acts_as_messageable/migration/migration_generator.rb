@@ -7,7 +7,7 @@ module ActsAsMessageable
   class MigrationGenerator < Rails::Generators::Base
     include Rails::Generators::Migration
 
-    namespace 'acts-as-messageable:migration'
+    namespace 'acts_as_messageable:migration'
 
     source_root File.join(File.dirname(__FILE__), 'templates')
     argument :table_name, type: :string, default: 'messages'
@@ -30,6 +30,11 @@ module ActsAsMessageable
       end
       begin
         migration_template 'migration_opened_as_datetime.rb', 'db/migrate/add_opened_at_to_messages.rb'
+      rescue StandardError
+        nil
+      end
+      begin
+        migration_template 'migration_indexes.rb', 'db/migrate/add_indexes_to_messages.rb'
       rescue StandardError
         nil
       end

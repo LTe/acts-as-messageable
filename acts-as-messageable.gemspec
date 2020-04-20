@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new('>= 0') if s.respond_to? :required_rubygems_version=
   s.require_paths = ['lib']
   s.authors = ['Piotr Nielacny']
-  s.date = '2020-04-18'
+  s.date = '2020-04-19'
   s.email = 'piotr.nielacny@gmail.com'
   s.extra_rdoc_files = [
     'README.md'
@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
     '.coveralls.yml',
     '.rspec',
     '.rubocop.yml',
+    '.rubocop_todo.yml',
     '.travis.yml',
     'Appraisals',
     'Gemfile',
@@ -32,14 +33,11 @@ Gem::Specification.new do |s|
     'VERSION',
     'acts-as-messageable.gemspec',
     'gemfiles/rails_3.2.gemfile',
-    'gemfiles/rails_3.2.gemfile.lock',
     'gemfiles/rails_4.2.11.gemfile',
-    'gemfiles/rails_4.2.11.gemfile.lock',
     'gemfiles/rails_5.2.gemfile',
-    'gemfiles/rails_5.2.gemfile.lock',
     'gemfiles/rails_6.0.gemfile',
-    'gemfiles/rails_6.0.gemfile.lock',
     'gemfiles/rails_master.gemfile',
+    'lib/acts-as-messageable.rb',
     'lib/acts_as_messageable.rb',
     'lib/acts_as_messageable/message.rb',
     'lib/acts_as_messageable/model.rb',
@@ -50,11 +48,14 @@ Gem::Specification.new do |s|
     'lib/acts_as_messageable/scopes.rb',
     'lib/generators/acts_as_messageable/migration/migration_generator.rb',
     'lib/generators/acts_as_messageable/migration/templates/migration.rb',
+    'lib/generators/acts_as_messageable/migration/templates/migration_indexes.rb',
+    'lib/generators/acts_as_messageable/migration/templates/migration_opened_as_datetime.rb',
     'lib/generators/acts_as_messageable/migration/templates/migration_permanent.rb',
     'spec/acts_as_messageable_spec.rb',
     'spec/custom_class_spec.rb',
     'spec/custom_required_spec.rb',
     'spec/group_messages_spec.rb',
+    'spec/migrations_spec.rb',
     'spec/spec_helper.rb',
     'spec/support/admin.rb',
     'spec/support/send_message.rb',
@@ -69,26 +70,41 @@ Gem::Specification.new do |s|
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0')
+      s.add_runtime_dependency('activerecord', ['>= 0'])
+      s.add_runtime_dependency('activesupport', ['>= 0'])
+      s.add_runtime_dependency('ancestry', ['>= 0'])
+      s.add_runtime_dependency('railties', ['>= 0'])
       s.add_development_dependency('appraisal', ['>= 0'])
       s.add_development_dependency('coveralls', ['>= 0'])
       s.add_development_dependency('jeweler', ['>= 0'])
       s.add_development_dependency('rspec', ['>= 0'])
       s.add_development_dependency('rubocop', ['>= 0'])
       s.add_development_dependency('sqlite3', ['>= 0'])
+      s.add_development_dependency('timecop', ['>= 0'])
     else
+      s.add_dependency('activerecord', ['>= 0'])
+      s.add_dependency('activesupport', ['>= 0'])
+      s.add_dependency('ancestry', ['>= 0'])
       s.add_dependency('appraisal', ['>= 0'])
       s.add_dependency('coveralls', ['>= 0'])
       s.add_dependency('jeweler', ['>= 0'])
+      s.add_dependency('railties', ['>= 0'])
       s.add_dependency('rspec', ['>= 0'])
       s.add_dependency('rubocop', ['>= 0'])
       s.add_dependency('sqlite3', ['>= 0'])
+      s.add_dependency('timecop', ['>= 0'])
     end
   else
-    s.add_dependency('appraisal', ['>= 0'])
-    s.add_dependency('coveralls', ['>= 0'])
-    s.add_dependency('jeweler', ['>= 0'])
+    s.add_dependency('activerecord', ['>= 0'])
+    s.add_dependency('activesupport', ['>= 0'])
+    s.add_dependency('ancestry', ['>= 0'])
+    s.add_dependency('railties', ['>= 0'])
+    s.add_dependency('railties', ['>= 0'])
+    s.add_dependency('railties', ['>= 0'])
+    s.add_dependency('railties', ['>= 0'])
     s.add_dependency('rspec', ['>= 0'])
     s.add_dependency('rubocop', ['>= 0'])
     s.add_dependency('sqlite3', ['>= 0'])
+    s.add_dependency('timecop', ['>= 0'])
   end
 end

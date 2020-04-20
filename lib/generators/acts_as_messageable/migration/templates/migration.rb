@@ -1,4 +1,4 @@
-class CreateMessagesTable < ActiveRecord::Migration
+class CreateMessagesTable < ActiveRecord::Migration[4.2]
   def self.up
     create_table :<%= table_name %> do |t|
       t.string :topic

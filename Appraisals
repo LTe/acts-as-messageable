@@ -10,10 +10,10 @@ appraise 'rails-3.2' do
   end
 end
 
-appraise 'rails-4.2.11' do
-  gem 'activerecord', '~> 4.2.11'
-  gem 'activesupport', '~> 4.2.11'
-  gem 'railties', '~> 4.2.11'
+appraise 'rails-4.2' do
+  gem 'activerecord', '~> 4.2'
+  gem 'activesupport', '~> 4.2'
+  gem 'railties', '~> 4.2'
   gem 'rdoc', '6.2.0'
 
   group :development do
