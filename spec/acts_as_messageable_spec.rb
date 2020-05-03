@@ -150,6 +150,12 @@ describe 'ActsAsMessageable' do
       expect(@alice.received_messages.count).to eq(1)
     end
 
+    it 'bob should be able to restore message' do
+      @bob.sent_messages.process(&:delete)
+      @bob.restore_message(@message.reload)
+      expect(@bob.sent_messages.count).to eq(1)
+    end
+
     it 'should works with relation' do
       @alice.received_messages.process(&:delete)
       expect(@alice.received_messages.count).to eq(0)
@@ -193,6 +199,19 @@ describe 'ActsAsMessageable' do
       @alice.messages.are_from(@bob).first.read
       read_datetime = @alice.messages.are_from(@bob).first.updated_at
       expect(@alice.messages.are_from(@bob).reorder('updated_at asc').first.updated_at).to eq(read_datetime)
+    end
+
+    describe '#open?' do
+      let(:message) { @alice.messages.are_from(@bob).first }
+
+      it 'returns false for closed message' do
+        expect(message.open?).to be_falsey
+      end
+
+      it 'returns true for open message' do
+        message.read
+        expect(message.open?).to be_truthy
+      end
     end
   end
 
