@@ -155,7 +155,7 @@ module ActsAsMessageable
           raise "#{current_user} can't delete this message"
         end
 
-        message.update_attributes!(attribute => true)
+        ActsAsMessageable.rails_api.new(message).update_attributes!(attribute => true)
       end
 
       # Mark message as restored
@@ -171,7 +171,7 @@ module ActsAsMessageable
           raise "#{current_user} can't restore this message"
         end
 
-        message.update_attributes!(attribute => false)
+        ActsAsMessageable.rails_api.new(message).update_attributes!(attribute => false)
       end
     end
   end
