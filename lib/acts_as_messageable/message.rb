@@ -27,16 +27,16 @@ module ActsAsMessageable
     end
 
     def open
-      update_attributes!(opened_at: DateTime.now)
-      update_attributes!(opened: true)
+      ActsAsMessageable.rails_api.new(self).update_attributes!(opened_at: DateTime.now)
+      ActsAsMessageable.rails_api.new(self).update_attributes!(opened: true)
     end
 
     alias mark_as_read open
     alias read open
 
     def close
-      update_attributes!(opened_at: nil)
-      update_attributes!(opened: false)
+      ActsAsMessageable.rails_api.new(self).update_attributes!(opened_at: nil)
+      ActsAsMessageable.rails_api.new(self).update_attributes!(opened: false)
     end
 
     alias mark_as_unread close
