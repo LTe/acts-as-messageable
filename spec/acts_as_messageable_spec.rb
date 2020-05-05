@@ -330,4 +330,18 @@ describe 'ActsAsMessageable' do
       expect(@message.body).to eq('Changed body')
     end
   end
+
+  describe 'ancestry initialization' do # GH#78
+    let(:message) { ActsAsMessageable::Message.create!(topic: 'topic', body: 'body') }
+
+    before do
+      # Use clean version of Message class
+      ActsAsMessageable.instance_eval { remove_const 'Message' }
+      load 'acts_as_messageable/message.rb'
+    end
+
+    it 'returns root of the conversation' do
+      expect(message.conversation).to include(message)
+    end
+  end
 end
