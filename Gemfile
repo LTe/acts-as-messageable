@@ -15,4 +15,5 @@ group :development do
   gem 'rubocop', require: false
   gem 'sqlite3'
   gem 'timecop'
+  gem 'yard'
 end
