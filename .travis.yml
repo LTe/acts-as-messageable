@@ -1,3 +1,7 @@
+stages:
+  - "Static analysis"
+  - "Test"
+  - "Documentation"
 matrix:
   allow_failures:
     - rvm: ruby-head
@@ -24,7 +28,19 @@ matrix:
       gemfile: gemfiles/rails_6.0.gemfile
       name: "Rubocop"
       script: rake rubocop
+    - rvm: 2.7
+      stage: "Documentation"
+      name: "Documentation"
+      before_deploy: 'bundle exec yard doc --private'
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        github_token: $GITHUB_TOKEN
+        local_dir: doc
+        on:
+          branch: master
 before_install:
   - gem update --system
   - gem install bundler
-install: bundle install --jobs=3 --retry=3
+cache: bundler
+

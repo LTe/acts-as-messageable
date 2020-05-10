@@ -157,6 +157,7 @@ GEM
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
     unicode-display_width (1.7.0)
+    yard (0.9.25)
     zeitwerk (2.3.0)
 
 PLATFORMS
@@ -174,6 +175,7 @@ DEPENDENCIES
   rubocop
   sqlite3
   timecop
+  yard
 
 BUNDLED WITH
    2.1.4
