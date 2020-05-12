@@ -11,6 +11,7 @@ module ActsAsMessageable
 
     source_root File.join(File.dirname(__FILE__), 'templates')
     argument :table_name, type: :string, default: 'messages'
+    class_option :uuid, type: :boolean, default: false
 
     def self.next_migration_number(dirname)
       ActiveRecord::Generators::Base.next_migration_number(dirname)

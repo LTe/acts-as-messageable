@@ -33,8 +33,32 @@ Post installation
 =================
 
 ```
-rails g acts-as-messageable:migration table_name # default 'messages'
+rails g acts_as_messageable:migration [messages] [--uuid]
 rake db:migrate
+```
+
+You need to run migration generator to create tables in database. You can do this with `acts_as_messageable:migration`
+generator. Default table name is `messages`, you can pass table name and uuid option to enable `uuid` support (by 
+default disabled). UUID support is required in case when your user primary key is `uuid` type.
+
+**Create `messages` table without `uuid` support**
+```
+rails g acts_as_messageable:migration 
+```
+
+**Create `messages` table with `uuid` support**
+```
+rails g acts_as_messageable:migration --uuid
+```
+
+**Create `my_messages` table without `uuid` support**
+```
+rails g acts_as_messageable:migration my_messages
+```
+
+**Create `my_messages` table with `uuid` support**
+```
+rails g acts_as_messageable:migration my_messages
 ```
 
 Usage
@@ -228,7 +252,6 @@ records = @alice.messages.search("Search me")  @alice search text "Search me" fr
 ```
 
 ## Filters
-==========
 
 ```ruby
 @alice.messages.are_from(@bob) # all message from @bob
@@ -352,9 +375,3 @@ Search
 ```ruby
 @alice.messages.search("Search me")  @alice seach text "Search me" from all messages
 ```
-
-Copyright © 2011-2012 Piotr Niełacny (http://ruby-blog.pl), released under the MIT license
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/LTe/acts-as-messageable/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-

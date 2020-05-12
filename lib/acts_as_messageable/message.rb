@@ -12,6 +12,7 @@ module ActsAsMessageable
     belongs_to :sent_messageable, polymorphic: true
 
     attr_accessor :removed, :restored
+
     cattr_accessor :required
 
     ActsAsMessageable.rails_api.new(self).attr_accessible(

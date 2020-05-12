@@ -3,8 +3,8 @@ class CreateMessagesTable < ActiveRecord::Migration[4.2]
     create_table :<%= table_name %> do |t|
       t.string :topic
       t.text :body
-      t.references :received_messageable, :polymorphic => true
-      t.references :sent_messageable, :polymorphic => true
+      t.references :received_messageable, :polymorphic => true, :type => :<%= options[:uuid] ? 'uuid' : 'bigint' %>
+      t.references :sent_messageable, :polymorphic => true, :type => :<%= options[:uuid] ? 'uuid' : 'bigint' %>
       t.boolean :opened, :default => false
       t.boolean :recipient_delete, :default => false
       t.boolean :sender_delete, :default => false

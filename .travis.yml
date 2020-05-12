@@ -20,6 +20,15 @@ matrix:
       env: RUN_GENERATORS=true
       gemfile: gemfiles/rails_6.0.gemfile
     - rvm: 2.7
+      name: "PostgreSQL"
+      services:
+        - postgresql
+      before_script:
+        - psql -c 'create database ci_test;' -U postgres
+      env:
+        - DATABASE_ADAPTER=postgresql
+        - DATABASE_NAME=ci_test
+    - rvm: 2.7
       gemfile: gemfiles/rails_master.gemfile
     - rvm: ruby-head
       gemfile: gemfiles/rails_master.gemfile

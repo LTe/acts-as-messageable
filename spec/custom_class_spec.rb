@@ -2,14 +2,6 @@
 
 require 'spec_helper'
 
-class CustomMessage < ActsAsMessageable::Message
-  def custom_method; end
-end
-
-class CustomSearchUser < ActiveRecord::Base
-  acts_as_messageable search_scope: :custom_search, class_name: 'CustomMessage'
-end
-
 describe 'custom class' do
   let(:alice) { User.find_by_email('alice@example.com') }
   let(:bob) { User.find_by_email('bob@example.com') }
