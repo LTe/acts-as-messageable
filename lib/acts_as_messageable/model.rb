@@ -7,8 +7,6 @@ module ActsAsMessageable
     end
 
     module ClassMethods
-      mattr_accessor :messages_class_name, :group_messages
-
       # Method make ActiveRecord::Base object messageable
       # @param [Symbol] :table_name - table name for messages
       # @param [String] :class_name - message class name
@@ -25,6 +23,8 @@ module ActsAsMessageable
           search_scope: :search
         }
         options = default_options.merge(options)
+
+        mattr_accessor(:messages_class_name, :group_messages)
 
         has_many :received_messages_relation,
                  as: :received_messageable,

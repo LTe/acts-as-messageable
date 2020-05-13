@@ -15,6 +15,7 @@ require 'timecop'
 require 'bundler/setup'
 Bundler.require(:default)
 
+require 'pry'
 require 'acts-as-messageable'
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each { |f| require f }
@@ -23,7 +24,10 @@ ActiveRecord::Migration.verbose = false
 
 RSpec.configure do |config|
   config.before(:all) do
-    ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: ':memory:')
+    ActiveRecord::Base.establish_connection(
+      adapter: ENV.fetch('DATABASE_ADAPTER', 'sqlite3'),
+      database: ENV.fetch('DATABASE_NAME', ':memory:')
+    )
     create_database
 
     @alice = User.create email: 'alice@example.com'
@@ -41,16 +45,28 @@ RSpec.configure do |config|
   config.after(:each) do
     User.messages_class_name.destroy_all
   end
+
+  config.around(:each) do |example|
+    supported_rails = Array.wrap(example.metadata[:rails]).presence || [3, 4, 5, 6]
+
+    example.run if supported_rails.include?(Rails::VERSION::MAJOR)
+  end
 end
 
 def create_database
   ActiveRecord::Schema.define(version: 1) do
+    if ENV.fetch('DATABASE_ADAPTER', '') == 'postgresql'
+      enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
+    end
+
     create_table(:messages, &TABLE_SCHEMA)
     create_table(:custom_messages, &TABLE_SCHEMA)
+    create_table(:custom_messages_uuid, &TABLE_SCHEMA_UUID)
 
     create_table(:users, &USER_SCHEMA)
     create_table(:admins, &USER_SCHEMA)
     create_table(:custom_search_users, &USER_SCHEMA)
+    create_table(:uuid_users, id: :uuid, &USER_SCHEMA)
   end
 end
 

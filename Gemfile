@@ -11,6 +11,8 @@ group :development do
   gem 'appraisal'
   gem 'coveralls', require: false
   gem 'jeweler'
+  gem 'pg'
+  gem 'pry'
   gem 'rspec'
   gem 'rubocop', require: false
   gem 'sqlite3'

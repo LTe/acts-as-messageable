@@ -17,8 +17,8 @@ def run_bundler
   run_in_app('bundle update')
 end
 
-def run_generators
-  run_in_app('bundle exec rails g acts_as_messageable:migration')
+def run_generators(option = '')
+  run_in_app("bundle exec rails g acts_as_messageable:migration #{option}")
 end
 
 def run_migrations
@@ -54,6 +54,20 @@ describe 'migration' do
 
   it 'runs migrations and revert them', skip: skip_generators? do
     run_generators
+
+    expect(run_migrations).to be_truthy
+    expect(rollback_migrations).to be_truthy
+  end
+
+  it 'runs migrations and revert them with uuid option', skip: skip_generators? do
+    run_generators('--uuid')
+
+    expect(run_migrations).to be_truthy
+    expect(rollback_migrations).to be_truthy
+  end
+
+  it 'runs migrations and revert them with uuid option and custom table', skip: skip_generators? do
+    run_generators('my_messages --uuid')
 
     expect(run_migrations).to be_truthy
     expect(rollback_migrations).to be_truthy

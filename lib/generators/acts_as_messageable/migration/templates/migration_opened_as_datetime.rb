@@ -1,11 +1,15 @@
 class AddOpenedAtToMessages < ActiveRecord::Migration[4.2]
+  class MigrationMessage < ActiveRecord::Base
+    self.table_name = :<%= table_name %>
+  end
+
   def self.up
     add_column :<%= table_name %>, :opened_at, :datetime
-    ActsAsMessageable::Message.where(opened: true).update_all(opened_at: DateTime.now)
+    MigrationMessage.where(opened: true).update_all(opened_at: DateTime.now)
   end
 
   def self.down
-    ActsAsMessageable::Message.where('opened_at is not null').update_all(opened: true)
+    MigrationMessage.where('opened_at is not null').update_all(opened: true)
     remove_column :<%= table_name %>, :opened_at
   end
 end

@@ -321,7 +321,7 @@ describe 'ActsAsMessageable' do
     end
   end
 
-  describe 'mass assigment', skip: Rails::VERSION::MAJOR >= 4 do
+  describe 'mass assigment', rails: 4 do
     it 'allows to mass assign topic and body attributes' do
       @message = send_message(@bob, @alice, 'Example', 'Example Body')
       @message.update_attributes!(topic: 'Changed topic', body: 'Changed body')
@@ -342,6 +342,19 @@ describe 'ActsAsMessageable' do
 
     it 'returns root of the conversation' do
       expect(message.conversation).to include(message)
+    end
+  end
+
+  describe 'user primary key is uuid type', rails: [5, 6] do # GH#107
+    let(:bob) { UuidUser.create(id: SecureRandom.uuid, email: 'bob@example.com') }
+    let(:alice) { UuidUser.create(id: SecureRandom.uuid, email: 'alice@example.com') }
+
+    before do
+      bob.send_message(alice, 'Subject', 'Body')
+    end
+
+    it 'returns messages for alice' do
+      expect(alice.messages).not_to be_empty
     end
   end
 end
