@@ -70,43 +70,28 @@ Gem::Specification.new do |s|
     "spec/support/uuid_user.rb"
   ]
   s.homepage = "http://github.com/LTe/acts-as-messageable".freeze
-  s.rubygems_version = "2.7.6.2".freeze
+  s.rubygems_version = "3.1.3".freeze
   s.summary = "Make user messageable!;-)".freeze
 
   if s.respond_to? :specification_version then
     s.specification_version = 4
+  end
 
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<activerecord>.freeze, [">= 0"])
-      s.add_runtime_dependency(%q<activesupport>.freeze, [">= 0"])
-      s.add_runtime_dependency(%q<ancestry>.freeze, [">= 0"])
-      s.add_runtime_dependency(%q<railties>.freeze, [">= 0"])
-      s.add_development_dependency(%q<appraisal>.freeze, [">= 0"])
-      s.add_development_dependency(%q<coveralls>.freeze, [">= 0"])
-      s.add_development_dependency(%q<jeweler>.freeze, [">= 0"])
-      s.add_development_dependency(%q<pg>.freeze, [">= 0"])
-      s.add_development_dependency(%q<pry>.freeze, [">= 0"])
-      s.add_development_dependency(%q<rspec>.freeze, [">= 0"])
-      s.add_development_dependency(%q<rubocop>.freeze, [">= 0"])
-      s.add_development_dependency(%q<sqlite3>.freeze, [">= 0"])
-      s.add_development_dependency(%q<timecop>.freeze, [">= 0"])
-      s.add_development_dependency(%q<yard>.freeze, [">= 0"])
-    else
-      s.add_dependency(%q<activerecord>.freeze, [">= 0"])
-      s.add_dependency(%q<activesupport>.freeze, [">= 0"])
-      s.add_dependency(%q<ancestry>.freeze, [">= 0"])
-      s.add_dependency(%q<railties>.freeze, [">= 0"])
-      s.add_dependency(%q<appraisal>.freeze, [">= 0"])
-      s.add_dependency(%q<coveralls>.freeze, [">= 0"])
-      s.add_dependency(%q<jeweler>.freeze, [">= 0"])
-      s.add_dependency(%q<pg>.freeze, [">= 0"])
-      s.add_dependency(%q<pry>.freeze, [">= 0"])
-      s.add_dependency(%q<rspec>.freeze, [">= 0"])
-      s.add_dependency(%q<rubocop>.freeze, [">= 0"])
-      s.add_dependency(%q<sqlite3>.freeze, [">= 0"])
-      s.add_dependency(%q<timecop>.freeze, [">= 0"])
-      s.add_dependency(%q<yard>.freeze, [">= 0"])
-    end
+  if s.respond_to? :add_runtime_dependency then
+    s.add_runtime_dependency(%q<activerecord>.freeze, [">= 0"])
+    s.add_runtime_dependency(%q<activesupport>.freeze, [">= 0"])
+    s.add_runtime_dependency(%q<ancestry>.freeze, [">= 0"])
+    s.add_runtime_dependency(%q<railties>.freeze, [">= 0"])
+    s.add_development_dependency(%q<appraisal>.freeze, [">= 0"])
+    s.add_development_dependency(%q<coveralls>.freeze, [">= 0"])
+    s.add_development_dependency(%q<jeweler>.freeze, [">= 0"])
+    s.add_development_dependency(%q<pg>.freeze, [">= 0"])
+    s.add_development_dependency(%q<pry>.freeze, [">= 0"])
+    s.add_development_dependency(%q<rspec>.freeze, [">= 0"])
+    s.add_development_dependency(%q<rubocop>.freeze, [">= 0"])
+    s.add_development_dependency(%q<sqlite3>.freeze, [">= 0"])
+    s.add_development_dependency(%q<timecop>.freeze, [">= 0"])
+    s.add_development_dependency(%q<yard>.freeze, [">= 0"])
   else
     s.add_dependency(%q<activerecord>.freeze, [">= 0"])
     s.add_dependency(%q<activesupport>.freeze, [">= 0"])
