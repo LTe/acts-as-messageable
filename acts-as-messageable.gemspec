@@ -70,7 +70,7 @@ Gem::Specification.new do |s|
     "spec/support/uuid_user.rb"
   ]
   s.homepage = "http://github.com/LTe/acts-as-messageable".freeze
-  s.rubygems_version = "3.0.3".freeze
+  s.rubygems_version = "2.7.6.2".freeze
   s.summary = "Make user messageable!;-)".freeze
 
   if s.respond_to? :specification_version then
