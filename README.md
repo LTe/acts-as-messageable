@@ -58,7 +58,7 @@ rails g acts_as_messageable:migration my_messages
 
 **Create `my_messages` table with `uuid` support**
 ```
-rails g acts_as_messageable:migration my_messages
+rails g acts_as_messageable:migration my_messages --uuid
 ```
 
 Usage
