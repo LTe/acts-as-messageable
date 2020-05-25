@@ -7,6 +7,7 @@ The Acts As Messageable allows communication between the models.
 [![Code Climate](https://codeclimate.com/github/LTe/acts-as-messageable.png)](https://codeclimate.com/github/LTe/acts-as-messageable)
 [![Coverage Status](https://coveralls.io/repos/LTe/acts-as-messageable/badge.png?branch=master)](https://coveralls.io/r/LTe/acts-as-messageable?branch=master)
 [![Gem Version](https://badge.fury.io/rb/acts-as-messageable.png)](http://badge.fury.io/rb/acts-as-messageable)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FLTe%2Facts-as-messageable.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FLTe%2Facts-as-messageable?ref=badge_shield)
 
 Usage
 =====
@@ -375,3 +376,7 @@ Search
 ```ruby
 @alice.messages.search("Search me")  @alice seach text "Search me" from all messages
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FLTe%2Facts-as-messageable.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FLTe%2Facts-as-messageable?ref=badge_large)
