@@ -34,7 +34,6 @@ matrix:
       gemfile: gemfiles/rails_master.gemfile
     - rvm: 2.7
       stage: "Static analysis"
-      gemfile: gemfiles/rails_6.0.gemfile
       name: "Rubocop"
       script: bundle exec rake rubocop
     - rvm: 2.7
