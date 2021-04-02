@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rspec'
 require 'active_record/railtie'
-ActiveRecord::Base.logger = Logger.new(STDERR)
+ActiveRecord::Base.logger = Logger.new($stderr)
 ActiveRecord::Base.logger.level = 3
 
 require 'coveralls'
@@ -55,9 +55,7 @@ end
 
 def create_database
   ActiveRecord::Schema.define(version: 1) do
-    if ENV.fetch('DATABASE_ADAPTER', '') == 'postgresql'
-      enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
-    end
+    enable_extension 'pgcrypto' if ENV.fetch('DATABASE_ADAPTER', '') == 'postgresql' && !extension_enabled?('pgcrypto')
 
     create_table(:messages, &TABLE_SCHEMA)
     create_table(:custom_messages, &TABLE_SCHEMA)

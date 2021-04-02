@@ -12,7 +12,6 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new('>= 0') if s.respond_to? :required_rubygems_version=
   s.require_paths = ['lib']
   s.authors = ['Piotr Nielacny']
-  s.date = '2020-05-13'
   s.email = 'piotr.nielacny@gmail.com'
   s.extra_rdoc_files = [
     'README.md'
@@ -71,35 +70,52 @@ Gem::Specification.new do |s|
     'spec/support/uuid_user.rb'
   ]
   s.homepage = 'http://github.com/LTe/acts-as-messageable'
-  s.rubygems_version = '3.1.3'
+  s.rubygems_version = '3.0.3'
   s.summary = 'Make user messageable!;-)'
 
-  s.specification_version = 4 if s.respond_to? :specification_version
+  if s.respond_to? :specification_version
+    s.specification_version = 4
 
-  if s.respond_to? :add_runtime_dependency
-    s.add_runtime_dependency('activerecord', ['>= 0'])
-    s.add_runtime_dependency('activesupport', ['>= 0'])
-    s.add_runtime_dependency('ancestry', ['>= 0'])
-    s.add_runtime_dependency('railties', ['>= 0'])
-    s.add_development_dependency('appraisal', ['>= 0'])
-    s.add_development_dependency('coveralls', ['>= 0'])
-    s.add_development_dependency('jeweler', ['>= 0'])
-    s.add_development_dependency('pg', ['>= 0'])
-    s.add_development_dependency('pry', ['>= 0'])
-    s.add_development_dependency('rspec', ['>= 0'])
-    s.add_development_dependency('rubocop', ['>= 0'])
-    s.add_development_dependency('sqlite3', ['>= 0'])
-    s.add_development_dependency('timecop', ['>= 0'])
-    s.add_development_dependency('yard', ['>= 0'])
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0')
+      s.add_runtime_dependency('activerecord', ['>= 0'])
+      s.add_runtime_dependency('activesupport', ['>= 0'])
+      s.add_runtime_dependency('ancestry', ['>= 0'])
+      s.add_runtime_dependency('railties', ['>= 0'])
+      s.add_development_dependency('appraisal', ['>= 0'])
+      s.add_development_dependency('coveralls', ['>= 0'])
+      s.add_development_dependency('jeweler', ['>= 0'])
+      s.add_development_dependency('pg', ['>= 0'])
+      s.add_development_dependency('pry', ['>= 0'])
+      s.add_development_dependency('rspec', ['>= 0'])
+      s.add_development_dependency('rubocop', ['>= 0'])
+      s.add_development_dependency('sqlite3', ['>= 0'])
+      s.add_development_dependency('timecop', ['>= 0'])
+      s.add_development_dependency('yard', ['>= 0'])
+    else
+      s.add_dependency('activerecord', ['>= 0'])
+      s.add_dependency('activesupport', ['>= 0'])
+      s.add_dependency('ancestry', ['>= 0'])
+      s.add_dependency('appraisal', ['>= 0'])
+      s.add_dependency('coveralls', ['>= 0'])
+      s.add_dependency('jeweler', ['>= 0'])
+      s.add_dependency('pg', ['>= 0'])
+      s.add_dependency('pry', ['>= 0'])
+      s.add_dependency('railties', ['>= 0'])
+      s.add_dependency('rspec', ['>= 0'])
+      s.add_dependency('rubocop', ['>= 0'])
+      s.add_dependency('sqlite3', ['>= 0'])
+      s.add_dependency('timecop', ['>= 0'])
+      s.add_dependency('yard', ['>= 0'])
+    end
   else
     s.add_dependency('activerecord', ['>= 0'])
     s.add_dependency('activesupport', ['>= 0'])
     s.add_dependency('ancestry', ['>= 0'])
-    s.add_dependency('appraisal', ['>= 0'])
-    s.add_dependency('coveralls', ['>= 0'])
-    s.add_dependency('jeweler', ['>= 0'])
-    s.add_dependency('pg', ['>= 0'])
-    s.add_dependency('pry', ['>= 0'])
+    s.add_dependency('railties', ['>= 0'])
+    s.add_dependency('railties', ['>= 0'])
+    s.add_dependency('railties', ['>= 0'])
+    s.add_dependency('railties', ['>= 0'])
+    s.add_dependency('railties', ['>= 0'])
     s.add_dependency('railties', ['>= 0'])
     s.add_dependency('rspec', ['>= 0'])
     s.add_dependency('rubocop', ['>= 0'])

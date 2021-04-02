@@ -8,11 +8,17 @@ AllCops:
     - 'gemfiles/vendor/**/*'
   NewCops: enable
 
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+
+Style/OptionalBooleanParameter:
+  Enabled: false
+
 Layout/LineLength:
   Max: 120
 
 Metrics/BlockLength:
-  ExcludedMethods: ['describe', 'context']
+  IgnoredMethods: ['describe', 'context']
 
 Naming/FileName:
   Exclude:
