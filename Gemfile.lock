@@ -26,8 +26,8 @@ GEM
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
     addressable (2.4.0)
-    ancestry (3.2.1)
-      activerecord (>= 4.2.0)
+    ancestry (4.0.0)
+      activerecord (>= 5.2.4.5)
     appraisal (2.4.0)
       bundler
       rake
