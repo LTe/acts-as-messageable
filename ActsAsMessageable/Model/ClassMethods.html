@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: ActsAsMessageable::Model::ClassMethods
+  
+    &mdash; Documentation by YARD 0.9.26
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "ActsAsMessageable::Model::ClassMethods";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../ActsAsMessageable.html" title="ActsAsMessageable (module)">ActsAsMessageable</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Model.html" title="ActsAsMessageable::Model (module)">Model</a></span></span>
+     &raquo; 
+    <span class="title">ClassMethods</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: ActsAsMessageable::Model::ClassMethods
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/acts_as_messageable/model.rb</dd>
+  </dl>
+  
+</div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#acts_as_messageable-instance_method" title="#acts_as_messageable (instance method)">#<strong>acts_as_messageable</strong>(options = {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Method make ActiveRecord::Base object messageable.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#resolve_active_record_ancestor-instance_method" title="#resolve_active_record_ancestor (instance method)">#<strong>resolve_active_record_ancestor</strong>  &#x21d2; ActiveRecord::Base </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Method recognize real object class.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="acts_as_messageable-instance_method">
+  
+    #<strong>acts_as_messageable</strong>(options = {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Method make ActiveRecord::Base object messageable</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>:table_name</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><ul><li>
+<p>table name for messages</p>
+</li></ul>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>:class_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><ul><li>
+<p>message class name</p>
+</li></ul>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>:required</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>, <tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><ul><li>
+<p>required fields in message</p>
+</li></ul>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>:dependent</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><ul><li>
+<p>dependent option from ActiveRecord has_many method</p>
+</li></ul>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>:search_scope</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><ul><li>
+<p>name of a scope for a full text search</p>
+</li></ul>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 16</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_acts_as_messageable'>acts_as_messageable</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_default_options'>default_options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+    <span class='label'>table_name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>messages</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>class_name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ActsAsMessageable::Message</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>required:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>topic</span><span class='words_sep'> </span><span class='tstring_content'>body</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+    <span class='label'>dependent:</span> <span class='symbol'>:nullify</span><span class='comma'>,</span>
+    <span class='label'>group_messages:</span> <span class='kw'>false</span><span class='comma'>,</span>
+    <span class='label'>search_scope:</span> <span class='symbol'>:search</span>
+  <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_default_options'>default_options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_mattr_accessor'>mattr_accessor</span><span class='lparen'>(</span><span class='symbol'>:messages_class_name</span><span class='comma'>,</span> <span class='symbol'>:group_messages</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:received_messages_relation</span><span class='comma'>,</span>
+           <span class='label'>as:</span> <span class='symbol'>:received_messageable</span><span class='comma'>,</span>
+           <span class='label'>class_name:</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:class_name</span><span class='rbracket'>]</span><span class='comma'>,</span>
+           <span class='label'>dependent:</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:dependent</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:sent_messages_relation</span><span class='comma'>,</span>
+           <span class='label'>as:</span> <span class='symbol'>:sent_messageable</span><span class='comma'>,</span>
+           <span class='label'>class_name:</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:class_name</span><span class='rbracket'>]</span><span class='comma'>,</span>
+           <span class='label'>dependent:</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:dependent</span><span class='rbracket'>]</span>
+
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_messages_class_name'>messages_class_name</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:class_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span>
+  <span class='id identifier rubyid_messages_class_name'>messages_class_name</span><span class='period'>.</span><span class='id identifier rubyid_has_ancestry'>has_ancestry</span>
+
+  <span class='id identifier rubyid_messages_class_name'>messages_class_name</span><span class='period'>.</span><span class='id identifier rubyid_table_name'>table_name</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:table_name</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_messages_class_name'>messages_class_name</span><span class='period'>.</span><span class='id identifier rubyid_initialize_scopes'>initialize_scopes</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:search_scope</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_messages_class_name'>messages_class_name</span><span class='period'>.</span><span class='id identifier rubyid_required'>required</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_wrap'>wrap</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:required</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_messages_class_name'>messages_class_name</span><span class='period'>.</span><span class='id identifier rubyid_validates_presence_of'>validates_presence_of</span> <span class='id identifier rubyid_messages_class_name'>messages_class_name</span><span class='period'>.</span><span class='id identifier rubyid_required'>required</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_group_messages'>group_messages</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:group_messages</span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_include'>include</span> <span class='const'><span class='object_link'><a href="../../ActsAsMessageable.html" title="ActsAsMessageable (module)">ActsAsMessageable</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Model.html" title="ActsAsMessageable::Model (module)">Model</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="InstanceMethods.html" title="ActsAsMessageable::Model::InstanceMethods (module)">InstanceMethods</a></span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="resolve_active_record_ancestor-instance_method">
+  
+    #<strong>resolve_active_record_ancestor</strong>  &#x21d2; <tt>ActiveRecord::Base</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Method recognize real object class</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ActiveRecord::Base</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>class or relation object</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+53
+54
+55</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 53</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_resolve_active_record_ancestor'>resolve_active_record_ancestor</span>
+  <span class='id identifier rubyid_reflect_on_association'>reflect_on_association</span><span class='lparen'>(</span><span class='symbol'>:received_messages_relation</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_active_record'>active_record</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Sat Oct 23 15:01:28 2021 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.26 (ruby-2.7.1).
+</div>
+
+    </div>
+  </body>
+</html>

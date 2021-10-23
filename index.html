@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.9.26
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "README";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="label-ActsAsMessageable">ActsAsMessageable</h1>
+
+<p>The Acts As Messageable allows communication between the models.</p>
+
+<p><a href="http://travis-ci.org/LTe/acts-as-messageable"><img src="https://secure.travis-ci.org/LTe/acts-as-messageable.png"></a> <a href="https://codeclimate.com/github/LTe/acts-as-messageable"><img src="https://codeclimate.com/github/LTe/acts-as-messageable.png"></a> <a href="https://coveralls.io/r/LTe/acts-as-messageable?branch=master"><img src="https://coveralls.io/repos/LTe/acts-as-messageable/badge.png?branch=master"></a> <a href="http://badge.fury.io/rb/acts-as-messageable"><img src="https://badge.fury.io/rb/acts-as-messageable.png"></a></p>
+
+<h1 id="label-Usage">Usage</h1>
+
+<p>To use it, add it to your Gemfile:</p>
+
+<h3 id="label-Rails+-3E-3D+3">Rails &gt;= 3</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>acts-as-messageable</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<h3 id="label-Rails+2">Rails 2</h3>
+
+<p>Use this <a href="http://github.com/openfirmware/acts-as-messageable">fork</a> Thanks for <a href="http://github.com/openfirmware">@openfirmware</a></p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>acts-as-messageable</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='symbol'>:git</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>git://github.com/openfirmware/acts-as-messageable.git</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                           <span class='symbol'>:branch</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rails2.3.11_compatible</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<h1 id="label-Post+installation">Post installation</h1>
+
+<pre class="code ruby"><code class="ruby">rails g acts_as_messageable:migration [messages] [--uuid]
+rake db:migrate
+</code></pre>
+
+<p>You need to run migration generator to create tables in database. You can do this with <code>acts_as_messageable:migration</code> generator. Default table name is <code>messages</code>, you can pass table name and uuid option to enable <code>uuid</code> support (by default disabled). UUID support is required in case when your user primary key is <code>uuid</code> type.</p>
+
+<p><strong>Create <code>messages</code> table without <code>uuid</code> support</strong></p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_rails'>rails</span> <span class='id identifier rubyid_g'>g</span> <span class='label'>acts_as_messageable:</span><span class='id identifier rubyid_migration'>migration</span>
+</code></pre>
+
+<p><strong>Create <code>messages</code> table with <code>uuid</code> support</strong></p>
+
+<pre class="code ruby"><code class="ruby">rails g acts_as_messageable:migration --uuid
+</code></pre>
+
+<p><strong>Create <code>my_messages</code> table without <code>uuid</code> support</strong></p>
+
+<pre class="code ruby"><code class="ruby">rails g acts_as_messageable:migration my_messages
+</code></pre>
+
+<p><strong>Create <code>my_messages</code> table with <code>uuid</code> support</strong></p>
+
+<pre class="code ruby"><code class="ruby">rails g acts_as_messageable:migration my_messages --uuid
+</code></pre>
+
+<h1 id="label-Usage">Usage</h1>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>User</span> <span class='op'>&lt;</span> <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Base</span>
+  <span class='id identifier rubyid_acts_as_messageable'>acts_as_messageable</span> <span class='symbol'>:table_name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>table_with_messages</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='comment'># default &#39;messages&#39;
+</span>                      <span class='symbol'>:required</span>   <span class='op'>=&gt;</span> <span class='symbol'>:body</span><span class='comma'>,</span>                 <span class='comment'># default [:topic, :body]
+</span>                      <span class='symbol'>:class_name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CustomMessages</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>      <span class='comment'># default &quot;ActsAsMessageable::Message&quot;,
+</span>                      <span class='symbol'>:dependent</span>  <span class='op'>=&gt;</span> <span class='symbol'>:destroy</span><span class='comma'>,</span>              <span class='comment'># default :nullify
+</span>                      <span class='symbol'>:group_messages</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>              <span class='comment'># default false
+</span>                      <span class='symbol'>:search_scope</span> <span class='op'>=&gt;</span> <span class='symbol'>:custom_search</span>       <span class='comment'># default :search
+</span><span class='kw'>end</span>
+</code></pre>
+
+<h1 id="label-Upgrade">Upgrade</h1>
+
+<p>Just type once again</p>
+
+<pre class="code ruby"><code class="ruby">rails g acts-as-messageable:migration
+</code></pre>
+
+<p>And new migrations should be created.</p>
+
+<pre class="code ruby"><code class="ruby">~$ rails g acts-as-messageable:migration
+    create  db/migrate/20110811223435_add_recipient_permanent_delete_and_sender_permanent_delete_to_messages.rb
+</code></pre>
+
+<h1 id="label-Send+message">Send message</h1>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@alice</span> <span class='op'>=</span> <span class='const'>User</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
+<span class='ivar'>@bob</span>   <span class='op'>=</span> <span class='const'>User</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
+
+<span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_send_message'>send_message</span><span class='lparen'>(</span><span class='ivar'>@bob</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Message topic</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hi bob!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='ivar'>@bob</span><span class='period'>.</span><span class='id identifier rubyid_send_message'>send_message</span><span class='lparen'>(</span><span class='ivar'>@alice</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Re: Message topic</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hi alice!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<h2 id="label-With+hash">With hash</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_send_message'>send_message</span><span class='lparen'>(</span><span class='ivar'>@bob</span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='symbol'>:body</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hash body</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:topic</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hash topic</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='rparen'>)</span>
+</code></pre>
+
+<h1 id="label-Custom+required+-28validation-29">Custom required (validation)</h1>
+
+<p>In User model</p>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>User</span> <span class='op'>&lt;</span> <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Base</span>
+  <span class='id identifier rubyid_acts_as_messageable'>acts_as_messageable</span> <span class='symbol'>:required</span> <span class='op'>=&gt;</span> <span class='symbol'>:body</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<h2 id="label-With+hash">With hash</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_send_message'>send_message</span><span class='lparen'>(</span><span class='ivar'>@bob</span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='symbol'>:body</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hash body</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='rparen'>)</span>
+</code></pre>
+
+<h2 id="label-Normal">Normal</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_send_message'>send_message</span><span class='lparen'>(</span><span class='ivar'>@bob</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>body</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<h2 id="label-Required+sequence">Required sequence</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>User</span> <span class='op'>&lt;</span> <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Base</span>
+  <span class='id identifier rubyid_acts_as_messageable'>acts_as_messageable</span> <span class='symbol'>:required</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='symbol'>:body</span><span class='comma'>,</span> <span class='symbol'>:topic</span><span class='rbracket'>]</span>
+<span class='kw'>end</span>
+
+<span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_send_message'>send_message</span><span class='lparen'>(</span><span class='ivar'>@bob</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>body</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>topic</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<h2 id="label-First+topic">First topic</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>User</span> <span class='op'>&lt;</span> <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Base</span>
+  <span class='id identifier rubyid_acts_as_messageable'>acts_as_messageable</span> <span class='symbol'>:required</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='symbol'>:topic</span><span class='comma'>,</span> <span class='symbol'>:body</span><span class='rbracket'>]</span>
+<span class='kw'>end</span>
+
+<span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_send_message'>send_message</span><span class='lparen'>(</span><span class='ivar'>@bob</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>topic</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>body</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<h1 id="label-Custom+class">Custom class</h1>
+
+<p>You can use your own class that will represent the message object. First of all create custom class</p>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>CustomMessage</span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="ActsAsMessageable.html" title="ActsAsMessageable (module)">ActsAsMessageable</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ActsAsMessageable/Message.html" title="ActsAsMessageable::Message (class)">Message</a></span></span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_capitalize_title'>capitalize_title</span>
+    <span class='id identifier rubyid_title'>title</span><span class='period'>.</span><span class='id identifier rubyid_capitalize'>capitalize</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>After that you can sepcify custom class in options.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>User</span>
+  <span class='id identifier rubyid_acts_as_messageable'>acts_as_messageable</span> <span class='symbol'>:class_name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CustomMessage</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>From now on, your message has custom class.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@message</span> <span class='op'>=</span> <span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_send_message'>send_message</span><span class='lparen'>(</span><span class='ivar'>@bob</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hi!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='ivar'>@message</span> <span class='comment'># =&gt; #&lt;CustomMessage:0x000000024b6278&gt;
+</span><span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_capitalize_title'>capitalize_title</span> <span class='comment'># =&gt; &quot;Hi!&quot;
+</span></code></pre>
+
+<h1 id="label-Conversation">Conversation</h1>
+
+<p>You can get conversation list from messages scope. For example:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@message</span> <span class='op'>=</span> <span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_send_message'>send_message</span><span class='lparen'>(</span><span class='ivar'>@bob</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello bob!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>How are you?</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='ivar'>@reply_message</span> <span class='op'>=</span> <span class='ivar'>@bob</span><span class='period'>.</span><span class='id identifier rubyid_reply_to'>reply_to</span><span class='lparen'>(</span><span class='ivar'>@message</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Re: Hello bob!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>I&#39;m fine!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+<span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_received_messages'>received_messages</span><span class='period'>.</span><span class='id identifier rubyid_conversations'>conversations</span> <span class='comment'># =&gt; [@reply_message]
+</span></code></pre>
+
+<p>should receive list of latest messages in conversations (like in facebook).</p>
+
+<p>To create conversation just reply to a message.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@message</span> <span class='op'>=</span> <span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_send_message'>send_message</span><span class='lparen'>(</span><span class='ivar'>@bob</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello bob!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>How are you?</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_reply'>reply</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Re: Hello bob!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>I&#39;m fine</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<p><strong>Or with hash</strong></p>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_reply'>reply</span><span class='lparen'>(</span><span class='symbol'>:topic</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Re: Hello bob!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:body</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>I&#39;m fine</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<p><strong>Or in old style</strong></p>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@message</span> <span class='op'>=</span> <span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_send_message'>send_message</span><span class='lparen'>(</span><span class='ivar'>@bob</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello bob!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>How are you?</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='ivar'>@reply_message</span> <span class='op'>=</span> <span class='ivar'>@bob</span><span class='period'>.</span><span class='id identifier rubyid_reply_to'>reply_to</span><span class='lparen'>(</span><span class='ivar'>@message</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Re: Hello bob!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>I&#39;m fine!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<h2 id="label-Get+conversation+for+a+specific+message">Get conversation for a specific message</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_conversation'>conversation</span>       <span class='comment'>#=&gt; [@message, @reply_message]
+</span><span class='ivar'>@reply_message</span><span class='period'>.</span><span class='id identifier rubyid_conversation'>conversation</span> <span class='comment'>#=&gt; [@message, @reply_message]
+</span></code></pre>
+
+<h1 id="label-Search">Search</h1>
+
+<p>You can search text from messages and get the records where match exist. For example:</p>
+
+<h3 id="label-Search+text+from+messages">Search text from messages</h3>
+
+<pre class="code ruby"><code class="ruby">records = @alice.messages.search(&quot;Search me&quot;)  @alice search text &quot;Search me&quot; from all messages
+</code></pre>
+
+<h3 id="label-Inbox">Inbox</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_received_messages'>received_messages</span>
+</code></pre>
+
+<h3 id="label-Outbox">Outbox</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_sent_messages'>sent_messages</span>
+</code></pre>
+
+<h3 id="label-Inbox+-2B+Outbox.+All+messages+connected+with+-40alice">Inbox + Outbox. All messages connected with <strong>@alice</strong></h3>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_messages'>messages</span>
+</code></pre>
+
+<h3 id="label-Trash">Trash</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_deleted_messages'>deleted_messages</span>
+</code></pre>
+
+<h2 id="label-Filters">Filters</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_messages'>messages</span><span class='period'>.</span><span class='id identifier rubyid_are_from'>are_from</span><span class='lparen'>(</span><span class='ivar'>@bob</span><span class='rparen'>)</span> <span class='comment'># all message from @bob
+</span><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_messages'>messages</span><span class='period'>.</span><span class='id identifier rubyid_are_to'>are_to</span><span class='lparen'>(</span><span class='ivar'>@bob</span><span class='rparen'>)</span> <span class='comment'># all message to @bob
+</span><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_messages'>messages</span><span class='period'>.</span><span class='id identifier rubyid_with_id'>with_id</span><span class='lparen'>(</span><span class='ivar'>@id_of_message</span><span class='rparen'>)</span> <span class='comment'># message with id id_of_message
+</span><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_messages'>messages</span><span class='period'>.</span><span class='id identifier rubyid_readed'>readed</span> <span class='comment'># all readed @alice  messages
+</span><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_messages'>messages</span><span class='period'>.</span><span class='id identifier rubyid_unreaded'>unreaded</span> <span class='comment'># all unreaded @alice messages
+</span></code></pre>
+
+<p><strong>You can use multiple filters at the same time</strong></p>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_messages'>messages</span><span class='period'>.</span><span class='id identifier rubyid_are_from'>are_from</span><span class='lparen'>(</span><span class='ivar'>@bob</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_are_to'>are_to</span><span class='lparen'>(</span><span class='ivar'>@alice</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_readed'>readed</span> <span class='comment'># all message from @bob to @alice and readed
+</span><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_deleted_messages'>deleted_messages</span><span class='period'>.</span><span class='id identifier rubyid_are_from'>are_from</span><span class='lparen'>(</span><span class='ivar'>@bob</span><span class='rparen'>)</span> <span class='comment'># all deleted messages from @bob
+</span></code></pre>
+
+<h1 id="label-Read+messages">Read messages</h1>
+
+<h3 id="label-Read+message">Read message</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span> <span class='comment'># open message
+</span><span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span>
+<span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_mark_as_read'>mark_as_read</span>
+</code></pre>
+
+<h3 id="label-Unread+message">Unread message</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span> <span class='comment'># unread message
+</span><span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_mark_as_unread'>mark_as_unread</span>
+</code></pre>
+
+<h1 id="label-Delete+message">Delete message</h1>
+
+<p><strong>We must know who delete message. That why we use <em>.process</em> method to save context</strong></p>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@message</span> <span class='op'>=</span> <span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_send_message'>send_message</span><span class='lparen'>(</span><span class='ivar'>@bob</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Topic</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Body</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+<span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_messages'>messages</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_message'>message</span><span class='op'>|</span>
+  <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='comment'># @alice delete message
+</span><span class='kw'>end</span>
+</code></pre>
+
+<p>Now we can find message in <strong>trash</strong></p>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_deleted_messages'>deleted_messages</span> <span class='comment'>#=&gt; [@message]
+</span></code></pre>
+
+<p>We can delete the message <strong>permanently</strong></p>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_deleted_messages'>deleted_messages</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_message'>message</span><span class='op'>|</span>
+  <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span>
+<span class='kw'>end</span>
+
+<span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_delete_message'>delete_message</span> <span class='comment'>#=&gt; []
+</span></code></pre>
+
+<p>Message has been deleted <strong>permanently</strong></p>
+
+<h2 id="label-Delete+message+without+context">Delete message without context</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_delete_message'>delete_message</span><span class='lparen'>(</span><span class='ivar'>@message</span><span class='rparen'>)</span> <span class='comment'># @alice delete @message
+</span></code></pre>
+
+<h1 id="label-Restore+message">Restore message</h1>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_deleted_messages'>deleted_messages</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_m'>m</span><span class='op'>|</span>
+  <span class='id identifier rubyid_m'>m</span><span class='period'>.</span><span class='id identifier rubyid_restore'>restore</span> <span class='comment'># @alice restore &#39;m&#39; message from trash
+</span><span class='kw'>end</span>
+</code></pre>
+
+<h2 id="label-Restore+message+without+context">Restore message without context</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_restore_message'>restore_message</span><span class='lparen'>(</span><span class='ivar'>@message</span><span class='rparen'>)</span> <span class='comment'># @alice restore message from trash
+</span></code></pre>
+
+<h1 id="label-Group+message">Group message</h1>
+
+<h2 id="label-Enable+group+messages">Enable group messages</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>User</span>
+  <span class='id identifier rubyid_acts_as_messageable'>acts_as_messageable</span> <span class='symbol'>:group_messages</span> <span class='op'>=&gt;</span> <span class='kw'>true</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<h2 id="label-How+to+join+other+users-27s+conversation">How to join other users&#39;s conversation</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@message</span> <span class='op'>=</span>  <span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_send_message'>send_message</span><span class='lparen'>(</span><span class='ivar'>@bob</span><span class='comma'>,</span> <span class='symbol'>:topic</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Helou bob!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:body</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>What&#39;s up?</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='ivar'>@reply_message</span> <span class='op'>=</span> <span class='ivar'>@sukhi</span><span class='period'>.</span><span class='id identifier rubyid_reply_to'>reply_to</span><span class='lparen'>(</span><span class='ivar'>@message</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hi there!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>I would like to join to this conversation!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='ivar'>@sec_reply_message</span> <span class='op'>=</span> <span class='ivar'>@bob</span><span class='period'>.</span><span class='id identifier rubyid_reply_to'>reply_to</span><span class='lparen'>(</span><span class='ivar'>@message</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hi!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Fine!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='ivar'>@third_reply_message</span> <span class='op'>=</span> <span class='ivar'>@alice</span><span class='period'>.</span><span class='id identifier rubyid_reply_to'>reply_to</span><span class='lparen'>(</span><span class='ivar'>@reply_message</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hi!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>no problem</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<h2 id="label-Know+the+people+involved+in+conversation">Know the people involved in conversation</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_people'>people</span> <span class='comment'># will give you participants users object
+</span><span class='ivar'>@message</span><span class='period'>.</span><span class='id identifier rubyid_people'>people</span> <span class='comment'># =&gt; [@alice, @bob, @sukhi]
+</span></code></pre>
+
+<h1 id="label-Search">Search</h1>
+
+<h2 id="label-Search+text+from+messages">Search text from messages</h2>
+
+<pre class="code ruby"><code class="ruby">@alice.messages.search(&quot;Search me&quot;)  @alice seach text &quot;Search me&quot; from all messages
+</code></pre>
+</div></div>
+
+      <div id="footer">
+  Generated on Sat Oct 23 15:01:28 2021 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.26 (ruby-2.7.1).
+</div>
+
+    </div>
+  </body>
+</html>
