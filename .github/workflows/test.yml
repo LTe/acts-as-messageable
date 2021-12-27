@@ -53,5 +53,5 @@ jobs:
         with:
           ruby-version: ${{ matrix.rvm }}
           bundler-cache: true
-      - run: psql -c 'create database ci_test;' -U postgres
+      - run: psql -c 'create database ci_test;' -U postgres -h postgres
       - run: bundle exec rake
