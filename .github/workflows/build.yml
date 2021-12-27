@@ -12,6 +12,8 @@ jobs:
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}
     strategy:
+      rvm: [""]
+      gemfile: [""]
       matrix:
         include:
           - rvm: 2.3.8
