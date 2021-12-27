@@ -7,7 +7,6 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
     runs-on: ubuntu-latest
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}
