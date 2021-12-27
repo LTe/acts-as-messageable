@@ -10,8 +10,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
     services:
+      # Label used to access the service container
       postgres:
+        # Docker Hub image
         image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
