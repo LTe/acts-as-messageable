@@ -27,7 +27,9 @@ RSpec.configure do |config|
     ActiveRecord::Base.establish_connection(
       adapter: ENV.fetch('DATABASE_ADAPTER', 'sqlite3'),
       database: ENV.fetch('DATABASE_NAME', ':memory:'),
-      password: ENV.fetch('DATABASE_PASSWORD', 'password')
+      password: ENV.fetch('DATABASE_PASSWORD', 'password'),
+      host: 'localhost',
+      user: 'postgres'
     )
     create_database
 
