@@ -10,9 +10,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     services:
-      # Label used to access the service container
       postgres:
-        # Docker Hub image
         image: postgres
         env:
           POSTGRES_PASSWORD: postgres
@@ -24,6 +22,7 @@ jobs:
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}
       RUN_GENERATORS: ${{ matrix.run_generators }}
+      PGPASSWORD: postgres
     strategy:
       matrix:
         rvm: ["2.7"]
@@ -54,4 +53,5 @@ jobs:
         with:
           ruby-version: ${{ matrix.rvm }}
           bundler-cache: true
+      - run: psql -c 'create database ci_test;' -U postgres
       - run: bundle exec rake
