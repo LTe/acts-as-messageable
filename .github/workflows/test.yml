@@ -13,7 +13,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: password
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -25,12 +25,18 @@ jobs:
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}
       RUN_GENERATORS: ${{ matrix.run_generators }}
-      PGPASSWORD: postgres
+      PGPASSWORD: password
+      DATABASE_ADAPTER: ${{ matrix.database_adapter }}
+      DATABASE_NAME: ${{ matrix.database_name }}
+      DATABASE_PASSWORD: ${{ matrix.database_password }}
     strategy:
       matrix:
         rvm: ["2.7"]
         gemfile: ["Gemfile"]
         run_generators: ["false"]
+        database_adapter: ['sqlite3']
+        database_name: [":memory:"]
+        database_password: ["password"]
         include:
           - rvm: 2.3.8
             gemfile: gemfiles/rails_3.2.gemfile
@@ -50,6 +56,10 @@ jobs:
           - rvm: 2.7
             gemfile: gemfiles/rails_6.0.gemfile
             run_generators: "true"
+          - rvm: 2.7
+            gemfile: gemfiles/rails_6.0.gemfile
+            database_adapter: 'postgresql'
+            database_name: 'ci_test'
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
