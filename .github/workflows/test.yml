@@ -20,17 +20,22 @@ jobs:
         include:
           - rvm: 2.3.8
             gemfile: gemfiles/rails_3.2.gemfile
+            run_generators: "false"
           - rvm: 2.3.8
             gemfile: gemfiles/rails_4.2.gemfile
+            run_generators: "false"
           - rvm: 2.7
             gemfile: gemfiles/rails_5.2.gemfile
+            run_generators: "false"
           - rvm: 2.7
             gemfile: gemfiles/rails_6.0.gemfile
+            run_generators: "false"
           - rvm: 2.7
             gemfile: gemfiles/rails_5.2.gemfile
+            run_generators: "false"
           - rvm: 2.7
             gemfile: gemfiles/rails_6.0.gemfile
-            run_generators: 'true'
+            run_generators: "true"
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
