@@ -12,9 +12,9 @@ jobs:
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}
     strategy:
-      rvm: [""]
-      gemfile: [""]
       matrix:
+        rvm: [""]
+        gemfile: [""]
         include:
           - rvm: 2.3.8
             gemfile: gemfiles/rails_3.2.gemfile
