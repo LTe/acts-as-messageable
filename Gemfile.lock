@@ -166,7 +166,9 @@ GEM
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.1.0)
-    yard (0.9.26)
+    webrick (1.7.0)
+    yard (0.9.27)
+      webrick (~> 1.7.0)
     zeitwerk (2.5.2)
 
 PLATFORMS
