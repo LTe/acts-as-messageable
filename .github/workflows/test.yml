@@ -41,25 +41,38 @@ jobs:
           - rvm: 2.3.8
             gemfile: gemfiles/rails_3.2.gemfile
             run_generators: "false"
+            database_adapter: 'sqlite3'
+            database_name: ":memory:"
           - rvm: 2.3.8
             gemfile: gemfiles/rails_4.2.gemfile
             run_generators: "false"
+            database_adapter: 'sqlite3'
+            database_name: ":memory:"
           - rvm: 2.7
             gemfile: gemfiles/rails_5.2.gemfile
             run_generators: "false"
+            database_adapter: 'sqlite3'
+            database_name: ":memory:"
           - rvm: 2.7
             gemfile: gemfiles/rails_6.0.gemfile
             run_generators: "false"
+            database_adapter: 'sqlite3'
+            database_name: ":memory:"
           - rvm: 2.7
             gemfile: gemfiles/rails_5.2.gemfile
             run_generators: "false"
+            database_adapter: 'sqlite3'
+            database_name: ":memory:"
           - rvm: 2.7
             gemfile: gemfiles/rails_6.0.gemfile
             run_generators: "true"
+            database_adapter: 'sqlite3'
+            database_name: ":memory:"
           - rvm: 2.7
             gemfile: gemfiles/rails_6.0.gemfile
             database_adapter: 'postgresql'
             database_name: 'ci_test'
+            database_password: "password"
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
