@@ -44,7 +44,7 @@ RSpec.configure do |config|
   end
 
   config.around(:each) do |example|
-    supported_rails = Array.wrap(example.metadata[:rails]).presence || [3, 4, 5, 6]
+    supported_rails = Array.wrap(example.metadata[:rails]).presence || [3, 4, 5, 6, 7]
 
     example.run if supported_rails.include?(Rails::VERSION::MAJOR)
   end
