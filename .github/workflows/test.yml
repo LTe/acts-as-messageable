@@ -38,6 +38,7 @@ jobs:
       DATABASE_ADAPTER: ${{ matrix.database_adapter }}
       DATABASE_NAME: ${{ matrix.database_name }}
       DATABASE_PASSWORD: ${{ matrix.database_password }}
+      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
     strategy:
       matrix:
         rvm: ["2.7"]
