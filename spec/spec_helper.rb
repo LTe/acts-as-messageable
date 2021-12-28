@@ -3,7 +3,7 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rspec'
-require 'active_record'
+require 'active_record/railtie'
 ActiveRecord::Base.logger = Logger.new($stderr)
 ActiveRecord::Base.logger.level = 3
 
