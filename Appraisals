@@ -48,5 +48,6 @@ appraise 'rails-master' do
 
   group :development do
     gem 'sqlite3'
+    gem 'pg', git: 'https://github.com/ged/ruby-pg.git'
   end
 end
