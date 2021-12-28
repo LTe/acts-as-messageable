@@ -47,12 +47,6 @@ appraise 'rails-7.0' do
   gem 'railties', '~> 7'
 end
 
-appraise 'rails-7.1' do
-  gem 'activerecord', '~> 7.1'
-  gem 'activesupport', '~> 7.1'
-  gem 'railties', '~> 7.1'
-end
-
 appraise 'rails-master' do
   gem 'activerecord', git: 'https://github.com/rails/rails.git'
   gem 'activesupport', git: 'https://github.com/rails/rails.git'

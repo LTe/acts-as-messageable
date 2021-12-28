@@ -96,11 +96,6 @@ jobs:
             run_generators: "true"
             database_adapter: 'sqlite3'
             database_name: ":memory:"
-          - rvm: 3
-            gemfile: gemfiles/rails_7.1.gemfile
-            run_generators: "true"
-            database_adapter: 'sqlite3'
-            database_name: ":memory:"
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
