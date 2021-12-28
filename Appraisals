@@ -41,6 +41,12 @@ appraise 'rails-6.0' do
   end
 end
 
+appraise 'rails-7.0' do
+  gem 'activerecord', '~> 7'
+  gem 'activesupport', '~> 7'
+  gem 'railties', '~> 7'
+end
+
 appraise 'rails-master' do
   gem 'activerecord', git: 'https://github.com/rails/rails.git'
   gem 'activesupport', git: 'https://github.com/rails/rails.git'
@@ -48,5 +54,6 @@ appraise 'rails-master' do
 
   group :development do
     gem 'sqlite3'
+    gem 'pg', git: 'https://github.com/ged/ruby-pg.git'
   end
 end

@@ -9,7 +9,7 @@ gem 'railties'
 
 group :development do
   gem 'appraisal'
-  gem 'coveralls', require: false
+  gem 'coveralls_reborn', require: false
   gem 'jeweler'
   gem 'pg'
   gem 'pry'

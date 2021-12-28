@@ -2,8 +2,7 @@ ActsAsMessageable
 =================
 
 The Acts As Messageable allows communication between the models.
-
-[![Build Status](https://secure.travis-ci.org/LTe/acts-as-messageable.png)](http://travis-ci.org/LTe/acts-as-messageable)
+[![Build Status](https://github.com/LTe/acts-as-messageable/actions/workflows/test.yml/badge.svg)](https://github.com/LTe/acts-as-messageable/actions/workflows/test.yml)
 [![Code Climate](https://codeclimate.com/github/LTe/acts-as-messageable.png)](https://codeclimate.com/github/LTe/acts-as-messageable)
 [![Coverage Status](https://coveralls.io/repos/LTe/acts-as-messageable/badge.png?branch=master)](https://coveralls.io/r/LTe/acts-as-messageable?branch=master)
 [![Gem Version](https://badge.fury.io/rb/acts-as-messageable.png)](http://badge.fury.io/rb/acts-as-messageable)

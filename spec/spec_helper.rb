@@ -24,10 +24,7 @@ ActiveRecord::Migration.verbose = false
 
 RSpec.configure do |config|
   config.before(:all) do
-    ActiveRecord::Base.establish_connection(
-      adapter: ENV.fetch('DATABASE_ADAPTER', 'sqlite3'),
-      database: ENV.fetch('DATABASE_NAME', ':memory:')
-    )
+    establish_connection
     create_database
 
     @alice = User.create email: 'alice@example.com'
@@ -47,10 +44,20 @@ RSpec.configure do |config|
   end
 
   config.around(:each) do |example|
-    supported_rails = Array.wrap(example.metadata[:rails]).presence || [3, 4, 5, 6]
+    supported_rails = Array.wrap(example.metadata[:rails]).presence || [3, 4, 5, 6, 7]
 
     example.run if supported_rails.include?(Rails::VERSION::MAJOR)
   end
+end
+
+def establish_connection
+  ActiveRecord::Base.establish_connection(
+    adapter: ENV.fetch('DATABASE_ADAPTER', 'sqlite3'),
+    database: ENV.fetch('DATABASE_NAME', ':memory:'),
+    password: ENV.fetch('DATABASE_PASSWORD', 'password'),
+    host: 'localhost',
+    user: 'postgres'
+  )
 end
 
 def create_database

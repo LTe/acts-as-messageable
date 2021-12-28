@@ -12,7 +12,7 @@ gem 'rdoc', '6.2.0'
 
 group :development do
   gem 'appraisal'
-  gem 'coveralls', require: false
+  gem 'coveralls_reborn', require: false
   gem 'jeweler'
   gem 'pg'
   gem 'pry'

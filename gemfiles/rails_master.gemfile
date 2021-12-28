@@ -11,9 +11,9 @@ gem 'railties', git: 'https://github.com/rails/rails.git'
 
 group :development do
   gem 'appraisal'
-  gem 'coveralls', require: false
+  gem 'coveralls_reborn', require: false
   gem 'jeweler'
-  gem 'pg'
+  gem 'pg', git: 'https://github.com/ged/ruby-pg.git'
   gem 'pry'
   gem 'rspec'
   gem 'rubocop', require: false
