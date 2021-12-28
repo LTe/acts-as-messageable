@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.version = '0.5.0'
 
   s.required_rubygems_version = Gem::Requirement.new('>= 0') if s.respond_to? :required_rubygems_version=
+  s.metadata = { 'rubygems_mfa_required' => 'true' } if s.respond_to? :metadata=
   s.require_paths = ['lib']
   s.authors = ['Piotr Nielacny']
   s.email = 'piotr.nielacny@gmail.com'
@@ -19,10 +20,11 @@ Gem::Specification.new do |s|
   s.files = [
     '.coveralls.yml',
     '.dockerignore',
+    '.github/dependabot.yml',
+    '.github/workflows/test.yml',
     '.rspec',
     '.rubocop.yml',
     '.rubocop_todo.yml',
-    '.travis.yml',
     'Appraisals',
     'Dockerfile',
     'Gemfile',
@@ -37,6 +39,7 @@ Gem::Specification.new do |s|
     'gemfiles/rails_4.2.gemfile',
     'gemfiles/rails_5.2.gemfile',
     'gemfiles/rails_6.0.gemfile',
+    'gemfiles/rails_7.0.gemfile',
     'gemfiles/rails_master.gemfile',
     'lib/acts-as-messageable.rb',
     'lib/acts_as_messageable.rb',
@@ -82,7 +85,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency('ancestry', ['>= 0'])
       s.add_runtime_dependency('railties', ['>= 0'])
       s.add_development_dependency('appraisal', ['>= 0'])
-      s.add_development_dependency('coveralls', ['>= 0'])
+      s.add_development_dependency('coveralls_reborn', ['>= 0'])
       s.add_development_dependency('jeweler', ['>= 0'])
       s.add_development_dependency('pg', ['>= 0'])
       s.add_development_dependency('pry', ['>= 0'])
@@ -96,9 +99,14 @@ Gem::Specification.new do |s|
       s.add_dependency('activesupport', ['>= 0'])
       s.add_dependency('ancestry', ['>= 0'])
       s.add_dependency('appraisal', ['>= 0'])
-      s.add_dependency('coveralls', ['>= 0'])
+      s.add_dependency('appraisal', ['>= 0'])
+      s.add_dependency('coveralls_reborn', ['>= 0'])
+      s.add_dependency('coveralls_reborn', ['>= 0'])
+      s.add_dependency('jeweler', ['>= 0'])
       s.add_dependency('jeweler', ['>= 0'])
       s.add_dependency('pg', ['>= 0'])
+      s.add_dependency('pg', ['>= 0'])
+      s.add_dependency('pry', ['>= 0'])
       s.add_dependency('pry', ['>= 0'])
       s.add_dependency('railties', ['>= 0'])
       s.add_dependency('rspec', ['>= 0'])
@@ -111,11 +119,6 @@ Gem::Specification.new do |s|
     s.add_dependency('activerecord', ['>= 0'])
     s.add_dependency('activesupport', ['>= 0'])
     s.add_dependency('ancestry', ['>= 0'])
-    s.add_dependency('railties', ['>= 0'])
-    s.add_dependency('railties', ['>= 0'])
-    s.add_dependency('railties', ['>= 0'])
-    s.add_dependency('railties', ['>= 0'])
-    s.add_dependency('railties', ['>= 0'])
     s.add_dependency('railties', ['>= 0'])
     s.add_dependency('rspec', ['>= 0'])
     s.add_dependency('rubocop', ['>= 0'])

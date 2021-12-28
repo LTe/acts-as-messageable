@@ -19,6 +19,7 @@ Jeweler::Tasks.new do |gem|
   gem.summary = 'Make user messageable!;-)'
   gem.homepage = 'http://github.com/LTe/acts-as-messageable'
   gem.authors = ['Piotr Nielacny']
+  gem.metadata = { 'rubygems_mfa_required' => true }
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
