@@ -7,7 +7,6 @@ gem 'activesupport'
 gem 'ancestry'
 gem 'railties'
 gem 'sorbet-runtime'
-gem 'listen'
 
 group :development do
   gem 'appraisal'
@@ -17,8 +16,8 @@ group :development do
   gem 'pry'
   gem 'rspec'
   gem 'rubocop', require: false
-  gem 'sqlite3'
   gem 'sorbet'
+  gem 'sqlite3'
   gem 'timecop'
   gem 'yard'
 end
