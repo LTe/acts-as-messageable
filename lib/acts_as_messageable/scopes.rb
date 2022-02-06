@@ -7,6 +7,8 @@ module ActsAsMessageable
     extend ActiveSupport::Concern
 
     module ClassMethods
+      # @return [Object]
+      # @param [String, Symbol] search_scope
       def initialize_scopes(search_scope)
         scope :are_from, lambda { |*args|
           where(sent_messageable_id: args.first, sent_messageable_type: args.first.class.name)
