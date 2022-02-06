@@ -1,3 +1,4 @@
+# typed: ignore
 class AddOpenedAtToMessages < ActiveRecord::Migration[4.2]
   class MigrationMessage < ActiveRecord::Base
     self.table_name = :<%= table_name %>

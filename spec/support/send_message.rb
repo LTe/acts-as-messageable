@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 def send_message(from = @bob, to = @alice, topic = 'Topic', body = 'Body')

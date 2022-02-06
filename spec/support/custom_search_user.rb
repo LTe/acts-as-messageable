@@ -1,3 +1,4 @@
+# typed: false
 # frozen_string_literal: true
 
 class CustomSearchUser < ActiveRecord::Base

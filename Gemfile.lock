@@ -48,6 +48,7 @@ GEM
     erubi (1.11.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
+    ffi (1.15.5)
     git (1.11.0)
       rchardet (~> 1.8)
     github_api (0.16.0)
@@ -74,6 +75,9 @@ GEM
       semver2
     json (2.6.2)
     jwt (2.5.0)
+    listen (3.7.1)
+      rb-fsevent (~> 0.10, >= 0.10.3)
+      rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.19.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -120,6 +124,9 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
+    rb-fsevent (0.11.1)
+    rb-inotify (0.10.1)
+      ffi (~> 1.0)
     rchardet (1.8.0)
     rdoc (6.4.0)
       psych (>= 4.0.0)
@@ -158,6 +165,10 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
+    sorbet (0.5.9959)
+      sorbet-static (= 0.5.9959)
+    sorbet-runtime (0.5.9959)
+    sorbet-static (0.5.9959-universal-darwin-19)
     sqlite3 (1.5.4)
       mini_portile2 (~> 2.8.0)
     stringio (3.0.2)
@@ -187,11 +198,14 @@ DEPENDENCIES
   appraisal
   coveralls_reborn
   jeweler
+  listen
   pg
   pry
   railties
   rspec
   rubocop
+  sorbet
+  sorbet-runtime
   sqlite3
   timecop
   yard

@@ -1,3 +1,4 @@
+# typed: ignore
 class CreateMessagesTable < ActiveRecord::Migration[4.2]
   def self.up
     create_table :<%= table_name %> do |t|

@@ -1,3 +1,4 @@
+# typed: ignore
 class AddRecipientPermanentDeleteAndSenderPermanentDeleteToMessages < ActiveRecord::Migration[4.2]
   def self.up
     add_column :<%= table_name %>, :recipient_permanent_delete, :boolean, :default => false
