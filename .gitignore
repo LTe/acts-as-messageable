@@ -9,3 +9,5 @@ tags
 lor
 coverage
 gemfiles/*.lock
+.yard
+doc

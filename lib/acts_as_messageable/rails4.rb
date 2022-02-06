@@ -11,7 +11,8 @@ module ActsAsMessageable
 
     # Empty method for Rails 4.x
     # @return [NilClass]
-    def attr_accessible(*); end
+    # @param [Array] _args
+    def attr_accessible(*_args); end
 
     # Default scope for Rails 4.x with block support
     # @return [Object]
