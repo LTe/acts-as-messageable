@@ -25,7 +25,7 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
     addressable (2.4.0)
-    ancestry (4.1.0)
+    ancestry (4.2.0)
       activerecord (>= 5.2.6)
     appraisal (2.4.1)
       bundler
