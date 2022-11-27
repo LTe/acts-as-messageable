@@ -55,11 +55,6 @@ jobs:
             run_generators: "false"
             database_adapter: 'sqlite3'
             database_name: ":memory:"
-          - rvm: ruby-head
-            gemfile: gemfiles/rails_master.gemfile
-            run_generators: "true"
-            database_adapter: 'sqlite3'
-            database_name: ":memory:"
           - rvm: 2.3.8
             gemfile: gemfiles/rails_3.2.gemfile
             run_generators: "false"
