@@ -87,7 +87,7 @@ module ActsAsMessageable
         messages true
       end
 
-      # Method sens message to another user
+      # Method sends message to another user
       # @param [ActiveRecord::Base] to
       # @param [String] topic
       # @param [String] body

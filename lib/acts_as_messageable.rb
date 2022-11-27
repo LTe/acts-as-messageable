@@ -9,6 +9,8 @@ module ActsAsMessageable
   autoload :Rails4, 'acts_as_messageable/rails4'
   autoload :Rails6, 'acts_as_messageable/rails6'
 
+  # @return [Class<ActsAsMessageable::Rails4>, Class<ActsAsMessageable::Rails6>, Class<ActsAsMessageable::Rails3>]
+  #  API wrapper
   def self.rails_api
     if Rails::VERSION::MAJOR >= 6
       Rails6
