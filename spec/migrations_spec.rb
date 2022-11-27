@@ -5,7 +5,7 @@ require 'spec_helper'
 def create_dummy_app
   system <<-COMMAND
     bundle exec rails new dummy --skip-test-unit --skip-spring --skip-webpack-install --skip-bootsnap \
-    --skip-active-storage --skip-active-job -d sqlite3
+    --skip-active-storage --skip-active-job --skip-action-cable --skip-javascript -d sqlite3
   COMMAND
 end
 
