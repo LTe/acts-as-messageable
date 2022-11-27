@@ -117,7 +117,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#attr_accessible-instance_method" title="#attr_accessible (instance method)">#<strong>attr_accessible</strong>  &#x21d2; Object </a>
+      <a href="#attr_accessible-instance_method" title="#attr_accessible (instance method)">#<strong>attr_accessible</strong>  &#x21d2; NilClass </a>
     
 
     
@@ -131,7 +131,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Empty method for Rails 4.x.</p>
+</div></span>
   
 </li>
 
@@ -153,7 +155,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Default scope for Rails 4.x with block support.</p>
+</div></span>
   
 </li>
 
@@ -161,7 +165,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(subject)  &#x21d2; Rails4 </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(subject)  &#x21d2; ActsAsMessageable::Rails4 </a>
     
 
     
@@ -178,7 +182,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>A new instance of Rails4.</p>
+<p>Api wrapper object.</p>
 </div></span>
   
 </li>
@@ -245,7 +249,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Rename of the method.</p>
+</div></span>
   
 </li>
 
@@ -259,7 +265,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(subject)  &#x21d2; <tt><span class='object_link'><a href="" title="ActsAsMessageable::Rails4 (class)">Rails4</a></span></tt> 
+    #<strong>initialize</strong>(subject)  &#x21d2; <tt><span class='object_link'><a href="" title="ActsAsMessageable::Rails4 (class)">ActsAsMessageable::Rails4</a></span></tt> 
   
 
   
@@ -268,13 +274,28 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns a new instance of Rails4.</p>
+<p>Returns api wrapper object.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>subject</span>
+      
+      
+        <span class='type'>(<tt>ActiveRecord::Base</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -282,12 +303,12 @@
       <pre class="lines">
 
 
-5
-6
-7</pre>
+7
+8
+9</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/rails4.rb', line 5</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/rails4.rb', line 7</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span>
   <span class='ivar'>@subject</span> <span class='op'>=</span> <span class='id identifier rubyid_subject'>subject</span>
@@ -314,18 +335,66 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>args</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Object</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-19
-20
-21</pre>
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/rails4.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/rails4.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@subject</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='kw'>super</span>
@@ -345,22 +414,46 @@
       <div class="method_details first">
   <h3 class="signature first" id="attr_accessible-instance_method">
   
-    #<strong>attr_accessible</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>attr_accessible</strong>  &#x21d2; <tt>NilClass</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Empty method for Rails 4.x</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>NilClass</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-9</pre>
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/rails4.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/rails4.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_attr_accessible'>attr_accessible</span><span class='lparen'>(</span><span class='op'>*</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -377,18 +470,57 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Default scope for Rails 4.x with block support</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>order_by</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>Symbol</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Object</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-11
-12
-13</pre>
+18
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/rails4.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/rails4.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default_scope'>default_scope</span><span class='lparen'>(</span><span class='id identifier rubyid_order_by'>order_by</span><span class='rparen'>)</span>
   <span class='ivar'>@subject</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:default_scope</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='id identifier rubyid_order_by'>order_by</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -414,7 +546,35 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>method_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>include_private</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
   
@@ -435,12 +595,12 @@
       <pre class="lines">
 
 
-23
-24
-25</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/rails4.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/rails4.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_respond_to_missing?'>respond_to_missing?</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='id identifier rubyid_include_private'>include_private</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='qwords_beg'>%w[</span><span class='tstring_content'>default_scope</span><span class='words_sep'> </span><span class='tstring_content'>scoped</span><span class='words_sep'> </span><span class='tstring_content'>attr_accessible</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='kw'>super</span>
@@ -459,18 +619,42 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Rename of the method</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Object</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-15
-16
-17</pre>
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/rails4.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/rails4.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_scoped'>scoped</span>
   <span class='ivar'>@subject</span><span class='period'>.</span><span class='id identifier rubyid_scope'>scope</span>
@@ -485,7 +669,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Nov 27 12:08:24 2022 by
+  Generated on Sun Nov 27 12:26:59 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>

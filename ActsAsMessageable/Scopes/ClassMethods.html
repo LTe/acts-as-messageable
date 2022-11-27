@@ -138,14 +138,49 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>search_scope</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>Symbol</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Object</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-10
-11
 12
 13
 14
@@ -173,10 +208,12 @@
 36
 37
 38
-39</pre>
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/scopes.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/scopes.rb', line 12</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize_scopes'>initialize_scopes</span><span class='lparen'>(</span><span class='id identifier rubyid_search_scope'>search_scope</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_scope'>scope</span> <span class='symbol'>:are_from</span><span class='comma'>,</span> <span class='id identifier rubyid_lambda'>lambda</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='op'>|</span>
@@ -218,7 +255,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Nov 27 12:08:24 2022 by
+  Generated on Sun Nov 27 12:26:59 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>
