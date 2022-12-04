@@ -248,7 +248,6 @@ DEPENDENCIES
   railties
   rspec
   rubocop
-  sorbet-runtime
   sorbet-static-and-runtime
   sord
   sqlite3

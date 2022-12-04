@@ -6,7 +6,6 @@ gem 'activerecord'
 gem 'activesupport'
 gem 'ancestry'
 gem 'railties'
-gem 'sorbet-runtime'
 gem 'sorbet-static-and-runtime'
 
 group :development do
