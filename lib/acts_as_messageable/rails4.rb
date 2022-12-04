@@ -1,4 +1,4 @@
-# typed: false
+# typed: ignore
 # frozen_string_literal: true
 
 module ActsAsMessageable
