@@ -1,0 +1,8 @@
+gem:
+  prerequire: sorbet/tapioca/pre_require.rb
+  exclude:
+    - parlour
+    - sord
+    - rubocop
+dsl:
+

@@ -1,3 +1,4 @@
+# typed: ignore
 # frozen_string_literal: true
 
 module ActsAsMessageable
@@ -22,4 +23,5 @@ module ActsAsMessageable
   end
 end
 
+require 'sorbet-runtime'
 require 'acts_as_messageable/railtie'

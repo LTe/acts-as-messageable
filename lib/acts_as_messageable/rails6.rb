@@ -1,3 +1,4 @@
+# typed: ignore
 # frozen_string_literal: true
 
 module ActsAsMessageable
@@ -10,7 +11,8 @@ module ActsAsMessageable
 
     # Empty method for Rails 3.x
     # @return [NilClass]
-    def attr_accessible(*); end
+    # @param [Array] _args
+    def attr_accessible(*_args); end
 
     # Default scope for Rails 6.x with block support
     # @return [Object]

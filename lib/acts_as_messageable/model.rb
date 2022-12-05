@@ -1,18 +1,23 @@
+# typed: ignore
 # frozen_string_literal: true
 
 module ActsAsMessageable
   module Model
+    # @return [Object]
+    # @param [Object] base
     def self.included(base)
       base.extend ClassMethods
     end
 
     module ClassMethods
       # Method make ActiveRecord::Base object messageable
-      # @param [Symbol] :table_name - table name for messages
-      # @param [String] :class_name - message class name
-      # @param [Array, Symbol] :required - required fields in message
-      # @param [Symbol] :dependent - dependent option from ActiveRecord has_many method
-      # @param [Symbol] :search_scope - name of a scope for a full text search
+      # @option options [Symbol] :table_name table name for messages
+      # @option options [String] :class_name message class name
+      # @option options [Array, Symbol] :required required fields in message
+      # @option options [Symbol] :dependent dependent option from ActiveRecord has_many method
+      # @option options [Symbol] :search_scope name of a scope for a full text search
+      # @param [Hash] options
+      # @return [Object]
       def acts_as_messageable(options = {})
         default_options = {
           table_name: 'messages',
@@ -56,7 +61,14 @@ module ActsAsMessageable
     end
 
     module InstanceMethods
+      extend T::Helpers
+      extend T::Sig
+
+      requires_ancestor { Kernel }
+      requires_ancestor { UserModel }
+
       # @return [ActiveRecord::Relation] all messages connected with user
+      # @param [Boolean] trash Show deleted messages
       def messages(trash = false)
         result = self.class.messages_class_name.connected_with(self, trash)
         result.relation_context = self
@@ -89,9 +101,9 @@ module ActsAsMessageable
 
       # Method sends message to another user
       # @param [ActiveRecord::Base] to
-      # @param [String] topic
-      # @param [String] body
-      #
+      # @param [Hash] args
+      # @option args [String] topic Topic of the message
+      # @option args [String] body Body of the message
       # @return [ActsAsMessageable::Message] the message object
       def send_message(to, *args)
         message_attributes = {}
@@ -116,8 +128,9 @@ module ActsAsMessageable
       # Method send message to another user
       # and raise exception in case of validation errors
       # @param [ActiveRecord::Base] to
-      # @param [String] topic
-      # @param [String] body
+      # @param [Hash] args
+      # @option [String] topic Topic of the message
+      # @option [String] body Body of the message
       #
       # @return [ActsAsMessageable::Message] the message object
       def send_message!(to, *args)
@@ -126,8 +139,9 @@ module ActsAsMessageable
 
       # Reply to given message
       # @param [ActsAsMessageable::Message] message
-      # @param [String] topic
-      # @param [String] body
+      # @param [Hash] args
+      # @option args [String] topic Topic of the message
+      # @option args [String] body Body of the message
       #
       # @return [ActsAsMessageable::Message] a message that is a response to a given message
       def reply_to(message, *args)
@@ -143,6 +157,8 @@ module ActsAsMessageable
       end
 
       # Mark message as deleted
+      # @param [ActsAsMessageable::Message] message to delete
+      # @return [ActsAsMessageable::Message] deleted message
       def delete_message(message)
         current_user = self
 
@@ -159,6 +175,8 @@ module ActsAsMessageable
       end
 
       # Mark message as restored
+      # @param [ActsAsMessageable::Message] message to restore
+      # @return [ActsAsMessageable::Message] restored message
       def restore_message(message)
         current_user = self
 
