@@ -23,4 +23,5 @@ module ActsAsMessageable
   end
 end
 
+require 'sorbet-runtime'
 require 'acts_as_messageable/railtie'
