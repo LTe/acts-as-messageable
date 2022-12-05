@@ -491,12 +491,12 @@
       <pre class="lines">
 
 
+13
 14
-15
-16</pre>
+15</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_removed'>removed</span>
   <span class='ivar'>@removed</span>
@@ -534,12 +534,12 @@
       <pre class="lines">
 
 
+13
 14
-15
-16</pre>
+15</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_restored'>restored</span>
   <span class='ivar'>@restored</span>
@@ -604,13 +604,13 @@
       <pre class="lines">
 
 
+46
 47
 48
-49
-50</pre>
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='const'><span class='object_link'><a href="../ActsAsMessageable.html" title="ActsAsMessageable (module)">ActsAsMessageable</a></span></span><span class='period'>.</span><span class='id identifier rubyid_rails_api'><span class='object_link'><a href="../ActsAsMessageable.html#rails_api-class_method" title="ActsAsMessageable.rails_api (method)">rails_api</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_update_attributes!'>update_attributes!</span><span class='lparen'>(</span><span class='label'>opened_at:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -665,12 +665,12 @@
       <pre class="lines">
 
 
+70
 71
-72
-73</pre>
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_conversation'>conversation</span>
   <span class='id identifier rubyid_root'><span class='object_link'><a href="../top-level-namespace.html" title="Top Level Namespace (root)">root</a></span></span><span class='period'>.</span><span class='id identifier rubyid_subtree'>subtree</span>
@@ -719,12 +719,12 @@
       <pre class="lines">
 
 
+76
 77
-78
-79</pre>
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete'>delete</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_removed'>removed</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -782,13 +782,13 @@
       <pre class="lines">
 
 
+36
 37
 38
-39
-40</pre>
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_open'>open</span>
   <span class='const'><span class='object_link'><a href="../ActsAsMessageable.html" title="ActsAsMessageable (module)">ActsAsMessageable</a></span></span><span class='period'>.</span><span class='id identifier rubyid_rails_api'><span class='object_link'><a href="../ActsAsMessageable.html#rails_api-class_method" title="ActsAsMessageable.rails_api (method)">rails_api</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_update_attributes!'>update_attributes!</span><span class='lparen'>(</span><span class='label'>opened_at:</span> <span class='const'>DateTime</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span>
@@ -843,12 +843,12 @@
       <pre class="lines">
 
 
+24
 25
-26
-27</pre>
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_open?'>open?</span>
   <span class='id identifier rubyid_opened?'>opened?</span>
@@ -909,12 +909,12 @@
       <pre class="lines">
 
 
+30
 31
-32
-33</pre>
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_opened?'>opened?</span>
   <span class='id identifier rubyid_opened_at'>opened_at</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>||</span> <span class='kw'>super</span>
@@ -983,12 +983,12 @@
       <pre class="lines">
 
 
+65
 66
-67
-68</pre>
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_participant?'>participant?</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_group_messages'>group_messages</span> <span class='op'>||</span> <span class='lparen'>(</span><span class='id identifier rubyid_to'>to</span> <span class='op'>==</span> <span class='id identifier rubyid_user'>user</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lparen'>(</span><span class='id identifier rubyid_from'>from</span> <span class='op'>==</span> <span class='id identifier rubyid_user'>user</span><span class='rparen'>)</span>
@@ -1042,12 +1042,12 @@
       <pre class="lines">
 
 
+98
 99
-100
-101</pre>
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 98</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_people'>people</span>
   <span class='id identifier rubyid_conversation'>conversation</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:from</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq!'>uniq!</span>
@@ -1116,12 +1116,12 @@
       <pre class="lines">
 
 
+59
 60
-61
-62</pre>
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_real_receiver'>real_receiver</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_user'>user</span> <span class='op'>==</span> <span class='id identifier rubyid_from'>from</span> <span class='op'>?</span> <span class='id identifier rubyid_to'>to</span> <span class='op'>:</span> <span class='id identifier rubyid_from'>from</span>
@@ -1232,12 +1232,12 @@
       <pre class="lines">
 
 
+92
 93
-94
-95</pre>
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 93</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reply'>reply</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_to'>to</span><span class='period'>.</span><span class='id identifier rubyid_reply_to'>reply_to</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -1286,12 +1286,12 @@
       <pre class="lines">
 
 
+82
 83
-84
-85</pre>
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/message.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_restore'>restore</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_restored'>restored</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -1306,7 +1306,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Dec  5 07:12:44 2022 by
+  Generated on Mon Dec  5 07:33:45 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>

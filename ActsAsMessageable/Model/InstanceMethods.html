@@ -69,6 +69,11 @@
 
   
   
+  <dl>
+      <dt>Extended by:</dt>
+      <dd>T::Helpers, T::Sig</dd>
+  </dl>
+  
   
   
   
@@ -101,7 +106,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#delete_message-instance_method" title="#delete_message (instance method)">#<strong>delete_message</strong>(message)  &#x21d2; Object </a>
+      <a href="#delete_message-instance_method" title="#delete_message (instance method)">#<strong>delete_message</strong>(message)  &#x21d2; ActsAsMessageable::Message </a>
     
 
     
@@ -221,7 +226,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#restore_message-instance_method" title="#restore_message (instance method)">#<strong>restore_message</strong>(message)  &#x21d2; Object </a>
+      <a href="#restore_message-instance_method" title="#restore_message (instance method)">#<strong>restore_message</strong>(message)  &#x21d2; ActsAsMessageable::Message </a>
     
 
     
@@ -318,6 +323,8 @@
   
 
 
+  
+  
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -326,7 +333,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="delete_message-instance_method">
   
-    #<strong>delete_message</strong>(message)  &#x21d2; <tt>Object</tt> 
+    #<strong>delete_message</strong>(message)  &#x21d2; <tt><span class='object_link'><a href="../Message.html" title="ActsAsMessageable::Message (class)">ActsAsMessageable::Message</a></span></tt> 
   
 
   
@@ -341,7 +348,45 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>message</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Message.html" title="ActsAsMessageable::Message (class)">ActsAsMessageable::Message</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>to delete</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Message.html" title="ActsAsMessageable::Message (class)">ActsAsMessageable::Message</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>deleted message</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -349,23 +394,23 @@
       <pre class="lines">
 
 
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159</pre>
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 146</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_message'>delete_message</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_current_user'>current_user</span> <span class='op'>=</span> <span class='kw'>self</span>
@@ -430,12 +475,12 @@
       <pre class="lines">
 
 
-86
-87
-88</pre>
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 98</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_deleted_messages'>deleted_messages</span>
   <span class='id identifier rubyid_messages'>messages</span> <span class='kw'>true</span>
@@ -463,7 +508,29 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>trash</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Show deleted messages</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
   
@@ -489,15 +556,15 @@
       <pre class="lines">
 
 
-60
-61
-62
-63
-64
-65</pre>
+72
+73
+74
+75
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_messages'>messages</span><span class='lparen'>(</span><span class='id identifier rubyid_trash'>trash</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_messages_class_name'>messages_class_name</span><span class='period'>.</span><span class='id identifier rubyid_connected_with'>connected_with</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_trash'>trash</span><span class='rparen'>)</span>
@@ -554,16 +621,16 @@
       <pre class="lines">
 
 
-68
-69
-70
-71
-72
-73
-74</pre>
+80
+81
+82
+83
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_received_messages'>received_messages</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../ActsAsMessageable.html" title="ActsAsMessageable (module)">ActsAsMessageable</a></span></span><span class='period'>.</span><span class='id identifier rubyid_rails_api'><span class='object_link'><a href="../../ActsAsMessageable.html#rails_api-class_method" title="ActsAsMessageable.rails_api (method)">rails_api</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_received_messages_relation'>received_messages_relation</span><span class='rparen'>)</span>
@@ -611,27 +678,53 @@
   
     <li>
       
-        <span class='name'>topic</span>
+        <span class='name'>args</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>body</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Hash</tt>)</span>
       
       
       
     </li>
   
 </ul>
+
+  
+    
+    
+    
+    
+    <p class="tag_title">Options Hash (<tt>*args</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">topic</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>Topic of the message</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">body</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>Body of the message</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
@@ -658,20 +751,20 @@
       <pre class="lines">
 
 
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143</pre>
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 133</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reply_to'>reply_to</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_current_user'>current_user</span> <span class='op'>=</span> <span class='kw'>self</span>
@@ -692,7 +785,7 @@
       <div class="method_details ">
   <h3 class="signature " id="restore_message-instance_method">
   
-    #<strong>restore_message</strong>(message)  &#x21d2; <tt>Object</tt> 
+    #<strong>restore_message</strong>(message)  &#x21d2; <tt><span class='object_link'><a href="../Message.html" title="ActsAsMessageable::Message (class)">ActsAsMessageable::Message</a></span></tt> 
   
 
   
@@ -707,7 +800,45 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>message</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Message.html" title="ActsAsMessageable::Message (class)">ActsAsMessageable::Message</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>to restore</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Message.html" title="ActsAsMessageable::Message (class)">ActsAsMessageable::Message</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>restored message</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -715,23 +846,23 @@
       <pre class="lines">
 
 
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175</pre>
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 180</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_restore_message'>restore_message</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_current_user'>current_user</span> <span class='op'>=</span> <span class='kw'>self</span>
@@ -786,27 +917,53 @@
   
     <li>
       
-        <span class='name'>topic</span>
+        <span class='name'>args</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>body</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Hash</tt>)</span>
       
       
       
     </li>
   
 </ul>
+
+  
+    
+    
+    
+    
+    <p class="tag_title">Options Hash (<tt>*args</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">topic</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>Topic of the message</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">body</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>Body of the message</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
@@ -833,28 +990,28 @@
       <pre class="lines">
 
 
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
 108
 109
 110
 111
 112
 113
-114</pre>
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_send_message'>send_message</span><span class='lparen'>(</span><span class='id identifier rubyid_to'>to</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_message_attributes'>message_attributes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -914,10 +1071,10 @@
   
     <li>
       
-        <span class='name'>topic</span>
+        <span class='name'>args</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Hash</tt>)</span>
       
       
       
@@ -925,16 +1082,27 @@
   
     <li>
       
-        <span class='name'>body</span>
+        <span class='name'>[String]</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Hash</tt>)</span>
       
       
+      
+        &mdash;
+        <div class='inline'>
+<p>a customizable set of options</p>
+</div>
       
     </li>
   
 </ul>
+
+  
+    
+    
+    
+    
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
@@ -961,12 +1129,12 @@
       <pre class="lines">
 
 
-123
-124
-125</pre>
+136
+137
+138</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 136</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_send_message!'>send_message!</span><span class='lparen'>(</span><span class='id identifier rubyid_to'>to</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_send_message'>send_message</span><span class='lparen'>(</span><span class='id identifier rubyid_to'>to</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:save!</span><span class='rparen'>)</span>
@@ -1020,16 +1188,16 @@
       <pre class="lines">
 
 
-77
-78
-79
-80
-81
-82
-83</pre>
+89
+90
+91
+92
+93
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sent_messages'>sent_messages</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../ActsAsMessageable.html" title="ActsAsMessageable (module)">ActsAsMessageable</a></span></span><span class='period'>.</span><span class='id identifier rubyid_rails_api'><span class='object_link'><a href="../../ActsAsMessageable.html#rails_api-class_method" title="ActsAsMessageable.rails_api (method)">rails_api</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_sent_messages_relation'>sent_messages_relation</span><span class='rparen'>)</span>
@@ -1048,7 +1216,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Dec  5 07:12:43 2022 by
+  Generated on Mon Dec  5 07:33:45 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>
