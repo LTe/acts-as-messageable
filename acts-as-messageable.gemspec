@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.authors = ['Piotr Nielacny']
   s.email = 'piotr.nielacny@gmail.com'
+  s.executables = ['tapioca']
   s.extra_rdoc_files = [
     'README.md'
   ]
@@ -25,6 +26,7 @@ Gem::Specification.new do |s|
     '.rspec',
     '.rubocop.yml',
     '.rubocop_todo.yml',
+    '.ruby-version',
     'Appraisals',
     'Dockerfile',
     'Gemfile',
@@ -34,6 +36,7 @@ Gem::Specification.new do |s|
     'Rakefile',
     'VERSION',
     'acts-as-messageable.gemspec',
+    'bin/tapioca',
     'docker-compose.yml',
     'gemfiles/rails_3.2.gemfile',
     'gemfiles/rails_4.2.gemfile',
@@ -56,6 +59,167 @@ Gem::Specification.new do |s|
     'lib/generators/acts_as_messageable/migration/templates/migration_indexes.rb',
     'lib/generators/acts_as_messageable/migration/templates/migration_opened_as_datetime.rb',
     'lib/generators/acts_as_messageable/migration/templates/migration_permanent.rb',
+    'rbi/acts_as_messageable.rbi',
+    'rbi/rails_generators.rbi',
+    'sorbet/config',
+    'sorbet/rbi/annotations/actionpack.rbi',
+    'sorbet/rbi/annotations/actionview.rbi',
+    'sorbet/rbi/annotations/activerecord.rbi',
+    'sorbet/rbi/annotations/activesupport.rbi',
+    'sorbet/rbi/annotations/faraday.rbi',
+    'sorbet/rbi/annotations/railties.rbi',
+    'sorbet/rbi/annotations/rainbow.rbi',
+    'sorbet/rbi/dsl/abstract_controller/caching.rbi',
+    'sorbet/rbi/dsl/abstract_controller/caching/fragments.rbi',
+    'sorbet/rbi/dsl/abstract_controller/callbacks.rbi',
+    'sorbet/rbi/dsl/abstract_controller/helpers.rbi',
+    'sorbet/rbi/dsl/abstract_controller/rendering.rbi',
+    'sorbet/rbi/dsl/abstract_controller/url_for.rbi',
+    'sorbet/rbi/dsl/action_controller/caching.rbi',
+    'sorbet/rbi/dsl/action_controller/conditional_get.rbi',
+    'sorbet/rbi/dsl/action_controller/content_security_policy.rbi',
+    'sorbet/rbi/dsl/action_controller/data_streaming.rbi',
+    'sorbet/rbi/dsl/action_controller/etag_with_flash.rbi',
+    'sorbet/rbi/dsl/action_controller/etag_with_template_digest.rbi',
+    'sorbet/rbi/dsl/action_controller/flash.rbi',
+    'sorbet/rbi/dsl/action_controller/form_builder.rbi',
+    'sorbet/rbi/dsl/action_controller/helpers.rbi',
+    'sorbet/rbi/dsl/action_controller/params_wrapper.rbi',
+    'sorbet/rbi/dsl/action_controller/redirecting.rbi',
+    'sorbet/rbi/dsl/action_controller/renderers.rbi',
+    'sorbet/rbi/dsl/action_controller/renderers/all.rbi',
+    'sorbet/rbi/dsl/action_controller/request_forgery_protection.rbi',
+    'sorbet/rbi/dsl/action_controller/rescue.rbi',
+    'sorbet/rbi/dsl/action_controller/test_case/behavior.rbi',
+    'sorbet/rbi/dsl/action_controller/url_for.rbi',
+    'sorbet/rbi/dsl/action_dispatch/routing/url_for.rbi',
+    'sorbet/rbi/dsl/action_view/helpers.rbi',
+    'sorbet/rbi/dsl/action_view/helpers/form_helper.rbi',
+    'sorbet/rbi/dsl/action_view/helpers/form_tag_helper.rbi',
+    'sorbet/rbi/dsl/action_view/helpers/text_helper.rbi',
+    'sorbet/rbi/dsl/action_view/layouts.rbi',
+    'sorbet/rbi/dsl/action_view/rendering.rbi',
+    'sorbet/rbi/dsl/active_model/attribute_methods.rbi',
+    'sorbet/rbi/dsl/active_model/attributes.rbi',
+    'sorbet/rbi/dsl/active_model/dirty.rbi',
+    'sorbet/rbi/dsl/active_model/serializers/json.rbi',
+    'sorbet/rbi/dsl/active_model/validations.rbi',
+    'sorbet/rbi/dsl/active_model/validations/callbacks.rbi',
+    'sorbet/rbi/dsl/active_record/attribute_methods.rbi',
+    'sorbet/rbi/dsl/active_record/attribute_methods/dirty.rbi',
+    'sorbet/rbi/dsl/active_record/attribute_methods/time_zone_conversion.rbi',
+    'sorbet/rbi/dsl/active_record/attributes.rbi',
+    'sorbet/rbi/dsl/active_record/callbacks.rbi',
+    'sorbet/rbi/dsl/active_record/core.rbi',
+    'sorbet/rbi/dsl/active_record/encryption/encryptable_record.rbi',
+    'sorbet/rbi/dsl/active_record/inheritance.rbi',
+    'sorbet/rbi/dsl/active_record/integration.rbi',
+    'sorbet/rbi/dsl/active_record/locking/optimistic.rbi',
+    'sorbet/rbi/dsl/active_record/model_schema.rbi',
+    'sorbet/rbi/dsl/active_record/nested_attributes.rbi',
+    'sorbet/rbi/dsl/active_record/readonly_attributes.rbi',
+    'sorbet/rbi/dsl/active_record/reflection.rbi',
+    'sorbet/rbi/dsl/active_record/scoping.rbi',
+    'sorbet/rbi/dsl/active_record/scoping/default.rbi',
+    'sorbet/rbi/dsl/active_record/serialization.rbi',
+    'sorbet/rbi/dsl/active_record/signed_id.rbi',
+    'sorbet/rbi/dsl/active_record/test_fixtures.rbi',
+    'sorbet/rbi/dsl/active_record/timestamp.rbi',
+    'sorbet/rbi/dsl/active_record/validations.rbi',
+    'sorbet/rbi/dsl/active_support/actionable_error.rbi',
+    'sorbet/rbi/dsl/active_support/callbacks.rbi',
+    'sorbet/rbi/dsl/active_support/rescuable.rbi',
+    'sorbet/rbi/dsl/active_support/testing/file_fixtures.rbi',
+    'sorbet/rbi/gems/actionpack@7.0.4.rbi',
+    'sorbet/rbi/gems/actionview@7.0.4.rbi',
+    'sorbet/rbi/gems/activemodel@7.0.4.rbi',
+    'sorbet/rbi/gems/activerecord@7.0.4.rbi',
+    'sorbet/rbi/gems/activesupport@7.0.4.rbi',
+    'sorbet/rbi/gems/addressable@2.4.0.rbi',
+    'sorbet/rbi/gems/ancestry@4.2.0.rbi',
+    'sorbet/rbi/gems/appraisal@2.4.1.rbi',
+    'sorbet/rbi/gems/ast@2.4.2.rbi',
+    'sorbet/rbi/gems/builder@3.2.4.rbi',
+    'sorbet/rbi/gems/coderay@1.1.3.rbi',
+    'sorbet/rbi/gems/commander@4.6.0.rbi',
+    'sorbet/rbi/gems/concurrent-ruby@1.1.10.rbi',
+    'sorbet/rbi/gems/coveralls_reborn@0.25.0.rbi',
+    'sorbet/rbi/gems/crass@1.0.6.rbi',
+    'sorbet/rbi/gems/descendants_tracker@0.0.4.rbi',
+    'sorbet/rbi/gems/diff-lcs@1.5.0.rbi',
+    'sorbet/rbi/gems/docile@1.4.0.rbi',
+    'sorbet/rbi/gems/erubi@1.11.0.rbi',
+    'sorbet/rbi/gems/faraday@0.9.2.rbi',
+    'sorbet/rbi/gems/git@1.11.0.rbi',
+    'sorbet/rbi/gems/github_api@0.16.0.rbi',
+    'sorbet/rbi/gems/hashie@5.0.0.rbi',
+    'sorbet/rbi/gems/highline@2.0.3.rbi',
+    'sorbet/rbi/gems/i18n@1.12.0.rbi',
+    'sorbet/rbi/gems/jeweler@2.3.9.rbi',
+    'sorbet/rbi/gems/json@2.6.2.rbi',
+    'sorbet/rbi/gems/jwt@2.5.0.rbi',
+    'sorbet/rbi/gems/loofah@2.19.0.rbi',
+    'sorbet/rbi/gems/method_source@1.0.0.rbi',
+    'sorbet/rbi/gems/mime-types@2.99.3.rbi',
+    'sorbet/rbi/gems/mini_portile2@2.8.0.rbi',
+    'sorbet/rbi/gems/minitest@5.16.3.rbi',
+    'sorbet/rbi/gems/multi_json@1.15.0.rbi',
+    'sorbet/rbi/gems/multi_xml@0.6.0.rbi',
+    'sorbet/rbi/gems/multipart-post@2.2.3.rbi',
+    'sorbet/rbi/gems/netrc@0.11.0.rbi',
+    'sorbet/rbi/gems/nokogiri@1.13.9.rbi',
+    'sorbet/rbi/gems/oauth2@1.4.8.rbi',
+    'sorbet/rbi/gems/parallel@1.22.1.rbi',
+    'sorbet/rbi/gems/parser@3.1.3.0.rbi',
+    'sorbet/rbi/gems/pg@1.4.5.rbi',
+    'sorbet/rbi/gems/pry@0.14.1.rbi',
+    'sorbet/rbi/gems/psych@4.0.6.rbi',
+    'sorbet/rbi/gems/racc@1.6.0.rbi',
+    'sorbet/rbi/gems/rack-test@2.0.2.rbi',
+    'sorbet/rbi/gems/rack@2.2.4.rbi',
+    'sorbet/rbi/gems/rails-dom-testing@2.0.3.rbi',
+    'sorbet/rbi/gems/rails-html-sanitizer@1.4.3.rbi',
+    'sorbet/rbi/gems/railties@7.0.4.rbi',
+    'sorbet/rbi/gems/rainbow@3.1.1.rbi',
+    'sorbet/rbi/gems/rake@13.0.6.rbi',
+    'sorbet/rbi/gems/rbi@0.0.16.rbi',
+    'sorbet/rbi/gems/rbs@2.8.0.rbi',
+    'sorbet/rbi/gems/rchardet@1.8.0.rbi',
+    'sorbet/rbi/gems/rdoc@6.4.0.rbi',
+    'sorbet/rbi/gems/regexp_parser@2.6.1.rbi',
+    'sorbet/rbi/gems/rexml@3.2.5.rbi',
+    'sorbet/rbi/gems/rspec-core@3.12.0.rbi',
+    'sorbet/rbi/gems/rspec-expectations@3.12.0.rbi',
+    'sorbet/rbi/gems/rspec-mocks@3.12.0.rbi',
+    'sorbet/rbi/gems/rspec-support@3.12.0.rbi',
+    'sorbet/rbi/gems/rspec@3.12.0.rbi',
+    'sorbet/rbi/gems/rubocop-ast@1.23.0.rbi',
+    'sorbet/rbi/gems/ruby-progressbar@1.11.0.rbi',
+    'sorbet/rbi/gems/semver2@3.4.2.rbi',
+    'sorbet/rbi/gems/simplecov-html@0.12.3.rbi',
+    'sorbet/rbi/gems/simplecov@0.21.2.rbi',
+    'sorbet/rbi/gems/simplecov_json_formatter@0.1.4.rbi',
+    'sorbet/rbi/gems/spoom@1.1.13.rbi',
+    'sorbet/rbi/gems/sqlite3@1.5.4.rbi',
+    'sorbet/rbi/gems/stringio@3.0.2.rbi',
+    'sorbet/rbi/gems/sync@0.5.0.rbi',
+    'sorbet/rbi/gems/tapioca@0.10.3.rbi',
+    'sorbet/rbi/gems/term-ansicolor@1.7.1.rbi',
+    'sorbet/rbi/gems/thor@1.2.1.rbi',
+    'sorbet/rbi/gems/thread_safe@0.3.6.rbi',
+    'sorbet/rbi/gems/timecop@0.9.5.rbi',
+    'sorbet/rbi/gems/tins@1.32.1.rbi',
+    'sorbet/rbi/gems/tzinfo@2.0.5.rbi',
+    'sorbet/rbi/gems/unicode-display_width@2.3.0.rbi',
+    'sorbet/rbi/gems/unparser@0.6.5.rbi',
+    'sorbet/rbi/gems/webrick@1.7.0.rbi',
+    'sorbet/rbi/gems/yard-sorbet@0.7.0.rbi',
+    'sorbet/rbi/gems/yard@0.9.28.rbi',
+    'sorbet/rbi/gems/zeitwerk@2.6.6.rbi',
+    'sorbet/rbi/todo.rbi',
+    'sorbet/tapioca/config.yml',
+    'sorbet/tapioca/pre_require.rb',
+    'sorbet/tapioca/require.rb',
     'spec/acts_as_messageable_spec.rb',
     'spec/custom_class_spec.rb',
     'spec/custom_required_spec.rb',
@@ -75,52 +239,40 @@ Gem::Specification.new do |s|
   s.homepage = 'http://github.com/LTe/acts-as-messageable'
   s.summary = 'Make user messageable!;-)'
 
-  if s.respond_to? :specification_version
-
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0')
-      s.add_runtime_dependency('activerecord', ['>= 0'])
-      s.add_runtime_dependency('activesupport', ['>= 0'])
-      s.add_runtime_dependency('ancestry', ['>= 0'])
-      s.add_runtime_dependency('railties', ['>= 0'])
-      s.add_development_dependency('appraisal', ['>= 0'])
-      s.add_development_dependency('coveralls_reborn', ['>= 0'])
-      s.add_development_dependency('jeweler', ['>= 0'])
-      s.add_development_dependency('pg', ['>= 0'])
-      s.add_development_dependency('pry', ['>= 0'])
-      s.add_development_dependency('rspec', ['>= 0'])
-      s.add_development_dependency('rubocop', ['>= 0'])
-      s.add_development_dependency('sqlite3', ['>= 0'])
-      s.add_development_dependency('timecop', ['>= 0'])
-      s.add_development_dependency('yard', ['>= 0'])
-    else
-      s.add_dependency('activerecord', ['>= 0'])
-      s.add_dependency('activesupport', ['>= 0'])
-      s.add_dependency('ancestry', ['>= 0'])
-      s.add_dependency('appraisal', ['>= 0'])
-      s.add_dependency('appraisal', ['>= 0'])
-      s.add_dependency('coveralls_reborn', ['>= 0'])
-      s.add_dependency('coveralls_reborn', ['>= 0'])
-      s.add_dependency('jeweler', ['>= 0'])
-      s.add_dependency('jeweler', ['>= 0'])
-      s.add_dependency('pg', ['>= 0'])
-      s.add_dependency('pg', ['>= 0'])
-      s.add_dependency('pry', ['>= 0'])
-      s.add_dependency('pry', ['>= 0'])
-      s.add_dependency('railties', ['>= 0'])
-      s.add_dependency('rspec', ['>= 0'])
-      s.add_dependency('rubocop', ['>= 0'])
-      s.add_dependency('sqlite3', ['>= 0'])
-      s.add_dependency('timecop', ['>= 0'])
-      s.add_dependency('yard', ['>= 0'])
-    end
+  if s.respond_to? :add_runtime_dependency
+    s.add_runtime_dependency('activerecord', ['>= 0'])
+    s.add_runtime_dependency('activesupport', ['>= 0'])
+    s.add_runtime_dependency('ancestry', ['>= 0'])
+    s.add_runtime_dependency('railties', ['>= 0'])
+    s.add_runtime_dependency('sorbet-static-and-runtime', ['>= 0'])
+    s.add_development_dependency('appraisal', ['>= 0'])
+    s.add_development_dependency('coveralls_reborn', ['>= 0'])
+    s.add_development_dependency('jeweler', ['>= 0'])
+    s.add_development_dependency('pg', ['>= 0'])
+    s.add_development_dependency('pry', ['>= 0'])
+    s.add_development_dependency('rspec', ['>= 0'])
+    s.add_development_dependency('rubocop', ['>= 0'])
+    s.add_development_dependency('sord', ['>= 0'])
+    s.add_development_dependency('sqlite3', ['>= 0'])
+    s.add_development_dependency('tapioca', ['>= 0'])
+    s.add_development_dependency('timecop', ['>= 0'])
+    s.add_development_dependency('yard', ['>= 0'])
   else
     s.add_dependency('activerecord', ['>= 0'])
     s.add_dependency('activesupport', ['>= 0'])
     s.add_dependency('ancestry', ['>= 0'])
+    s.add_dependency('appraisal', ['>= 0'])
+    s.add_dependency('coveralls_reborn', ['>= 0'])
+    s.add_dependency('jeweler', ['>= 0'])
+    s.add_dependency('pg', ['>= 0'])
+    s.add_dependency('pry', ['>= 0'])
     s.add_dependency('railties', ['>= 0'])
     s.add_dependency('rspec', ['>= 0'])
     s.add_dependency('rubocop', ['>= 0'])
+    s.add_dependency('sorbet-static-and-runtime', ['>= 0'])
+    s.add_dependency('sord', ['>= 0'])
     s.add_dependency('sqlite3', ['>= 0'])
+    s.add_dependency('tapioca', ['>= 0'])
     s.add_dependency('timecop', ['>= 0'])
     s.add_dependency('yard', ['>= 0'])
   end
