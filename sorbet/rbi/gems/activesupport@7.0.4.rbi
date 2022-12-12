@@ -18227,7 +18227,7 @@ end
 
 Struct::Group = Etc::Group
 
-# source://nokogiri/1.13.9/lib/nokogiri/html4/element_description_defaults.rb#11
+# source://nokogiri/1.13.10/lib/nokogiri/html4/element_description_defaults.rb#11
 Struct::HTMLElementDescription = Struct
 
 Struct::Passwd = Etc::Passwd

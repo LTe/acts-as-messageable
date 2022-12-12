@@ -32,8 +32,6 @@ class BasicObject
   def __binding__; end
 end
 
-# not pulling in active-support JUST for this method.  And I love this method.
-#
 # source://pry//lib/pry/core_extensions.rb#24
 class Object < ::BasicObject
   include ::ActiveSupport::ForkTracker::CoreExt
