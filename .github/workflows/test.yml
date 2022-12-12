@@ -108,12 +108,12 @@ jobs:
             database_name: ":memory:"
     steps:
       - uses: actions/checkout@v2
+      - run: sudo apt-get install libyaml-dev
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.rvm }}
           bundler-cache: true
       - run: psql -c 'create database ci_test;' -U postgres -h localhost
-      - run: sudo apt-get install libyaml-dev
       - run: bundle exec rake
   documentation:
     runs-on: ubuntu-latest
