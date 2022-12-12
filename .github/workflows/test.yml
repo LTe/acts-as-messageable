@@ -51,6 +51,7 @@ jobs:
       DATABASE_PASSWORD: ${{ matrix.database_password }}
       COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
     strategy:
+      fail-fast: false
       matrix:
         rvm: ["2.7"]
         gemfile: ["Gemfile"]
@@ -107,6 +108,7 @@ jobs:
             database_name: ":memory:"
     steps:
       - uses: actions/checkout@v2
+      - run: sudo apt-get install libyaml-dev
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.rvm }}
