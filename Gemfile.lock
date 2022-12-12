@@ -86,6 +86,8 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.2.3)
     netrc (0.11.0)
+    nokogiri (1.13.10-x86_64-darwin)
+      racc (~> 1.4)
     nokogiri (1.13.10-x86_64-linux)
       racc (~> 1.4)
     oauth2 (1.4.8)
@@ -173,6 +175,7 @@ GEM
     sorbet (0.5.10588)
       sorbet-static (= 0.5.10588)
     sorbet-runtime (0.5.10588)
+    sorbet-static (0.5.10588-universal-darwin-19)
     sorbet-static (0.5.10588-x86_64-linux)
     sorbet-static-and-runtime (0.5.10588)
       sorbet (= 0.5.10588)
@@ -187,6 +190,7 @@ GEM
       sorbet (>= 0.5.9204)
       sorbet-runtime (>= 0.5.9204)
       thor (>= 0.19.2)
+    sqlite3 (1.5.4-x86_64-darwin)
     sqlite3 (1.5.4-x86_64-linux)
     stringio (3.0.2)
     sync (0.5.0)
@@ -221,6 +225,7 @@ GEM
     zeitwerk (2.6.6)
 
 PLATFORMS
+  x86_64-darwin-19
   x86_64-linux
 
 DEPENDENCIES
