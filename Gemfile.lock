@@ -74,21 +74,19 @@ GEM
       rake
       rdoc
       semver2
-    json (2.6.2)
+    json (2.6.3)
     jwt (2.5.0)
     loofah (2.19.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     method_source (1.0.0)
     mime-types (2.99.3)
-    mini_portile2 (2.8.0)
     minitest (5.16.3)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.2.3)
     netrc (0.11.0)
-    nokogiri (1.13.9)
-      mini_portile2 (~> 2.8.0)
+    nokogiri (1.13.9-x86_64-linux)
       racc (~> 1.4)
     oauth2 (1.4.8)
       faraday (>= 0.8, < 3.0)
@@ -152,7 +150,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
     rspec-support (3.12.0)
-    rubocop (1.39.0)
+    rubocop (1.40.0)
       json (~> 2.3)
       parallel (~> 1.10)
       parser (>= 3.1.2.1)
@@ -162,7 +160,7 @@ GEM
       rubocop-ast (>= 1.23.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 3.0)
-    rubocop-ast (1.23.0)
+    rubocop-ast (1.24.0)
       parser (>= 3.1.1.0)
     ruby-progressbar (1.11.0)
     semver2 (3.4.2)
@@ -175,15 +173,6 @@ GEM
     sorbet (0.5.10564)
       sorbet-static (= 0.5.10564)
     sorbet-runtime (0.5.10564)
-    sorbet-static (0.5.10564-universal-darwin-14)
-    sorbet-static (0.5.10564-universal-darwin-15)
-    sorbet-static (0.5.10564-universal-darwin-16)
-    sorbet-static (0.5.10564-universal-darwin-17)
-    sorbet-static (0.5.10564-universal-darwin-18)
-    sorbet-static (0.5.10564-universal-darwin-19)
-    sorbet-static (0.5.10564-universal-darwin-20)
-    sorbet-static (0.5.10564-universal-darwin-21)
-    sorbet-static (0.5.10564-universal-darwin-22)
     sorbet-static (0.5.10564-x86_64-linux)
     sorbet-static-and-runtime (0.5.10564)
       sorbet (= 0.5.10564)
@@ -198,8 +187,7 @@ GEM
       sorbet (>= 0.5.9204)
       sorbet-runtime (>= 0.5.9204)
       thor (>= 0.19.2)
-    sqlite3 (1.5.4)
-      mini_portile2 (~> 2.8.0)
+    sqlite3 (1.5.4-x86_64-linux)
     stringio (3.0.2)
     sync (0.5.0)
     tapioca (0.10.3)
@@ -233,7 +221,6 @@ GEM
     zeitwerk (2.6.6)
 
 PLATFORMS
-  ruby
   x86_64-linux
 
 DEPENDENCIES
