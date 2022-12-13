@@ -76,7 +76,7 @@ GEM
       semver2
     json (2.6.3)
     jwt (2.5.0)
-    loofah (2.19.0)
+    loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     method_source (1.0.0)
