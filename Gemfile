@@ -18,7 +18,7 @@ group :development do
   gem 'rubocop', require: false
   gem 'sord', require: false
   gem 'sqlite3', require: false
-  gem 'tapioca', require: false
+  gem 'tapioca', github: 'Shopify/tapioca', require: false
   gem 'timecop', require: false
   gem 'yard', require: false
 end
