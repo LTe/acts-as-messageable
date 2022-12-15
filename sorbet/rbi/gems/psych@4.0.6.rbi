@@ -16,6 +16,8 @@
 # source://yard/0.9.28/lib/yard.rb#62
 ::RUBY19 = T.let(T.unsafe(nil), TrueClass)
 
+# not pulling in active-support JUST for this method.  And I love this method.
+#
 # source://psych//lib/psych/core_ext.rb#2
 class Object < ::BasicObject
   include ::ActiveSupport::ForkTracker::CoreExt

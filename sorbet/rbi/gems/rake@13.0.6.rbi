@@ -323,22 +323,12 @@ class Rake::Application
   # source://rake//lib/rake/application.rb#157
   def invoke_task(task_string); end
 
-  # The jeweler instance that has be instantiated in the current Rakefile.
-  #
-  # This is usually useful if you want to get at info like version from other files.
-  #
   # source://jeweler/2.3.9/lib/jeweler/tasks.rb#14
   def jeweler; end
 
-  # Returns the value of attribute jeweler_tasks.
-  #
   # source://jeweler/2.3.9/lib/jeweler/tasks.rb#9
   def jeweler_tasks; end
 
-  # Sets the attribute jeweler_tasks
-  #
-  # @param value the value to set the attribute jeweler_tasks to.
-  #
   # source://jeweler/2.3.9/lib/jeweler/tasks.rb#9
   def jeweler_tasks=(_arg0); end
 

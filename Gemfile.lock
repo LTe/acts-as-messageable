@@ -1,3 +1,17 @@
+GIT
+  remote: https://github.com/Shopify/tapioca.git
+  revision: 062c5d6df26d851f960d2e1fa0d6c28c72ca1009
+  specs:
+    tapioca (0.10.3)
+      bundler (>= 1.17.3)
+      netrc (>= 0.11.0)
+      parallel (>= 1.21.0)
+      rbi (~> 0.0.0, >= 0.0.16)
+      sorbet-static-and-runtime (>= 0.5.10187)
+      spoom (~> 1.1.0, >= 1.1.11)
+      thor (>= 1.2.0)
+      yard-sorbet
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -86,6 +100,8 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.2.3)
     netrc (0.11.0)
+    nokogiri (1.13.10-x86_64-darwin)
+      racc (~> 1.4)
     nokogiri (1.13.10-x86_64-linux)
       racc (~> 1.4)
     oauth2 (1.4.8)
@@ -170,35 +186,28 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    sorbet (0.5.10564)
-      sorbet-static (= 0.5.10564)
-    sorbet-runtime (0.5.10564)
-    sorbet-static (0.5.10564-x86_64-linux)
-    sorbet-static-and-runtime (0.5.10564)
-      sorbet (= 0.5.10564)
-      sorbet-runtime (= 0.5.10564)
+    sorbet (0.5.10588)
+      sorbet-static (= 0.5.10588)
+    sorbet-runtime (0.5.10588)
+    sorbet-static (0.5.10588-universal-darwin-19)
+    sorbet-static (0.5.10588-x86_64-linux)
+    sorbet-static-and-runtime (0.5.10588)
+      sorbet (= 0.5.10588)
+      sorbet-runtime (= 0.5.10588)
     sord (5.0.0)
       commander (~> 4.5)
       parlour (~> 5.0)
       rbs (~> 2.0)
       sorbet-runtime
       yard
-    spoom (1.1.13)
-      sorbet (>= 0.5.9204)
+    spoom (1.1.15)
+      sorbet (>= 0.5.10187)
       sorbet-runtime (>= 0.5.9204)
       thor (>= 0.19.2)
+    sqlite3 (1.5.4-x86_64-darwin)
     sqlite3 (1.5.4-x86_64-linux)
     stringio (3.0.2)
     sync (0.5.0)
-    tapioca (0.10.3)
-      bundler (>= 1.17.3)
-      netrc (>= 0.11.0)
-      parallel (>= 1.21.0)
-      rbi (~> 0.0.0, >= 0.0.16)
-      sorbet-static-and-runtime (>= 0.5.9892)
-      spoom (~> 1.1.0, >= 1.1.11)
-      thor (>= 1.2.0)
-      yard-sorbet
     term-ansicolor (1.7.1)
       tins (~> 1.0)
     thor (1.2.1)
@@ -221,6 +230,7 @@ GEM
     zeitwerk (2.6.6)
 
 PLATFORMS
+  x86_64-darwin-19
   x86_64-linux
 
 DEPENDENCIES
@@ -238,7 +248,7 @@ DEPENDENCIES
   sorbet-static-and-runtime
   sord
   sqlite3
-  tapioca
+  tapioca!
   timecop
   yard
 

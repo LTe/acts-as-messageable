@@ -1999,7 +1999,7 @@ Nokogiri::LIBXSLT_LOADED_VERSION = T.let(T.unsafe(nil), String)
 Nokogiri::LIBXSLT_PATCHES = T.let(T.unsafe(nil), Array)
 Nokogiri::OTHER_LIBRARY_VERSIONS = T.let(T.unsafe(nil), String)
 Nokogiri::PACKAGED_LIBRARIES = T.let(T.unsafe(nil), TrueClass)
-Nokogiri::PRECOMPILED_LIBRARIES = T.let(T.unsafe(nil), FalseClass)
+Nokogiri::PRECOMPILED_LIBRARIES = T.let(T.unsafe(nil), TrueClass)
 
 # source://nokogiri//lib/nokogiri/syntax_error.rb#4
 class Nokogiri::SyntaxError < ::StandardError; end
@@ -6496,8 +6496,6 @@ class Nokogiri::XSLT::Stylesheet
   end
 end
 
-# When requiring 'highline/import' HighLine adds {#or_ask} to Object so
-#   it is globally available.
 class Object < ::BasicObject
   include ::ActiveSupport::ForkTracker::CoreExt
   include ::Kernel
