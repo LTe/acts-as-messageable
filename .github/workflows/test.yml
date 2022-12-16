@@ -9,115 +9,115 @@ on:
     - cron: '02 4 * * *'
 
 jobs:
-  static:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.7
-          bundler-cache: true
-      - run : bundle exec rake rubocop
-  typecheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.7
-          bundler-cache: true
-      - run : bundle exec srb
-  test:
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_PASSWORD: password
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          # Maps tcp port 5432 on service container to the host
-          - 5432:5432
-    env:
-      BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}
-      RUN_GENERATORS: ${{ matrix.run_generators }}
-      PGPASSWORD: password
-      DATABASE_ADAPTER: ${{ matrix.database_adapter }}
-      DATABASE_NAME: ${{ matrix.database_name }}
-      DATABASE_PASSWORD: ${{ matrix.database_password }}
-      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-    strategy:
-      fail-fast: false
-      matrix:
-        rvm: ["2.7"]
-        gemfile: ["Gemfile"]
-        run_generators: ["false"]
-        database_adapter: ['sqlite3']
-        database_name: [":memory:"]
-        database_password: ["password"]
-        include:
-          - rvm: ruby-head
-            gemfile: gemfiles/rails_master.gemfile
-            run_generators: "false"
-            database_adapter: 'sqlite3'
-            database_name: ":memory:"
-          - rvm: 2.3.8
-            gemfile: gemfiles/rails_3.2.gemfile
-            run_generators: "false"
-            database_adapter: 'sqlite3'
-            database_name: ":memory:"
-          - rvm: 2.3.8
-            gemfile: gemfiles/rails_4.2.gemfile
-            run_generators: "false"
-            database_adapter: 'sqlite3'
-            database_name: ":memory:"
-          - rvm: 2.7
-            gemfile: gemfiles/rails_5.2.gemfile
-            run_generators: "false"
-            database_adapter: 'sqlite3'
-            database_name: ":memory:"
-          - rvm: 2.7
-            gemfile: gemfiles/rails_6.0.gemfile
-            run_generators: "false"
-            database_adapter: 'sqlite3'
-            database_name: ":memory:"
-          - rvm: 2.7
-            gemfile: gemfiles/rails_5.2.gemfile
-            run_generators: "false"
-            database_adapter: 'sqlite3'
-            database_name: ":memory:"
-          - rvm: 2.7
-            gemfile: gemfiles/rails_6.0.gemfile
-            run_generators: "true"
-            database_adapter: 'sqlite3'
-            database_name: ":memory:"
-          - rvm: 2.7
-            gemfile: gemfiles/rails_6.0.gemfile
-            database_adapter: 'postgresql'
-            database_name: 'ci_test'
-            database_password: "password"
-            run_generators: "false"
-          - rvm: 2.7
-            gemfile: gemfiles/rails_7.0.gemfile
-            run_generators: "true"
-            database_adapter: 'sqlite3'
-            database_name: ":memory:"
-    steps:
-      - uses: actions/checkout@v2
-      - run: sudo apt-get install libyaml-dev
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.rvm }}
-          bundler-cache: true
-      - run: psql -c 'create database ci_test;' -U postgres -h localhost
-      - run: bundle exec rake
+#  static:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: ruby/setup-ruby@v1
+#        with:
+#          ruby-version: 2.7
+#          bundler-cache: true
+#      - run : bundle exec rake rubocop
+#  typecheck:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: ruby/setup-ruby@v1
+#        with:
+#          ruby-version: 2.7
+#          bundler-cache: true
+#      - run : bundle exec srb
+#  test:
+#    runs-on: ubuntu-latest
+#    services:
+#      postgres:
+#        image: postgres
+#        env:
+#          POSTGRES_PASSWORD: password
+#        options: >-
+#          --health-cmd pg_isready
+#          --health-interval 10s
+#          --health-timeout 5s
+#          --health-retries 5
+#        ports:
+#          # Maps tcp port 5432 on service container to the host
+#          - 5432:5432
+#    env:
+#      BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}
+#      RUN_GENERATORS: ${{ matrix.run_generators }}
+#      PGPASSWORD: password
+#      DATABASE_ADAPTER: ${{ matrix.database_adapter }}
+#      DATABASE_NAME: ${{ matrix.database_name }}
+#      DATABASE_PASSWORD: ${{ matrix.database_password }}
+#      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        rvm: ["2.7"]
+#        gemfile: ["Gemfile"]
+#        run_generators: ["false"]
+#        database_adapter: ['sqlite3']
+#        database_name: [":memory:"]
+#        database_password: ["password"]
+#        include:
+#          - rvm: ruby-head
+#            gemfile: gemfiles/rails_master.gemfile
+#            run_generators: "false"
+#            database_adapter: 'sqlite3'
+#            database_name: ":memory:"
+#          - rvm: 2.3.8
+#            gemfile: gemfiles/rails_3.2.gemfile
+#            run_generators: "false"
+#            database_adapter: 'sqlite3'
+#            database_name: ":memory:"
+#          - rvm: 2.3.8
+#            gemfile: gemfiles/rails_4.2.gemfile
+#            run_generators: "false"
+#            database_adapter: 'sqlite3'
+#            database_name: ":memory:"
+#          - rvm: 2.7
+#            gemfile: gemfiles/rails_5.2.gemfile
+#            run_generators: "false"
+#            database_adapter: 'sqlite3'
+#            database_name: ":memory:"
+#          - rvm: 2.7
+#            gemfile: gemfiles/rails_6.0.gemfile
+#            run_generators: "false"
+#            database_adapter: 'sqlite3'
+#            database_name: ":memory:"
+#          - rvm: 2.7
+#            gemfile: gemfiles/rails_5.2.gemfile
+#            run_generators: "false"
+#            database_adapter: 'sqlite3'
+#            database_name: ":memory:"
+#          - rvm: 2.7
+#            gemfile: gemfiles/rails_6.0.gemfile
+#            run_generators: "true"
+#            database_adapter: 'sqlite3'
+#            database_name: ":memory:"
+#          - rvm: 2.7
+#            gemfile: gemfiles/rails_6.0.gemfile
+#            database_adapter: 'postgresql'
+#            database_name: 'ci_test'
+#            database_password: "password"
+#            run_generators: "false"
+#          - rvm: 2.7
+#            gemfile: gemfiles/rails_7.0.gemfile
+#            run_generators: "true"
+#            database_adapter: 'sqlite3'
+#            database_name: ":memory:"
+#    steps:
+#      - uses: actions/checkout@v2
+#      - run: sudo apt-get install libyaml-dev
+#      - uses: ruby/setup-ruby@v1
+#        with:
+#          ruby-version: ${{ matrix.rvm }}
+#          bundler-cache: true
+#      - run: psql -c 'create database ci_test;' -U postgres -h localhost
+#      - run: bundle exec rake
   documentation:
     runs-on: ubuntu-latest
-    needs: ['test', 'static']
+#    needs: ['test', 'static']
 #    if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
