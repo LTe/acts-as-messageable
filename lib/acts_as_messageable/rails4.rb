@@ -1,4 +1,4 @@
-# typed: false
+# typed: true
 # frozen_string_literal: true
 
 module ActsAsMessageable
@@ -18,7 +18,7 @@ module ActsAsMessageable
     # @return [Object]
     # @param [String, Symbol] order_by
     def default_scope(order_by)
-      @subject.send(:default_scope) { order(order_by) }
+      @subject.send(:default_scope) { @subject.order(order_by) }
     end
 
     # Rename of the method
