@@ -7,7 +7,7 @@ module ActsAsMessageable
 
     # @return [ActsAsMessageable::Rails4] api wrapper object
     # @param [ActiveRecord::Base] subject
-    sig { params(subject: T.any(T.class_of(ActiveRecord::Base), ActiveRecord::Base, T::Array[ActiveRecord::Base])).void }
+    sig { params(subject: T.any(T.class_of(ActiveRecord::Base), ActiveRecord::Base, T::Array[ActiveRecord::Base], T.untyped)).void }
     def initialize(subject)
       @subject = subject
     end
@@ -15,7 +15,7 @@ module ActsAsMessageable
     # Empty method for Rails 4.x
     # @return [NilClass]
     # @param [Array] _args
-    sig { params(_args: T::Array[T.any(String, Symbol)]).void }
+    sig { params(_args: T.any(String, Symbol)).void }
     def attr_accessible(*_args); end
 
     # Default scope for Rails 4.x with block support
