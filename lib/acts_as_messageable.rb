@@ -14,6 +14,8 @@ module ActsAsMessageable
 
   extend T::Sig
 
+  # @return [Class<ActsAsMessageable::Rails4>, Class<ActsAsMessageable::Rails6>, Class<ActsAsMessageable::Rails3>]
+  #  API wrapper
   sig do
     returns(
       T.any(
@@ -23,8 +25,6 @@ module ActsAsMessageable
       )
     )
   end
-  # @return [Class<ActsAsMessageable::Rails4>, Class<ActsAsMessageable::Rails6>, Class<ActsAsMessageable::Rails3>]
-  #  API wrapper
   def self.rails_api
     if Rails::VERSION::MAJOR >= 6
       Rails6

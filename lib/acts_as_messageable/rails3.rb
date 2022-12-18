@@ -5,6 +5,8 @@ module ActsAsMessageable
   class Rails3
     extend T::Sig
 
+    delegate :attr_accessible, :update_attributes!, to: :@subject
+
     # @return [ActsAsMessageable::Rails3] api wrapper object
     # @param [ActiveRecord::Base] subject
     sig { params(subject: T.any(T.class_of(ActiveRecord::Base), ActiveRecord::Base, T::Array[ActiveRecord::Base])).void }
