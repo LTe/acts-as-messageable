@@ -17,8 +17,8 @@ group :development do
   gem 'pry', require: false
   gem 'rspec', require: false
   gem 'rubocop', require: false
-  gem 'sorbet-rails'
   gem 'sord', require: false
+  gem 'sorbet-rails', require: false
   gem 'sqlite3', require: false
   gem 'tapioca', github: 'Shopify/tapioca', require: false
   gem 'timecop', require: false

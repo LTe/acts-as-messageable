@@ -1,4 +1,4 @@
-# typed: false 
+# typed: true 
 # frozen_string_literal: true
 
 module ActsAsMessageable
@@ -10,6 +10,13 @@ module ActsAsMessageable
     end
 
     module ClassMethods
+      extend T::Helpers
+      extend T::Sig
+
+      requires_ancestor { T.class_of(ActiveRecord::Base) }
+
+      mattr_accessor(:messages_class_name, :group_messages)
+
       # Method make ActiveRecord::Base object messageable
       # @option options [Symbol] :table_name table name for messages
       # @option options [String] :class_name message class name
@@ -29,7 +36,6 @@ module ActsAsMessageable
         }
         options = default_options.merge(options)
 
-        mattr_accessor(:messages_class_name, :group_messages)
 
         has_many :received_messages_relation,
                  as: :received_messageable,
@@ -65,6 +71,7 @@ module ActsAsMessageable
       extend T::Sig
 
       requires_ancestor { Kernel }
+      requires_ancestor { CustomSearchUser }
 
       # @return [ActiveRecord::Relation] all messages connected with user
       # @param [Boolean] trash Show deleted messages
@@ -78,7 +85,7 @@ module ActsAsMessageable
       # @return [ActiveRecord::Relation] returns all messages from inbox
       def received_messages
         result = ActsAsMessageable.rails_api.new(received_messages_relation)
-        result = result.scoped.where(recipient_delete: false)
+        result = T.unsafe(result).scoped.where(recipient_delete: false)
         result.relation_context = self
 
         result
@@ -87,7 +94,7 @@ module ActsAsMessageable
       # @return [ActiveRecord::Relation] returns all messages from outbox
       def sent_messages
         result = ActsAsMessageable.rails_api.new(sent_messages_relation)
-        result = result.scoped.where(sender_delete: false)
+        result = T.unsafe(result).scoped.where(sender_delete: false)
         result.relation_context = self
 
         result
@@ -133,7 +140,7 @@ module ActsAsMessageable
       #
       # @return [ActsAsMessageable::Message] the message object
       def send_message!(to, *args)
-        send_message(to, *args).tap(&:save!)
+        T.unsafe(self).send_message(to, *T.unsafe(args)).tap(&:save!)
       end
 
       # Reply to given message
@@ -144,11 +151,11 @@ module ActsAsMessageable
       #
       # @return [ActsAsMessageable::Message] a message that is a response to a given message
       def reply_to(message, *args)
-        current_user = self
+        current_user = T.cast(self, ActiveRecord::Base)
 
         return unless message.participant?(current_user)
 
-        reply_message = send_message(message.real_receiver(current_user), *args)
+        reply_message = T.unsafe(self).send_message(message.real_receiver(current_user), *args)
         reply_message.parent = message
         reply_message.save
 

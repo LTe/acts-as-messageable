@@ -254,8 +254,6 @@ class RSpec::Expectations::BlockSnippetExtractor::BlockLocator < ::Struct
   #
   # @param value [Object] the value to set the attribute beginning_line_number to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-expectations//lib/rspec/expectations/block_snippet_extractor.rb#198
   def beginning_line_number=(_); end
 
   # source://rspec-expectations//lib/rspec/expectations/block_snippet_extractor.rb#203
@@ -273,8 +271,6 @@ class RSpec::Expectations::BlockSnippetExtractor::BlockLocator < ::Struct
   #
   # @param value [Object] the value to set the attribute method_name to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-expectations//lib/rspec/expectations/block_snippet_extractor.rb#198
   def method_name=(_); end
 
   # Returns the value of attribute source
@@ -286,8 +282,6 @@ class RSpec::Expectations::BlockSnippetExtractor::BlockLocator < ::Struct
   #
   # @param value [Object] the value to set the attribute source to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-expectations//lib/rspec/expectations/block_snippet_extractor.rb#198
   def source=(_); end
 
   private
@@ -315,6 +309,7 @@ class RSpec::Expectations::BlockSnippetExtractor::BlockLocator < ::Struct
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -341,8 +336,6 @@ class RSpec::Expectations::BlockSnippetExtractor::BlockTokenExtractor < ::Struct
   #
   # @param value [Object] the value to set the attribute beginning_line_number to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-expectations//lib/rspec/expectations/block_snippet_extractor.rb#75
   def beginning_line_number=(_); end
 
   # Returns the value of attribute body_tokens.
@@ -359,8 +352,6 @@ class RSpec::Expectations::BlockSnippetExtractor::BlockTokenExtractor < ::Struct
   #
   # @param value [Object] the value to set the attribute method_name to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-expectations//lib/rspec/expectations/block_snippet_extractor.rb#75
   def method_name=(_); end
 
   # Returns the value of attribute source
@@ -372,8 +363,6 @@ class RSpec::Expectations::BlockSnippetExtractor::BlockTokenExtractor < ::Struct
   #
   # @param value [Object] the value to set the attribute source to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-expectations//lib/rspec/expectations/block_snippet_extractor.rb#75
   def source=(_); end
 
   # Returns the value of attribute state.
@@ -446,6 +435,7 @@ class RSpec::Expectations::BlockSnippetExtractor::BlockTokenExtractor < ::Struct
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -806,10 +796,10 @@ module RSpec::Expectations::ExpectationTarget::UndefinedValue; end
 class RSpec::Expectations::FailureAggregator
   # @return [FailureAggregator] a new instance of FailureAggregator
   #
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#73
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#90
   def initialize(block_label, metadata); end
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#7
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#22
   def aggregate; end
 
   # Returns the value of attribute block_label.
@@ -820,10 +810,10 @@ class RSpec::Expectations::FailureAggregator
   # This method is defined to satisfy the callable interface
   # expected by `RSpec::Support.with_failure_notifier`.
   #
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#44
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#59
   def call(failure, options); end
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#34
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#49
   def failures; end
 
   # Returns the value of attribute metadata.
@@ -831,19 +821,35 @@ class RSpec::Expectations::FailureAggregator
   # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#5
   def metadata; end
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#38
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#53
   def other_errors; end
 
   private
 
   # Using `caller` performs better (and is simpler) than `raise` on most Rubies.
   #
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#68
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#85
   def assign_backtrace(failure); end
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#79
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#96
   def notify_aggregated_failures; end
 end
+
+# source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#20
+RSpec::Expectations::FailureAggregator::AGGREGATED_FAILURE = T.let(T.unsafe(nil), RSpec::Expectations::FailureAggregator::AggregatedFailure)
+
+# @private
+#
+# source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#8
+class RSpec::Expectations::FailureAggregator::AggregatedFailure
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#15
+  def inspect; end
+end
+
+# @private
+#
+# source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#10
+RSpec::Expectations::FailureAggregator::AggregatedFailure::MESSAGE = T.let(T.unsafe(nil), String)
 
 # RSpec 3.0 was released with the class name misspelled. For SemVer compatibility,
 # we will provide this misspelled alias until 4.0.
@@ -923,92 +929,97 @@ end
 
 # Exception raised from `aggregate_failures` when multiple expectations fail.
 #
+# @note The constant is defined here but the extensive logic of this class
+#   is lazily defined when `FailureAggregator` is autoloaded, since we do
+#   not need to waste time defining that functionality unless
+#   `aggregate_failures` is used.
+#
 # source://rspec-expectations//lib/rspec/expectations.rb#76
 class RSpec::Expectations::MultipleExpectationsNotMetError < ::RSpec::Expectations::ExpectationNotMetError
   # @return [MultipleExpectationsNotMetError] a new instance of MultipleExpectationsNotMetError
   #
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#136
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#153
   def initialize(failure_aggregator); end
 
   # @return [String] The user-assigned label for the aggregation block.
   #
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#111
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#128
   def aggregation_block_label; end
 
   # @return [Hash] The metadata hash passed to `aggregate_failures`.
   #
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#116
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#133
   def aggregation_metadata; end
 
   # @return [Array<Exception>] The list of expectation failures and other exceptions, combined.
   #
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#108
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#125
   def all_exceptions; end
 
   # return [String] A description of the failure/error counts.
   #
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#127
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#144
   def exception_count_description; end
 
   # @return [Array<RSpec::Expectations::ExpectationNotMetError>] The list of expectation failures.
   #
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#98
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#115
   def failures; end
 
   # @return [String] The fully formatted exception message.
   #
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#93
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#110
   def message; end
 
   # @return [Array<Exception>] The list of other exceptions.
   #
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#103
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#120
   def other_errors; end
 
   # @return [String] A summary of the failure, including the block label and a count of failures.
   #
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#121
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#138
   def summary; end
 
   private
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#168
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#185
   def backtrace_line(line); end
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#141
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#158
   def block_description; end
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#150
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#167
   def enumerated(exceptions, index_offset); end
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#180
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#197
   def enumerated_errors; end
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#176
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#193
   def enumerated_failures; end
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#158
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#175
   def exclusion_patterns; end
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#164
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#181
   def format_backtrace(backtrace); end
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#195
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#212
   def indentation; end
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#186
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#203
   def indented(failure_message, index); end
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#207
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#224
   def index_label(index); end
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#199
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#216
   def longest_index_label_width; end
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#146
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#163
   def pluralize(noun, count); end
 
-  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#203
+  # source://rspec-expectations//lib/rspec/expectations/failure_aggregator.rb#220
   def width_of_label(index); end
 end
 
@@ -1544,7 +1555,7 @@ module RSpec::Matchers
   # @param message [Symbol] the message to send the receiver
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_block_changing(*args, &block); end
+  def a_block_changing(*args, **_arg1, &block); end
 
   # With no arg, passes if the block outputs `to_stdout` or `to_stderr`.
   # With a string, passes if the block outputs that specific string `to_stdout` or `to_stderr`.
@@ -1577,7 +1588,7 @@ module RSpec::Matchers
   #   are thus significantly (~30x) slower than `to_stdout` and `to_stderr`.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_block_outputting(*args, &block); end
+  def a_block_outputting(*args, **_arg1, &block); end
 
   # With no args, matches if any error is raised.
   # With a named error, matches only if that specific error is raised.
@@ -1597,7 +1608,7 @@ module RSpec::Matchers
   #   expect { do_something_risky }.not_to raise_error
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_block_raising(*args, &block); end
+  def a_block_raising(*args, **_arg1, &block); end
 
   # Given no argument, matches if a proc throws any Symbol.
   #
@@ -1616,7 +1627,7 @@ module RSpec::Matchers
   #   expect { do_something_risky }.not_to throw_symbol(:that_was_risky, 'culprit')
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_block_throwing(*args, &block); end
+  def a_block_throwing(*args, **_arg1, &block); end
 
   # Passes if the method called in the expect block yields, regardless
   # of whether or not arguments are yielded.
@@ -1628,7 +1639,7 @@ module RSpec::Matchers
   #   the method-under-test as a block.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_block_yielding_control(*args, &block); end
+  def a_block_yielding_control(*args, **_arg1, &block); end
 
   # Designed for use with methods that repeatedly yield (such as
   # iterators). Passes if the method called in the expect block yields
@@ -1646,7 +1657,7 @@ module RSpec::Matchers
   #   the method-under-test as a block.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_block_yielding_successive_args(*args, &block); end
+  def a_block_yielding_successive_args(*args, **_arg1, &block); end
 
   # Given no arguments, matches if the method called in the expect
   # block yields with arguments (regardless of what they are or how
@@ -1673,7 +1684,7 @@ module RSpec::Matchers
   #   multiple times.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_block_yielding_with_args(*args, &block); end
+  def a_block_yielding_with_args(*args, **_arg1, &block); end
 
   # Passes if the method called in the expect block yields with
   # no arguments. Fails if it does not yield, or yields with arguments.
@@ -1688,7 +1699,7 @@ module RSpec::Matchers
   #   multiple times.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_block_yielding_with_no_args(*args, &block); end
+  def a_block_yielding_with_no_args(*args, **_arg1, &block); end
 
   # Passes if actual contains all of the expected regardless of order.
   # This works for collections. Pass in multiple args and it will only
@@ -1702,7 +1713,7 @@ module RSpec::Matchers
   # @see #match_array
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_collection_containing_exactly(*args, &block); end
+  def a_collection_containing_exactly(*args, **_arg1, &block); end
 
   # Matches if the actual value ends with the expected value(s). In the case
   # of a string, matches against the last `expected.length` characters of the
@@ -1715,7 +1726,7 @@ module RSpec::Matchers
   #   expect([0, 2, 3, 4, 4]).to end_with 3, 4
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_collection_ending_with(*args, &block); end
+  def a_collection_ending_with(*args, **_arg1, &block); end
 
   # Passes if actual includes expected. This works for
   # collections and Strings. You can also pass in multiple args
@@ -1736,7 +1747,7 @@ module RSpec::Matchers
   #   expect(:a => 1, :b => 2).not_to include(:a => 2)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_collection_including(*args, &block); end
+  def a_collection_including(*args, **_arg1, &block); end
 
   # Matches if the actual value starts with the expected value(s). In the
   # case of a string, matches against the first `expected.length` characters
@@ -1749,17 +1760,17 @@ module RSpec::Matchers
   #   expect([0, 2, 3, 4, 4]).to start_with 0, 1
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_collection_starting_with(*args, &block); end
+  def a_collection_starting_with(*args, **_arg1, &block); end
 
   # Passes if actual is falsey (false or nil)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_falsey_value(*args, &block); end
+  def a_falsey_value(*args, **_arg1, &block); end
 
   # Passes if actual is falsey (false or nil)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_falsy_value(*args, &block); end
+  def a_falsy_value(*args, **_arg1, &block); end
 
   # Passes if actual includes expected. This works for
   # collections and Strings. You can also pass in multiple args
@@ -1780,7 +1791,7 @@ module RSpec::Matchers
   #   expect(:a => 1, :b => 2).not_to include(:a => 2)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_hash_including(*args, &block); end
+  def a_hash_including(*args, **_arg1, &block); end
 
   # Passes if actual.kind_of?(expected)
   #
@@ -1790,12 +1801,12 @@ module RSpec::Matchers
   #   expect(5).not_to be_a_kind_of(Float)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_kind_of(*args, &block); end
+  def a_kind_of(*args, **_arg1, &block); end
 
   # Passes if actual is nil
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_nil_value(*args, &block); end
+  def a_nil_value(*args, **_arg1, &block); end
 
   # Passes if actual covers expected. This works for
   # Ranges. You can also pass in multiple args
@@ -1811,7 +1822,7 @@ module RSpec::Matchers
   #   expect(1..10).not_to cover(5)        # fails
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_range_covering(*args, &block); end
+  def a_range_covering(*args, **_arg1, &block); end
 
   # Matches if the actual value ends with the expected value(s). In the case
   # of a string, matches against the last `expected.length` characters of the
@@ -1824,7 +1835,7 @@ module RSpec::Matchers
   #   expect([0, 2, 3, 4, 4]).to end_with 3, 4
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_string_ending_with(*args, &block); end
+  def a_string_ending_with(*args, **_arg1, &block); end
 
   # Passes if actual includes expected. This works for
   # collections and Strings. You can also pass in multiple args
@@ -1845,7 +1856,7 @@ module RSpec::Matchers
   #   expect(:a => 1, :b => 2).not_to include(:a => 2)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_string_including(*args, &block); end
+  def a_string_including(*args, **_arg1, &block); end
 
   # Given a `Regexp` or `String`, passes if `actual.match(pattern)`
   # Given an arbitrary nested data structure (e.g. arrays and hashes),
@@ -1878,7 +1889,7 @@ module RSpec::Matchers
   #   `match` could not be used there), but is no longer needed in 3.x.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_string_matching(*args, &block); end
+  def a_string_matching(*args, **_arg1, &block); end
 
   # Matches if the actual value starts with the expected value(s). In the
   # case of a string, matches against the first `expected.length` characters
@@ -1891,12 +1902,12 @@ module RSpec::Matchers
   #   expect([0, 2, 3, 4, 4]).to start_with 0, 1
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_string_starting_with(*args, &block); end
+  def a_string_starting_with(*args, **_arg1, &block); end
 
   # Passes if actual is truthy (anything but false or nil)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_truthy_value(*args, &block); end
+  def a_truthy_value(*args, **_arg1, &block); end
 
   # Given true, false, or nil, will pass if actual value is true, false or
   # nil (respectively). Given no args means the caller should satisfy an if
@@ -1920,7 +1931,7 @@ module RSpec::Matchers
   #   expect(actual).not_to be_[arbitrary_predicate](*args)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_value(*args, &block); end
+  def a_value(*args, **_arg1, &block); end
 
   # Passes if actual.between?(min, max). Works with any Comparable object,
   # including String, Symbol, Time, or Numeric (Fixnum, Bignum, Integer,
@@ -1935,7 +1946,7 @@ module RSpec::Matchers
   #   expect(10).not_to be_between(1, 10).exclusive
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_value_between(*args, &block); end
+  def a_value_between(*args, **_arg1, &block); end
 
   # Passes if actual == expected +/- delta
   #
@@ -1944,7 +1955,7 @@ module RSpec::Matchers
   #   expect(result).not_to be_within(0.5).of(3.0)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def a_value_within(*args, &block); end
+  def a_value_within(*args, **_arg1, &block); end
 
   # Allows multiple expectations in the provided block to fail, and then
   # aggregates them into a single exception, rather than aborting on the
@@ -2007,7 +2018,7 @@ module RSpec::Matchers
   # @see #contain_exactly
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def an_array_matching(*args, &block); end
+  def an_array_matching(*args, **_arg1, &block); end
 
   # Passes if actual.instance_of?(expected)
   #
@@ -2017,7 +2028,7 @@ module RSpec::Matchers
   #   expect(5).not_to be_an_instance_of(Float)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def an_instance_of(*args, &block); end
+  def an_instance_of(*args, **_arg1, &block); end
 
   # Passes if <tt>actual == expected</tt>.
   #
@@ -2029,7 +2040,7 @@ module RSpec::Matchers
   #   expect(5).not_to eq(3)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def an_object_eq_to(*args, &block); end
+  def an_object_eq_to(*args, **_arg1, &block); end
 
   # Passes if `actual.eql?(expected)`
   #
@@ -2041,7 +2052,7 @@ module RSpec::Matchers
   #   expect(5).not_to eql(3)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def an_object_eql_to(*args, &block); end
+  def an_object_eql_to(*args, **_arg1, &block); end
 
   # Passes if <tt>actual.equal?(expected)</tt> (object identity).
   #
@@ -2053,7 +2064,7 @@ module RSpec::Matchers
   #   expect("5").not_to equal("5") # Strings that look the same are not the same object
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def an_object_equal_to(*args, &block); end
+  def an_object_equal_to(*args, **_arg1, &block); end
 
   # Passes if `actual.exist?` or `actual.exists?`
   #
@@ -2061,7 +2072,7 @@ module RSpec::Matchers
   #   expect(File).to exist("path/to/file")
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def an_object_existing(*args, &block); end
+  def an_object_existing(*args, **_arg1, &block); end
 
   # Passes if actual's attribute values match the expected attributes hash.
   # This works no matter how you define your attribute readers.
@@ -2077,7 +2088,7 @@ module RSpec::Matchers
   # @note It will fail if actual doesn't respond to any of the expected attributes.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def an_object_having_attributes(*args, &block); end
+  def an_object_having_attributes(*args, **_arg1, &block); end
 
   # Given a `Regexp` or `String`, passes if `actual.match(pattern)`
   # Given an arbitrary nested data structure (e.g. arrays and hashes),
@@ -2110,7 +2121,7 @@ module RSpec::Matchers
   #   `match` could not be used there), but is no longer needed in 3.x.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def an_object_matching(*args, &block); end
+  def an_object_matching(*args, **_arg1, &block); end
 
   # Matches if the target object responds to all of the names
   # provided. Names can be Strings or Symbols.
@@ -2119,7 +2130,7 @@ module RSpec::Matchers
   #   expect("string").to respond_to(:length)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def an_object_responding_to(*args, &block); end
+  def an_object_responding_to(*args, **_arg1, &block); end
 
   # Passes if the submitted block returns true. Yields target to the
   # block.
@@ -2137,7 +2148,7 @@ module RSpec::Matchers
   # @param description [String] optional description to be used for this matcher.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def an_object_satisfying(*args, &block); end
+  def an_object_satisfying(*args, **_arg1, &block); end
 
   # Given true, false, or nil, will pass if actual value is true, false or
   # nil (respectively). Given no args means the caller should satisfy an if
@@ -2216,7 +2227,7 @@ module RSpec::Matchers
   # Passes if actual is falsey (false or nil)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def be_falsy(*args, &block); end
+  def be_falsy(*args, **_arg1, &block); end
 
   # Passes if actual.instance_of?(expected)
   #
@@ -2423,7 +2434,7 @@ module RSpec::Matchers
   # @param message [Symbol] the message to send the receiver
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def changing(*args, &block); end
+  def changing(*args, **_arg1, &block); end
 
   # Passes if actual contains all of the expected regardless of order.
   # This works for collections. Pass in multiple args and it will only
@@ -2451,7 +2462,7 @@ module RSpec::Matchers
   # @see #match_array
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def containing_exactly(*args, &block); end
+  def containing_exactly(*args, **_arg1, &block); end
 
   # Passes if actual covers expected. This works for
   # Ranges. You can also pass in multiple args
@@ -2483,7 +2494,7 @@ module RSpec::Matchers
   #   expect(1..10).not_to cover(5)        # fails
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def covering(*args, &block); end
+  def covering(*args, **_arg1, &block); end
 
   # Matches if the actual value ends with the expected value(s). In the case
   # of a string, matches against the last `expected.length` characters of the
@@ -2509,7 +2520,7 @@ module RSpec::Matchers
   #   expect([0, 2, 3, 4, 4]).to end_with 3, 4
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def ending_with(*args, &block); end
+  def ending_with(*args, **_arg1, &block); end
 
   # Passes if <tt>actual == expected</tt>.
   #
@@ -2533,7 +2544,7 @@ module RSpec::Matchers
   #   expect(5).not_to eq(3)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def eq_to(*args, &block); end
+  def eq_to(*args, **_arg1, &block); end
 
   # Passes if `actual.eql?(expected)`
   #
@@ -2557,7 +2568,7 @@ module RSpec::Matchers
   #   expect(5).not_to eql(3)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def eql_to(*args, &block); end
+  def eql_to(*args, **_arg1, &block); end
 
   # Passes if <tt>actual.equal?(expected)</tt> (object identity).
   #
@@ -2581,7 +2592,7 @@ module RSpec::Matchers
   #   expect("5").not_to equal("5") # Strings that look the same are not the same object
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def equal_to(*args, &block); end
+  def equal_to(*args, **_arg1, &block); end
 
   # Passes if `actual.exist?` or `actual.exists?`
   #
@@ -2597,7 +2608,7 @@ module RSpec::Matchers
   #   expect(File).to exist("path/to/file")
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def existing(*args, &block); end
+  def existing(*args, **_arg1, &block); end
 
   # Supports `expect(actual).to matcher` syntax by wrapping `actual` in an
   # `ExpectationTarget`.
@@ -2642,7 +2653,7 @@ module RSpec::Matchers
   # @note It will fail if actual doesn't respond to any of the expected attributes.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def having_attributes(*args, &block); end
+  def having_attributes(*args, **_arg1, &block); end
 
   # Passes if actual includes expected. This works for
   # collections and Strings. You can also pass in multiple args
@@ -2684,7 +2695,7 @@ module RSpec::Matchers
   #   expect(:a => 1, :b => 2).not_to include(:a => 2)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def including(*args, &block); end
+  def including(*args, **_arg1, &block); end
 
   # Given a `Regexp` or `String`, passes if `actual.match(pattern)`
   # Given an arbitrary nested data structure (e.g. arrays and hashes),
@@ -2763,7 +2774,7 @@ module RSpec::Matchers
   #   `match` could not be used there), but is no longer needed in 3.x.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def match_regex(*args, &block); end
+  def match_regex(*args, **_arg1, &block); end
 
   # Given a `Regexp` or `String`, passes if `actual.match(pattern)`
   # Given an arbitrary nested data structure (e.g. arrays and hashes),
@@ -2796,7 +2807,7 @@ module RSpec::Matchers
   #   `match` could not be used there), but is no longer needed in 3.x.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def matching(*args, &block); end
+  def matching(*args, **_arg1, &block); end
 
   # With no arg, passes if the block outputs `to_stdout` or `to_stderr`.
   # With a string, passes if the block outputs that specific string `to_stdout` or `to_stderr`.
@@ -2889,7 +2900,7 @@ module RSpec::Matchers
   #   expect { do_something_risky }.not_to raise_error
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def raising(*args, &block); end
+  def raising(*args, **_arg1, &block); end
 
   # Matches if the target object responds to all of the names
   # provided. Names can be Strings or Symbols.
@@ -2907,7 +2918,7 @@ module RSpec::Matchers
   #   expect("string").to respond_to(:length)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def responding_to(*args, &block); end
+  def responding_to(*args, **_arg1, &block); end
 
   # Passes if the submitted block returns true. Yields target to the
   # block.
@@ -2943,7 +2954,7 @@ module RSpec::Matchers
   # @param description [String] optional description to be used for this matcher.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def satisfying(*args, &block); end
+  def satisfying(*args, **_arg1, &block); end
 
   # Matches if the actual value starts with the expected value(s). In the
   # case of a string, matches against the first `expected.length` characters
@@ -2969,7 +2980,7 @@ module RSpec::Matchers
   #   expect([0, 2, 3, 4, 4]).to start_with 0, 1
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def starting_with(*args, &block); end
+  def starting_with(*args, **_arg1, &block); end
 
   # Given no argument, matches if a proc throws any Symbol.
   #
@@ -3007,7 +3018,7 @@ module RSpec::Matchers
   #   expect { do_something_risky }.not_to throw_symbol(:that_was_risky, 'culprit')
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def throwing(*args, &block); end
+  def throwing(*args, **_arg1, &block); end
 
   # Passes if actual == expected +/- delta
   #
@@ -3016,7 +3027,7 @@ module RSpec::Matchers
   #   expect(result).not_to be_within(0.5).of(3.0)
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def within(*args, &block); end
+  def within(*args, **_arg1, &block); end
 
   # Passes if the method called in the expect block yields, regardless
   # of whether or not arguments are yielded.
@@ -3100,7 +3111,7 @@ module RSpec::Matchers
   #   the method-under-test as a block.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def yielding_control(*args, &block); end
+  def yielding_control(*args, **_arg1, &block); end
 
   # Designed for use with methods that repeatedly yield (such as
   # iterators). Passes if the method called in the expect block yields
@@ -3118,7 +3129,7 @@ module RSpec::Matchers
   #   the method-under-test as a block.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def yielding_successive_args(*args, &block); end
+  def yielding_successive_args(*args, **_arg1, &block); end
 
   # Given no arguments, matches if the method called in the expect
   # block yields with arguments (regardless of what they are or how
@@ -3145,7 +3156,7 @@ module RSpec::Matchers
   #   multiple times.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def yielding_with_args(*args, &block); end
+  def yielding_with_args(*args, **_arg1, &block); end
 
   # Passes if the method called in the expect block yields with
   # no arguments. Fails if it does not yield, or yields with arguments.
@@ -3160,12 +3171,12 @@ module RSpec::Matchers
   #   multiple times.
   #
   # source://rspec-expectations//lib/rspec/matchers/dsl.rb#38
-  def yielding_with_no_args(*args, &block); end
+  def yielding_with_no_args(*args, **_arg1, &block); end
 
   private
 
   # source://rspec-expectations//lib/rspec/matchers.rb#961
-  def method_missing(method, *args, &block); end
+  def method_missing(method, *args, **_arg2, &block); end
 
   # @return [Boolean]
   #
@@ -5014,8 +5025,6 @@ class RSpec::Matchers::BuiltIn::ContainExactly::PairingsMaximizer::Solution < ::
   #
   # @param value [Object] the value to set the attribute indeterminate_actual_indexes to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-expectations//lib/rspec/matchers/built_in/contain_exactly.rb#188
   def indeterminate_actual_indexes=(_); end
 
   # Returns the value of attribute indeterminate_expected_indexes
@@ -5027,8 +5036,6 @@ class RSpec::Matchers::BuiltIn::ContainExactly::PairingsMaximizer::Solution < ::
   #
   # @param value [Object] the value to set the attribute indeterminate_expected_indexes to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-expectations//lib/rspec/matchers/built_in/contain_exactly.rb#188
   def indeterminate_expected_indexes=(_); end
 
   # Returns the value of attribute unmatched_actual_indexes
@@ -5040,8 +5047,6 @@ class RSpec::Matchers::BuiltIn::ContainExactly::PairingsMaximizer::Solution < ::
   #
   # @param value [Object] the value to set the attribute unmatched_actual_indexes to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-expectations//lib/rspec/matchers/built_in/contain_exactly.rb#188
   def unmatched_actual_indexes=(_); end
 
   # Returns the value of attribute unmatched_expected_indexes
@@ -5053,8 +5058,6 @@ class RSpec::Matchers::BuiltIn::ContainExactly::PairingsMaximizer::Solution < ::
   #
   # @param value [Object] the value to set the attribute unmatched_expected_indexes to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-expectations//lib/rspec/matchers/built_in/contain_exactly.rb#188
   def unmatched_expected_indexes=(_); end
 
   # @api private
@@ -5071,6 +5074,7 @@ class RSpec::Matchers::BuiltIn::ContainExactly::PairingsMaximizer::Solution < ::
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -5252,7 +5256,7 @@ class RSpec::Matchers::BuiltIn::DynamicPredicate < ::RSpec::Matchers::BuiltIn::B
   # @return [DynamicPredicate] a new instance of DynamicPredicate
   #
   # source://rspec-expectations//lib/rspec/matchers/built_in/has.rb#10
-  def initialize(method_name, *args, &block); end
+  def initialize(method_name, *args, **_arg2, &block); end
 
   # @api private
   # @return [String]
@@ -7481,8 +7485,6 @@ class RSpec::Matchers::Composable::DescribableItem < ::Struct
   #
   # @param value [Object] the value to set the attribute item to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-expectations//lib/rspec/matchers/composable.rb#158
   def item=(_); end
 
   # A pretty printed version of the item description.
@@ -7495,6 +7497,7 @@ class RSpec::Matchers::Composable::DescribableItem < ::Struct
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -7540,7 +7543,7 @@ module RSpec::Matchers::DSL
   #   When args are passed to your matcher, they will be yielded here,
   #   usually representing the expected value(s).
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#72
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#73
   def define(name, &declarations); end
 
   # Defines a negated matcher. The returned matcher's `description` and `failure_message`
@@ -7558,7 +7561,7 @@ module RSpec::Matchers::DSL
   #   logic. The yielded arg is the original description or failure message. If no
   #   block is provided, a default override is used based on the old and new names.
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#60
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#61
   def define_negated_matcher(negated_name, base_name, &description_override); end
 
   # Defines a custom matcher.
@@ -7570,14 +7573,14 @@ module RSpec::Matchers::DSL
   #   When args are passed to your matcher, they will be yielded here,
   #   usually representing the expected value(s).
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#72
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#73
   def matcher(name, &declarations); end
 
   private
 
   # :nocov:
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#83
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#84
   def warn_about_block_args(name, declarations); end
 end
 
@@ -7586,13 +7589,13 @@ end
 # override any of these using the {RSpec::Matchers::DSL::Macros Macros} methods
 # from within an `RSpec::Matchers.define` block.
 #
-# source://rspec-expectations//lib/rspec/matchers/dsl.rb#384
+# source://rspec-expectations//lib/rspec/matchers/dsl.rb#385
 module RSpec::Matchers::DSL::DefaultImplementations
   include ::RSpec::Matchers::BuiltIn::BaseMatcher::DefaultFailureMessages
 
   # The default description.
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#394
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#395
   def description; end
 
   # Used internally by objects returns by `should` and `should_not`.
@@ -7600,14 +7603,14 @@ module RSpec::Matchers::DSL::DefaultImplementations
   # @api private
   # @return [Boolean]
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#389
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#390
   def diffable?; end
 
   # Most matchers do not expect call stack jumps.
   #
   # @return [Boolean]
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#411
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#412
   def expects_call_stack_jump?; end
 
   # Matchers do not support block expectations by default. You
@@ -7615,24 +7618,24 @@ module RSpec::Matchers::DSL::DefaultImplementations
   #
   # @return [Boolean]
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#402
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#403
   def supports_block_expectations?; end
 
   # @return [Boolean]
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#406
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#407
   def supports_value_expectations?; end
 
   private
 
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#417
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#418
   def chained_method_clause_sentences; end
 end
 
 # Contains the methods that are available from within the
 # `RSpec::Matchers.define` DSL for creating custom matchers.
 #
-# source://rspec-expectations//lib/rspec/matchers/dsl.rb#103
+# source://rspec-expectations//lib/rspec/matchers/dsl.rb#104
 module RSpec::Matchers::DSL::Macros
   # Convenience for defining methods on this matcher to create a fluent
   # interface. The trick about fluent interfaces is that each method must
@@ -7662,7 +7665,7 @@ module RSpec::Matchers::DSL::Macros
   #
   #   expect(minor).to have_errors_on(:age).with("Not old enough to participate")
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#297
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#298
   def chain(method_name, *attr_names, &definition); end
 
   # Customize the description to use for one-liners.  Only use this when
@@ -7679,13 +7682,13 @@ module RSpec::Matchers::DSL::Macros
   #   end
   # @yield [Object] actual the actual object (i.e. the value wrapped by `expect`)
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#252
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#253
   def description(&definition); end
 
   # Tells the matcher to diff the actual and expected values in the failure
   # message.
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#258
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#259
   def diffable; end
 
   # Customizes the failure messsage to use when this matcher is
@@ -7703,7 +7706,7 @@ module RSpec::Matchers::DSL::Macros
   #   end
   # @yield [Object] actual the actual object (i.e. the value wrapped by `expect`)
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#215
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#216
   def failure_message(&definition); end
 
   # Customize the failure messsage to use when this matcher is asked
@@ -7721,7 +7724,7 @@ module RSpec::Matchers::DSL::Macros
   #   end
   # @yield [Object] actual the actual object (i.e. the value wrapped by `expect`)
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#234
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#235
   def failure_message_when_negated(&definition); end
 
   # Stores the block that is used to determine whether this matcher passes
@@ -7750,7 +7753,7 @@ module RSpec::Matchers::DSL::Macros
   # @param options [Hash] for defining the behavior of the match block.
   # @yield [Object] actual the actual value (i.e. the value wrapped by `expect`)
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#130
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#131
   def match(options = T.unsafe(nil), &match_block); end
 
   # Use this instead of `match` when the block will raise an exception
@@ -7767,7 +7770,7 @@ module RSpec::Matchers::DSL::Macros
   #   expect(email_validator).to accept_as_valid("person@company.com")
   # @yield [Object] actual the actual object (i.e. the value wrapped by `expect`)
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#187
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#188
   def match_unless_raises(expected_exception = T.unsafe(nil), &match_block); end
 
   # Use this to define the block for a negative expectation (`expect(...).not_to`)
@@ -7783,7 +7786,7 @@ module RSpec::Matchers::DSL::Macros
   # @param options [Hash] for defining the behavior of the match block.
   # @yield [Object] actual the actual value (i.e. the value wrapped by `expect`)
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#159
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#160
   def match_when_negated(options = T.unsafe(nil), &match_block); end
 
   # Declares that the matcher can be used in a block expectation.
@@ -7791,12 +7794,12 @@ module RSpec::Matchers::DSL::Macros
   # expectation without declaring this.
   # (e.g. `expect { do_something }.to matcher`).
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#266
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#267
   def supports_block_expectations; end
 
   private
 
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#311
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#312
   def assign_attributes(attr_names); end
 
   # Does the following:
@@ -7817,7 +7820,7 @@ module RSpec::Matchers::DSL::Macros
   # (e.g. assigning `@actual`, rescueing errors, etc) and
   # can `super` to the user's definition.
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#345
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#346
   def define_user_override(method_name, user_def, &our_def); end
 end
 
@@ -7825,32 +7828,32 @@ end
 #
 # @deprecated Use the methods from {Macros} instead.
 #
-# source://rspec-expectations//lib/rspec/matchers/dsl.rb#353
+# source://rspec-expectations//lib/rspec/matchers/dsl.rb#354
 module RSpec::Matchers::DSL::Macros::Deprecated
   # @deprecated Use {Macros#failure_message} instead.
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#367
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#368
   def failure_message_for_should(&definition); end
 
   # @deprecated Use {Macros#failure_message_when_negated} instead.
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#373
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#374
   def failure_message_for_should_not(&definition); end
 
   # @deprecated Use {Macros#match} instead.
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#355
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#356
   def match_for_should(&definition); end
 
   # @deprecated Use {Macros#match_when_negated} instead.
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#361
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#362
   def match_for_should_not(&definition); end
 end
 
 # @private
 #
-# source://rspec-expectations//lib/rspec/matchers/dsl.rb#145
+# source://rspec-expectations//lib/rspec/matchers/dsl.rb#146
 RSpec::Matchers::DSL::Macros::RAISE_NOTIFIER = T.let(T.unsafe(nil), Proc)
 
 # The class used for custom matchers. The block passed to
@@ -7858,7 +7861,7 @@ RSpec::Matchers::DSL::Macros::RAISE_NOTIFIER = T.let(T.unsafe(nil), Proc)
 # of the singleton class of an instance, and will have the
 # {RSpec::Matchers::DSL::Macros Macros} methods available.
 #
-# source://rspec-expectations//lib/rspec/matchers/dsl.rb#432
+# source://rspec-expectations//lib/rspec/matchers/dsl.rb#433
 class RSpec::Matchers::DSL::Matcher
   include ::RSpec::Matchers::BuiltIn::BaseMatcher::DefaultFailureMessages
   include ::RSpec::Matchers::DSL::DefaultImplementations
@@ -7870,18 +7873,18 @@ class RSpec::Matchers::DSL::Matcher
   # @api private
   # @return [Matcher] a new instance of Matcher
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#461
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#462
   def initialize(name, declarations, matcher_execution_context, *expected, &block_arg); end
 
   # Exposes the value being matched against -- generally the object
   # object wrapped by `expect`.
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#448
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#449
   def actual; end
 
   # The block parameter used in the expectation
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#455
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#456
   def block_arg; end
 
   # Provides the expected value. This will return an array if
@@ -7890,7 +7893,7 @@ class RSpec::Matchers::DSL::Matcher
   #
   # @see #expected_as_array
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#481
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#482
   def expected; end
 
   # Returns the expected value as an an array. This exists primarily
@@ -7899,30 +7902,30 @@ class RSpec::Matchers::DSL::Matcher
   #
   # @see #expected
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#493
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#494
   def expected_as_array; end
 
   # Adds the name (rather than a cryptic hex number)
   # so we can identify an instance of
   # the matcher in error messages (e.g. for `NoMethodError`)
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#498
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#499
   def inspect; end
 
   # The name of the matcher.
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#458
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#459
   def name; end
 
   # Exposes the exception raised during the matching by `match_unless_raises`.
   # Could be useful to extract details for a failure message.
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#452
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#453
   def rescued_exception; end
 
   private
 
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#521
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#522
   def actual_arg_for(block); end
 
   # Takes care of forwarding unhandled messages to the
@@ -7932,8 +7935,8 @@ class RSpec::Matchers::DSL::Matcher
   # Rails' test helper methods, but it's also a useful
   # feature in its own right.
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#531
-  def method_missing(method, *args, &block); end
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#532
+  def method_missing(method, *args, **_arg2, &block); end
 
   # Indicates that this matcher responds to messages
   # from the `@matcher_execution_context` as well.
@@ -7941,7 +7944,7 @@ class RSpec::Matchers::DSL::Matcher
   #
   # @return [Boolean]
   #
-  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#506
+  # source://rspec-expectations//lib/rspec/matchers/dsl.rb#507
   def respond_to_missing?(method, include_private = T.unsafe(nil)); end
 end
 
@@ -8099,5 +8102,5 @@ class RSpec::Matchers::MatcherDelegator
   def respond_to_missing?(name, include_all = T.unsafe(nil)); end
 end
 
-# source://tapioca/0.10.3/lib/tapioca/runtime/reflection.rb#39
+# source://rspec-core/3.12.0/lib/rspec/core/shared_context.rb#54
 RSpec::SharedContext = RSpec::Core::SharedContext

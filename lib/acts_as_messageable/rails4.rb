@@ -9,7 +9,7 @@ module ActsAsMessageable
 
     # @return [ActsAsMessageable::Rails4] api wrapper object
     # @param [ActiveRecord::Base] subject
-    sig { params(subject: T.any(T.class_of(ActiveRecord::Base), ActiveRecord::Base, T::Array[ActiveRecord::Base], T.untyped)).void }
+    sig { params(subject: T.untyped).void }
     def initialize(subject)
       @subject = subject
     end

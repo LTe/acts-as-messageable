@@ -9,7 +9,7 @@ module ActsAsMessageable
 
     # @return [ActsAsMessageable::Rails3] api wrapper object
     # @param [ActiveRecord::Base] subject
-    sig { params(subject: T.any(T.class_of(ActiveRecord::Base), ActiveRecord::Base, T::Array[ActiveRecord::Base])).void }
+    sig { params(subject: T.untyped).void }
     def initialize(subject)
       @subject = subject
     end
@@ -38,7 +38,7 @@ module ActsAsMessageable
     # @return [Boolean]
     # @param [Object] method_name
     # @param [FalseClass] include_private
-    sig {params(method_name: Symbol, include_private: T::Boolean).returns(T::Boolean)}
+    sig { params(method_name: Symbol, include_private: T::Boolean).returns(T::Boolean) }
     def respond_to_missing?(method_name, include_private = false)
       method_name.to_s == 'default_scope' || super
     end
