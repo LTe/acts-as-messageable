@@ -1,4 +1,4 @@
-# typed: ignore 
+# typed: false 
 # frozen_string_literal: true
 
 module ActsAsMessageable
@@ -65,7 +65,6 @@ module ActsAsMessageable
       extend T::Sig
 
       requires_ancestor { Kernel }
-      requires_ancestor { UserModel }
 
       # @return [ActiveRecord::Relation] all messages connected with user
       # @param [Boolean] trash Show deleted messages
