@@ -4,6 +4,7 @@
 module ActsAsMessageable
   class Message < ::ActiveRecord::Base
     include ActsAsMessageable::Scopes
+    include Ancestry::InstanceMethods
 
     has_ancestry
 
@@ -51,8 +52,13 @@ module ActsAsMessageable
     alias mark_as_unread close
     alias unread close
 
-    alias from sent_messageable
-    alias to received_messageable
+    def from
+      sent_messageable
+    end
+
+    def to 
+      received_messageable
+    end
 
     # @param [ActiveRecord::Base] user
     # @return [ActiveRecord::Associations::BelongsToAssociation] real receiver of the mssage
