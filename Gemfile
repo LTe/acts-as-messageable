@@ -7,6 +7,7 @@ gem 'activesupport'
 gem 'ancestry'
 gem 'railties'
 gem 'sorbet-static-and-runtime'
+gem 'acts-as-messageable', path: '.'
 
 group :development do
   gem 'appraisal', require: false
@@ -16,6 +17,7 @@ group :development do
   gem 'pry', require: false
   gem 'rspec', require: false
   gem 'rubocop', require: false
+  gem 'sorbet-rails'
   gem 'sord', require: false
   gem 'sqlite3', require: false
   gem 'tapioca', github: 'Shopify/tapioca', require: false
