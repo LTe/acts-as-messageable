@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 require 'sorbet-runtime'
+require 'sorbet-rails'
+require 'ancestry'
 
 module ActsAsMessageable
   autoload :Model, 'acts_as_messageable/model'

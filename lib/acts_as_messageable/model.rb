@@ -1,10 +1,13 @@
-# typed: true 
+# typed: strict
 # frozen_string_literal: true
 
 module ActsAsMessageable
   module Model
+    extend T::Sig
+
     # @return [Object]
     # @param [Object] base
+    sig { params(base: Module).returns(T.untyped) }
     def self.included(base)
       base.extend ClassMethods
     end
@@ -25,6 +28,7 @@ module ActsAsMessageable
       # @option options [Symbol] :search_scope name of a scope for a full text search
       # @param [Hash] options
       # @return [Object]
+      sig { params(options: T::Hash[Symbol, T.any(String, Symbol, T::Array[Symbol], T::Array[String])]).returns(ActsAsMessageable::Model::ClassMethods) }
       def acts_as_messageable(options = {})
         default_options = {
           table_name: 'messages',
@@ -61,6 +65,7 @@ module ActsAsMessageable
 
       # Method recognize real object class
       # @return [ActiveRecord::Base] class or relation object
+      sig { returns(T.class_of(ActiveRecord::Base)) }
       def resolve_active_record_ancestor
         reflect_on_association(:received_messages_relation).active_record
       end
@@ -75,6 +80,7 @@ module ActsAsMessageable
 
       # @return [ActiveRecord::Relation] all messages connected with user
       # @param [Boolean] trash Show deleted messages
+      sig { params(trash: T::Boolean).returns(ActiveRecord::Relation) }
       def messages(trash = false)
         result = self.class.messages_class_name.connected_with(self, trash)
         result.relation_context = self
@@ -83,6 +89,7 @@ module ActsAsMessageable
       end
 
       # @return [ActiveRecord::Relation] returns all messages from inbox
+      sig { returns(ActiveRecord::Relation) }
       def received_messages
         result = ActsAsMessageable.rails_api.new(received_messages_relation)
         result = T.unsafe(result).scoped.where(recipient_delete: false)
@@ -92,6 +99,7 @@ module ActsAsMessageable
       end
 
       # @return [ActiveRecord::Relation] returns all messages from outbox
+      sig { returns(ActiveRecord::Relation) }
       def sent_messages
         result = ActsAsMessageable.rails_api.new(sent_messages_relation)
         result = T.unsafe(result).scoped.where(sender_delete: false)
@@ -101,8 +109,9 @@ module ActsAsMessageable
       end
 
       # @return [ActiveRecord::Relation] returns all messages from trash
+      sig { returns(ActiveRecord::Relation) }
       def deleted_messages
-        messages true
+        messages(true)
       end
 
       # Method sends message to another user
@@ -111,6 +120,7 @@ module ActsAsMessageable
       # @option args [String] topic Topic of the message
       # @option args [String] body Body of the message
       # @return [ActsAsMessageable::Message] the message object
+      sig { params(to: ActiveRecord::Base, args: T.any(String, T::Hash[T.any(String, Symbol), String])).returns(ActsAsMessageable::Message) }
       def send_message(to, *args)
         message_attributes = {}
 
@@ -139,6 +149,7 @@ module ActsAsMessageable
       # @option [String] body Body of the message
       #
       # @return [ActsAsMessageable::Message] the message object
+      sig { params(to: ActiveRecord::Base, args: T.any(String, T::Hash[T.any(String, Symbol), String])).returns(ActsAsMessageable::Message) }
       def send_message!(to, *args)
         T.unsafe(self).send_message(to, *T.unsafe(args)).tap(&:save!)
       end
@@ -150,6 +161,7 @@ module ActsAsMessageable
       # @option args [String] body Body of the message
       #
       # @return [ActsAsMessageable::Message] a message that is a response to a given message
+      sig { params(message: ActsAsMessageable::Message, args: T.any(String, T::Hash[T.any(String, Symbol), String])).returns(T.nilable(ActsAsMessageable::Message)) }
       def reply_to(message, *args)
         current_user = T.cast(self, ActiveRecord::Base)
 
@@ -165,6 +177,7 @@ module ActsAsMessageable
       # Mark message as deleted
       # @param [ActsAsMessageable::Message] message to delete
       # @return [ActsAsMessageable::Message] deleted message
+      sig { params(message: ActsAsMessageable::Message).returns(T::Boolean) }
       def delete_message(message)
         current_user = self
 
@@ -183,6 +196,7 @@ module ActsAsMessageable
       # Mark message as restored
       # @param [ActsAsMessageable::Message] message to restore
       # @return [ActsAsMessageable::Message] restored message
+      sig { params(message: ActsAsMessageable::Message).returns(T::Boolean) }
       def restore_message(message)
         current_user = self
 

@@ -2,12 +2,13 @@
 
 source 'http://rubygems.org'
 
-gem 'activerecord'
-gem 'activesupport'
-gem 'ancestry'
-gem 'railties'
-gem 'sorbet-static-and-runtime'
-gem 'acts-as-messageable', path: '.'
+gem 'activerecord', require: false
+gem 'activesupport',require: false 
+gem 'ancestry', require: false
+gem 'railties', require: false
+gem 'sorbet-static-and-runtime', require: false
+gem 'sorbet-rails', require: false
+gem 'acts-as-messageable', path: '.', require: false
 
 group :development do
   gem 'appraisal', require: false
@@ -18,7 +19,6 @@ group :development do
   gem 'rspec', require: false
   gem 'rubocop', require: false
   gem 'sord', require: false
-  gem 'sorbet-rails', require: false
   gem 'sqlite3', require: false
   gem 'tapioca', github: 'Shopify/tapioca', require: false
   gem 'timecop', require: false
