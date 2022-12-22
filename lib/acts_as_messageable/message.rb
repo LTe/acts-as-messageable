@@ -1,4 +1,4 @@
-# typed: strict 
+# typed: strict
 # frozen_string_literal: true
 
 module ActsAsMessageable
@@ -73,7 +73,7 @@ module ActsAsMessageable
     end
 
     sig { returns(ActiveRecord::Base) }
-    def to 
+    def to
       received_messageable
     end
 
@@ -116,16 +116,19 @@ module ActsAsMessageable
     # @option args [String] topic Topic of the message
     # @option args [String] body Body of the message
     # @return [ActsAsMessageable::Message] a message that is a response to a given message
-    # @return [Boolean] when user is not participant of the message 
+    # @return [Boolean] when user is not participant of the message
     # @see ActsAsMessageable::Model::InstanceMethods#reply_to
-    sig { params(args: T.any(T::Hash[String, String], String)).returns(T.any(ActsAsMessageable::Message, T::Boolean, ActiveRecord::Base)) }
+    sig do
+      params(args: T.any(T::Hash[String, String],
+                         String)).returns(T.any(ActsAsMessageable::Message, T::Boolean, ActiveRecord::Base))
+    end
     def reply(*args)
       T.unsafe(to).reply_to(self, *args)
     end
 
     # Method will return list of users in the conversation
     # @return [Array<ActiveRecord::Base>] users
-    sig { returns(T::Array[ActiveRecord::Base])}
+    sig { returns(T::Array[ActiveRecord::Base]) }
     def people
       conversation.map(&:from).uniq!
     end

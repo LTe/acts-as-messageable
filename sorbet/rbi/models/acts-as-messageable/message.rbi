@@ -2,6 +2,7 @@
 # Please rerun bundle exec rake rails_rbi:models[ActsAsMessageable::Message] to regenerate.
 
 # typed: strong
+
 module ActsAsMessageable::Message::ActiveRelation_WhereNot
   sig { params(opts: T.untyped, rest: T.untyped).returns(T.self_type) }
   def not(opts, *rest); end
@@ -222,7 +223,10 @@ class ActsAsMessageable::Message < ActiveRecord::Base
   include ActsAsMessageable::Message::GeneratedAssociationMethods
   extend ActsAsMessageable::Message::CustomFinderMethods
   extend ActsAsMessageable::Message::QueryMethodsReturningRelation
-  RelationType = T.type_alias { T.any(ActsAsMessageable::Message::ActiveRecord_Relation, ActsAsMessageable::Message::ActiveRecord_Associations_CollectionProxy, ActsAsMessageable::Message::ActiveRecord_AssociationRelation) }
+  RelationType = T.type_alias do
+    T.any(ActsAsMessageable::Message::ActiveRecord_Relation,
+          ActsAsMessageable::Message::ActiveRecord_Associations_CollectionProxy, ActsAsMessageable::Message::ActiveRecord_AssociationRelation)
+  end
 
   sig { params(args: T.untyped).returns(ActsAsMessageable::Message::ActiveRecord_Relation) }
   def self.after_depth(*args); end
@@ -265,7 +269,7 @@ class ActsAsMessageable::Message::ActiveRecord_Relation < ActiveRecord::Relation
   include ActsAsMessageable::Message::ActiveRelation_WhereNot
   include ActsAsMessageable::Message::CustomFinderMethods
   include ActsAsMessageable::Message::QueryMethodsReturningRelation
-  Elem = type_member {{fixed: ActsAsMessageable::Message}}
+  Elem = type_member { { fixed: ActsAsMessageable::Message } }
 
   sig { params(args: T.untyped).returns(ActsAsMessageable::Message::ActiveRecord_Relation) }
   def after_depth(*args); end
@@ -308,7 +312,7 @@ class ActsAsMessageable::Message::ActiveRecord_AssociationRelation < ActiveRecor
   include ActsAsMessageable::Message::ActiveRelation_WhereNot
   include ActsAsMessageable::Message::CustomFinderMethods
   include ActsAsMessageable::Message::QueryMethodsReturningAssociationRelation
-  Elem = type_member {{fixed: ActsAsMessageable::Message}}
+  Elem = type_member { { fixed: ActsAsMessageable::Message } }
 
   sig { params(args: T.untyped).returns(ActsAsMessageable::Message::ActiveRecord_AssociationRelation) }
   def after_depth(*args); end
@@ -350,7 +354,7 @@ end
 class ActsAsMessageable::Message::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
   include ActsAsMessageable::Message::CustomFinderMethods
   include ActsAsMessageable::Message::QueryMethodsReturningAssociationRelation
-  Elem = type_member {{fixed: ActsAsMessageable::Message}}
+  Elem = type_member { { fixed: ActsAsMessageable::Message } }
 
   sig { params(args: T.untyped).returns(ActsAsMessageable::Message::ActiveRecord_AssociationRelation) }
   def after_depth(*args); end
@@ -495,10 +499,15 @@ module ActsAsMessageable::Message::QueryMethodsReturningRelation
   sig { params(args: T.untyped).returns(ActsAsMessageable::Message::ActiveRecord_Relation) }
   def only(*args); end
 
-  sig { params(block: T.proc.params(e: ActsAsMessageable::Message).returns(T::Boolean)).returns(T::Array[ActsAsMessageable::Message]) }
+  sig do
+    params(block: T.proc.params(e: ActsAsMessageable::Message).returns(T::Boolean)).returns(T::Array[ActsAsMessageable::Message])
+  end
   def select(&block); end
 
-  sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActsAsMessageable::Message::ActiveRecord_Relation) }
+  sig do
+    params(args: T.any(String, Symbol,
+                       T::Array[T.any(String, Symbol)])).returns(ActsAsMessageable::Message::ActiveRecord_Relation)
+  end
   def select_columns(*args); end
 
   sig { params(args: Symbol).returns(ActsAsMessageable::Message::ActiveRecord_Relation) }
@@ -507,7 +516,9 @@ module ActsAsMessageable::Message::QueryMethodsReturningRelation
   sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActsAsMessageable::Message::ActiveRecord_Relation) }
   def in_order_of(column, values); end
 
-  sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActsAsMessageable::Message::ActiveRecord_Relation) }
+  sig do
+    params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActsAsMessageable::Message::ActiveRecord_Relation)
+  end
   def extending(*args, &block); end
 
   sig do
@@ -617,19 +628,30 @@ module ActsAsMessageable::Message::QueryMethodsReturningAssociationRelation
   sig { params(args: T.untyped).returns(ActsAsMessageable::Message::ActiveRecord_AssociationRelation) }
   def only(*args); end
 
-  sig { params(block: T.proc.params(e: ActsAsMessageable::Message).returns(T::Boolean)).returns(T::Array[ActsAsMessageable::Message]) }
+  sig do
+    params(block: T.proc.params(e: ActsAsMessageable::Message).returns(T::Boolean)).returns(T::Array[ActsAsMessageable::Message])
+  end
   def select(&block); end
 
-  sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActsAsMessageable::Message::ActiveRecord_AssociationRelation) }
+  sig do
+    params(args: T.any(String, Symbol,
+                       T::Array[T.any(String, Symbol)])).returns(ActsAsMessageable::Message::ActiveRecord_AssociationRelation)
+  end
   def select_columns(*args); end
 
   sig { params(args: Symbol).returns(ActsAsMessageable::Message::ActiveRecord_AssociationRelation) }
   def where_missing(*args); end
 
-  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActsAsMessageable::Message::ActiveRecord_AssociationRelation) }
+  sig do
+    params(column: Symbol,
+           values: T::Array[T.untyped]).returns(ActsAsMessageable::Message::ActiveRecord_AssociationRelation)
+  end
   def in_order_of(column, values); end
 
-  sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActsAsMessageable::Message::ActiveRecord_AssociationRelation) }
+  sig do
+    params(args: T.untyped,
+           block: T.nilable(T.proc.void)).returns(ActsAsMessageable::Message::ActiveRecord_AssociationRelation)
+  end
   def extending(*args, &block); end
 
   sig do

@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/Shopify/tapioca.git
-  revision: 5ff4070761ef4e9019e289358fd776306261d99a
+  revision: befdec9091637e5808432cc705f1c9167e14d92a
   specs:
-    tapioca (0.10.3)
+    tapioca (0.10.4)
       bundler (>= 1.17.3)
       netrc (>= 0.11.0)
       parallel (>= 1.21.0)
@@ -11,16 +11,6 @@ GIT
       spoom (~> 1.1.0, >= 1.1.11)
       thor (>= 1.2.0)
       yard-sorbet
-
-PATH
-  remote: .
-  specs:
-    acts-as-messageable (0.5.0)
-      activerecord
-      activesupport
-      ancestry
-      railties
-      sorbet-static-and-runtime
 
 GEM
   remote: http://rubygems.org/
@@ -189,6 +179,8 @@ GEM
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.24.0)
       parser (>= 3.1.1.0)
+    rubocop-sorbet (0.6.11)
+      rubocop (>= 0.90.0)
     ruby-progressbar (1.11.0)
     safe_type (1.1.1)
     semver2 (3.4.2)
@@ -260,7 +252,6 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   activesupport
-  acts-as-messageable!
   ancestry
   appraisal
   coveralls_reborn
@@ -270,12 +261,14 @@ DEPENDENCIES
   railties
   rspec
   rubocop
+  rubocop-sorbet
   sorbet-rails
   sorbet-static-and-runtime
   sord
   sqlite3
   tapioca!
   timecop
+  unparser
   yard
 
 BUNDLED WITH

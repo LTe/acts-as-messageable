@@ -22,7 +22,7 @@ module ActsAsMessageable
       # T.unsafe is needed here because the default_scope method is defined in
       # different ways in different versions of Rails. In Rails 3, it is a
       # class method, but in Rails 4, it is an instance method. We can't
-      # statically determine which version of Rails is being used, so we have 
+      # statically determine which version of Rails is being used, so we have
       # to use T.unsafe here.
       @subject.send(:default_scope, T.unsafe(@subject).order(order_by))
     end

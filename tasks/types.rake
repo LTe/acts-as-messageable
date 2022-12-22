@@ -1,11 +1,5 @@
 # typed: ignore
-
-require_relative '../spec/spec_helper'
-require 'active_support/core_ext/string'
-require 'sorbet-rails'
-require 'sorbet-rails/active_record_rbi_formatter'
-
-SorbetRails.configure { }
+# frozen_string_literal: true
 
 def generate_type(model, model_name, file_name)
   establish_connection
@@ -23,15 +17,15 @@ def generate_types_for_active_record_runtime
   establish_connection
   create_database
 
-  dir_path = File.expand_path("../sorbet/rbi/rails-rbi/", __dir__)
+  dir_path = File.expand_path('../sorbet/rbi/rails-rbi/', __dir__)
   FileUtils.mkdir_p(dir_path)
 
   formatter = SorbetRails::ActiveRecordRbiFormatter.new
 
-  file_path = File.expand_path("../sorbet/rbi/rails-rbi/active_record_base.rbi", __dir__)
+  file_path = File.expand_path('../sorbet/rbi/rails-rbi/active_record_base.rbi', __dir__)
   File.write(file_path, formatter.generate_active_record_base_rbi)
 
-  file_path = File.expand_path("../sorbet/rbi/rails-rbi/active_record_relation.rbi", __dir__)
+  file_path = File.expand_path('../sorbet/rbi/rails-rbi/active_record_relation.rbi', __dir__)
   File.write(file_path, formatter.generate_active_record_relation_rbi)
 
   drop_database
@@ -39,6 +33,13 @@ end
 
 desc 'Generate types for model'
 task :generate_rbi_for_model do
+  require_relative '../spec/spec_helper'
+  require 'active_support/core_ext/string'
+  require 'sorbet-rails'
+  require 'sorbet-rails/active_record_rbi_formatter'
+
+  SorbetRails.configure {} # rubocop:disable Lint/EmptyBlock
+
   generate_type(ActsAsMessageable::Message, 'ActsAsMessageable::Message', 'message')
   generate_type(CustomSearchUser, 'CustomSearchUser', 'user')
   generate_types_for_active_record_runtime

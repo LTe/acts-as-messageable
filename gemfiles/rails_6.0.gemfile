@@ -6,9 +6,10 @@ source 'http://rubygems.org'
 
 gem 'activerecord', '~> 6'
 gem 'activesupport', '~> 6'
-gem 'ancestry'
+gem 'ancestry', require: false
 gem 'railties', '~> 6'
-gem 'sorbet-static-and-runtime'
+gem 'sorbet-rails', require: false
+gem 'sorbet-static-and-runtime', require: false
 
 group :development do
   gem 'appraisal', require: false
@@ -18,9 +19,10 @@ group :development do
   gem 'pry', require: false
   gem 'rspec', require: false
   gem 'rubocop', require: false
+  gem 'rubocop-sorbet', require: false
   gem 'sord', require: false
   gem 'sqlite3', '~> 1.4.0'
-  gem 'tapioca', require: false
   gem 'timecop', require: false
+  gem 'unparser', require: false
   gem 'yard', require: false
 end

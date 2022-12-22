@@ -59,8 +59,6 @@ Gem::Specification.new do |s|
     'lib/generators/acts_as_messageable/migration/templates/migration_indexes.rb',
     'lib/generators/acts_as_messageable/migration/templates/migration_opened_as_datetime.rb',
     'lib/generators/acts_as_messageable/migration/templates/migration_permanent.rb',
-    'rbi/acts_as_messageable.rbi',
-    'rbi/rails_generators.rbi',
     'sorbet/config',
     'sorbet/rbi/annotations/actionpack.rbi',
     'sorbet/rbi/annotations/actionview.rbi',
@@ -156,58 +154,67 @@ Gem::Specification.new do |s|
     'sorbet/rbi/gems/highline@2.0.3.rbi',
     'sorbet/rbi/gems/i18n@1.12.0.rbi',
     'sorbet/rbi/gems/jeweler@2.3.9.rbi',
-    'sorbet/rbi/gems/json@2.6.2.rbi',
+    'sorbet/rbi/gems/json@2.6.3.rbi',
     'sorbet/rbi/gems/jwt@2.5.0.rbi',
     'sorbet/rbi/gems/loofah@2.19.0.rbi',
+    'sorbet/rbi/gems/loofah@2.19.1.rbi',
     'sorbet/rbi/gems/method_source@1.0.0.rbi',
     'sorbet/rbi/gems/mime-types@2.99.3.rbi',
-    'sorbet/rbi/gems/mini_portile2@2.8.0.rbi',
     'sorbet/rbi/gems/minitest@5.16.3.rbi',
     'sorbet/rbi/gems/multi_json@1.15.0.rbi',
     'sorbet/rbi/gems/multi_xml@0.6.0.rbi',
     'sorbet/rbi/gems/multipart-post@2.2.3.rbi',
     'sorbet/rbi/gems/netrc@0.11.0.rbi',
-    'sorbet/rbi/gems/nokogiri@1.13.9.rbi',
+    'sorbet/rbi/gems/nokogiri@1.13.10.rbi',
     'sorbet/rbi/gems/oauth2@1.4.8.rbi',
     'sorbet/rbi/gems/parallel@1.22.1.rbi',
     'sorbet/rbi/gems/parser@3.1.3.0.rbi',
     'sorbet/rbi/gems/pg@1.4.5.rbi',
+    'sorbet/rbi/gems/polyfill@1.9.0.rbi',
     'sorbet/rbi/gems/pry@0.14.1.rbi',
     'sorbet/rbi/gems/psych@4.0.6.rbi',
-    'sorbet/rbi/gems/racc@1.6.0.rbi',
+    'sorbet/rbi/gems/psych@5.0.1.rbi',
+    'sorbet/rbi/gems/racc@1.6.1.rbi',
     'sorbet/rbi/gems/rack-test@2.0.2.rbi',
     'sorbet/rbi/gems/rack@2.2.4.rbi',
     'sorbet/rbi/gems/rails-dom-testing@2.0.3.rbi',
     'sorbet/rbi/gems/rails-html-sanitizer@1.4.3.rbi',
+    'sorbet/rbi/gems/rails-html-sanitizer@1.4.4.rbi',
     'sorbet/rbi/gems/railties@7.0.4.rbi',
     'sorbet/rbi/gems/rainbow@3.1.1.rbi',
     'sorbet/rbi/gems/rake@13.0.6.rbi',
     'sorbet/rbi/gems/rbi@0.0.16.rbi',
-    'sorbet/rbi/gems/rbs@2.8.0.rbi',
+    'sorbet/rbi/gems/rbs@2.8.2.rbi',
     'sorbet/rbi/gems/rchardet@1.8.0.rbi',
     'sorbet/rbi/gems/rdoc@6.4.0.rbi',
+    'sorbet/rbi/gems/rdoc@6.5.0.rbi',
     'sorbet/rbi/gems/regexp_parser@2.6.1.rbi',
     'sorbet/rbi/gems/rexml@3.2.5.rbi',
     'sorbet/rbi/gems/rspec-core@3.12.0.rbi',
     'sorbet/rbi/gems/rspec-expectations@3.12.0.rbi',
+    'sorbet/rbi/gems/rspec-expectations@3.12.1.rbi',
     'sorbet/rbi/gems/rspec-mocks@3.12.0.rbi',
+    'sorbet/rbi/gems/rspec-mocks@3.12.1.rbi',
     'sorbet/rbi/gems/rspec-support@3.12.0.rbi',
     'sorbet/rbi/gems/rspec@3.12.0.rbi',
-    'sorbet/rbi/gems/rubocop-ast@1.23.0.rbi',
+    'sorbet/rbi/gems/rubocop-ast@1.24.0.rbi',
     'sorbet/rbi/gems/ruby-progressbar@1.11.0.rbi',
+    'sorbet/rbi/gems/safe_type@1.1.1.rbi',
     'sorbet/rbi/gems/semver2@3.4.2.rbi',
     'sorbet/rbi/gems/simplecov-html@0.12.3.rbi',
     'sorbet/rbi/gems/simplecov@0.21.2.rbi',
     'sorbet/rbi/gems/simplecov_json_formatter@0.1.4.rbi',
-    'sorbet/rbi/gems/spoom@1.1.13.rbi',
+    'sorbet/rbi/gems/sorbet-coerce@0.7.0.rbi',
+    'sorbet/rbi/gems/spoom@1.1.15.rbi',
     'sorbet/rbi/gems/sqlite3@1.5.4.rbi',
     'sorbet/rbi/gems/stringio@3.0.2.rbi',
+    'sorbet/rbi/gems/stringio@3.0.4.rbi',
     'sorbet/rbi/gems/sync@0.5.0.rbi',
-    'sorbet/rbi/gems/tapioca@0.10.3.rbi',
+    'sorbet/rbi/gems/tapioca@0.10.4-97271d62d7d57adf8d235ea825a05d6d7cb66aff.rbi',
     'sorbet/rbi/gems/term-ansicolor@1.7.1.rbi',
     'sorbet/rbi/gems/thor@1.2.1.rbi',
     'sorbet/rbi/gems/thread_safe@0.3.6.rbi',
-    'sorbet/rbi/gems/timecop@0.9.5.rbi',
+    'sorbet/rbi/gems/timecop@0.9.6.rbi',
     'sorbet/rbi/gems/tins@1.32.1.rbi',
     'sorbet/rbi/gems/tzinfo@2.0.5.rbi',
     'sorbet/rbi/gems/unicode-display_width@2.3.0.rbi',
@@ -216,7 +223,12 @@ Gem::Specification.new do |s|
     'sorbet/rbi/gems/yard-sorbet@0.7.0.rbi',
     'sorbet/rbi/gems/yard@0.9.28.rbi',
     'sorbet/rbi/gems/zeitwerk@2.6.6.rbi',
-    'sorbet/rbi/todo.rbi',
+    'sorbet/rbi/models/acts-as-messageable/message.rbi',
+    'sorbet/rbi/models/acts-as-messageable/user.rbi',
+    'sorbet/rbi/rails-rbi/active_record_base.rbi',
+    'sorbet/rbi/rails-rbi/active_record_relation.rbi',
+    'sorbet/rbi/shims/activerecord.rbi',
+    'sorbet/rbi/shims/model.rbi',
     'sorbet/tapioca/config.yml',
     'sorbet/tapioca/pre_require.rb',
     'sorbet/tapioca/require.rb',
@@ -234,7 +246,8 @@ Gem::Specification.new do |s|
     'spec/support/send_message.rb',
     'spec/support/table_schema.rb',
     'spec/support/user.rb',
-    'spec/support/uuid_user.rb'
+    'spec/support/uuid_user.rb',
+    'tasks/types.rake'
   ]
   s.homepage = 'http://github.com/LTe/acts-as-messageable'
   s.summary = 'Make user messageable!;-)'
@@ -244,6 +257,7 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency('activesupport', ['>= 0'])
     s.add_runtime_dependency('ancestry', ['>= 0'])
     s.add_runtime_dependency('railties', ['>= 0'])
+    s.add_runtime_dependency('sorbet-rails', ['>= 0'])
     s.add_runtime_dependency('sorbet-static-and-runtime', ['>= 0'])
     s.add_development_dependency('appraisal', ['>= 0'])
     s.add_development_dependency('coveralls_reborn', ['>= 0'])
@@ -252,10 +266,12 @@ Gem::Specification.new do |s|
     s.add_development_dependency('pry', ['>= 0'])
     s.add_development_dependency('rspec', ['>= 0'])
     s.add_development_dependency('rubocop', ['>= 0'])
+    s.add_development_dependency('rubocop-sorbet', ['>= 0'])
     s.add_development_dependency('sord', ['>= 0'])
     s.add_development_dependency('sqlite3', ['>= 0'])
     s.add_development_dependency('tapioca', ['>= 0'])
     s.add_development_dependency('timecop', ['>= 0'])
+    s.add_development_dependency('unparser', ['>= 0'])
     s.add_development_dependency('yard', ['>= 0'])
   else
     s.add_dependency('activerecord', ['>= 0'])
@@ -269,11 +285,14 @@ Gem::Specification.new do |s|
     s.add_dependency('railties', ['>= 0'])
     s.add_dependency('rspec', ['>= 0'])
     s.add_dependency('rubocop', ['>= 0'])
+    s.add_dependency('rubocop-sorbet', ['>= 0'])
+    s.add_dependency('sorbet-rails', ['>= 0'])
     s.add_dependency('sorbet-static-and-runtime', ['>= 0'])
     s.add_dependency('sord', ['>= 0'])
     s.add_dependency('sqlite3', ['>= 0'])
     s.add_dependency('tapioca', ['>= 0'])
     s.add_dependency('timecop', ['>= 0'])
+    s.add_dependency('unparser', ['>= 0'])
     s.add_dependency('yard', ['>= 0'])
   end
 end

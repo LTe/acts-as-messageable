@@ -18,8 +18,6 @@ module ActsAsMessageable
 
       requires_ancestor { T.class_of(ActiveRecord::Base) }
 
-      mattr_accessor(:messages_class_name, :group_messages)
-
       # Method make ActiveRecord::Base object messageable
       # @option options [Symbol] :table_name table name for messages
       # @option options [String] :class_name message class name
@@ -28,7 +26,11 @@ module ActsAsMessageable
       # @option options [Symbol] :search_scope name of a scope for a full text search
       # @param [Hash] options
       # @return [Object]
-      sig { params(options: T::Hash[Symbol, T.any(String, Symbol, T::Array[Symbol], T::Array[String])]).returns(ActsAsMessageable::Model::ClassMethods) }
+      sig do
+        params(options: T::Hash[Symbol,
+                                T.any(String, Symbol, T::Array[Symbol],
+                                      T::Array[String])]).returns(ActsAsMessageable::Model::ClassMethods)
+      end
       def acts_as_messageable(options = {})
         default_options = {
           table_name: 'messages',
@@ -40,6 +42,7 @@ module ActsAsMessageable
         }
         options = default_options.merge(options)
 
+        mattr_accessor(:messages_class_name, :group_messages)
 
         has_many :received_messages_relation,
                  as: :received_messageable,
@@ -120,7 +123,10 @@ module ActsAsMessageable
       # @option args [String] topic Topic of the message
       # @option args [String] body Body of the message
       # @return [ActsAsMessageable::Message] the message object
-      sig { params(to: ActiveRecord::Base, args: T.any(String, T::Hash[T.any(String, Symbol), String])).returns(ActsAsMessageable::Message) }
+      sig do
+        params(to: ActiveRecord::Base,
+               args: T.any(String, T::Hash[T.any(String, Symbol), String])).returns(ActsAsMessageable::Message)
+      end
       def send_message(to, *args)
         message_attributes = {}
 
@@ -136,7 +142,7 @@ module ActsAsMessageable
         message = self.class.messages_class_name.new message_attributes
         message.received_messageable = to
         message.sent_messageable = self
-        message.save
+        message.save!
 
         message
       end
@@ -149,7 +155,10 @@ module ActsAsMessageable
       # @option [String] body Body of the message
       #
       # @return [ActsAsMessageable::Message] the message object
-      sig { params(to: ActiveRecord::Base, args: T.any(String, T::Hash[T.any(String, Symbol), String])).returns(ActsAsMessageable::Message) }
+      sig do
+        params(to: ActiveRecord::Base,
+               args: T.any(String, T::Hash[T.any(String, Symbol), String])).returns(ActsAsMessageable::Message)
+      end
       def send_message!(to, *args)
         T.unsafe(self).send_message(to, *T.unsafe(args)).tap(&:save!)
       end
@@ -161,7 +170,11 @@ module ActsAsMessageable
       # @option args [String] body Body of the message
       #
       # @return [ActsAsMessageable::Message] a message that is a response to a given message
-      sig { params(message: ActsAsMessageable::Message, args: T.any(String, T::Hash[T.any(String, Symbol), String])).returns(T.nilable(ActsAsMessageable::Message)) }
+      sig do
+        params(message: ActsAsMessageable::Message,
+               args: T.any(String,
+                           T::Hash[T.any(String, Symbol), String])).returns(T.nilable(ActsAsMessageable::Message))
+      end
       def reply_to(message, *args)
         current_user = T.cast(self, ActiveRecord::Base)
 

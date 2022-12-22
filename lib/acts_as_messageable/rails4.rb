@@ -25,7 +25,7 @@ module ActsAsMessageable
     # @param [String, Symbol] order_by
     sig { params(order_by: T.any(String, Symbol)).returns(Object) }
     def default_scope(order_by)
-      @subject.send(:default_scope) { T.cast(@subject, T.class_of(ActiveRecord::Base)).order(order_by) }
+      @subject.send(:default_scope) { T.unsafe(self).order(order_by) }
     end
 
     # Rename of the method
@@ -46,7 +46,7 @@ module ActsAsMessageable
     # @return [Boolean]
     # @param [String] method_name
     # @param [Boolean] include_private
-    sig {params(method_name: Symbol, include_private: T::Boolean).returns(T::Boolean)}
+    sig { params(method_name: Symbol, include_private: T::Boolean).returns(T::Boolean) }
     def respond_to_missing?(method_name, include_private = false)
       %w[default_scope scoped attr_accessible].include?(method_name) || super
     end

@@ -7,9 +7,10 @@ describe 'custom require' do
   before do
     # Use clean version of Message class we used here remove_const before
     # but it doesn't work with sorbet so we use this hack to clear side effects
-    ActsAsMessageable::Message.table_name = nil
-    ActsAsMessageable::Message.required = nil
-    ActsAsMessageable::Message.clear_validators!
+    ActsAsMessageable::Message.table_name = 'messages'
+    ActsAsMessageable::Message.required = []
+    ActsAsMessageable::Message.clear_validators! if ActsAsMessageable::Message.respond_to?(:clear_validators!)
+    ActsAsMessageable::Message.reset_callbacks(:validate)
   end
 
   it 'should work with non-array require' do
