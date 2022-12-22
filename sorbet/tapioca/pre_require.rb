@@ -3,3 +3,4 @@
 
 # Needed for ancestry in order to generate types
 require 'active_support'
+

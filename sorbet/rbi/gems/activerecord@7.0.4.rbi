@@ -20560,6 +20560,58 @@ class ActiveRecord::FutureResult::SelectAll < ::ActiveRecord::FutureResult
   def exec_query(*_arg0, **_arg1); end
 end
 
+# source://activerecord//lib/rails/generators/active_record/migration.rb#6
+module ActiveRecord::Generators; end
+
+# source://activerecord//lib/rails/generators/active_record.rb#10
+class ActiveRecord::Generators::Base < ::Rails::Generators::NamedBase
+  include ::Rails::Generators::Migration
+  include ::ActiveRecord::Generators::Migration
+  extend ::Rails::Generators::Migration::ClassMethods
+  extend ::ActiveRecord::Generators::Migration::ClassMethods
+
+  class << self
+    # Set the current directory as base for the inherited generators.
+    #
+    # source://activerecord//lib/rails/generators/active_record.rb#14
+    def base_root; end
+  end
+end
+
+# source://activerecord//lib/rails/generators/active_record/migration.rb#7
+module ActiveRecord::Generators::Migration
+  extend ::ActiveSupport::Concern
+  include ::Rails::Generators::Migration
+
+  mixes_in_class_methods ::Rails::Generators::Migration::ClassMethods
+  mixes_in_class_methods ::ActiveRecord::Generators::Migration::ClassMethods
+
+  private
+
+  # source://activerecord//lib/rails/generators/active_record/migration.rb#42
+  def configured_migrate_path; end
+
+  # source://activerecord//lib/rails/generators/active_record/migration.rb#30
+  def db_migrate_path; end
+
+  # source://activerecord//lib/rails/generators/active_record/migration.rb#38
+  def default_migrate_path; end
+
+  # source://activerecord//lib/rails/generators/active_record/migration.rb#25
+  def foreign_key_type; end
+
+  # source://activerecord//lib/rails/generators/active_record/migration.rb#20
+  def primary_key_type; end
+end
+
+# source://activerecord//lib/rails/generators/active_record/migration.rb#11
+module ActiveRecord::Generators::Migration::ClassMethods
+  # Implement the required interface for Rails::Generators::Migration.
+  #
+  # source://activerecord//lib/rails/generators/active_record/migration.rb#13
+  def next_migration_number(dirname); end
+end
+
 # source://activerecord//lib/active_record/associations.rb#74
 class ActiveRecord::HasManyThroughAssociationNotFoundError < ::ActiveRecord::ActiveRecordError
   include ::DidYouMean::Correctable
