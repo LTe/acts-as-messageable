@@ -3,6 +3,7 @@
 
 require 'sorbet-runtime'
 T::Configuration.default_checked_level = :tests
+T::Configuration.enable_checking_for_sigs_marked_checked_tests
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))

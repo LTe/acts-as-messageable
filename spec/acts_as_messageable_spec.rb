@@ -336,9 +336,11 @@ describe 'ActsAsMessageable' do
     let(:message) { ActsAsMessageable::Message.create!(topic: 'topic', body: 'body') }
 
     before do
-      # Use clean version of Message class
-      ActsAsMessageable.instance_eval { remove_const 'Message' }
-      load 'acts_as_messageable/message.rb'
+      # Use clean version of Message class we used here remove_const before
+      # but it doesn't work with sorbet so we use this hack to clear side effects
+      ActsAsMessageable::Message.table_name = 'messages'
+      ActsAsMessageable::Message.required = nil
+      ActsAsMessageable::Message.clear_validators!
     end
 
     it 'returns root of the conversation' do
