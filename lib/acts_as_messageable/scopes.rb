@@ -1,4 +1,4 @@
-# typed: false
+# typed: strict
 # frozen_string_literal: true
 
 require 'active_support/concern'
@@ -10,6 +10,14 @@ module ActsAsMessageable
     module ClassMethods
       # @return [Object]
       # @param [String, Symbol] search_scope
+      extend T::Helpers
+      extend T::Sig
+
+      requires_ancestor { T.class_of(ActiveRecord::Base) }
+
+      include Kernel
+
+      sig { params(search_scope: T.any(String, Symbol)).void }
       def initialize_scopes(search_scope)
         scope :are_from, lambda { |*args|
           where(sent_messageable_id: args.first, sent_messageable_type: args.first.class.name)
