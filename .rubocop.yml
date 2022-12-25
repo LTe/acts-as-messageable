@@ -1,7 +1,14 @@
 inherit_from: .rubocop_todo.yml
 
+inherit_mode:
+  merge:
+    - Exclude
+
+require: rubocop-sorbet
+
 AllCops:
   TargetRubyVersion: 2.7
+  SuggestExtensions: false
   Exclude:
     - 'lib/generators/acts_as_messageable/migration/templates/*'
     - 'vendor/**/*'
@@ -18,7 +25,7 @@ Layout/LineLength:
   Max: 120
 
 Metrics/BlockLength:
-  IgnoredMethods: ['describe', 'context']
+  AllowedMethods: ['describe', 'context']
 
 Naming/FileName:
   Exclude:

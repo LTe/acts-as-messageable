@@ -1,4 +1,4 @@
-# typed: ignore
+# typed: strict
 # frozen_string_literal: true
 
 require 'rails/generators/migration'
@@ -6,6 +6,7 @@ require 'rails/generators/active_record'
 
 module ActsAsMessageable
   class MigrationGenerator < Rails::Generators::Base
+    extend T::Sig
     include Rails::Generators::Migration
 
     namespace 'acts_as_messageable:migration'
@@ -14,10 +15,12 @@ module ActsAsMessageable
     argument :table_name, type: :string, default: 'messages'
     class_option :uuid, type: :boolean, default: false
 
+    sig { params(dirname: String).returns(String) }
     def self.next_migration_number(dirname)
       ActiveRecord::Generators::Base.next_migration_number(dirname)
     end
 
+    sig { returns(String) }
     def create_migration_file
       begin
         migration_template 'migration.rb', 'db/migrate/create_messages_table.rb'

@@ -4,5 +4,6 @@ gem:
     - parlour
     - sord
     - rubocop
+    - sorbet-rails
 dsl:
 

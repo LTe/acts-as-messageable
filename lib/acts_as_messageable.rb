@@ -1,5 +1,9 @@
-# typed: ignore
+# typed: strong
 # frozen_string_literal: true
+
+require 'sorbet-runtime'
+require 'sorbet-rails'
+require 'ancestry'
 
 module ActsAsMessageable
   autoload :Model, 'acts_as_messageable/model'
@@ -10,8 +14,19 @@ module ActsAsMessageable
   autoload :Rails4, 'acts_as_messageable/rails4'
   autoload :Rails6, 'acts_as_messageable/rails6'
 
+  extend T::Sig
+
   # @return [Class<ActsAsMessageable::Rails4>, Class<ActsAsMessageable::Rails6>, Class<ActsAsMessageable::Rails3>]
   #  API wrapper
+  sig do
+    returns(
+      T.any(
+        T.class_of(ActsAsMessageable::Rails4),
+        T.class_of(ActsAsMessageable::Rails6),
+        T.class_of(ActsAsMessageable::Rails3)
+      )
+    )
+  end
   def self.rails_api
     if Rails::VERSION::MAJOR >= 6
       Rails6
@@ -23,5 +38,4 @@ module ActsAsMessageable
   end
 end
 
-require 'sorbet-runtime'
 require 'acts_as_messageable/railtie'

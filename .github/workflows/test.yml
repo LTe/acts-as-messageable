@@ -55,6 +55,7 @@ jobs:
       matrix:
         rvm: ["2.7"]
         gemfile: ["Gemfile"]
+        bundler: ['default']
         run_generators: ["false"]
         database_adapter: ['sqlite3']
         database_name: [":memory:"]
@@ -62,47 +63,56 @@ jobs:
         include:
           - rvm: ruby-head
             gemfile: gemfiles/rails_master.gemfile
+            bundler: 'default'
             run_generators: "false"
             database_adapter: 'sqlite3'
             database_name: ":memory:"
           - rvm: 2.3.8
             gemfile: gemfiles/rails_3.2.gemfile
+            bundler: '2.3.26'
             run_generators: "false"
             database_adapter: 'sqlite3'
             database_name: ":memory:"
           - rvm: 2.3.8
             gemfile: gemfiles/rails_4.2.gemfile
+            bundler: '2.3.26'
             run_generators: "false"
             database_adapter: 'sqlite3'
             database_name: ":memory:"
           - rvm: 2.7
             gemfile: gemfiles/rails_5.2.gemfile
+            bundler: 'default'
             run_generators: "false"
             database_adapter: 'sqlite3'
             database_name: ":memory:"
           - rvm: 2.7
             gemfile: gemfiles/rails_6.0.gemfile
+            bundler: 'default'
             run_generators: "false"
             database_adapter: 'sqlite3'
             database_name: ":memory:"
           - rvm: 2.7
             gemfile: gemfiles/rails_5.2.gemfile
+            bundler: 'default'
             run_generators: "false"
             database_adapter: 'sqlite3'
             database_name: ":memory:"
           - rvm: 2.7
             gemfile: gemfiles/rails_6.0.gemfile
+            bundler: 'default'
             run_generators: "true"
             database_adapter: 'sqlite3'
             database_name: ":memory:"
           - rvm: 2.7
             gemfile: gemfiles/rails_6.0.gemfile
+            bundler: 'default'
             database_adapter: 'postgresql'
             database_name: 'ci_test'
             database_password: "password"
             run_generators: "false"
           - rvm: 2.7
             gemfile: gemfiles/rails_7.0.gemfile
+            bundler: 'default'
             run_generators: "true"
             database_adapter: 'sqlite3'
             database_name: ":memory:"
@@ -112,6 +122,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.rvm }}
+          bundler: ${{ matrix.bundler }}
           bundler-cache: true
       - run: psql -c 'create database ci_test;' -U postgres -h localhost
       - run: bundle exec rake

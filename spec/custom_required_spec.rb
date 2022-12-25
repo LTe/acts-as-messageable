@@ -4,10 +4,13 @@
 require 'spec_helper'
 
 describe 'custom require' do
-  before(:each) do
-    # Use clean version of Message class
-    ActsAsMessageable.instance_eval { remove_const 'Message' }
-    load 'acts_as_messageable/message.rb'
+  before do
+    # Use clean version of Message class we used here remove_const before
+    # but it doesn't work with sorbet so we use this hack to clear side effects
+    ActsAsMessageable::Message.table_name = 'messages'
+    ActsAsMessageable::Message.required = []
+    ActsAsMessageable::Message.clear_validators! if ActsAsMessageable::Message.respond_to?(:clear_validators!)
+    ActsAsMessageable::Message.reset_callbacks(:validate)
   end
 
   it 'should work with non-array require' do

@@ -7,6 +7,7 @@ appraise 'rails-3.2' do
 
   group :development do
     gem 'sqlite3', '~> 1.3.6'
+    remove_gem 'tapioca'
   end
 end
 
@@ -18,6 +19,7 @@ appraise 'rails-4.2' do
 
   group :development do
     gem 'sqlite3', '~> 1.3.6'
+    remove_gem 'tapioca'
   end
 end
 
@@ -28,6 +30,7 @@ appraise 'rails-5.2' do
 
   group :development do
     gem 'sqlite3', '~> 1.3.6'
+    remove_gem 'tapioca'
   end
 end
 
@@ -38,6 +41,7 @@ appraise 'rails-6.0' do
 
   group :development do
     gem 'sqlite3', '~> 1.4.0'
+    remove_gem 'tapioca'
   end
 end
 

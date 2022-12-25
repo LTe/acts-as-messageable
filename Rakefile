@@ -11,8 +11,8 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 require 'rubocop/rake_task'
-
 require 'jeweler'
+
 Jeweler::Tasks.new do |gem|
   gem.name = 'acts-as-messageable'
   gem.email = 'piotr.nielacny@gmail.com'
@@ -22,6 +22,7 @@ Jeweler::Tasks.new do |gem|
   gem.metadata = { 'rubygems_mfa_required' => true }
   # dependencies defined in Gemfile
 end
+
 Jeweler::RubygemsDotOrgTasks.new
 RuboCop::RakeTask.new
 
@@ -31,5 +32,8 @@ RSpec::Core::RakeTask.new(:spec) do |spec|
   spec.rspec_opts = ['-fd -c --order random']
   spec.pattern = FileList['spec/**/*_spec.rb']
 end
+
+path = File.expand_path(__dir__)
+Dir.glob("#{path}/tasks/**/*.rake").each { |f| import f }
 
 task default: :spec

@@ -1,7 +1,7 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
-TABLE_SCHEMA = lambda do |t|
+TABLE_SCHEMA = T.let(lambda do |t|
   t.string :topic
   t.text :body
   t.references :received_messageable, polymorphic: true, index: false
@@ -14,9 +14,9 @@ TABLE_SCHEMA = lambda do |t|
   t.datetime :opened_at, :datetime
   t.string :ancestry
   t.timestamps
-end
+end, T.untyped)
 
-TABLE_SCHEMA_UUID = lambda do |t|
+TABLE_SCHEMA_UUID = T.let(lambda do |t|
   t.string :topic
   t.text :body
   t.references :received_messageable, polymorphic: true, index: false, type: :uuid
@@ -29,8 +29,8 @@ TABLE_SCHEMA_UUID = lambda do |t|
   t.datetime :opened_at, :datetime
   t.string :ancestry
   t.timestamps
-end
+end, T.untyped)
 
-USER_SCHEMA = lambda do |t|
+USER_SCHEMA = T.let(lambda do |t|
   t.string :email
-end
+end, T.untyped)
