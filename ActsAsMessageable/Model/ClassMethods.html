@@ -69,6 +69,11 @@
 
   
   
+  <dl>
+      <dt>Extended by:</dt>
+      <dd>T::Helpers, T::Sig</dd>
+  </dl>
+  
   
   
   
@@ -115,9 +120,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Method make ActiveRecord::Base object messageable.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -125,7 +128,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#resolve_active_record_ancestor-instance_method" title="#resolve_active_record_ancestor (instance method)">#<strong>resolve_active_record_ancestor</strong>  &#x21d2; ActiveRecord::Base </a>
+      <a href="#resolve_active_record_ancestor-instance_method" title="#resolve_active_record_ancestor (instance method)">#<strong>resolve_active_record_ancestor</strong>  &#x21d2; Object </a>
     
 
     
@@ -139,9 +142,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Method recognize real object class.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -150,6 +151,8 @@
   
 
 
+  
+  
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -164,140 +167,12 @@
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Method make ActiveRecord::Base object messageable</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>options</span>
-      
-      
-        <span class='type'>(<tt>Hash</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>{}</tt>)</em>
-      
-      
-    </li>
-  
-</ul>
-
-  
-    
-    
-    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
-    <ul class="option">
-      
-        <li>
-          <span class="name">:table_name</span>
-          <span class="type">(<tt>Symbol</tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'>
-<p>table name for messages</p>
-</div>
-          
-        </li>
-      
-        <li>
-          <span class="name">:class_name</span>
-          <span class="type">(<tt>String</tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'>
-<p>message class name</p>
-</div>
-          
-        </li>
-      
-        <li>
-          <span class="name">:required</span>
-          <span class="type">(<tt>Array</tt>, <tt>Symbol</tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'>
-<p>required fields in message</p>
-</div>
-          
-        </li>
-      
-        <li>
-          <span class="name">:dependent</span>
-          <span class="type">(<tt>Symbol</tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'>
-<p>dependent option from ActiveRecord has_many method</p>
-</div>
-          
-        </li>
-      
-        <li>
-          <span class="name">:search_scope</span>
-          <span class="type">(<tt>Symbol</tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'>
-<p>name of a scope for a full text search</p>
-</div>
-          
-        </li>
-      
-    </ul>
-  
-
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Object</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
 34
 35
 36
@@ -318,10 +193,23 @@
 51
 52
 53
-54</pre>
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_acts_as_messageable'>acts_as_messageable</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_default_options'>default_options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
@@ -365,53 +253,24 @@
       <div class="method_details ">
   <h3 class="signature " id="resolve_active_record_ancestor-instance_method">
   
-    #<strong>resolve_active_record_ancestor</strong>  &#x21d2; <tt>ActiveRecord::Base</tt> 
+    #<strong>resolve_active_record_ancestor</strong>  &#x21d2; <tt>Object</tt> 
   
 
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Method recognize real object class</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>ActiveRecord::Base</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>class or relation object</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-58
-59
-60</pre>
+72
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resolve_active_record_ancestor'>resolve_active_record_ancestor</span>
   <span class='id identifier rubyid_reflect_on_association'>reflect_on_association</span><span class='lparen'>(</span><span class='symbol'>:received_messages_relation</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_active_record'>active_record</span>
@@ -426,7 +285,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Dec 24 04:26:05 2022 by
+  Generated on Sun Dec 25 10:45:43 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>
