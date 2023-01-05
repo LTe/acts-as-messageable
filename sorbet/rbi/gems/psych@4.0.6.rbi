@@ -16,12 +16,10 @@
 # source://yard/0.9.28/lib/yard.rb#62
 ::RUBY19 = T.let(T.unsafe(nil), TrueClass)
 
-# not pulling in active-support JUST for this method.  And I love this method.
-#
 # source://psych//lib/psych/core_ext.rb#2
 class Object < ::BasicObject
-  include ::ActiveSupport::ForkTracker::CoreExt
   include ::Kernel
+  include ::PP::ObjectMixin
 
   # call-seq: to_yaml(options = {})
   #
@@ -253,11 +251,8 @@ module Psych
     # source://psych//lib/psych.rb#692
     def add_tag(tag, klass); end
 
-    # source://psych//lib/psych.rb#734
-    def domain_types; end
-
-    # source://psych//lib/psych.rb#734
-    def domain_types=(_arg0); end
+    # source://psych//lib/psych.rb#726
+    def config; end
 
     # call-seq:
     #   Psych.dump(o)               -> string of yaml
@@ -312,12 +307,6 @@ module Psych
     #
     # source://psych//lib/psych.rb#595
     def dump_stream(*objects); end
-
-    # source://psych//lib/psych.rb#733
-    def dump_tags; end
-
-    # source://psych//lib/psych.rb#733
-    def dump_tags=(_arg0); end
 
     # Load +yaml+ in to a Ruby data structure.  If multiple documents are
     # provided, the object contained in the first document will be returned.
@@ -375,12 +364,6 @@ module Psych
     #
     # source://psych//lib/psych.rb#626
     def load_stream(yaml, filename: T.unsafe(nil), fallback: T.unsafe(nil), **kwargs); end
-
-    # source://psych//lib/psych.rb#732
-    def load_tags; end
-
-    # source://psych//lib/psych.rb#732
-    def load_tags=(_arg0); end
 
     # Parse a YAML string in +yaml+.  Returns the Psych::Nodes::Document.
     # +filename+ is used in the exception message if a Psych::SyntaxError is
@@ -1617,7 +1600,7 @@ class Psych::Visitors::Visitor
 
   private
 
-  # source://psych//lib/psych/visitors/visitor.rb#24
+  # source://psych//lib/psych/visitors/visitor.rb#19
   def dispatch; end
 
   # source://psych//lib/psych/visitors/visitor.rb#29
