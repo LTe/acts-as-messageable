@@ -1179,12 +1179,21 @@ class TZInfo::DataSources::RubyDataSource < ::TZInfo::DataSource
   # source://tzinfo//lib/tzinfo/data_sources/ruby_data_source.rb#38
   def initialize; end
 
-  # Returns the value of attribute country_codes.
+  # Returns a frozen `Array` of all the available ISO 3166-1 alpha-2 country
+  # codes. The identifiers are sorted according to `String#<=>`.
+  #
+  # @return [Array<String>] a frozen `Array` of all the available ISO 3166-1
+  #   alpha-2 country codes.
   #
   # source://tzinfo//lib/tzinfo/data_sources/ruby_data_source.rb#32
   def country_codes; end
 
-  # Returns the value of attribute data_timezone_identifiers.
+  # Returns a frozen `Array` of all the available time zone identifiers for
+  # data time zones (i.e. those that actually contain definitions). The
+  # identifiers are sorted according to `String#<=>`.
+  #
+  # @return [Array<String>] a frozen `Array` of all the available time zone
+  #   identifiers for data time zones.
   #
   # source://tzinfo//lib/tzinfo/data_sources/ruby_data_source.rb#26
   def data_timezone_identifiers; end
@@ -1195,7 +1204,12 @@ class TZInfo::DataSources::RubyDataSource < ::TZInfo::DataSource
   # source://tzinfo//lib/tzinfo/data_sources/ruby_data_source.rb#76
   def inspect; end
 
-  # Returns the value of attribute linked_timezone_identifiers.
+  # Returns a frozen `Array` of all the available time zone identifiers that
+  # are links to other time zones. The identifiers are sorted according to
+  # `String#<=>`.
+  #
+  # @return [Array<String>] a frozen `Array` of all the available time zone
+  #   identifiers that are links to other time zones.
   #
   # source://tzinfo//lib/tzinfo/data_sources/ruby_data_source.rb#29
   def linked_timezone_identifiers; end
@@ -1527,7 +1541,11 @@ class TZInfo::DataSources::ZoneinfoDataSource < ::TZInfo::DataSource
   # source://tzinfo//lib/tzinfo/data_sources/zoneinfo_data_source.rb#241
   def initialize(zoneinfo_dir = T.unsafe(nil), alternate_iso3166_tab_path = T.unsafe(nil)); end
 
-  # Returns the value of attribute country_codes.
+  # Returns a frozen `Array` of all the available ISO 3166-1 alpha-2 country
+  # codes. The identifiers are sorted according to `String#<=>`.
+  #
+  # @return [Array<String>] a frozen `Array` of all the available ISO 3166-1
+  #   alpha-2 country codes.
   #
   # source://tzinfo//lib/tzinfo/data_sources/zoneinfo_data_source.rb#208
   def country_codes; end

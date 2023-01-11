@@ -219,8 +219,8 @@ class WEBrick::BasicLog
   def format(arg); end
 end
 
-# Base TCP server class.  You must subclass GenericServer and provide a #run
-# method.
+# --
+# Updates WEBrick::GenericServer with SSL functionality
 #
 # source://webrick//lib/webrick/server.rb#56
 class WEBrick::GenericServer
@@ -242,8 +242,7 @@ class WEBrick::GenericServer
   # source://webrick//lib/webrick/server.rb#66
   def config; end
 
-  # Adds listeners from +address+ and +port+ to the server.  See
-  # WEBrick::Utils::create_listeners for details.
+  # Updates +listen+ to enable SSL when the SSL configuration is active.
   #
   # source://webrick//lib/webrick/server.rb#129
   def listen(address, port); end
@@ -660,35 +659,6 @@ class WEBrick::HTTPAuth::DigestAuth
     # source://webrick//lib/webrick/httpauth/digestauth.rb#69
     def make_passwd(realm, user, pass); end
   end
-end
-
-# Struct containing the opaque portion of the digest authentication
-#
-# source://webrick//lib/webrick/httpauth/digestauth.rb#54
-class WEBrick::HTTPAuth::DigestAuth::OpaqueInfo < ::Struct
-  # Sets the attribute nc
-  #
-  # @param value [Object] the value to set the attribute nc to.
-  # @return [Object] the newly set value
-  #
-  # source://webrick//lib/webrick/httpauth/digestauth.rb#54
-  def nc=(_); end
-
-  # Sets the attribute nonce
-  #
-  # @param value [Object] the value to set the attribute nonce to.
-  # @return [Object] the newly set value
-  #
-  # source://webrick//lib/webrick/httpauth/digestauth.rb#54
-  def nonce=(_); end
-
-  # Sets the attribute time
-  #
-  # @param value [Object] the value to set the attribute time to.
-  # @return [Object] the newly set value
-  #
-  # source://webrick//lib/webrick/httpauth/digestauth.rb#54
-  def time=(_); end
 end
 
 # Htdigest accesses apache-compatible digest password files.  Passwords are
@@ -1491,8 +1461,7 @@ class WEBrick::HTTPResponse::ChunkedWrapper
   def write(buf); end
 end
 
-# --
-# Adds SSL functionality to WEBrick::HTTPServer
+# An HTTP Server
 #
 # source://webrick//lib/webrick/httpserver.rb#44
 class WEBrick::HTTPServer < ::WEBrick::GenericServer

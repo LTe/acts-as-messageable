@@ -78,7 +78,7 @@ end
 # source://rspec-core/3.12.0/lib/rspec/core.rb#187
 RSpec::MODULES_TO_AUTOLOAD = T.let(T.unsafe(nil), Hash)
 
-# source://tapioca/0.10.3/lib/tapioca/runtime/reflection.rb#39
+# source://rspec-core/3.12.0/lib/rspec/core/shared_context.rb#54
 RSpec::SharedContext = RSpec::Core::SharedContext
 
 # source://rspec//lib/rspec/version.rb#2

@@ -113,10 +113,10 @@ end
 class Minitest::AbstractReporter
   include ::Mutex_m
 
-  # source://mutex_m/0.1.0/mutex_m.rb#92
+  # source://mutex_m/0.1.1/mutex_m.rb#93
   def lock; end
 
-  # source://mutex_m/0.1.0/mutex_m.rb#82
+  # source://mutex_m/0.1.1/mutex_m.rb#83
   def locked?; end
 
   # Did this run pass?
@@ -150,13 +150,13 @@ class Minitest::AbstractReporter
   # source://minitest//lib/minitest.rb#584
   def start; end
 
-  # source://mutex_m/0.1.0/mutex_m.rb#77
+  # source://mutex_m/0.1.1/mutex_m.rb#78
   def synchronize(&block); end
 
-  # source://mutex_m/0.1.0/mutex_m.rb#87
+  # source://mutex_m/0.1.1/mutex_m.rb#88
   def try_lock; end
 
-  # source://mutex_m/0.1.0/mutex_m.rb#97
+  # source://mutex_m/0.1.1/mutex_m.rb#98
   def unlock; end
 end
 

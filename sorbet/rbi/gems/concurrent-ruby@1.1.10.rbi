@@ -388,32 +388,19 @@ class Concurrent::AbstractExecutorService < ::Concurrent::Synchronization::Locka
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/abstract_executor_service.rb#23
   def initialize(opts = T.unsafe(nil), &block); end
 
-  # Set the auto-terminate behavior for this executor.
-  #
-  # @deprecated Has no effect
-  # @param value [Boolean] The new auto-terminate value to set for this executor.
-  # @return [Boolean] `true` when auto-termination is enabled else `false`.
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/abstract_executor_service.rb#72
   def auto_terminate=(value); end
 
-  # Is the executor auto-terminate when the application exits?
-  #
-  # @return [Boolean] `true` when auto-termination is enabled else `false`.
+  # @return [Boolean]
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/abstract_executor_service.rb#67
   def auto_terminate?; end
 
-  # @return [Symbol] The fallback policy in effect. Either `:abort`, `:discard`, or `:caller_runs`.
+  # Returns the value of attribute fallback_policy.
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/abstract_executor_service.rb#18
   def fallback_policy; end
 
-  # Begin an immediate shutdown. In-progress tasks will be allowed to
-  # complete but enqueued tasks will be dismissed and no new tasks
-  # will be accepted. Has no additional effect if the thread pool is
-  # not running.
-  #
   # @raise [NotImplementedError]
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/abstract_executor_service.rb#42
@@ -424,32 +411,22 @@ class Concurrent::AbstractExecutorService < ::Concurrent::Synchronization::Locka
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/abstract_executor_service.rb#20
   def name; end
 
-  # Is the executor running?
-  #
-  # @return [Boolean] `true` when running, `false` when shutting down or shutdown
+  # @return [Boolean]
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/abstract_executor_service.rb#52
   def running?; end
 
-  # Begin an orderly shutdown. Tasks already in the queue will be executed,
-  # but no new tasks will be accepted. Has no additional effect if the
-  # thread pool is not running.
-  #
   # @raise [NotImplementedError]
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/abstract_executor_service.rb#37
   def shutdown; end
 
-  # Is the executor shutdown?
-  #
-  # @return [Boolean] `true` when shutdown, `false` when shutting down or running
+  # @return [Boolean]
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/abstract_executor_service.rb#62
   def shutdown?; end
 
-  # Is the executor shuttingdown?
-  #
-  # @return [Boolean] `true` when not running and not shutdown, else `false`
+  # @return [Boolean]
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/abstract_executor_service.rb#57
   def shuttingdown?; end
@@ -457,14 +434,7 @@ class Concurrent::AbstractExecutorService < ::Concurrent::Synchronization::Locka
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/abstract_executor_service.rb#32
   def to_s; end
 
-  # Block until executor shutdown is complete or until `timeout` seconds have
-  # passed.
-  #
-  # @note Does not initiate shutdown or termination. Either `shutdown` or `kill`
-  #   must be called before this method (or on another thread).
-  # @param timeout [Integer] the maximum number of seconds to wait for shutdown to complete
   # @raise [NotImplementedError]
-  # @return [Boolean] `true` if shutdown complete or false on `timeout`
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/abstract_executor_service.rb#47
   def wait_for_termination(timeout = T.unsafe(nil)); end
@@ -508,101 +478,22 @@ end
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/abstract_executor_service.rb#15
 Concurrent::AbstractExecutorService::FALLBACK_POLICIES = T.let(T.unsafe(nil), Array)
 
-# A `ThreadLocalVar` is a variable where the value is different for each thread.
-# Each variable may have a default value, but when you modify the variable only
-# the current thread will ever see that change.
-#
-#
-# ## Thread-safe Variable Classes
-#
-# Each of the thread-safe variable classes is designed to solve a different
-# problem. In general:
-#
-# * *{Concurrent::Agent}:* Shared, mutable variable providing independent,
-#   uncoordinated, *asynchronous* change of individual values. Best used when
-#   the value will undergo frequent, complex updates. Suitable when the result
-#   of an update does not need to be known immediately.
-# * *{Concurrent::Atom}:* Shared, mutable variable providing independent,
-#   uncoordinated, *synchronous* change of individual values. Best used when
-#   the value will undergo frequent reads but only occasional, though complex,
-#   updates. Suitable when the result of an update must be known immediately.
-# * *{Concurrent::AtomicReference}:* A simple object reference that can be updated
-#   atomically. Updates are synchronous but fast. Best used when updates a
-#   simple set operations. Not suitable when updates are complex.
-#   {Concurrent::AtomicBoolean} and {Concurrent::AtomicFixnum} are similar
-#   but optimized for the given data type.
-# * *{Concurrent::Exchanger}:* Shared, stateless synchronization point. Used
-#   when two or more threads need to exchange data. The threads will pair then
-#   block on each other until the exchange is complete.
-# * *{Concurrent::MVar}:* Shared synchronization point. Used when one thread
-#   must give a value to another, which must take the value. The threads will
-#   block on each other until the exchange is complete.
-# * *{Concurrent::ThreadLocalVar}:* Shared, mutable, isolated variable which
-#   holds a different value for each thread which has access. Often used as
-#   an instance variable in objects which must maintain different state
-#   for different threads.
-# * *{Concurrent::TVar}:* Shared, mutable variables which provide
-#   *coordinated*, *synchronous*, change of *many* stated. Used when multiple
-#   value must change together, in an all-or-nothing transaction.
-#
-# @example
-#   v = ThreadLocalVar.new(14)
-#   v.value #=> 14
-#   v.value = 2
-#   v.value #=> 2
-# @example
-#   v = ThreadLocalVar.new(14)
-#
-#   t1 = Thread.new do
-#   v.value #=> 14
-#   v.value = 1
-#   v.value #=> 1
-#   end
-#
-#   t2 = Thread.new do
-#   v.value #=> 14
-#   v.value = 2
-#   v.value #=> 2
-#   end
-#
-#   v.value #=> 14
-# @see https://docs.oracle.com/javase/7/docs/api/java/lang/ThreadLocal.html Java ThreadLocal
-#
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/abstract_thread_local_var.rb#8
 class Concurrent::AbstractThreadLocalVar
-  # Creates a thread local variable.
-  #
-  # @param default [Object] the default value when otherwise unset
-  # @param default_block [Proc] Optional block that gets called to obtain the
-  #   default value for each thread
   # @return [AbstractThreadLocalVar] a new instance of AbstractThreadLocalVar
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/abstract_thread_local_var.rb#11
   def initialize(default = T.unsafe(nil), &default_block); end
 
-  # Bind the given value to thread local storage during
-  # execution of the given block.
-  #
-  # @param value [Object] the value to bind
-  # @return [Object] the value
-  # @yield the operation to be performed with the bound variable
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/abstract_thread_local_var.rb#38
   def bind(value, &block); end
 
-  # Returns the value in the current thread's copy of this thread-local variable.
-  #
   # @raise [NotImplementedError]
-  # @return [Object] the current value
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/abstract_thread_local_var.rb#28
   def value; end
 
-  # Sets the current thread's copy of this thread-local variable to the specified value.
-  #
-  # @param value [Object] the value to set
   # @raise [NotImplementedError]
-  # @return [Object] the new value
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/abstract_thread_local_var.rb#33
   def value=(value); end
@@ -746,38 +637,6 @@ end
 # block/proc/lambda. The call will block the Agent and will always fail.
 # Calling either {#await} or {#wait} (with a timeout of `nil`) will
 # hopelessly deadlock the Agent with no possibility of recovery.
-#
-# ## Thread-safe Variable Classes
-#
-# Each of the thread-safe variable classes is designed to solve a different
-# problem. In general:
-#
-# * *{Concurrent::Agent}:* Shared, mutable variable providing independent,
-#   uncoordinated, *asynchronous* change of individual values. Best used when
-#   the value will undergo frequent, complex updates. Suitable when the result
-#   of an update does not need to be known immediately.
-# * *{Concurrent::Atom}:* Shared, mutable variable providing independent,
-#   uncoordinated, *synchronous* change of individual values. Best used when
-#   the value will undergo frequent reads but only occasional, though complex,
-#   updates. Suitable when the result of an update must be known immediately.
-# * *{Concurrent::AtomicReference}:* A simple object reference that can be updated
-#   atomically. Updates are synchronous but fast. Best used when updates a
-#   simple set operations. Not suitable when updates are complex.
-#   {Concurrent::AtomicBoolean} and {Concurrent::AtomicFixnum} are similar
-#   but optimized for the given data type.
-# * *{Concurrent::Exchanger}:* Shared, stateless synchronization point. Used
-#   when two or more threads need to exchange data. The threads will pair then
-#   block on each other until the exchange is complete.
-# * *{Concurrent::MVar}:* Shared synchronization point. Used when one thread
-#   must give a value to another, which must take the value. The threads will
-#   block on each other until the exchange is complete.
-# * *{Concurrent::ThreadLocalVar}:* Shared, mutable, isolated variable which
-#   holds a different value for each thread which has access. Often used as
-#   an instance variable in objects which must maintain different state
-#   for different threads.
-# * *{Concurrent::TVar}:* Shared, mutable variables which provide
-#   *coordinated*, *synchronous*, change of *many* stated. Used when multiple
-#   value must change together, in an all-or-nothing transaction.
 #
 # @see http://clojure.org/Agents Clojure Agents
 # @see http://clojure.org/state Values and Change - Clojure's approach to Identity and State
@@ -1333,8 +1192,6 @@ class Concurrent::Agent::Job < ::Struct
   #
   # @param value [Object] the value to set the attribute action to.
   # @return [Object] the newly set value
-  #
-  # source://concurrent-ruby//lib/concurrent-ruby/concurrent/agent.rb#162
   def action=(_); end
 
   # Returns the value of attribute args
@@ -1346,8 +1203,6 @@ class Concurrent::Agent::Job < ::Struct
   #
   # @param value [Object] the value to set the attribute args to.
   # @return [Object] the newly set value
-  #
-  # source://concurrent-ruby//lib/concurrent-ruby/concurrent/agent.rb#162
   def args=(_); end
 
   # Returns the value of attribute caller
@@ -1359,8 +1214,6 @@ class Concurrent::Agent::Job < ::Struct
   #
   # @param value [Object] the value to set the attribute caller to.
   # @return [Object] the newly set value
-  #
-  # source://concurrent-ruby//lib/concurrent-ruby/concurrent/agent.rb#162
   def caller=(_); end
 
   # Returns the value of attribute executor
@@ -1372,13 +1225,12 @@ class Concurrent::Agent::Job < ::Struct
   #
   # @param value [Object] the value to set the attribute executor to.
   # @return [Object] the newly set value
-  #
-  # source://concurrent-ruby//lib/concurrent-ruby/concurrent/agent.rb#162
   def executor=(_); end
 
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -1825,7 +1677,7 @@ end
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/async.rb#269
 module Concurrent::Async::ClassMethods
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/async.rb#270
-  def new(*args, &block); end
+  def new(*args, **_arg1, &block); end
 end
 
 # Atoms provide a way to manage shared, synchronous, independent state.
@@ -2339,41 +2191,21 @@ class Concurrent::AtomicMarkableReference < ::Concurrent::Synchronization::Objec
 
   private
 
-  # Sets the reference to new_reference if the current reference is expected_reference
-  #
-  # @return [true, false]
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#137
   def compare_and_set_reference(expected, value); end
 
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/atomic_markable_reference.rb#160
   def immutable_array(*args); end
 
-  # @return [Object] The reference.
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#125
   def reference; end
 
-  # Set the reference.
-  #
-  # @return [Object] new_reference.
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#129
   def reference=(value); end
 
-  # Set the reference to new_reference and return the old reference.
-  #
-  # @return [Object] old reference
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#133
   def swap_reference(value); end
 
-  # Updates the reference using the block.
-  #
-  # @return [Object] new reference
-  # @yield [Object] Calculate a new reference using given (old) reference
-  # @yieldparam old [Object] reference
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#141
   def update_reference(&block); end
 
@@ -2387,6 +2219,15 @@ end
 #
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic_reference/numeric_cas_wrapper.rb#7
 module Concurrent::AtomicNumericCompareAndSetWrapper
+  # Atomically sets the value to the given updated value if
+  # the current value == the expected value.
+  #
+  # that the actual value was not equal to the expected value.
+  #
+  # @param old_value [Object] the expected value
+  # @param new_value [Object] the new value
+  # @return [Boolean] `true` if successful. A `false` return indicates
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic_reference/numeric_cas_wrapper.rb#10
   def compare_and_set(old_value, new_value); end
 end
@@ -2468,6 +2309,9 @@ class Concurrent::CRubySet < ::Set
 
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/thread_safe/util/data_structures.rb#31
   def <=(*args); end
+
+  # source://concurrent-ruby//lib/concurrent-ruby/concurrent/thread_safe/util/data_structures.rb#31
+  def <=>(*args); end
 
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/thread_safe/util/data_structures.rb#31
   def ==(*args); end
@@ -2561,6 +2405,9 @@ class Concurrent::CRubySet < ::Set
 
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/thread_safe/util/data_structures.rb#31
   def intersection(*args); end
+
+  # source://concurrent-ruby//lib/concurrent-ruby/concurrent/thread_safe/util/data_structures.rb#31
+  def join(*args); end
 
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/thread_safe/util/data_structures.rb#31
   def keep_if(*args); end
@@ -3029,64 +2876,148 @@ end
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/non_concurrent_priority_queue.rb#10
 Concurrent::Collection::NonConcurrentPriorityQueueImplementation = Concurrent::Collection::RubyNonConcurrentPriorityQueue
 
+# A queue collection in which the elements are sorted based on their
+# comparison (spaceship) operator `<=>`. Items are added to the queue
+# at a position relative to their priority. On removal the element
+# with the "highest" priority is removed. By default the sort order is
+# from highest to lowest, but a lowest-to-highest sort order can be
+# set on construction.
+#
+# The API is based on the `Queue` class from the Ruby standard library.
+#
+# The pure Ruby implementation, `RubyNonConcurrentPriorityQueue` uses a heap algorithm
+# stored in an array. The algorithm is based on the work of Robert Sedgewick
+# and Kevin Wayne.
+#
+# The JRuby native implementation is a thin wrapper around the standard
+# library `java.util.NonConcurrentPriorityQueue`.
+#
+# When running under JRuby the class `NonConcurrentPriorityQueue` extends `JavaNonConcurrentPriorityQueue`.
+# When running under all other interpreters it extends `RubyNonConcurrentPriorityQueue`.
+#
+# @note This implementation is *not* thread safe.
+# @see http://en.wikipedia.org/wiki/Priority_queue
+# @see http://ruby-doc.org/stdlib-2.0.0/libdoc/thread/rdoc/Queue.html
+# @see http://algs4.cs.princeton.edu/24pq/index.php#2.6
+# @see http://algs4.cs.princeton.edu/24pq/MaxPQ.java.html
+# @see http://docs.oracle.com/javase/7/docs/api/java/util/PriorityQueue.html
+#
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/ruby_non_concurrent_priority_queue.rb#8
 class Concurrent::Collection::RubyNonConcurrentPriorityQueue
+  # Create a new priority queue with no items.
+  #
+  # @option opts
+  # @param opts [Hash] the options for creating the queue
   # @return [RubyNonConcurrentPriorityQueue] a new instance of RubyNonConcurrentPriorityQueue
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/ruby_non_concurrent_priority_queue.rb#11
   def initialize(opts = T.unsafe(nil)); end
 
+  # Inserts the specified element into this priority queue.
+  #
+  # @param item [Object] the item to insert onto the queue
   # @raise [ArgumentError]
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/ruby_non_concurrent_priority_queue.rb#78
   def <<(item); end
 
+  # Removes all of the elements from this priority queue.
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/ruby_non_concurrent_priority_queue.rb#18
   def clear; end
 
+  # Deletes all items from `self` that are equal to `item`.
+  #
+  # @param item [Object] the item to be removed from the queue
+  # @return [Object] true if the item is found else false
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/ruby_non_concurrent_priority_queue.rb#25
   def delete(item); end
 
+  # Retrieves and removes the head of this queue, or returns `nil` if this
+  # queue is empty.
+  #
+  # @return [Object] the head of the queue or `nil` when empty
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/ruby_non_concurrent_priority_queue.rb#65
   def deq; end
 
-  # @return [Boolean]
+  # Returns `true` if `self` contains no elements.
+  #
+  # @return [Boolean] true if there are no items in the queue else false
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/ruby_non_concurrent_priority_queue.rb#43
   def empty?; end
 
+  # Inserts the specified element into this priority queue.
+  #
+  # @param item [Object] the item to insert onto the queue
   # @raise [ArgumentError]
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/ruby_non_concurrent_priority_queue.rb#78
   def enq(item); end
 
-  # @return [Boolean]
+  # Returns `true` if the given item is present in `self` (that is, if any
+  # element == `item`), otherwise returns false.
+  #
+  # @param item [Object] the item to search for
+  # @return [Boolean] true if the item is found else false
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/ruby_non_concurrent_priority_queue.rb#48
   def has_priority?(item); end
 
-  # @return [Boolean]
+  # Returns `true` if the given item is present in `self` (that is, if any
+  # element == `item`), otherwise returns false.
+  #
+  # @param item [Object] the item to search for
+  # @return [Boolean] true if the item is found else false
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/ruby_non_concurrent_priority_queue.rb#48
   def include?(item); end
 
+  # The current length of the queue.
+  #
+  # @return [Fixnum] the number of items in the queue
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/ruby_non_concurrent_priority_queue.rb#54
   def length; end
 
+  # Retrieves, but does not remove, the head of this queue, or returns `nil`
+  # if this queue is empty.
+  #
+  # @return [Object] the head of the queue or `nil` when empty
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/ruby_non_concurrent_priority_queue.rb#60
   def peek; end
 
+  # Retrieves and removes the head of this queue, or returns `nil` if this
+  # queue is empty.
+  #
+  # @return [Object] the head of the queue or `nil` when empty
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/ruby_non_concurrent_priority_queue.rb#65
   def pop; end
 
+  # Inserts the specified element into this priority queue.
+  #
+  # @param item [Object] the item to insert onto the queue
   # @raise [ArgumentError]
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/ruby_non_concurrent_priority_queue.rb#78
   def push(item); end
 
+  # Retrieves and removes the head of this queue, or returns `nil` if this
+  # queue is empty.
+  #
+  # @return [Object] the head of the queue or `nil` when empty
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/ruby_non_concurrent_priority_queue.rb#65
   def shift; end
 
+  # The current length of the queue.
+  #
+  # @return [Fixnum] the number of items in the queue
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/collection/ruby_non_concurrent_priority_queue.rb#54
   def size; end
 
@@ -3663,13 +3594,12 @@ class Concurrent::CyclicBarrier::Generation < ::Struct
   #
   # @param value [Object] the value to set the attribute status to.
   # @return [Object] the newly set value
-  #
-  # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/cyclic_barrier.rb#30
   def status=(_); end
 
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -4120,15 +4050,6 @@ class Concurrent::Future < ::Concurrent::IVar
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/future.rb#53
   def execute; end
 
-  # Set the `IVar` to a value and wake or notify all threads waiting on it.
-  #
-  # @param value [Object] the value to store in the `IVar`
-  # @raise [ArgumentError] if both a value and a block are given
-  # @raise [Concurrent::MultipleAssignmentError] if the `IVar` has already
-  #   been set or otherwise completed
-  # @return [IVar] self
-  # @yield A block operation to use for setting the value
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/future.rb#82
   def set(value = T.unsafe(nil), &block); end
 
@@ -4354,35 +4275,68 @@ class Concurrent::ImmediateExecutor < ::Concurrent::AbstractExecutorService
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/immediate_executor.rb#21
   def initialize; end
 
+  # Submit a task to the executor for asynchronous processing.
+  #
+  # @param task [Proc] the asynchronous task to perform
+  # @return [self] returns itself
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/immediate_executor.rb#34
   def <<(task); end
 
+  # Begin an orderly shutdown. Tasks already in the queue will be executed,
+  # but no new tasks will be accepted. Has no additional effect if the
+  # thread pool is not running.
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/immediate_executor.rb#55
   def kill; end
 
-  # @raise [ArgumentError]
+  # Submit a task to the executor for asynchronous processing.
+  #
+  # @param args [Array] zero or more arguments to be passed to the task
+  # @raise [ArgumentError] if no task is given
+  # @return [Boolean] `true` if the task is queued, `false` if the executor
+  #   is not running
+  # @yield the asynchronous task to perform
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/immediate_executor.rb#26
   def post(*args, &task); end
 
-  # @return [Boolean]
+  # Is the executor running?
+  #
+  # @return [Boolean] `true` when running, `false` when shutting down or shutdown
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/immediate_executor.rb#40
   def running?; end
 
+  # Begin an orderly shutdown. Tasks already in the queue will be executed,
+  # but no new tasks will be accepted. Has no additional effect if the
+  # thread pool is not running.
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/immediate_executor.rb#55
   def shutdown; end
 
-  # @return [Boolean]
+  # Is the executor shutdown?
+  #
+  # @return [Boolean] `true` when shutdown, `false` when shutting down or running
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/immediate_executor.rb#50
   def shutdown?; end
 
-  # @return [Boolean]
+  # Is the executor shuttingdown?
+  #
+  # @return [Boolean] `true` when not running and not shutdown, else `false`
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/immediate_executor.rb#45
   def shuttingdown?; end
 
+  # Block until executor shutdown is complete or until `timeout` seconds have
+  # passed.
+  #
+  # @note Does not initiate shutdown or termination. Either `shutdown` or `kill`
+  #   must be called before this method (or on another thread).
+  # @param timeout [Integer] the maximum number of seconds to wait for shutdown to complete
+  # @return [Boolean] `true` if shutdown complete or false on `timeout`
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/immediate_executor.rb#62
   def wait_for_termination(timeout = T.unsafe(nil)); end
 end
@@ -5475,32 +5429,110 @@ end
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/mutable_struct.rb#220
 Concurrent::MutableStruct::FACTORY = T.let(T.unsafe(nil), T.untyped)
 
+# A boolean value that can be updated atomically. Reads and writes to an atomic
+# boolean and thread-safe and guaranteed to succeed. Reads and writes may block
+# briefly but no explicit locking is required.
+#
+#
+# ## Thread-safe Variable Classes
+#
+# Each of the thread-safe variable classes is designed to solve a different
+# problem. In general:
+#
+# * *{Concurrent::Agent}:* Shared, mutable variable providing independent,
+#   uncoordinated, *asynchronous* change of individual values. Best used when
+#   the value will undergo frequent, complex updates. Suitable when the result
+#   of an update does not need to be known immediately.
+# * *{Concurrent::Atom}:* Shared, mutable variable providing independent,
+#   uncoordinated, *synchronous* change of individual values. Best used when
+#   the value will undergo frequent reads but only occasional, though complex,
+#   updates. Suitable when the result of an update must be known immediately.
+# * *{Concurrent::AtomicReference}:* A simple object reference that can be updated
+#   atomically. Updates are synchronous but fast. Best used when updates a
+#   simple set operations. Not suitable when updates are complex.
+#   {Concurrent::AtomicBoolean} and {Concurrent::AtomicFixnum} are similar
+#   but optimized for the given data type.
+# * *{Concurrent::Exchanger}:* Shared, stateless synchronization point. Used
+#   when two or more threads need to exchange data. The threads will pair then
+#   block on each other until the exchange is complete.
+# * *{Concurrent::MVar}:* Shared synchronization point. Used when one thread
+#   must give a value to another, which must take the value. The threads will
+#   block on each other until the exchange is complete.
+# * *{Concurrent::ThreadLocalVar}:* Shared, mutable, isolated variable which
+#   holds a different value for each thread which has access. Often used as
+#   an instance variable in objects which must maintain different state
+#   for different threads.
+# * *{Concurrent::TVar}:* Shared, mutable variables which provide
+#   *coordinated*, *synchronous*, change of *many* stated. Used when multiple
+#   value must change together, in an all-or-nothing transaction.
+# Performance:
+#
+# ```
+# Testing with ruby 2.1.2
+# Testing with Concurrent::MutexAtomicBoolean...
+#   2.790000   0.000000   2.790000 (  2.791454)
+# Testing with Concurrent::CAtomicBoolean...
+#   0.740000   0.000000   0.740000 (  0.740206)
+#
+# Testing with jruby 1.9.3
+# Testing with Concurrent::MutexAtomicBoolean...
+#   5.240000   2.520000   7.760000 (  3.683000)
+# Testing with Concurrent::JavaAtomicBoolean...
+#   3.340000   0.010000   3.350000 (  0.855000)
+# ```
+#
+# @see http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/atomic/AtomicBoolean.html java.util.concurrent.atomic.AtomicBoolean
+#
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/mutex_atomic_boolean.rb#8
 class Concurrent::MutexAtomicBoolean < ::Concurrent::Synchronization::LockableObject
+  # Creates a new `AtomicBoolean` with the given initial value.
+  #
+  # @param initial [Boolean] the initial value
   # @return [MutexAtomicBoolean] a new instance of MutexAtomicBoolean
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/mutex_atomic_boolean.rb#11
   def initialize(initial = T.unsafe(nil)); end
 
-  # @return [Boolean]
+  # Is the current value `false`
+  #
+  # @return [Boolean] true if the current value is `false`, else false
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/mutex_atomic_boolean.rb#32
   def false?; end
 
+  # Explicitly sets the value to false.
+  #
+  # @return [Boolean] true if value has changed, otherwise false
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/mutex_atomic_boolean.rb#42
   def make_false; end
 
+  # Explicitly sets the value to true.
+  #
+  # @return [Boolean] true if value has changed, otherwise false
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/mutex_atomic_boolean.rb#37
   def make_true; end
 
-  # @return [Boolean]
+  # Is the current value `true`
+  #
+  # @return [Boolean] true if the current value is `true`, else false
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/mutex_atomic_boolean.rb#27
   def true?; end
 
+  # Retrieves the current `Boolean` value.
+  #
+  # @return [Boolean] the current value
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/mutex_atomic_boolean.rb#17
   def value; end
 
+  # Explicitly sets the value.
+  #
+  # @param value [Boolean] the new value to be set
+  # @return [Boolean] the current value
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/mutex_atomic_boolean.rb#22
   def value=(value); end
 
@@ -5666,32 +5698,70 @@ class Concurrent::MutexAtomicReference < ::Concurrent::Synchronization::Lockable
   include ::Concurrent::AtomicDirectUpdate
   include ::Concurrent::AtomicNumericCompareAndSetWrapper
 
+  # @param value [Object] The initial value.
   # @return [MutexAtomicReference] a new instance of MutexAtomicReference
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic_reference/mutex_atomic.rb#11
   def initialize(value = T.unsafe(nil)); end
 
+  # Atomically sets the value to the given updated value if
+  # the current value == the expected value.
+  #
+  # that the actual value was not equal to the expected value.
+  #
+  # @param old_value [Object] the expected value
+  # @param new_value [Object] the new value
+  # @return [Boolean] `true` if successful. A `false` return indicates
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic_reference/mutex_atomic.rb#39
   def _compare_and_set(old_value, new_value); end
 
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic_reference/numeric_cas_wrapper.rb#10
   def compare_and_swap(old_value, new_value); end
 
+  # Gets the current value.
+  #
+  # @return [Object] the current value
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic_reference/mutex_atomic.rb#17
   def get; end
 
+  # Atomically sets to the given value and returns the old value.
+  #
+  # @param new_value [Object] the new value
+  # @return [Object] the old value
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic_reference/mutex_atomic.rb#29
   def get_and_set(new_value); end
 
+  # Sets to the given value.
+  #
+  # @param new_value [Object] the new value
+  # @return [Object] the new value
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic_reference/mutex_atomic.rb#23
   def set(new_value); end
 
+  # Atomically sets to the given value and returns the old value.
+  #
+  # @param new_value [Object] the new value
+  # @return [Object] the old value
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic_reference/mutex_atomic.rb#29
   def swap(new_value); end
 
+  # Gets the current value.
+  #
+  # @return [Object] the current value
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic_reference/mutex_atomic.rb#17
   def value; end
 
+  # Sets to the given value.
+  #
+  # @param new_value [Object] the new value
+  # @return [Object] the new value
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic_reference/mutex_atomic.rb#23
   def value=(new_value); end
 
@@ -5748,44 +5818,16 @@ class Concurrent::MutexCountDownLatch < ::Concurrent::Synchronization::LockableO
   def ns_initialize(count); end
 end
 
-# A counting semaphore. Conceptually, a semaphore maintains a set of
-# permits. Each {#acquire} blocks if necessary until a permit is
-# available, and then takes it. Each {#release} adds a permit, potentially
-# releasing a blocking acquirer.
-# However, no actual permit objects are used; the Semaphore just keeps a
-# count of the number available and acts accordingly.
-# Alternatively, permits may be acquired within a block, and automatically
-# released after the block finishes executing.
-#
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/mutex_semaphore.rb#9
 class Concurrent::MutexSemaphore < ::Concurrent::Synchronization::LockableObject
-  # Create a new `Semaphore` with the initial `count`.
-  #
-  # @param count [Fixnum] the initial count
-  # @raise [ArgumentError] if `count` is not an integer or is less than zero
   # @return [MutexSemaphore] a new instance of MutexSemaphore
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/mutex_semaphore.rb#12
   def initialize(count); end
 
-  # Acquires the given number of permits from this semaphore,
-  #   blocking until all are available. If a block is given,
-  #   yields to it and releases the permits afterwards.
-  #
-  # is given, its return value is returned.
-  #
-  # @param permits [Fixnum] Number of permits to acquire
-  # @raise [ArgumentError] if `permits` is not an integer or is less than
-  #   one
-  # @return [nil, BasicObject] Without a block, `nil` is returned. If a block
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/mutex_semaphore.rb#20
   def acquire(permits = T.unsafe(nil)); end
 
-  # Returns the current number of permits available in this semaphore.
-  #
-  # @return [Integer]
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/mutex_semaphore.rb#38
   def available_permits; end
 
@@ -5806,31 +5848,9 @@ class Concurrent::MutexSemaphore < ::Concurrent::Synchronization::LockableObject
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/mutex_semaphore.rb#99
   def reduce_permits(reduction); end
 
-  # Releases the given number of permits, returning them to the semaphore.
-  #
-  # @param permits [Fixnum] Number of permits to return to the semaphore.
-  # @raise [ArgumentError] if `permits` is not a number or is less than one
-  # @return [nil]
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/mutex_semaphore.rb#77
   def release(permits = T.unsafe(nil)); end
 
-  # Acquires the given number of permits from this semaphore,
-  #   only if all are available at the time of invocation or within
-  #   `timeout` interval. If a block is given, yields to it if the permits
-  #   were successfully acquired, and releases them afterward, returning the
-  #   block's return value.
-  #
-  # @param permits [Fixnum] the number of permits to acquire
-  # @param timeout [Fixnum] the number of seconds to wait for the counter
-  #   or `nil` to return immediately
-  # @raise [ArgumentError] if `permits` is not an integer or is less than
-  #   one
-  # @return [true, false, nil, BasicObject] `false` if no permits are
-  #   available, `true` when acquired a permit. If a block is given, the
-  #   block's return value is returned if the permits were acquired; if not,
-  #   `nil` is returned.
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/mutex_semaphore.rb#54
   def try_acquire(permits = T.unsafe(nil), timeout = T.unsafe(nil)); end
 
@@ -6418,8 +6438,6 @@ class Concurrent::Promises::AbstractEventFuture < ::Concurrent::Synchronization:
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/promises.rb#617
   def inspect; end
 
-  # @return [Object] The internal_state.
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#125
   def internal_state; end
 
@@ -6569,33 +6587,15 @@ class Concurrent::Promises::AbstractEventFuture < ::Concurrent::Synchronization:
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/promises.rb#807
   def callback_notify_blocked(state, promise, index); end
 
-  # Sets the internal_state to new_internal_state if the current internal_state is expected_internal_state
-  #
-  # @return [true, false]
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#137
   def compare_and_set_internal_state(expected, value); end
 
-  # Set the internal_state.
-  #
-  # @return [Object] new_internal_state.
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#129
   def internal_state=(value); end
 
-  # Set the internal_state to new_internal_state and return the old internal_state.
-  #
-  # @return [Object] old internal_state
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#133
   def swap_internal_state(value); end
 
-  # Updates the internal_state using the block.
-  #
-  # @return [Object] new internal_state
-  # @yield [Object] Calculate a new internal_state using given (old) internal_state
-  # @yieldparam old [Object] internal_state
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#141
   def update_internal_state(&block); end
 
@@ -6949,8 +6949,8 @@ end
 module Concurrent::Promises::FactoryMethods
   include ::Concurrent::Promises::FactoryMethods::Configuration
   extend ::Concurrent::ReInclude
-  extend ::Concurrent::Promises::FactoryMethods
   extend ::Concurrent::Promises::FactoryMethods::Configuration
+  extend ::Concurrent::Promises::FactoryMethods
 
   # Shortcut of {#any_resolved_future_on} with default `:io` executor supplied.
   #
@@ -8595,38 +8595,18 @@ class Concurrent::RubyExchanger < ::Concurrent::AbstractExchanger
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#169
   def __initialize_atomic_fields__; end
 
-  # Sets the slot to new_slot if the current slot is expected_slot
-  #
-  # @return [true, false]
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#137
   def compare_and_set_slot(expected, value); end
 
-  # @return [Object] The slot.
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#125
   def slot; end
 
-  # Set the slot.
-  #
-  # @return [Object] new_slot.
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#129
   def slot=(value); end
 
-  # Set the slot to new_slot and return the old slot.
-  #
-  # @return [Object] old slot
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#133
   def swap_slot(value); end
 
-  # Updates the slot using the block.
-  #
-  # @return [Object] new slot
-  # @yield [Object] Calculate a new slot using given (old) slot
-  # @yieldparam old [Object] slot
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#141
   def update_slot(&block); end
 
@@ -8662,10 +8642,6 @@ class Concurrent::RubyExchanger::Node < ::Concurrent::Synchronization::Object
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#169
   def __initialize_atomic_fields__; end
 
-  # Sets the value to new_value if the current value is expected_value
-  #
-  # @return [true, false]
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#137
   def compare_and_set_value(expected, value); end
 
@@ -8675,31 +8651,15 @@ class Concurrent::RubyExchanger::Node < ::Concurrent::Synchronization::Object
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/exchanger.rb#149
   def latch; end
 
-  # Set the value to new_value and return the old value.
-  #
-  # @return [Object] old value
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#133
   def swap_value(value); end
 
-  # Updates the value using the block.
-  #
-  # @return [Object] new value
-  # @yield [Object] Calculate a new value using given (old) value
-  # @yieldparam old [Object] value
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#141
   def update_value(&block); end
 
-  # @return [Object] The value.
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#125
   def value; end
 
-  # Set the value.
-  #
-  # @return [Object] new_value.
-  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/object.rb#129
   def value=(value); end
 
@@ -8716,17 +8676,40 @@ class Concurrent::RubyExecutorService < ::Concurrent::AbstractExecutorService
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_executor_service.rb#11
   def initialize(*args, &block); end
 
+  # Begin an immediate shutdown. In-progress tasks will be allowed to
+  # complete but enqueued tasks will be dismissed and no new tasks
+  # will be accepted. Has no additional effect if the thread pool is
+  # not running.
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_executor_service.rb#42
   def kill; end
 
-  # @raise [ArgumentError]
+  # Submit a task to the executor for asynchronous processing.
+  #
+  # @param args [Array] zero or more arguments to be passed to the task
+  # @raise [ArgumentError] if no task is given
+  # @return [Boolean] `true` if the task is queued, `false` if the executor
+  #   is not running
+  # @yield the asynchronous task to perform
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_executor_service.rb#17
   def post(*args, &task); end
 
+  # Begin an orderly shutdown. Tasks already in the queue will be executed,
+  # but no new tasks will be accepted. Has no additional effect if the
+  # thread pool is not running.
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_executor_service.rb#33
   def shutdown; end
 
+  # Block until executor shutdown is complete or until `timeout` seconds have
+  # passed.
+  #
+  # @note Does not initiate shutdown or termination. Either `shutdown` or `kill`
+  #   must be called before this method (or on another thread).
+  # @param timeout [Integer] the maximum number of seconds to wait for shutdown to complete
+  # @return [Boolean] `true` if shutdown complete or false on `timeout`
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_executor_service.rb#52
   def wait_for_termination(timeout = T.unsafe(nil)); end
 
@@ -8843,6 +8826,57 @@ Concurrent::RubyThreadLocalVar::LOCK = T.let(T.unsafe(nil), Thread::Mutex)
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/atomic/ruby_thread_local_var.rb#33
 Concurrent::RubyThreadLocalVar::THREAD_LOCAL_ARRAYS = T.let(T.unsafe(nil), Hash)
 
+# **Thread Pool Options**
+#
+# Thread pools support several configuration options:
+#
+# * `idletime`: The number of seconds that a thread may be idle before being reclaimed.
+# * `name`: The name of the executor (optional). Printed in the executor's `#to_s` output and
+#   a `<name>-worker-<id>` name is given to its threads if supported by used Ruby
+#   implementation. `<id>` is uniq for each thread.
+# * `max_queue`: The maximum number of tasks that may be waiting in the work queue at
+#   any one time. When the queue size reaches `max_queue` and no new threads can be created,
+#   subsequent tasks will be rejected in accordance with the configured `fallback_policy`.
+# * `auto_terminate`: When true (default), the threads started will be marked as daemon.
+# * `fallback_policy`: The policy defining how rejected tasks are handled.
+#
+# Three fallback policies are supported:
+#
+# * `:abort`: Raise a `RejectedExecutionError` exception and discard the task.
+# * `:discard`: Discard the task and return false.
+# * `:caller_runs`: Execute the task on the calling thread.
+#
+# **Shutting Down Thread Pools**
+#
+# Killing a thread pool while tasks are still being processed, either by calling
+# the `#kill` method or at application exit, will have unpredictable results. There
+# is no way for the thread pool to know what resources are being used by the
+# in-progress tasks. When those tasks are killed the impact on those resources
+# cannot be predicted. The *best* practice is to explicitly shutdown all thread
+# pools using the provided methods:
+#
+# * Call `#shutdown` to initiate an orderly termination of all in-progress tasks
+# * Call `#wait_for_termination` with an appropriate timeout interval an allow
+#   the orderly shutdown to complete
+# * Call `#kill` *only when* the thread pool fails to shutdown in the allotted time
+#
+# On some runtime platforms (most notably the JVM) the application will not
+# exit until all thread pools have been shutdown. To prevent applications from
+# "hanging" on exit, all threads can be marked as daemon according to the
+# `:auto_terminate` option.
+#
+# ```ruby
+# pool1 = Concurrent::FixedThreadPool.new(5) # threads will be marked as daemon
+# pool2 = Concurrent::FixedThreadPool.new(5, auto_terminate: false) # mark threads as non-daemon
+# ```
+#
+# @note Failure to properly shutdown a thread pool can lead to unpredictable results.
+#   Please read *Shutting Down Thread Pools* for more information.
+# @see http://docs.oracle.com/javase/tutorial/essential/concurrency/pools.html Java Tutorials: Thread Pools
+# @see http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Executors.html Java Executors class
+# @see http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html Java ExecutorService interface
+# @see https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html#setDaemon-boolean-
+#
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#12
 class Concurrent::RubyThreadPoolExecutor < ::Concurrent::RubyExecutorService
   # @return [RubyThreadPoolExecutor] a new instance of RubyThreadPoolExecutor
@@ -8850,59 +8884,111 @@ class Concurrent::RubyThreadPoolExecutor < ::Concurrent::RubyExecutorService
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#45
   def initialize(opts = T.unsafe(nil)); end
 
-  # @return [Boolean]
+  # Does the task queue have a maximum size?
+  #
+  # @return [Boolean] True if the task queue has a maximum size else false.
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#65
   def can_overflow?; end
 
+  # The number of tasks that have been completed by the pool since construction.
+  #
+  # @return [Integer] The number of tasks that have been completed by the pool since construction.
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#60
   def completed_task_count; end
 
-  # Returns the value of attribute idletime.
+  # The number of seconds that a thread may be idle before being reclaimed.
+  #
+  # @return [Integer] The number of seconds that a thread may be idle before being reclaimed.
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#36
   def idletime; end
 
+  # The largest number of threads that have been created in the pool since construction.
+  #
+  # @return [Integer] The largest number of threads that have been created in the pool since construction.
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#50
   def largest_length; end
 
+  # The number of threads currently in the pool.
+  #
+  # @return [Integer] The number of threads currently in the pool.
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#70
   def length; end
 
-  # Returns the value of attribute max_length.
+  # The maximum number of threads that may be created in the pool.
+  #
+  # @return [Integer] The maximum number of threads that may be created in the pool.
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#30
   def max_length; end
 
-  # Returns the value of attribute max_queue.
+  # The maximum number of tasks that may be waiting in the work queue at any one time.
+  # When the queue size reaches `max_queue` subsequent tasks will be rejected in
+  # accordance with the configured `fallback_policy`.
+  #
+  # @return [Integer] The maximum number of tasks that may be waiting in the work queue at any one time.
+  #   When the queue size reaches `max_queue` subsequent tasks will be rejected in
+  #   accordance with the configured `fallback_policy`.
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#39
   def max_queue; end
 
-  # Returns the value of attribute min_length.
+  # The minimum number of threads that may be retained in the pool.
+  #
+  # @return [Integer] The minimum number of threads that may be retained in the pool.
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#33
   def min_length; end
 
+  # Prune the thread pool of unneeded threads
+  #
+  # What is being pruned is controlled by the min_threads and idletime
+  # parameters passed at pool creation time
+  #
+  # This is a no-op on some pool implementation (e.g. the Java one).  The Ruby
+  # pool will auto-prune each time a new job is posted. You will need to call
+  # this method explicitely in case your application post jobs in bursts (a
+  # lot of jobs and then nothing for long periods)
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#111
   def prune_pool; end
 
+  # The number of tasks in the queue awaiting execution.
+  #
+  # @return [Integer] The number of tasks in the queue awaiting execution.
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#75
   def queue_length; end
 
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#96
   def ready_worker(worker, last_message); end
 
+  # Number of tasks that may be enqueued before reaching `max_queue` and rejecting
+  # new tasks. A value of -1 indicates that the queue may grow without bound.
+  #
+  # @return [Integer] Number of tasks that may be enqueued before reaching `max_queue` and rejecting
+  #   new tasks. A value of -1 indicates that the queue may grow without bound.
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#80
   def remaining_capacity; end
 
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#91
   def remove_busy_worker(worker); end
 
+  # The number of tasks that have been scheduled for execution on the pool since construction.
+  #
+  # @return [Integer] The number of tasks that have been scheduled for execution on the pool since construction.
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#55
   def scheduled_task_count; end
 
-  # Returns the value of attribute synchronous.
+  # Whether or not a value of 0 for :max_queue option means the queue must perform direct hand-off or rather unbounded queue.
+  #
+  # @return [true, false]
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#42
   def synchronous; end
@@ -8977,18 +9063,29 @@ class Concurrent::RubyThreadPoolExecutor < ::Concurrent::RubyExecutorService
   def ns_worker_died(worker); end
 end
 
+# Default maximum number of threads that will be created in the pool.
+#
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#15
 Concurrent::RubyThreadPoolExecutor::DEFAULT_MAX_POOL_SIZE = T.let(T.unsafe(nil), Integer)
 
+# Default maximum number of tasks that may be added to the task queue.
+#
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#21
 Concurrent::RubyThreadPoolExecutor::DEFAULT_MAX_QUEUE_SIZE = T.let(T.unsafe(nil), Integer)
 
+# Default minimum number of threads that will be retained in the pool.
+#
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#18
 Concurrent::RubyThreadPoolExecutor::DEFAULT_MIN_POOL_SIZE = T.let(T.unsafe(nil), Integer)
 
+# Default value of the :synchronous option.
+#
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#27
 Concurrent::RubyThreadPoolExecutor::DEFAULT_SYNCHRONOUS = T.let(T.unsafe(nil), FalseClass)
 
+# Default maximum number of seconds a thread in the pool may remain idle
+# before being reclaimed.
+#
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/ruby_thread_pool_executor.rb#24
 Concurrent::RubyThreadPoolExecutor::DEFAULT_THREAD_IDLETIMEOUT = T.let(T.unsafe(nil), Integer)
 
@@ -9387,8 +9484,12 @@ module Concurrent::SerialExecutorService
   include ::Concurrent::Concern::Logging
   include ::Concurrent::ExecutorService
 
+  # Does this executor guarantee serialization of its operations?
+  #
   # @note Always returns `true`
-  # @return [Boolean]
+  # @return [Boolean] True if the executor guarantees that all operations
+  #   will be post in the order they are received and no two operations may
+  #   occur simultaneously. Else false.
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/serial_executor_service.rb#30
   def serialized?; end
@@ -9452,8 +9553,6 @@ class Concurrent::SerializedExecution::Job < ::Struct
   #
   # @param value [Object] the value to set the attribute args to.
   # @return [Object] the newly set value
-  #
-  # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/serialized_execution.rb#16
   def args=(_); end
 
   # Returns the value of attribute block
@@ -9465,8 +9564,6 @@ class Concurrent::SerializedExecution::Job < ::Struct
   #
   # @param value [Object] the value to set the attribute block to.
   # @return [Object] the newly set value
-  #
-  # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/serialized_execution.rb#16
   def block=(_); end
 
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/serialized_execution.rb#17
@@ -9481,13 +9578,12 @@ class Concurrent::SerializedExecution::Job < ::Struct
   #
   # @param value [Object] the value to set the attribute executor to.
   # @return [Object] the newly set value
-  #
-  # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/serialized_execution.rb#16
   def executor=(_); end
 
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -9553,44 +9649,127 @@ Concurrent::SetImplementation = Concurrent::CRubySet
 module Concurrent::SettableStruct
   include ::Concurrent::Synchronization::AbstractStruct
 
+  # Equality
+  #
+  # @return [Boolean] true if other has the same struct subclass and has
+  #   equal member values (according to `Object#==`)
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/settable_struct.rb#50
   def ==(other); end
 
+  # Attribute Reference
+  #
+  # @param member [Symbol, String, Integer] the string or symbol name of the member
+  #   for which to obtain the value or the member's index
+  # @raise [NameError] if the member does not exist
+  # @raise [IndexError] if the index is out of range.
+  # @return [Object] the value of the given struct member or the member at the given index.
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/settable_struct.rb#45
   def [](member); end
 
+  # Attribute Assignment
+  #
+  # Sets the value of the given struct member or the member at the given index.
+  #
+  # @param member [Symbol, String, Integer] the string or symbol name of the member
+  #   for which to obtain the value or the member's index
+  # @raise [NameError] if the name does not exist
+  # @raise [IndexError] if the index is out of range.
   # @raise [Concurrent::ImmutabilityError] if the given member has already been set
+  # @return [Object] the value of the given struct member or the member at the given index.
   #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/settable_struct.rb#75
   def []=(member, value); end
 
+  # Yields the value of each struct member in order. If no block is given
+  # an enumerator is returned.
+  #
+  # @yield the operation to be performed on each struct member
+  # @yieldparam value [Object] each struct value (in order)
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/settable_struct.rb#55
   def each(&block); end
 
+  # Yields the name and value of each struct member in order. If no block is
+  # given an enumerator is returned.
+  #
+  # @yield the operation to be performed on each struct member/value pair
+  # @yieldparam member [Object] each struct member (in order)
+  # @yieldparam value [Object] each struct value (in order)
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/settable_struct.rb#61
   def each_pair(&block); end
 
+  # Describe the contents of this struct in a string.
+  #
+  # @return [String] the contents of this struct in a string
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/settable_struct.rb#29
   def inspect; end
 
+  # Returns a new struct containing the contents of `other` and the contents
+  # of `self`. If no block is specified, the value for entries with duplicate
+  # keys will be that of `other`. Otherwise the value for each duplicate key
+  # is determined by calling the block with the key, its value in `self` and
+  # its value in `other`.
+  #
+  # @param other [Hash] the hash from which to set the new values
+  # @raise [ArgumentError] of given a member that is not defined in the struct
+  # @return [Synchronization::AbstractStruct] a new struct with the new values
+  # @yield an options block for resolving duplicate keys
+  # @yieldparam member [String, Symbol] the name of the member which is duplicated
+  # @yieldparam selfvalue [Object] the value of the member in `self`
+  # @yieldparam othervalue [Object] the value of the member in `other`
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/settable_struct.rb#35
   def merge(other, &block); end
 
+  # Yields each member value from the struct to the block and returns an Array
+  # containing the member values from the struct for which the given block
+  # returns a true value (equivalent to `Enumerable#select`).
+  #
+  # @return [Array] an array containing each value for which the block returns true
+  # @yield the operation to be performed on each struct member
+  # @yieldparam value [Object] each struct value (in order)
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/settable_struct.rb#67
   def select(&block); end
 
+  # Returns the values for this struct as an Array.
+  #
+  # @return [Array] the values for this struct
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/settable_struct.rb#18
   def to_a; end
 
+  # Returns a hash containing the names and values for the struct’s members.
+  #
+  # @return [Hash] the names and values for the struct’s members
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/settable_struct.rb#40
   def to_h; end
 
+  # Describe the contents of this struct in a string.
+  #
+  # @return [String] the contents of this struct in a string
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/settable_struct.rb#29
   def to_s; end
 
+  # Returns the values for this struct as an Array.
+  #
+  # @return [Array] the values for this struct
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/settable_struct.rb#18
   def values; end
 
+  # Returns the struct member values for each selector as an Array.
+  #
+  # A selector may be either an Integer offset or a Range of offsets (as in `Array#values_at`).
+  #
+  # @param indexes [Fixnum, Range] the index(es) from which to obatin the values (in order)
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/settable_struct.rb#24
   def values_at(*indexes); end
 
@@ -9600,6 +9779,36 @@ module Concurrent::SettableStruct
   def initialize_copy(original); end
 
   class << self
+    # Factory for creating new struct classes.
+    #
+    # ```
+    # new([class_name] [, member_name]+>) -> StructClass click to toggle source
+    # new([class_name] [, member_name]+>) {|StructClass| block } -> StructClass
+    # new(value, ...) -> obj
+    # StructClass[value, ...] -> obj
+    # ```
+    #
+    # The first two forms are used to create a new struct subclass `class_name`
+    # that can contain a value for each   member_name . This subclass can be
+    # used to create instances of the structure like any other  Class .
+    #
+    # If the `class_name` is omitted an anonymous struct class will be created.
+    # Otherwise, the name of this struct will appear as a constant in the struct class,
+    # so it must be unique for all structs under this base class and must start with a
+    # capital letter. Assigning a struct class to a constant also gives the class
+    # the name of the constant.
+    #
+    # If a block is given it will be evaluated in the context of `StructClass`, passing
+    # the created class as a parameter. This is the recommended way to customize a struct.
+    # Subclassing an anonymous struct creates an extra anonymous class that will never be used.
+    #
+    # The last two forms create a new instance of a struct subclass. The number of value
+    # parameters must be less than or equal to the number of attributes defined for the
+    # struct. Unset parameters default to nil. Passing more parameters than number of attributes
+    # will raise an `ArgumentError`.
+    #
+    # @see http://ruby-doc.org/core/Struct.html#method-c-new Ruby standard library `Struct#new`
+    #
     # source://concurrent-ruby//lib/concurrent-ruby/concurrent/settable_struct.rb#105
     def new(*args, &block); end
   end
@@ -9873,36 +10082,102 @@ module Concurrent::Synchronization::AbstractStruct
 
   protected
 
+  # Yields the value of each struct member in order. If no block is given
+  # an enumerator is returned.
+  #
+  # @yield the operation to be performed on each struct member
+  # @yieldparam value [Object] each struct value (in order)
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/abstract_struct.rb#82
   def ns_each; end
 
+  # Yields the name and value of each struct member in order. If no block is
+  # given an enumerator is returned.
+  #
+  # @yield the operation to be performed on each struct member/value pair
+  # @yieldparam member [Object] each struct member (in order)
+  # @yieldparam value [Object] each struct value (in order)
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/abstract_struct.rb#89
   def ns_each_pair; end
 
+  # Equality
+  #
+  # @return [Boolean] true if other has the same struct subclass and has
+  #   equal member values (according to `Object#==`)
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/abstract_struct.rb#75
   def ns_equality(other); end
 
+  # Attribute Reference
+  #
+  # @param member [Symbol, String, Integer] the string or symbol name of the member
+  #   for which to obtain the value or the member's index
+  # @raise [NameError] if the member does not exist
+  # @raise [IndexError] if the index is out of range.
+  # @return [Object] the value of the given struct member or the member at the given index.
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/abstract_struct.rb#59
   def ns_get(member); end
 
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/abstract_struct.rb#119
   def ns_initialize_copy; end
 
+  # Describe the contents of this struct in a string.
+  #
+  # @return [String] the contents of this struct in a string
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/abstract_struct.rb#105
   def ns_inspect; end
 
+  # Returns a new struct containing the contents of `other` and the contents
+  # of `self`. If no block is specified, the value for entries with duplicate
+  # keys will be that of `other`. Otherwise the value for each duplicate key
+  # is determined by calling the block with the key, its value in `self` and
+  # its value in `other`.
+  #
+  # @param other [Hash] the hash from which to set the new values
+  # @raise [ArgumentError] of given a member that is not defined in the struct
+  # @return [Synchronization::AbstractStruct] a new struct with the new values
+  # @yield an options block for resolving duplicate keys
+  # @yieldparam member [String, Symbol] the name of the member which is duplicated
+  # @yieldparam selfvalue [Object] the value of the member in `self`
+  # @yieldparam othervalue [Object] the value of the member in `other`
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/abstract_struct.rb#114
   def ns_merge(other, &block); end
 
+  # Yields each member value from the struct to the block and returns an Array
+  # containing the member values from the struct for which the given block
+  # returns a true value (equivalent to `Enumerable#select`).
+  #
+  # @return [Array] an array containing each value for which the block returns true
+  # @yield the operation to be performed on each struct member
+  # @yieldparam value [Object] each struct value (in order)
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/abstract_struct.rb#98
   def ns_select; end
 
+  # Returns a hash containing the names and values for the struct’s members.
+  #
+  # @return [Hash] the names and values for the struct’s members
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/abstract_struct.rb#52
   def ns_to_h; end
 
+  # Returns the values for this struct as an Array.
+  #
+  # @return [Array] the values for this struct
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/abstract_struct.rb#38
   def ns_values; end
 
+  # Returns the struct member values for each selector as an Array.
+  #
+  # A selector may be either an Integer offset or a Range of offsets (as in `Array#values_at`).
+  #
+  # @param indexes [Fixnum, Range] the index(es) from which to obatin the values (in order)
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/abstract_struct.rb#45
   def ns_values_at(indexes); end
 
@@ -10309,8 +10584,25 @@ end
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/synchronization/volatile.rb#23
 Concurrent::Synchronization::Volatile = Concurrent::Synchronization::MriAttrVolatile
 
+# This class provides a trivial way to synchronize all calls to a given object
+# by wrapping it with a `Delegator` that performs `Monitor#enter/exit` calls
+# around the delegated `#send`. Example:
+#
+#   array = [] # not thread-safe on many impls
+#   array = SynchronizedDelegator.new([]) # thread-safe
+#
+# A simple `Monitor` provides a very coarse-grained way to synchronize a given
+# object, in that it will cause synchronization for methods that have no need
+# for it, but this is a trivial way to get thread-safety where none may exist
+# currently on some implementations.
+#
+# This class is currently being considered for inclusion into stdlib, via
+# https://bugs.ruby-lang.org/issues/8556
+#
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/thread_safe/synchronized_delegator.rb#23
 class Concurrent::SynchronizedDelegator < ::SimpleDelegator
+  # @return [SynchronizedDelegator] a new instance of SynchronizedDelegator
+  #
   # source://concurrent-ruby//lib/concurrent-ruby/concurrent/thread_safe/synchronized_delegator.rb#33
   def initialize(obj); end
 
@@ -10493,6 +10785,57 @@ Concurrent::ThreadLocalVarImplementation = Concurrent::RubyThreadLocalVar
 # > [FixedThreadPool] (fixed size thread pool) and [SingleThreadExecutor] (single
 # > background thread), that preconfigure settings for the most common usage
 # > scenarios.
+#
+# **Thread Pool Options**
+#
+# Thread pools support several configuration options:
+#
+# * `idletime`: The number of seconds that a thread may be idle before being reclaimed.
+# * `name`: The name of the executor (optional). Printed in the executor's `#to_s` output and
+#   a `<name>-worker-<id>` name is given to its threads if supported by used Ruby
+#   implementation. `<id>` is uniq for each thread.
+# * `max_queue`: The maximum number of tasks that may be waiting in the work queue at
+#   any one time. When the queue size reaches `max_queue` and no new threads can be created,
+#   subsequent tasks will be rejected in accordance with the configured `fallback_policy`.
+# * `auto_terminate`: When true (default), the threads started will be marked as daemon.
+# * `fallback_policy`: The policy defining how rejected tasks are handled.
+#
+# Three fallback policies are supported:
+#
+# * `:abort`: Raise a `RejectedExecutionError` exception and discard the task.
+# * `:discard`: Discard the task and return false.
+# * `:caller_runs`: Execute the task on the calling thread.
+#
+# **Shutting Down Thread Pools**
+#
+# Killing a thread pool while tasks are still being processed, either by calling
+# the `#kill` method or at application exit, will have unpredictable results. There
+# is no way for the thread pool to know what resources are being used by the
+# in-progress tasks. When those tasks are killed the impact on those resources
+# cannot be predicted. The *best* practice is to explicitly shutdown all thread
+# pools using the provided methods:
+#
+# * Call `#shutdown` to initiate an orderly termination of all in-progress tasks
+# * Call `#wait_for_termination` with an appropriate timeout interval an allow
+#   the orderly shutdown to complete
+# * Call `#kill` *only when* the thread pool fails to shutdown in the allotted time
+#
+# On some runtime platforms (most notably the JVM) the application will not
+# exit until all thread pools have been shutdown. To prevent applications from
+# "hanging" on exit, all threads can be marked as daemon according to the
+# `:auto_terminate` option.
+#
+# ```ruby
+# pool1 = Concurrent::FixedThreadPool.new(5) # threads will be marked as daemon
+# pool2 = Concurrent::FixedThreadPool.new(5, auto_terminate: false) # mark threads as non-daemon
+# ```
+#
+# @note Failure to properly shutdown a thread pool can lead to unpredictable results.
+#   Please read *Shutting Down Thread Pools* for more information.
+# @see http://docs.oracle.com/javase/tutorial/essential/concurrency/pools.html Java Tutorials: Thread Pools
+# @see http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Executors.html Java Executors class
+# @see http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html Java ExecutorService interface
+# @see https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html#setDaemon-boolean-
 #
 # source://concurrent-ruby//lib/concurrent-ruby/concurrent/executor/thread_pool_executor.rb#56
 class Concurrent::ThreadPoolExecutor < ::Concurrent::RubyThreadPoolExecutor; end
@@ -10924,8 +11267,6 @@ class Concurrent::Transaction::OpenEntry < ::Struct
   #
   # @param value [Object] the value to set the attribute modified to.
   # @return [Object] the newly set value
-  #
-  # source://concurrent-ruby//lib/concurrent-ruby/concurrent/tvar.rb#156
   def modified=(_); end
 
   # Returns the value of attribute value
@@ -10937,13 +11278,12 @@ class Concurrent::Transaction::OpenEntry < ::Struct
   #
   # @param value [Object] the value to set the attribute value to.
   # @return [Object] the newly set value
-  #
-  # source://concurrent-ruby//lib/concurrent-ruby/concurrent/tvar.rb#156
   def value=(_); end
 
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end

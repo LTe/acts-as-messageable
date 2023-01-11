@@ -1165,6 +1165,9 @@ class Rake::FileList
   def inspect(*args, &block); end
 
   # source://rake//lib/rake/file_list.rb#77
+  def intersect?(*args, &block); end
+
+  # source://rake//lib/rake/file_list.rb#77
   def intersection(*args, &block); end
 
   # Lie about our class.
@@ -2091,7 +2094,7 @@ class Rake::PseudoStatus
   def to_i; end
 end
 
-# source://rdoc/6.4.0/lib/rdoc/task.rb#326
+# source://rdoc/6.4.0/rdoc/task.rb#326
 Rake::RDocTask = RDoc::Task
 
 # Error indicating a recursion overflow error in task selection.

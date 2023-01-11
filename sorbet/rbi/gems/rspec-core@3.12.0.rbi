@@ -313,8 +313,6 @@ class RSpec::Core::Bisect::ExampleSetDescriptor < ::Struct
   #
   # @param value [Object] the value to set the attribute all_example_ids to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/bisect/utilities.rb#5
   def all_example_ids=(_); end
 
   # Returns the value of attribute failed_example_ids
@@ -326,13 +324,12 @@ class RSpec::Core::Bisect::ExampleSetDescriptor < ::Struct
   #
   # @param value [Object] the value to set the attribute failed_example_ids to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/bisect/utilities.rb#5
   def failed_example_ids=(_); end
 
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -3390,6 +3387,9 @@ class RSpec::Core::Example::Procsy
   def <<(*a, &b); end
 
   # source://rspec-core//lib/rspec/core/example.rb#346
+  def ==(*a, &b); end
+
+  # source://rspec-core//lib/rspec/core/example.rb#346
   def ===(*a, &b); end
 
   # source://rspec-core//lib/rspec/core/example.rb#346
@@ -3429,6 +3429,9 @@ class RSpec::Core::Example::Procsy
 
   # source://rspec-core//lib/rspec/core/example.rb#339
   def duplicate_with(*a, &b); end
+
+  # source://rspec-core//lib/rspec/core/example.rb#346
+  def eql?(*a, &b); end
 
   # The {Example} instance.
   #
@@ -3589,7 +3592,7 @@ class RSpec::Core::ExampleGroup
   private
 
   # source://rspec-core//lib/rspec/core/example_group.rb#758
-  def method_missing(name, *args); end
+  def method_missing(name, *args, **_arg2); end
 
   class << self
     # Adds an example to the example group
@@ -5140,13 +5143,12 @@ class RSpec::Core::Formatters::DeprecationFormatter::GeneratedDeprecationMessage
   #
   # @param value [Object] the value to set the attribute type to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/formatters/deprecation_formatter.rb#94
   def type=(_); end
 
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -5225,8 +5227,6 @@ class RSpec::Core::Formatters::DeprecationFormatter::SpecifiedDeprecationMessage
   #
   # @param value [Object] the value to set the attribute type to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/formatters/deprecation_formatter.rb#66
   def type=(_); end
 
   private
@@ -5240,6 +5240,7 @@ class RSpec::Core::Formatters::DeprecationFormatter::SpecifiedDeprecationMessage
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -6347,9 +6348,6 @@ module RSpec::Core::HashImitatable
   def include?(*args, &block); end
 
   # source://rspec-core//lib/rspec/core/metadata.rb#367
-  def index(*args, &block); end
-
-  # source://rspec-core//lib/rspec/core/metadata.rb#367
   def inject(*args, &block); end
 
   # source://rspec-core//lib/rspec/core/metadata.rb#367
@@ -7149,8 +7147,6 @@ class RSpec::Core::Hooks::Hook < ::Struct
   #
   # @param value [Object] the value to set the attribute block to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/hooks.rb#360
   def block=(_); end
 
   # Returns the value of attribute options
@@ -7162,13 +7158,12 @@ class RSpec::Core::Hooks::Hook < ::Struct
   #
   # @param value [Object] the value to set the attribute options to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/hooks.rb#360
   def options=(_); end
 
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -7360,8 +7355,6 @@ class RSpec::Core::Invocations::PrintHelp < ::Struct
   #
   # @param value [Object] the value to set the attribute hidden_options to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/invocations.rb#78
   def hidden_options=(_); end
 
   # Returns the value of attribute parser
@@ -7373,13 +7366,12 @@ class RSpec::Core::Invocations::PrintHelp < ::Struct
   #
   # @param value [Object] the value to set the attribute parser to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/invocations.rb#78
   def parser=(_); end
 
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -8271,8 +8263,6 @@ class RSpec::Core::Notifications::DeprecationNotification < ::Struct
   #
   # @param value [String] the value to set the attribute call_site to.
   # @return [String] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#491
   def call_site=(_); end
 
   # A custom message about the deprecation (alias of
@@ -8286,8 +8276,6 @@ class RSpec::Core::Notifications::DeprecationNotification < ::Struct
   #
   # @param value [String] the value to set the attribute deprecated to.
   # @return [String] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#491
   def deprecated=(_); end
 
   # A custom message about the deprecation
@@ -8299,8 +8287,6 @@ class RSpec::Core::Notifications::DeprecationNotification < ::Struct
   #
   # @param value [String] the value to set the attribute message to.
   # @return [String] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#491
   def message=(_); end
 
   # An optional replacement for the deprecation
@@ -8312,8 +8298,6 @@ class RSpec::Core::Notifications::DeprecationNotification < ::Struct
   #
   # @param value [String] the value to set the attribute replacement to.
   # @return [String] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#491
   def replacement=(_); end
 
   class << self
@@ -8327,6 +8311,7 @@ class RSpec::Core::Notifications::DeprecationNotification < ::Struct
     def from_hash(data); end
 
     def inspect; end
+    def keyword_init?; end
     def members; end
 
     private
@@ -8356,8 +8341,6 @@ class RSpec::Core::Notifications::ExampleNotification < ::Struct
   #
   # @param value [RSpec::Core::Example] the value to set the attribute example to.
   # @return [RSpec::Core::Example] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#38
   def example=(_); end
 
   class << self
@@ -8369,6 +8352,7 @@ class RSpec::Core::Notifications::ExampleNotification < ::Struct
     def for(example); end
 
     def inspect; end
+    def keyword_init?; end
     def members; end
 
     private
@@ -8538,13 +8522,12 @@ class RSpec::Core::Notifications::GroupNotification < ::Struct
   #
   # @param value [RSpec::Core::ExampleGroup] the value to set the attribute group to.
   # @return [RSpec::Core::ExampleGroup] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#256
   def group=(_); end
 
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -8566,13 +8549,12 @@ class RSpec::Core::Notifications::MessageNotification < ::Struct
   #
   # @param value [String] the value to set the attribute message to.
   # @return [String] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#262
   def message=(_); end
 
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -8695,8 +8677,6 @@ class RSpec::Core::Notifications::SeedNotification < ::Struct
   #
   # @param value [Fixnum] the value to set the attribute seed to.
   # @return [Fixnum] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#269
   def seed=(_); end
 
   # @api
@@ -8709,8 +8689,6 @@ class RSpec::Core::Notifications::SeedNotification < ::Struct
   #
   # @param value [Boolean] the value to set the attribute used to.
   # @return [Boolean] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#269
   def used=(_); end
 
   private
@@ -8723,6 +8701,7 @@ class RSpec::Core::Notifications::SeedNotification < ::Struct
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -8762,8 +8741,6 @@ class RSpec::Core::Notifications::StartNotification < ::Struct
   #
   # @param value [Fixnum] the value to set the attribute count to.
   # @return [Fixnum] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#26
   def count=(_); end
 
   # the number of seconds taken to boot RSpec
@@ -8777,13 +8754,12 @@ class RSpec::Core::Notifications::StartNotification < ::Struct
   #
   # @param value [Float] the value to set the attribute load_time to.
   # @return [Float] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#26
   def load_time=(_); end
 
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -8838,8 +8814,6 @@ class RSpec::Core::Notifications::SummaryNotification < ::Struct
   #
   # @param value [Float] the value to set the attribute duration to.
   # @return [Float] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#298
   def duration=(_); end
 
   # the number of errors that
@@ -8855,8 +8829,6 @@ class RSpec::Core::Notifications::SummaryNotification < ::Struct
   #
   # @param value [Integer] the value to set the attribute errors_outside_of_examples_count to.
   # @return [Integer] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#298
   def errors_outside_of_examples_count=(_); end
 
   # @api
@@ -8874,8 +8846,6 @@ class RSpec::Core::Notifications::SummaryNotification < ::Struct
   #
   # @param value [Array<RSpec::Core::Example>] the value to set the attribute examples to.
   # @return [Array<RSpec::Core::Example>] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#298
   def examples=(_); end
 
   # the failed examples
@@ -8887,8 +8857,6 @@ class RSpec::Core::Notifications::SummaryNotification < ::Struct
   #
   # @param value [Array<RSpec::Core::Example>] the value to set the attribute failed_examples to.
   # @return [Array<RSpec::Core::Example>] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#298
   def failed_examples=(_); end
 
   # @api
@@ -8926,8 +8894,6 @@ class RSpec::Core::Notifications::SummaryNotification < ::Struct
   #
   # @param value [Float] the value to set the attribute load_time to.
   # @return [Float] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#298
   def load_time=(_); end
 
   # @api
@@ -8945,8 +8911,6 @@ class RSpec::Core::Notifications::SummaryNotification < ::Struct
   #
   # @param value [Array<RSpec::Core::Example>] the value to set the attribute pending_examples to.
   # @return [Array<RSpec::Core::Example>] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/notifications.rb#298
   def pending_examples=(_); end
 
   # @api
@@ -8966,6 +8930,7 @@ class RSpec::Core::Notifications::SummaryNotification < ::Struct
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -9152,12 +9117,6 @@ class RSpec::Core::OutputWrapper
   def binmode?(*args, &block); end
 
   # source://rspec-core//lib/rspec/core/output_wrapper.rb#23
-  def bytes(*args, &block); end
-
-  # source://rspec-core//lib/rspec/core/output_wrapper.rb#23
-  def chars(*args, &block); end
-
-  # source://rspec-core//lib/rspec/core/output_wrapper.rb#23
   def close(*args, &block); end
 
   # source://rspec-core//lib/rspec/core/output_wrapper.rb#23
@@ -9174,9 +9133,6 @@ class RSpec::Core::OutputWrapper
 
   # source://rspec-core//lib/rspec/core/output_wrapper.rb#23
   def closed?(*args, &block); end
-
-  # source://rspec-core//lib/rspec/core/output_wrapper.rb#23
-  def codepoints(*args, &block); end
 
   # source://rspec-core//lib/rspec/core/output_wrapper.rb#23
   def each(*args, &block); end
@@ -9243,9 +9199,6 @@ class RSpec::Core::OutputWrapper
 
   # source://rspec-core//lib/rspec/core/output_wrapper.rb#23
   def lineno=(*args, &block); end
-
-  # source://rspec-core//lib/rspec/core/output_wrapper.rb#23
-  def lines(*args, &block); end
 
   # source://rspec-core//lib/rspec/core/output_wrapper.rb#17
   def method_missing(name, *args, &block); end
@@ -9384,6 +9337,9 @@ class RSpec::Core::OutputWrapper
 
   # source://rspec-core//lib/rspec/core/output_wrapper.rb#23
   def wait(*args, &block); end
+
+  # source://rspec-core//lib/rspec/core/output_wrapper.rb#23
+  def wait_priority(*args, &block); end
 
   # source://rspec-core//lib/rspec/core/output_wrapper.rb#23
   def wait_readable(*args, &block); end
@@ -10099,8 +10055,6 @@ class RSpec::Core::SharedContext::Recording < ::Struct
   #
   # @param value [Object] the value to set the attribute args to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/shared_context.rb#33
   def args=(_); end
 
   # Returns the value of attribute block
@@ -10112,8 +10066,6 @@ class RSpec::Core::SharedContext::Recording < ::Struct
   #
   # @param value [Object] the value to set the attribute block to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/shared_context.rb#33
   def block=(_); end
 
   # Returns the value of attribute method_name
@@ -10125,8 +10077,6 @@ class RSpec::Core::SharedContext::Recording < ::Struct
   #
   # @param value [Object] the value to set the attribute method_name to.
   # @return [Object] the newly set value
-  #
-  # source://rspec-core//lib/rspec/core/shared_context.rb#33
   def method_name=(_); end
 
   # source://rspec-core//lib/rspec/core/shared_context.rb#34
@@ -10135,6 +10085,7 @@ class RSpec::Core::SharedContext::Recording < ::Struct
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end
@@ -10472,7 +10423,7 @@ end
 # source://rspec-core//lib/rspec/core.rb#174
 class RSpec::Core::Time
   class << self
-    def now(*_arg0); end
+    def now(in: T.unsafe(nil)); end
   end
 end
 
@@ -10843,5 +10794,5 @@ RSpec::MODULES_TO_AUTOLOAD = T.let(T.unsafe(nil), Hash)
 
 # @private
 #
-# source://tapioca/0.10.3/lib/tapioca/runtime/reflection.rb#39
+# source://rspec-core//lib/rspec/core/shared_context.rb#54
 RSpec::SharedContext = RSpec::Core::SharedContext
