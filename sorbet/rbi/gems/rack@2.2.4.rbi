@@ -404,7 +404,7 @@ class Rack::BodyProxy
   # Delegate missing methods to the wrapped body.
   #
   # source://rack//lib/rack/body_proxy.rb#40
-  def method_missing(method_name, *args, &block); end
+  def method_missing(method_name, *args, **_arg2, &block); end
 
   private
 
@@ -542,7 +542,7 @@ class Rack::Builder
   # referenced in the application if required.
   #
   # source://rack//lib/rack/builder.rb#153
-  def use(middleware, *args, &block); end
+  def use(middleware, *args, **_arg2, &block); end
 
   # Takes a lambda or block that is used to warm-up the application. This block is called
   # before the Rack application is returned by to_app.
@@ -1348,7 +1348,7 @@ class Rack::Events::EventedBodyProxy < ::Rack::BodyProxy
   def response; end
 end
 
-# source://tapioca/0.10.3/lib/tapioca/runtime/reflection.rb#39
+# source://rack//lib/rack/file.rb#6
 Rack::File = Rack::Files
 
 # Rack::Files serves files below the +root+ directory given, according to the
@@ -1753,32 +1753,32 @@ class Rack::Lint::HijackWrapper
   # source://rack//lib/rack/lint.rb#547
   def initialize(io); end
 
-  # source://forwardable/1.3.1/forwardable.rb#226
-  def close(*args, &block); end
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def close(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.1/forwardable.rb#226
-  def close_read(*args, &block); end
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def close_read(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.1/forwardable.rb#226
-  def close_write(*args, &block); end
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def close_write(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.1/forwardable.rb#226
-  def closed?(*args, &block); end
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def closed?(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.1/forwardable.rb#226
-  def flush(*args, &block); end
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def flush(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.1/forwardable.rb#226
-  def read(*args, &block); end
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def read(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.1/forwardable.rb#226
-  def read_nonblock(*args, &block); end
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def read_nonblock(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.1/forwardable.rb#226
-  def write(*args, &block); end
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def write(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.1/forwardable.rb#226
-  def write_nonblock(*args, &block); end
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def write_nonblock(*args, **_arg1, &block); end
 end
 
 # source://rack//lib/rack/lint.rb#540
@@ -2453,8 +2453,6 @@ class Rack::Multipart::Parser::MultipartInfo < ::Struct
   #
   # @param value [Object] the value to set the attribute params to.
   # @return [Object] the newly set value
-  #
-  # source://rack//lib/rack/multipart/parser.rb#53
   def params=(_); end
 
   # Returns the value of attribute tmp_files
@@ -2466,13 +2464,12 @@ class Rack::Multipart::Parser::MultipartInfo < ::Struct
   #
   # @param value [Object] the value to set the attribute tmp_files to.
   # @return [Object] the newly set value
-  #
-  # source://rack//lib/rack/multipart/parser.rb#53
   def tmp_files=(_); end
 
   class << self
     def [](*_arg0); end
     def inspect; end
+    def keyword_init?; end
     def members; end
     def new(*_arg0); end
   end

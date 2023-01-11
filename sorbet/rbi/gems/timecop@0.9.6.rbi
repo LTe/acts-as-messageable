@@ -44,6 +44,9 @@ Date::DATE_FORMATS = T.let(T.unsafe(nil), Hash)
 # source://activesupport/7.0.4/lib/active_support/core_ext/date/deprecated_conversions.rb#6
 Date::NOT_SET = T.let(T.unsafe(nil), Object)
 
+# source://date/3.2.2/date.rb#7
+Date::VERSION = T.let(T.unsafe(nil), String)
+
 # source://timecop//lib/timecop/time_extensions.rb#113
 class DateTime < ::Date
   class << self
@@ -79,10 +82,10 @@ class Time
     def mock_time; end
 
     # source://timecop//lib/timecop/time_extensions.rb#21
-    def new(*args); end
+    def new(*args, **_arg1); end
 
     # source://timecop//lib/timecop/time_extensions.rb#21
-    def new_with_mock_time(*args); end
+    def new_with_mock_time(*args, **_arg1); end
 
     # source://timecop//lib/timecop/time_extensions.rb#13
     def now; end

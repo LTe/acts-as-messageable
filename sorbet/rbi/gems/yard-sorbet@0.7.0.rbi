@@ -8,6 +8,8 @@ class YARD::Handlers::Ruby::ClassHandler < ::YARD::Handlers::Ruby::Base
   include ::YARDSorbet::Handlers::StructClassHandler
 end
 
+# Types are documentation
+#
 # source://yard-sorbet//lib/yard-sorbet/version.rb#5
 module YARDSorbet; end
 
@@ -347,7 +349,7 @@ class YARDSorbet::TStructProp < ::T::Struct
   const :types, T::Array[::String]
 
   class << self
-    # source://sorbet-runtime/0.5.10588/lib/types/struct.rb#13
+    # source://sorbet-runtime/0.5.10616/lib/types/struct.rb#13
     def inherited(s); end
   end
 end
