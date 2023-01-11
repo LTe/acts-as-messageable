@@ -14,7 +14,7 @@
 #   conn = Faraday.new "http://faraday.com"
 #   conn.get '/'
 #
-# source://faraday//lib/faraday.rb#16
+# source://faraday//lib/faraday/connection.rb#1
 module Faraday
   class << self
     # source://faraday//lib/faraday.rb#231
@@ -141,6 +141,337 @@ module Faraday
     def method_missing(name, *args, &block); end
   end
 end
+
+# Public: Connection objects manage the default properties and the middleware
+# stack for fulfilling an HTTP request.
+#
+# Examples
+#
+#   conn = Faraday::Connection.new 'http://sushi.com'
+#
+#   # GET http://sushi.com/nigiri
+#   conn.get 'nigiri'
+#   # => #<Faraday::Response>
+#
+# source://faraday//lib/faraday/connection.rb#13
+class Faraday::Connection
+  extend ::Forwardable
+
+  # Public: Initializes a new Faraday::Connection.
+  #
+  # url     - URI or String base URL to use as a prefix for all
+  #           requests (optional).
+  # options - Hash or Faraday::ConnectionOptions.
+  #           :url     - URI or String base URL (default: "http:/").
+  #           :params  - Hash of URI query unencoded key/value pairs.
+  #           :headers - Hash of unencoded HTTP header key/value pairs.
+  #           :request - Hash of request options.
+  #           :ssl     - Hash of SSL options.
+  #           :proxy   - URI, String or Hash of HTTP proxy options
+  #                     (default: "http_proxy" environment variable).
+  #                     :uri      - URI or String
+  #                     :user     - String (optional)
+  #                     :password - String (optional)
+  #
+  # @return [Connection] a new instance of Connection
+  # @yield [_self]
+  # @yieldparam _self [Faraday::Connection] the object that the method was called on
+  #
+  # source://faraday//lib/faraday/connection.rb#57
+  def initialize(url = T.unsafe(nil), options = T.unsafe(nil)); end
+
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def adapter(*args, **_arg1, &block); end
+
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def app(*args, **_arg1, &block); end
+
+  # Public: Sets up a custom Authorization header.
+  #
+  # type  - The String authorization type.
+  # token - The String or Hash token.  A String value is taken literally, and
+  #         a Hash is encoded into comma separated key/value pairs.
+  #
+  # Examples
+  #
+  #   conn.authorization :Bearer, 'mF_9.B5f-4.1JqM'
+  #   conn.headers['Authorization']
+  #   # => "Bearer mF_9.B5f-4.1JqM"
+  #
+  #   conn.authorization :Token, :token => 'abcdef', :foo => 'bar'
+  #   conn.headers['Authorization']
+  #   # => "Token token=\"abcdef\",
+  #               foo=\"bar\""
+  #
+  # Returns nothing.
+  #
+  # source://faraday//lib/faraday/connection.rb#234
+  def authorization(type, token); end
+
+  # Public: Sets up the Authorization header with these credentials, encoded
+  # with base64.
+  #
+  # login - The authentication login.
+  # pass  - The authentication password.
+  #
+  # Examples
+  #
+  #   conn.basic_auth 'Aladdin', 'open sesame'
+  #   conn.headers['Authorization']
+  #   # => "Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ=="
+  #
+  # Returns nothing.
+  #
+  # source://faraday//lib/faraday/connection.rb#195
+  def basic_auth(login, pass); end
+
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def build(*args, **_arg1, &block); end
+
+  # Internal: Build an absolute URL based on url_prefix.
+  #
+  # url    - A String or URI-like object
+  # params - A Faraday::Utils::ParamsHash to replace the query values
+  #          of the resulting url (default: nil).
+  #
+  # Returns the resulting URI instance.
+  #
+  # source://faraday//lib/faraday/connection.rb#399
+  def build_exclusive_url(url = T.unsafe(nil), params = T.unsafe(nil), params_encoder = T.unsafe(nil)); end
+
+  # Creates and configures the request object.
+  #
+  # Returns the new Request.
+  #
+  # source://faraday//lib/faraday/connection.rb#383
+  def build_request(method); end
+
+  # Public: Takes a relative url for a request and combines it with the defaults
+  # set on the connection instance.
+  #
+  #   conn = Faraday::Connection.new { ... }
+  #   conn.url_prefix = "https://sushi.com/api?token=abc"
+  #   conn.scheme      # => https
+  #   conn.path_prefix # => "/api"
+  #
+  #   conn.build_url("nigiri?page=2")      # => https://sushi.com/api/nigiri?token=abc&page=2
+  #   conn.build_url("nigiri", :page => 2) # => https://sushi.com/api/nigiri?token=abc&page=2
+  #
+  # source://faraday//lib/faraday/connection.rb#347
+  def build_url(url = T.unsafe(nil), extra_params = T.unsafe(nil)); end
+
+  # Public: Returns the Faraday::Builder for this Connection.
+  #
+  # source://faraday//lib/faraday/connection.rb#28
+  def builder; end
+
+  # Internal: Traverse the middleware stack in search of a
+  # parallel-capable adapter.
+  #
+  # Yields in case of not found.
+  #
+  # Returns a parallel manager or nil if not found.
+  #
+  # source://faraday//lib/faraday/connection.rb#244
+  def default_parallel_manager; end
+
+  # Public: Sets the default parallel manager for this connection.
+  #
+  # source://faraday//lib/faraday/connection.rb#40
+  def default_parallel_manager=(_arg0); end
+
+  # source://faraday//lib/faraday/connection.rb#139
+  def delete(url = T.unsafe(nil), params = T.unsafe(nil), headers = T.unsafe(nil)); end
+
+  # Internal: Creates a duplicate of this Faraday::Connection.
+  #
+  # Returns a Faraday::Connection.
+  #
+  # source://faraday//lib/faraday/connection.rb#415
+  def dup; end
+
+  # source://faraday//lib/faraday/connection.rb#139
+  def get(url = T.unsafe(nil), params = T.unsafe(nil), headers = T.unsafe(nil)); end
+
+  # source://faraday//lib/faraday/connection.rb#139
+  def head(url = T.unsafe(nil), params = T.unsafe(nil), headers = T.unsafe(nil)); end
+
+  # Public: Returns a Hash of unencoded HTTP header key/value pairs.
+  #
+  # source://faraday//lib/faraday/connection.rb#21
+  def headers; end
+
+  # Public: Sets the Hash of unencoded HTTP header key/value pairs.
+  #
+  # source://faraday//lib/faraday/connection.rb#102
+  def headers=(hash); end
+
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def host(*args, **_arg1, &block); end
+
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def host=(*args, **_arg1, &block); end
+
+  # Public: Sets up the parallel manager to make a set of requests.
+  #
+  # manager - The parallel manager that this Connection's Adapter uses.
+  #
+  # Yields a block to execute multiple requests.
+  # Returns nothing.
+  #
+  # source://faraday//lib/faraday/connection.rb#271
+  def in_parallel(manager = T.unsafe(nil)); end
+
+  # Public: Determine if this Faraday::Connection can make parallel requests.
+  #
+  # Returns true or false.
+  #
+  # @return [Boolean]
+  #
+  # source://faraday//lib/faraday/connection.rb#261
+  def in_parallel?; end
+
+  # Public: Returns a Hash of the request options.
+  #
+  # source://faraday//lib/faraday/connection.rb#31
+  def options; end
+
+  # Public: Returns the parallel manager for this Connection.
+  #
+  # source://faraday//lib/faraday/connection.rb#37
+  def parallel_manager; end
+
+  # Public: Returns a Hash of URI query unencoded key/value pairs.
+  #
+  # source://faraday//lib/faraday/connection.rb#18
+  def params; end
+
+  # Public: Sets the Hash of URI query unencoded key/value pairs.
+  #
+  # source://faraday//lib/faraday/connection.rb#97
+  def params=(hash); end
+
+  # source://faraday//lib/faraday/connection.rb#176
+  def patch(url = T.unsafe(nil), body = T.unsafe(nil), headers = T.unsafe(nil), &block); end
+
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def path_prefix(*args, **_arg1, &block); end
+
+  # Public: Sets the path prefix and ensures that it always has a leading
+  # slash.
+  #
+  # value - A String.
+  #
+  # Returns the new String path prefix.
+  #
+  # source://faraday//lib/faraday/connection.rb#329
+  def path_prefix=(value); end
+
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def port(*args, **_arg1, &block); end
+
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def port=(*args, **_arg1, &block); end
+
+  # source://faraday//lib/faraday/connection.rb#176
+  def post(url = T.unsafe(nil), body = T.unsafe(nil), headers = T.unsafe(nil), &block); end
+
+  # Public: Gets or Sets the Hash proxy options.
+  #
+  # source://faraday//lib/faraday/connection.rb#284
+  def proxy(arg = T.unsafe(nil)); end
+
+  # source://faraday//lib/faraday/connection.rb#176
+  def put(url = T.unsafe(nil), body = T.unsafe(nil), headers = T.unsafe(nil), &block); end
+
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def request(*args, **_arg1, &block); end
+
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def response(*args, **_arg1, &block); end
+
+  # Builds and runs the Faraday::Request.
+  #
+  # method  - The Symbol HTTP method.
+  # url     - The String or URI to access.
+  # body    - The String body
+  # headers - Hash of unencoded HTTP header key/value pairs.
+  #
+  # Returns a Faraday::Response.
+  #
+  # source://faraday//lib/faraday/connection.rb#365
+  def run_request(method, url, body, headers); end
+
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def scheme(*args, **_arg1, &block); end
+
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def scheme=(*args, **_arg1, &block); end
+
+  # source://faraday//lib/faraday/connection.rb#431
+  def set_authorization_header(header_type, *args); end
+
+  # Public: Returns a Hash of the SSL options.
+  #
+  # source://faraday//lib/faraday/connection.rb#34
+  def ssl; end
+
+  # Public: Sets up the Authorization header with the given token.
+  #
+  # token   - The String token.
+  # options - Optional Hash of extra token options.
+  #
+  # Examples
+  #
+  #   conn.token_auth 'abcdef', :foo => 'bar'
+  #   conn.headers['Authorization']
+  #   # => "Token token=\"abcdef\",
+  #               foo=\"bar\""
+  #
+  # Returns nothing.
+  #
+  # source://faraday//lib/faraday/connection.rb#212
+  def token_auth(token, options = T.unsafe(nil)); end
+
+  # Public: Returns a URI with the prefix used for all requests from this
+  # Connection.  This includes a default host name, scheme, port, and path.
+  #
+  # source://faraday//lib/faraday/connection.rb#25
+  def url_prefix; end
+
+  # Public: Parses the giving url with URI and stores the individual
+  # components in this connection.  These components serve as defaults for
+  # requests made by this connection.
+  #
+  # url - A String or URI.
+  #
+  # Examples
+  #
+  #   conn = Faraday::Connection.new { ... }
+  #   conn.url_prefix = "https://sushi.com/api"
+  #   conn.scheme      # => https
+  #   conn.path_prefix # => "/api"
+  #
+  #   conn.get("nigiri?page=2") # accesses https://sushi.com/api/nigiri
+  #
+  # Returns the parsed URI from teh given input..
+  #
+  # source://faraday//lib/faraday/connection.rb#308
+  def url_prefix=(url, encoder = T.unsafe(nil)); end
+
+  # source://forwardable/1.3.2/forwardable.rb#229
+  def use(*args, **_arg1, &block); end
+
+  # Internal: Yields username and password extracted from a URI if they both exist.
+  #
+  # source://faraday//lib/faraday/connection.rb#425
+  def with_uri_credentials(uri); end
+end
+
+# A Set of allowed HTTP verbs.
+#
+# source://faraday//lib/faraday/connection.rb#15
+Faraday::Connection::METHODS = T.let(T.unsafe(nil), Set)
 
 # Public: Adds the ability for other modules to register and lookup
 # middleware classes.
