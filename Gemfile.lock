@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/Shopify/tapioca.git
-  revision: 7eaa3fa72e531dc0c01217e2691af0bbf0f6b2d7
+  revision: 1b485c6ce47fb840554fbb864d58ade1e2be20df
   specs:
     tapioca (0.10.5)
       bundler (>= 1.17.3)
@@ -239,7 +239,7 @@ GEM
     webrick (1.7.0)
     yard (0.9.28)
       webrick (~> 1.7.0)
-    yard-sorbet (0.7.0)
+    yard-sorbet (0.8.0)
       sorbet-runtime (>= 0.5)
       yard (>= 0.9)
     zeitwerk (2.6.6)
