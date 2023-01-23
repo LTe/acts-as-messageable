@@ -10270,48 +10270,48 @@ class ActiveSupport::TestCase < ::Minitest::Test
   # source://activesupport//lib/active_support/callbacks.rb#940
   def _teardown_callbacks; end
 
-  # source://minitest/5.16.3/lib/minitest/assertions.rb#709
+  # source://minitest/5.17.0/lib/minitest/assertions.rb#709
   def assert_no_match(matcher, obj, msg = T.unsafe(nil)); end
 
-  # source://minitest/5.16.3/lib/minitest/assertions.rb#638
+  # source://minitest/5.17.0/lib/minitest/assertions.rb#638
   def assert_not_empty(obj, msg = T.unsafe(nil)); end
 
-  # source://minitest/5.16.3/lib/minitest/assertions.rb#649
+  # source://minitest/5.17.0/lib/minitest/assertions.rb#649
   def assert_not_equal(exp, act, msg = T.unsafe(nil)); end
 
-  # source://minitest/5.16.3/lib/minitest/assertions.rb#661
+  # source://minitest/5.17.0/lib/minitest/assertions.rb#661
   def assert_not_in_delta(exp, act, delta = T.unsafe(nil), msg = T.unsafe(nil)); end
 
-  # source://minitest/5.16.3/lib/minitest/assertions.rb#673
+  # source://minitest/5.17.0/lib/minitest/assertions.rb#673
   def assert_not_in_epsilon(a, b, epsilon = T.unsafe(nil), msg = T.unsafe(nil)); end
 
-  # source://minitest/5.16.3/lib/minitest/assertions.rb#680
+  # source://minitest/5.17.0/lib/minitest/assertions.rb#680
   def assert_not_includes(collection, obj, msg = T.unsafe(nil)); end
 
-  # source://minitest/5.16.3/lib/minitest/assertions.rb#691
+  # source://minitest/5.17.0/lib/minitest/assertions.rb#691
   def assert_not_instance_of(cls, obj, msg = T.unsafe(nil)); end
 
-  # source://minitest/5.16.3/lib/minitest/assertions.rb#701
+  # source://minitest/5.17.0/lib/minitest/assertions.rb#701
   def assert_not_kind_of(cls, obj, msg = T.unsafe(nil)); end
 
-  # source://minitest/5.16.3/lib/minitest/assertions.rb#719
+  # source://minitest/5.17.0/lib/minitest/assertions.rb#719
   def assert_not_nil(obj, msg = T.unsafe(nil)); end
 
-  # source://minitest/5.16.3/lib/minitest/assertions.rb#730
+  # source://minitest/5.17.0/lib/minitest/assertions.rb#730
   def assert_not_operator(o1, op, o2 = T.unsafe(nil), msg = T.unsafe(nil)); end
 
-  # source://minitest/5.16.3/lib/minitest/assertions.rb#753
+  # source://minitest/5.17.0/lib/minitest/assertions.rb#753
   def assert_not_predicate(o1, op, msg = T.unsafe(nil)); end
 
-  # source://minitest/5.16.3/lib/minitest/assertions.rb#761
+  # source://minitest/5.17.0/lib/minitest/assertions.rb#761
   def assert_not_respond_to(obj, meth, msg = T.unsafe(nil)); end
 
-  # source://minitest/5.16.3/lib/minitest/assertions.rb#770
+  # source://minitest/5.17.0/lib/minitest/assertions.rb#770
   def assert_not_same(exp, act, msg = T.unsafe(nil)); end
 
   # test/unit backwards compatibility methods
   #
-  # source://minitest/5.16.3/lib/minitest/assertions.rb#396
+  # source://minitest/5.17.0/lib/minitest/assertions.rb#396
   def assert_raise(*exp); end
 
   # source://activesupport//lib/active_support/testing/file_fixtures.rb#20
@@ -10323,7 +10323,7 @@ class ActiveSupport::TestCase < ::Minitest::Test
   # source://activesupport//lib/active_support/test_case.rb#151
   def inspect; end
 
-  # source://minitest/5.16.3/lib/minitest.rb#304
+  # source://minitest/5.17.0/lib/minitest.rb#304
   def method_name; end
 
   class << self
@@ -12381,7 +12381,7 @@ ActiveSupport::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActiveSupport::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
 
 # source://activesupport//lib/active_support/gem_version.rb#13
-ActiveSupport::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
+ActiveSupport::VERSION::PRE = T.let(T.unsafe(nil), String)
 
 # source://activesupport//lib/active_support/gem_version.rb#15
 ActiveSupport::VERSION::STRING = T.let(T.unsafe(nil), String)
@@ -17485,6 +17485,8 @@ module Process
   end
 end
 
+Process::CLOCK_TAI = T.let(T.unsafe(nil), Integer)
+
 # source://activesupport//lib/active_support/core_ext/object/json.rb#234
 class Process::Status
   # source://activesupport//lib/active_support/core_ext/object/json.rb#235
@@ -18246,7 +18248,7 @@ end
 
 Struct::Group = Etc::Group
 
-# source://nokogiri/1.13.10/lib/nokogiri/html4/element_description_defaults.rb#11
+# source://nokogiri/1.14.0/lib/nokogiri/html4/element_description_defaults.rb#11
 Struct::HTMLElementDescription = Struct
 
 Struct::Passwd = Etc::Passwd

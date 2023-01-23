@@ -30,13 +30,13 @@ class Module
   def prepend_features(constant); end
 end
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/module/delegation.rb#13
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/module/delegation.rb#13
 Module::DELEGATION_RESERVED_KEYWORDS = T.let(T.unsafe(nil), Array)
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/module/delegation.rb#14
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/module/delegation.rb#14
 Module::DELEGATION_RESERVED_METHOD_NAMES = T.let(T.unsafe(nil), Set)
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/module/delegation.rb#10
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/module/delegation.rb#10
 Module::RUBY_RESERVED_KEYWORDS = T.let(T.unsafe(nil), Array)
 
 # source://tapioca//lib/tapioca/rbi_ext/model.rb#4
@@ -194,7 +194,7 @@ class RBI::TypedParam < ::T::Struct
   const :type, ::String
 
   class << self
-    # source://sorbet-runtime/0.5.10616/lib/types/struct.rb#13
+    # source://sorbet-runtime/0.5.10626/lib/types/struct.rb#13
     def inherited(s); end
   end
 end
@@ -241,7 +241,7 @@ module T::Private::Methods
   end
 end
 
-# source://sorbet-runtime/0.5.10616/lib/types/private/methods/_methods.rb#29
+# source://sorbet-runtime/0.5.10626/lib/types/private/methods/_methods.rb#29
 T::Private::Methods::ARG_NOT_PROVIDED = T.let(T.unsafe(nil), Object)
 
 class T::Private::Methods::Declaration < ::Struct
@@ -298,7 +298,7 @@ class T::Private::Methods::DeclarationBlock < ::Struct
   end
 end
 
-# source://sorbet-runtime/0.5.10616/lib/types/private/methods/_methods.rb#30
+# source://sorbet-runtime/0.5.10626/lib/types/private/methods/_methods.rb#30
 T::Private::Methods::PROC_TYPE = T.let(T.unsafe(nil), Object)
 
 # source://tapioca//lib/tapioca/sorbet_ext/proc_bind_patch.rb#29
@@ -307,7 +307,7 @@ module T::Private::Methods::ProcBindPatch
   def finalize_proc(decl); end
 end
 
-# source://sorbet-runtime/0.5.10616/lib/types/private/methods/_methods.rb#581
+# source://sorbet-runtime/0.5.10626/lib/types/private/methods/_methods.rb#586
 T::Private::Methods::TOP_SELF = T.let(T.unsafe(nil), Object)
 
 class T::Types::Proc < ::T::Types::Base; end
@@ -641,11 +641,11 @@ class Tapioca::Commands::Configure < ::Tapioca::Commands::CommandWithoutTracker
 
   private
 
-  # source://tapioca//lib/tapioca/commands/configure.rb#78
+  # source://tapioca//lib/tapioca/commands/configure.rb#79
   sig { void }
   def create_binstub; end
 
-  # source://tapioca//lib/tapioca/commands/configure.rb#68
+  # source://tapioca//lib/tapioca/commands/configure.rb#69
   sig { void }
   def create_post_require; end
 
@@ -653,15 +653,15 @@ class Tapioca::Commands::Configure < ::Tapioca::Commands::CommandWithoutTracker
   sig { void }
   def create_sorbet_config; end
 
-  # source://tapioca//lib/tapioca/commands/configure.rb#49
+  # source://tapioca//lib/tapioca/commands/configure.rb#50
   sig { void }
   def create_tapioca_config; end
 
-  # source://tapioca//lib/tapioca/commands/configure.rb#91
+  # source://tapioca//lib/tapioca/commands/configure.rb#92
   sig { returns(::Bundler::Installer) }
   def installer; end
 
-  # source://tapioca//lib/tapioca/commands/configure.rb#96
+  # source://tapioca//lib/tapioca/commands/configure.rb#97
   sig { returns(T.any(::Bundler::StubSpecification, ::Gem::Specification)) }
   def spec; end
 end
@@ -983,7 +983,7 @@ class Tapioca::ConfigHelper::ConfigError < ::T::Struct
   const :message_parts, T::Array[::Tapioca::ConfigHelper::ConfigErrorMessagePart]
 
   class << self
-    # source://sorbet-runtime/0.5.10616/lib/types/struct.rb#13
+    # source://sorbet-runtime/0.5.10626/lib/types/struct.rb#13
     def inherited(s); end
   end
 end
@@ -994,7 +994,7 @@ class Tapioca::ConfigHelper::ConfigErrorMessagePart < ::T::Struct
   const :colors, T::Array[::Symbol]
 
   class << self
-    # source://sorbet-runtime/0.5.10616/lib/types/struct.rb#13
+    # source://sorbet-runtime/0.5.10626/lib/types/struct.rb#13
     def inherited(s); end
   end
 end
@@ -1281,7 +1281,7 @@ end
 class Tapioca::Gem::Event
   abstract!
 
-  # source://sorbet-runtime/0.5.10616/lib/types/private/abstract/declare.rb#37
+  # source://sorbet-runtime/0.5.10626/lib/types/private/abstract/declare.rb#37
   def initialize(*args, **_arg1, &blk); end
 end
 
@@ -2182,7 +2182,7 @@ class Tapioca::Loaders::Loader
 
   abstract!
 
-  # source://sorbet-runtime/0.5.10616/lib/types/private/abstract/declare.rb#37
+  # source://sorbet-runtime/0.5.10626/lib/types/private/abstract/declare.rb#37
   def initialize(*args, **_arg1, &blk); end
 
   # @abstract

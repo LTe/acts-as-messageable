@@ -37,7 +37,7 @@ class Array
   def place(*values); end
 end
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/array/deprecated_conversions.rb#4
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/array/deprecated_conversions.rb#4
 Array::NOT_SET = T.let(T.unsafe(nil), Object)
 
 # source://yard//lib/yard/core_ext/file.rb#4
@@ -481,13 +481,13 @@ class Module
   def class_name; end
 end
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/module/delegation.rb#13
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/module/delegation.rb#13
 Module::DELEGATION_RESERVED_KEYWORDS = T.let(T.unsafe(nil), Array)
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/module/delegation.rb#14
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/module/delegation.rb#14
 Module::DELEGATION_RESERVED_METHOD_NAMES = T.let(T.unsafe(nil), Set)
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/module/delegation.rb#10
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/module/delegation.rb#10
 Module::RUBY_RESERVED_KEYWORDS = T.let(T.unsafe(nil), Array)
 
 class Object < ::BasicObject
@@ -517,19 +517,19 @@ RUBY19 = T.let(T.unsafe(nil), TrueClass)
 #
 # source://yard//lib/yard/server/rack_adapter.rb#85
 class Rack::Request
-  # source://rack/2.2.4/lib/rack/request.rb#26
+  # source://rack/2.2.6.2/lib/rack/request.rb#26
   def initialize(env); end
 
-  # source://rack/2.2.4/lib/rack/request.rb#40
+  # source://rack/2.2.6.2/lib/rack/request.rb#40
   def delete_param(k); end
 
-  # source://rack/2.2.4/lib/rack/request.rb#31
+  # source://rack/2.2.6.2/lib/rack/request.rb#31
   def params; end
 
-  # source://rack/2.2.4/lib/rack/request.rb#31
+  # source://rack/2.2.6.2/lib/rack/request.rb#31
   def query; end
 
-  # source://rack/2.2.4/lib/rack/request.rb#35
+  # source://rack/2.2.6.2/lib/rack/request.rb#35
   def update_param(k, v); end
 
   # Returns the value of attribute version_supplied.
@@ -550,18 +550,18 @@ class Rack::Request
   def xhr?; end
 
   class << self
-    # source://rack/2.2.4/lib/rack/request.rb#16
+    # source://rack/2.2.6.2/lib/rack/request.rb#16
     def ip_filter; end
 
-    # source://rack/2.2.4/lib/rack/request.rb#16
+    # source://rack/2.2.6.2/lib/rack/request.rb#16
     def ip_filter=(_arg0); end
   end
 end
 
-# source://rack/2.2.4/lib/rack/request.rb#20
+# source://rack/2.2.6.2/lib/rack/request.rb#20
 Rack::Request::ALLOWED_SCHEMES = T.let(T.unsafe(nil), Array)
 
-# source://rack/2.2.4/lib/rack/request.rb#21
+# source://rack/2.2.6.2/lib/rack/request.rb#21
 Rack::Request::SCHEME_WHITELIST = T.let(T.unsafe(nil), Array)
 
 # source://yard//lib/yard/core_ext/string.rb#2
@@ -578,10 +578,10 @@ class String
   def shell_split; end
 end
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/object/blank.rb#104
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/object/blank.rb#104
 String::BLANK_RE = T.let(T.unsafe(nil), Regexp)
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/object/blank.rb#105
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/object/blank.rb#105
 String::ENCODED_BLANKS = T.let(T.unsafe(nil), Concurrent::Map)
 
 # A subclass of Hash where all keys are converted into Symbols, and
@@ -7514,13 +7514,13 @@ class YARD::I18n::Text
   #   block separated by one or more empty lines. Empty line is a
   #   line that contains only zero or more whitespaces. It may
   #   called many times.
-  # @yieldparam text [String] the text of extracted paragraph.
-  # @yieldparam start_line_no [Integer] the start line number of
-  #   extracted paragraph.
   # @yieldparam name [String] the name of extracted attribute.
   # @yieldparam value [String] the value of extracted attribute.
   # @yieldparam line_no [Integer] the defined line number of extracted
   #   attribute.
+  # @yieldparam text [String] the text of extracted paragraph.
+  # @yieldparam start_line_no [Integer] the start line number of
+  #   extracted paragraph.
   #
   # source://yard//lib/yard/i18n/text.rb#35
   def extract_messages; end
@@ -11232,10 +11232,6 @@ class YARD::Parser::SourceParser
     # To register a callback that is called before the entire list of files
     # is processed, see {before_parse_list}.
     #
-    # @example Cancel parsing of any test_*.rb files
-    #   SourceParser.before_parse_file do |parser|
-    #   return false if parser.file =~ /^test_.+\.rb$/
-    #   end
     # @example Installing a simple callback
     #   SourceParser.before_parse_file do |parser|
     #   puts "I'm parsing #{parser.file}"
@@ -11245,9 +11241,13 @@ class YARD::Parser::SourceParser
     #   "I'm parsing lib/foo.rb"
     #   "I'm parsing lib/foo_bar.rb"
     #   "I'm parsing lib/last_file.rb"
+    # @example Cancel parsing of any test_*.rb files
+    #   SourceParser.before_parse_file do |parser|
+    #   return false if parser.file =~ /^test_.+\.rb$/
+    #   end
     # @return [Proc] the yielded block
-    # @see before_parse_list
     # @see after_parse_file
+    # @see before_parse_list
     # @since 0.7.0
     # @yield [parser] the yielded block is called once before each
     #   file that is parsed. This might happen many times for a single
@@ -11271,6 +11271,12 @@ class YARD::Parser::SourceParser
     # via {parse}. The block passed to this method will be called on
     # subsequent parse calls.
     #
+    # @example Installing a simple callback
+    #   SourceParser.before_parse_list do |files, globals|
+    #   puts "Starting to parse..."
+    #   end
+    #   YARD.parse('lib/**/*.rb')
+    #   # prints "Starting to parse..."
     # @example Setting global state
     #   SourceParser.before_parse_list do |files, globals|
     #   globals.method_count = 0
@@ -11284,12 +11290,6 @@ class YARD::Parser::SourceParser
     #   end
     #   YARD.parse
     #   # Prints: "Found 37 methods"
-    # @example Installing a simple callback
-    #   SourceParser.before_parse_list do |files, globals|
-    #   puts "Starting to parse..."
-    #   end
-    #   YARD.parse('lib/**/*.rb')
-    #   # prints "Starting to parse..."
     # @example Using a global callback to cancel parsing
     #   SourceParser.before_parse_list do |files, globals|
     #   return false if files.include?('foo.rb')
@@ -11298,8 +11298,8 @@ class YARD::Parser::SourceParser
     #   YARD.parse(['foo.rb', 'bar.rb']) # callback cancels this method
     #   YARD.parse('bar.rb') # parses normally
     # @return [Proc] the yielded block
-    # @see before_parse_file
     # @see after_parse_list
+    # @see before_parse_file
     # @since 0.7.0
     # @yield [files, globals] the yielded block is called once before
     #   parsing all files
@@ -11826,22 +11826,22 @@ module YARD::Registry
     # Attempts to find an object by name starting at +namespace+, performing
     # a lookup similar to Ruby's method of resolving a constant in a namespace.
     #
+    # @example Looks for instance method #reverse starting from A::B::C
+    #   Registry.resolve(P("A::B::C"), "#reverse")
     # @example Looks for a constant in the root namespace
     #   Registry.resolve(nil, 'CONSTANT')
     # @example Looks for a class method respecting the inheritance tree
     #   Registry.resolve(myclass, 'mymethod', true)
-    # @example Looks for instance method #reverse starting from A::B::C
-    #   Registry.resolve(P("A::B::C"), "#reverse")
     # @example Looks for a constant but returns a proxy if not found
     #   Registry.resolve(P('A::B::C'), 'D', false, true) # => #<yardoc proxy A::B::C::D>
     # @example Looks for a complex path from a namespace
     #   Registry.resolve(P('A::B'), 'B::D') # => #<yardoc class A::B::D>
-    # @param inheritance [Boolean] Follows inheritance chain (mixins, superclass)
-    #   when performing name resolution if set to +true+.
     # @param namespace [CodeObjects::NamespaceObject, nil] the starting namespace
     #   (module or class). If +nil+ or +:root+, starts from the {root} object.
     # @param name [String, Symbol] the name (or complex path) to look for from
     #   +namespace+.
+    # @param inheritance [Boolean] Follows inheritance chain (mixins, superclass)
+    #   when performing name resolution if set to +true+.
     # @param proxy_fallback [Boolean] If +true+, returns a proxy representing
     #   the unresolved path (namespace + name) if no object is found.
     # @param type [Symbol, nil] the {CodeObjects::Base#type} that the resolved
@@ -11999,12 +11999,12 @@ class YARD::RegistryResolver
   # object can be returned if the lookup fails for future resolution. The
   # proxy will be type hinted with the +type+ used in the original lookup.
   #
-  # @example A lookup on a method through the inheritance tree
-  #   resolver.lookup_by_math("A::B#foo", inheritance: true)
   # @example A lookup from root
   #   resolver.lookup_by_path("A::B::C")
   # @example A lookup from the A::B namespace
   #   resolver.lookup_by_path("C", namespace: P("A::B"))
+  # @example A lookup on a method through the inheritance tree
+  #   resolver.lookup_by_math("A::B#foo", inheritance: true)
   # @option opts
   # @option opts
   # @option opts

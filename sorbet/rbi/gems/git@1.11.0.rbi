@@ -50,16 +50,16 @@ module Git
 
     # Clone a repository into an empty or newly created directory
     #
+    # @example Clone into the default directory `ruby-git`
+    #   git = Git.clone('https://github.com/ruby-git/ruby-git.git')
+    # @example Clone and then checkout the `development` branch
+    #   git = Git.clone('https://github.com/ruby-git/ruby-git.git', branch: 'development')
     # @example Clone into a different directory `my-ruby-git`
     #   git = Git.clone('https://github.com/ruby-git/ruby-git.git', 'my-ruby-git')
     #   # or:
     #   git = Git.clone('https://github.com/ruby-git/ruby-git.git', path: 'my-ruby-git')
-    # @example Clone into the default directory `ruby-git`
-    #   git = Git.clone('https://github.com/ruby-git/ruby-git.git')
     # @example Create a bare repository in the directory `ruby-git.git`
     #   git = Git.clone('https://github.com/ruby-git/ruby-git.git', bare: true)
-    # @example Clone and then checkout the `development` branch
-    #   git = Git.clone('https://github.com/ruby-git/ruby-git.git', branch: 'development')
     # @option options
     # @option options
     # @option options
@@ -113,12 +113,12 @@ module Git
 
     # Create an empty Git repository or reinitialize an existing Git repository
     #
+    # @example Initialize a repository in the current directory
+    #   git = Git.init
     # @example Initialize a repository in some other directory
     #   git = Git.init '~/code/ruby-git'
     # @example Initialize a bare repository
     #   git = Git.init '~/code/ruby-git.git', bare: true
-    # @example Initialize a repository in the current directory
-    #   git = Git.init
     # @example Initialize a repository in a non-default location (outside of the working copy)
     #   git = Git.init '~/code/ruby-git', repository: '~/code/ruby-git.git'
     # @option options
@@ -163,10 +163,10 @@ module Git
     # If not provided in the options, the library will assume
     # the repository and index are in the default places (`.git/`, `.git/index`).
     #
-    # @example Open a Git working directory in some other directory
-    #   git = Git.open('~/Projects/ruby-git')
     # @example Open the Git working directory in the current directory
     #   git = Git.open
+    # @example Open a Git working directory in some other directory
+    #   git = Git.open('~/Projects/ruby-git')
     # @example Use a logger to see what is going on
     #   logger = Logger.new(STDOUT)
     #   git = Git.open('~/Projects/ruby-git', log: logger)
@@ -667,16 +667,16 @@ class Git::Base
 
     # Clone a repository into an empty or newly created directory
     #
+    # @example Clone into the default directory `ruby-git`
+    #   git = Git.clone('https://github.com/ruby-git/ruby-git.git')
+    # @example Clone and then checkout the `development` branch
+    #   git = Git.clone('https://github.com/ruby-git/ruby-git.git', branch: 'development')
     # @example Clone into a different directory `my-ruby-git`
     #   git = Git.clone('https://github.com/ruby-git/ruby-git.git', 'my-ruby-git')
     #   # or:
     #   git = Git.clone('https://github.com/ruby-git/ruby-git.git', path: 'my-ruby-git')
-    # @example Clone into the default directory `ruby-git`
-    #   git = Git.clone('https://github.com/ruby-git/ruby-git.git')
     # @example Create a bare repository in the directory `ruby-git.git`
     #   git = Git.clone('https://github.com/ruby-git/ruby-git.git', bare: true)
-    # @example Clone and then checkout the `development` branch
-    #   git = Git.clone('https://github.com/ruby-git/ruby-git.git', branch: 'development')
     # @option options
     # @option options
     # @option options
@@ -708,12 +708,12 @@ class Git::Base
 
     # Create an empty Git repository or reinitialize an existing Git repository
     #
+    # @example Initialize a repository in the current directory
+    #   git = Git.init
     # @example Initialize a repository in some other directory
     #   git = Git.init '~/code/ruby-git'
     # @example Initialize a bare repository
     #   git = Git.init '~/code/ruby-git.git', bare: true
-    # @example Initialize a repository in the current directory
-    #   git = Git.init
     # @example Initialize a repository in a non-default location (outside of the working copy)
     #   git = Git.init '~/code/ruby-git', repository: '~/code/ruby-git.git'
     # @option options
@@ -746,10 +746,10 @@ class Git::Base
     # If not provided in the options, the library will assume
     # the repository and index are in the default places (`.git/`, `.git/index`).
     #
-    # @example Open a Git working directory in some other directory
-    #   git = Git.open('~/Projects/ruby-git')
     # @example Open the Git working directory in the current directory
     #   git = Git.open
+    # @example Open a Git working directory in some other directory
+    #   git = Git.open('~/Projects/ruby-git')
     # @example Use a logger to see what is going on
     #   logger = Logger.new(STDOUT)
     #   git = Git.open('~/Projects/ruby-git', log: logger)

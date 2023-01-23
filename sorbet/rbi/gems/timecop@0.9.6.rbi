@@ -38,10 +38,10 @@ class Date
   end
 end
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/date/conversions.rb#9
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/date/conversions.rb#9
 Date::DATE_FORMATS = T.let(T.unsafe(nil), Hash)
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/date/deprecated_conversions.rb#6
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/date/deprecated_conversions.rb#6
 Date::NOT_SET = T.let(T.unsafe(nil), Object)
 
 # source://date/3.2.2/date.rb#7
@@ -70,7 +70,7 @@ class DateTime < ::Date
   end
 end
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/date_time/deprecated_conversions.rb#6
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/date_time/deprecated_conversions.rb#6
 DateTime::NOT_SET = T.let(T.unsafe(nil), Object)
 
 # source://timecop//lib/timecop/time_extensions.rb#4
@@ -95,13 +95,13 @@ class Time
   end
 end
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/time/calculations.rb#14
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/time/calculations.rb#14
 Time::COMMON_YEAR_DAYS_IN_MONTH = T.let(T.unsafe(nil), Array)
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/time/conversions.rb#8
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/time/conversions.rb#8
 Time::DATE_FORMATS = T.let(T.unsafe(nil), Hash)
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/time/deprecated_conversions.rb#6
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/time/deprecated_conversions.rb#6
 Time::NOT_SET = T.let(T.unsafe(nil), Object)
 
 # Timecop

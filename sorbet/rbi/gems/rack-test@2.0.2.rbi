@@ -9,57 +9,57 @@
 # source://rack-test//lib/rack/test/cookie_jar.rb#6
 module Rack
   class << self
-    # source://rack/2.2.4/lib/rack/version.rb#26
+    # source://rack/2.2.6.2/lib/rack/version.rb#26
     def release; end
 
-    # source://rack/2.2.4/lib/rack/version.rb#19
+    # source://rack/2.2.6.2/lib/rack/version.rb#19
     def version; end
   end
 end
 
-# source://rack/2.2.4/lib/rack.rb#29
+# source://rack/2.2.6.2/lib/rack.rb#29
 Rack::CACHE_CONTROL = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#31
+# source://rack/2.2.6.2/lib/rack.rb#31
 Rack::CONTENT_LENGTH = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#32
+# source://rack/2.2.6.2/lib/rack.rb#32
 Rack::CONTENT_TYPE = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#43
+# source://rack/2.2.6.2/lib/rack.rb#43
 Rack::DELETE = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#36
+# source://rack/2.2.6.2/lib/rack.rb#36
 Rack::ETAG = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#30
+# source://rack/2.2.6.2/lib/rack.rb#30
 Rack::EXPIRES = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack/file.rb#6
+# source://rack/2.2.6.2/lib/rack/file.rb#6
 Rack::File = Rack::Files
 
-# source://rack/2.2.4/lib/rack.rb#39
+# source://rack/2.2.6.2/lib/rack.rb#39
 Rack::GET = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#44
+# source://rack/2.2.6.2/lib/rack.rb#44
 Rack::HEAD = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#20
+# source://rack/2.2.6.2/lib/rack.rb#20
 Rack::HTTPS = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#35
+# source://rack/2.2.6.2/lib/rack.rb#35
 Rack::HTTP_COOKIE = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#17
+# source://rack/2.2.6.2/lib/rack.rb#17
 Rack::HTTP_HOST = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#18
+# source://rack/2.2.6.2/lib/rack.rb#18
 Rack::HTTP_PORT = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#19
+# source://rack/2.2.6.2/lib/rack.rb#19
 Rack::HTTP_VERSION = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#46
+# source://rack/2.2.6.2/lib/rack.rb#46
 Rack::LINK = T.let(T.unsafe(nil), String)
 
 # For backwards compatibility with 1.1.0 and below
@@ -67,133 +67,133 @@ Rack::LINK = T.let(T.unsafe(nil), String)
 # source://rack-test//lib/rack/test.rb#413
 Rack::MockSession = Rack::Test::Session
 
-# source://rack/2.2.4/lib/rack.rb#45
+# source://rack/2.2.6.2/lib/rack.rb#45
 Rack::OPTIONS = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#42
+# source://rack/2.2.6.2/lib/rack.rb#42
 Rack::PATCH = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#21
+# source://rack/2.2.6.2/lib/rack.rb#21
 Rack::PATH_INFO = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#40
+# source://rack/2.2.6.2/lib/rack.rb#40
 Rack::POST = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#41
+# source://rack/2.2.6.2/lib/rack.rb#41
 Rack::PUT = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#25
+# source://rack/2.2.6.2/lib/rack.rb#25
 Rack::QUERY_STRING = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#53
+# source://rack/2.2.6.2/lib/rack.rb#53
 Rack::RACK_ERRORS = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#63
+# source://rack/2.2.6.2/lib/rack.rb#63
 Rack::RACK_HIJACK = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#65
+# source://rack/2.2.6.2/lib/rack.rb#65
 Rack::RACK_HIJACK_IO = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#55
+# source://rack/2.2.6.2/lib/rack.rb#55
 Rack::RACK_INPUT = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#64
+# source://rack/2.2.6.2/lib/rack.rb#64
 Rack::RACK_IS_HIJACK = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#54
+# source://rack/2.2.6.2/lib/rack.rb#54
 Rack::RACK_LOGGER = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#76
+# source://rack/2.2.6.2/lib/rack.rb#76
 Rack::RACK_METHODOVERRIDE_ORIGINAL_METHOD = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#67
+# source://rack/2.2.6.2/lib/rack.rb#67
 Rack::RACK_MULTIPART_BUFFER_SIZE = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#68
+# source://rack/2.2.6.2/lib/rack.rb#68
 Rack::RACK_MULTIPART_TEMPFILE_FACTORY = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#60
+# source://rack/2.2.6.2/lib/rack.rb#60
 Rack::RACK_MULTIPROCESS = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#59
+# source://rack/2.2.6.2/lib/rack.rb#59
 Rack::RACK_MULTITHREAD = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#66
+# source://rack/2.2.6.2/lib/rack.rb#66
 Rack::RACK_RECURSIVE_INCLUDE = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#72
+# source://rack/2.2.6.2/lib/rack.rb#72
 Rack::RACK_REQUEST_COOKIE_HASH = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#73
+# source://rack/2.2.6.2/lib/rack.rb#73
 Rack::RACK_REQUEST_COOKIE_STRING = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#70
+# source://rack/2.2.6.2/lib/rack.rb#70
 Rack::RACK_REQUEST_FORM_HASH = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#69
+# source://rack/2.2.6.2/lib/rack.rb#69
 Rack::RACK_REQUEST_FORM_INPUT = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#71
+# source://rack/2.2.6.2/lib/rack.rb#71
 Rack::RACK_REQUEST_FORM_VARS = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#74
+# source://rack/2.2.6.2/lib/rack.rb#74
 Rack::RACK_REQUEST_QUERY_HASH = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#75
+# source://rack/2.2.6.2/lib/rack.rb#75
 Rack::RACK_REQUEST_QUERY_STRING = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#61
+# source://rack/2.2.6.2/lib/rack.rb#61
 Rack::RACK_RUNONCE = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#56
+# source://rack/2.2.6.2/lib/rack.rb#56
 Rack::RACK_SESSION = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#57
+# source://rack/2.2.6.2/lib/rack.rb#57
 Rack::RACK_SESSION_OPTIONS = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#77
+# source://rack/2.2.6.2/lib/rack.rb#77
 Rack::RACK_SESSION_UNPACKED_COOKIE_DATA = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#58
+# source://rack/2.2.6.2/lib/rack.rb#58
 Rack::RACK_SHOWSTATUS_DETAIL = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#52
+# source://rack/2.2.6.2/lib/rack.rb#52
 Rack::RACK_TEMPFILES = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#62
+# source://rack/2.2.6.2/lib/rack.rb#62
 Rack::RACK_URL_SCHEME = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#51
+# source://rack/2.2.6.2/lib/rack.rb#51
 Rack::RACK_VERSION = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack/version.rb#23
+# source://rack/2.2.6.2/lib/rack/version.rb#23
 Rack::RELEASE = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#22
+# source://rack/2.2.6.2/lib/rack.rb#22
 Rack::REQUEST_METHOD = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#23
+# source://rack/2.2.6.2/lib/rack.rb#23
 Rack::REQUEST_PATH = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#24
+# source://rack/2.2.6.2/lib/rack.rb#24
 Rack::SCRIPT_NAME = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#27
+# source://rack/2.2.6.2/lib/rack.rb#27
 Rack::SERVER_NAME = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#28
+# source://rack/2.2.6.2/lib/rack.rb#28
 Rack::SERVER_PORT = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#26
+# source://rack/2.2.6.2/lib/rack.rb#26
 Rack::SERVER_PROTOCOL = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#33
+# source://rack/2.2.6.2/lib/rack.rb#33
 Rack::SET_COOKIE = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#48
+# source://rack/2.2.6.2/lib/rack.rb#48
 Rack::TRACE = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#34
+# source://rack/2.2.6.2/lib/rack.rb#34
 Rack::TRANSFER_ENCODING = T.let(T.unsafe(nil), String)
 
 # source://rack-test//lib/rack/test/cookie_jar.rb#7
@@ -936,8 +936,8 @@ end
 # source://rack-test//lib/rack/test/version.rb#3
 Rack::Test::VERSION = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack.rb#47
+# source://rack/2.2.6.2/lib/rack.rb#47
 Rack::UNLINK = T.let(T.unsafe(nil), String)
 
-# source://rack/2.2.4/lib/rack/version.rb#16
+# source://rack/2.2.6.2/lib/rack/version.rb#16
 Rack::VERSION = T.let(T.unsafe(nil), Array)
