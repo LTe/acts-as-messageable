@@ -117,13 +117,13 @@ class Module
   def rake_extension(method); end
 end
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/module/delegation.rb#13
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/module/delegation.rb#13
 Module::DELEGATION_RESERVED_KEYWORDS = T.let(T.unsafe(nil), Array)
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/module/delegation.rb#14
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/module/delegation.rb#14
 Module::DELEGATION_RESERVED_METHOD_NAMES = T.let(T.unsafe(nil), Set)
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/module/delegation.rb#10
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/module/delegation.rb#10
 Module::RUBY_RESERVED_KEYWORDS = T.let(T.unsafe(nil), Array)
 
 # source://rake//lib/rake.rb#24
@@ -2094,7 +2094,7 @@ class Rake::PseudoStatus
   def to_i; end
 end
 
-# source://rdoc/6.4.0/rdoc/task.rb#326
+# source://rdoc/6.5.0/lib/rdoc/task.rb#326
 Rake::RDocTask = RDoc::Task
 
 # Error indicating a recursion overflow error in task selection.
@@ -2928,6 +2928,8 @@ class Rake::Win32::Win32HomeError < ::RuntimeError; end
 # source://rake//lib/rake.rb#71
 RakeFileUtils = Rake::FileUtilsExt
 
+# HighLine adds #each_line alias to #each when each_line is not available.
+#
 # source://rake//lib/rake/ext/string.rb#4
 class String
   include ::Comparable
@@ -2950,8 +2952,8 @@ class String
   def pathmap_replace(patterns, &block); end
 end
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/object/blank.rb#104
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/object/blank.rb#104
 String::BLANK_RE = T.let(T.unsafe(nil), Regexp)
 
-# source://activesupport/7.0.4/lib/active_support/core_ext/object/blank.rb#105
+# source://activesupport/7.0.4.1/lib/active_support/core_ext/object/blank.rb#105
 String::ENCODED_BLANKS = T.let(T.unsafe(nil), Concurrent::Map)

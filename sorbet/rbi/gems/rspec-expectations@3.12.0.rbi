@@ -7496,19 +7496,19 @@ module RSpec::Matchers::DSL
   # when passed as an argument to another matcher in a composed matcher expression.
   #
   # @example
+  #   RSpec::Matchers.alias_matcher :a_list_that_sums_to, :sum_to
+  #   sum_to(3).description # => "sum to 3"
+  #   a_list_that_sums_to(3).description # => "a list that sums to 3"
+  # @example
   #   RSpec::Matchers.alias_matcher :a_list_sorted_by, :be_sorted_by do |description|
   #   description.sub("be sorted by", "a list sorted by")
   #   end
   #
   #   be_sorted_by(:age).description # => "be sorted by age"
   #   a_list_sorted_by(:age).description # => "a list sorted by age"
-  # @example
-  #   RSpec::Matchers.alias_matcher :a_list_that_sums_to, :sum_to
-  #   sum_to(3).description # => "sum to 3"
-  #   a_list_that_sums_to(3).description # => "a list that sums to 3"
   # @option options
-  # @param old_name [Symbol] the original name for the matcher
   # @param new_name [Symbol] the new name for the matcher
+  # @param old_name [Symbol] the original name for the matcher
   # @param options [Hash] options for the aliased matcher
   # @see RSpec::Matchers
   # @yield [String] optional block that, when given, is used to define the overriden
