@@ -14,7 +14,7 @@ services:
     build:
       context: '.'
       args:
-        - RUBY_VERSION=2.3.8
+        - RUBY_VERSION=2.7
         - GEMFILE=rails_3.2.gemfile
     environment:
       - BUNDLE_GEMFILE=gemfiles/rails_3.2.gemfile
@@ -24,7 +24,7 @@ services:
     build:
       context: '.'
       args:
-        - RUBY_VERSION=2.3.8
+        - RUBY_VERSION=2.7
         - GEMFILE=rails_4.2.gemfile
     volumes:
       - ./:/home/app
@@ -35,7 +35,7 @@ services:
       context: '.'
       args:
         - RUBY_VERSION=2.7
-        - GEMFILE=gemfiles/rails_5.2.gemfile
+        - GEMFILE=rails_5.2.gemfile
     volumes:
       - ./:/home/app
     environment:
@@ -51,11 +51,22 @@ services:
     environment:
       - BUNDLE_GEMFILE=gemfiles/rails_6.0.gemfile
       - RUN_GENERATORS=${RUN_GENERATORS-true}
-  ruby_2.7_rails_master:
+  ruby_3_rails_7.0:
     build:
       context: '.'
       args:
-        - RUBY_VERSION=2.7
+        - RUBY_VERSION=3
+        - GEMFILE=rails_7.0.gemfile
+    volumes:
+      - ./:/home/app
+    environment:
+      - BUNDLE_GEMFILE=gemfiles/rails_6.0.gemfile
+      - RUN_GENERATORS=${RUN_GENERATORS-true}
+  ruby_3_rails_master:
+    build:
+      context: '.'
+      args:
+        - RUBY_VERSION=3
         - GEMFILE=rails_master.gemfile
     volumes:
       - ./:/home/app

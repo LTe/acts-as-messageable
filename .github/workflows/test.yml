@@ -119,7 +119,7 @@ jobs:
             database_name: 'ci_test'
             database_password: "password"
             run_generators: "false"
-          - rvm: 2.7
+          - rvm: 3
             gemfile: gemfiles/rails_7.0.gemfile
             bundler: 'default'
             run_generators: "true"
