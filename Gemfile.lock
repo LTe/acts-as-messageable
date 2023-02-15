@@ -51,7 +51,7 @@ GEM
     commander (4.6.0)
       highline (~> 2.0.0)
     concurrent-ruby (1.2.0)
-    coveralls_reborn (0.26.0)
+    coveralls_reborn (0.27.0)
       simplecov (~> 0.22.0)
       term-ansicolor (~> 1.7)
       thor (~> 1.2)
