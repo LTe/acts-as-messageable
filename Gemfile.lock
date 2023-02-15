@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/Shopify/tapioca.git
-  revision: 790da1f2bdb3d50ab5770ad6cc252090f33b1a11
+  revision: ff060516361bd9ec61956b0b420ca5755c3a50fb
   specs:
     tapioca (0.10.5)
       bundler (>= 1.17.3)
@@ -116,7 +116,7 @@ GEM
       parser
       rainbow (~> 3.0)
       sorbet-runtime (>= 0.5)
-    parser (3.2.0.0)
+    parser (3.2.1.0)
       ast (~> 2.4.1)
     pg (1.4.5)
     polyfill (1.9.0)
