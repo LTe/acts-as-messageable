@@ -7,6 +7,33 @@
 # source://ancestry//lib/ancestry/version.rb#1
 module Ancestry
   class << self
+    # The value changes the default way that ancestry is stored in the database
+    #
+    #    :materialized_path (default and legacy)
+    #
+    #        Ancestry is of the form null (for no ancestors) and 1/2/ for children
+    #
+    #    :materialized_path2 (preferred)
+    #
+    #        Ancestry is of the form '/' (for no ancestors) and '/1/2/' for children
+    #
+    # source://ancestry//lib/ancestry.rb#52
+    def default_ancestry_format; end
+
+    # source://ancestry//lib/ancestry.rb#56
+    def default_ancestry_format=(value); end
+
+    # The value represents the way the id looks for validation
+    #
+    #    '[0-9]+' (default) for integer ids
+    #    '[-A-Fa-f0-9]{36}'    for uuids (though you can find other regular expressions)
+    #
+    # source://ancestry//lib/ancestry.rb#67
+    def default_primary_key_format; end
+
+    # source://ancestry//lib/ancestry.rb#71
+    def default_primary_key_format=(value); end
+
     # The value changes the default way that ancestry is updated for associated records
     #
     #    :ruby (default and legacy value)
@@ -19,10 +46,10 @@ module Ancestry
     #        Child records are updated in sql and callbacks will not get called.
     #        Associated records in memory will have the wrong ancestry value
     #
-    # source://ancestry//lib/ancestry.rb#30
+    # source://ancestry//lib/ancestry.rb#32
     def default_update_strategy; end
 
-    # source://ancestry//lib/ancestry.rb#34
+    # source://ancestry//lib/ancestry.rb#36
     def default_update_strategy=(value); end
   end
 end
@@ -40,23 +67,25 @@ module Ancestry::ClassMethods
   # source://ancestry//lib/ancestry/class_methods.rb#41
   def arrange(options = T.unsafe(nil)); end
 
-  # Arrange array of nodes into a nested hash of the form
-  # {node => children}, where children = {} if the node has no children
+  # arranges array of nodes to a hierarchical hash
+  #
   # If a node's parent is not included, the node will be included as if it is a top level node
   #
-  # source://ancestry//lib/ancestry/class_methods.rb#52
+  # @param nodes [Array[Node]] nodes to be arranged
+  #
+  # source://ancestry//lib/ancestry/class_methods.rb#54
   def arrange_nodes(nodes); end
 
   # Arrangement to nested array for serialization
   # You can also supply your own serialization logic using blocks
   # also allows you to pass the order just as you can pass it to the arrange method
   #
-  # source://ancestry//lib/ancestry/class_methods.rb#66
+  # source://ancestry//lib/ancestry/class_methods.rb#80
   def arrange_serializable(options = T.unsafe(nil), nodes = T.unsafe(nil), &block); end
 
   # Build ancestry from parent ids for migration purposes
   #
-  # source://ancestry//lib/ancestry/class_methods.rb#209
+  # source://ancestry//lib/ancestry/class_methods.rb#215
   def build_ancestry_from_parent_ids!(column = T.unsafe(nil), parent_id = T.unsafe(nil), ancestor_ids = T.unsafe(nil)); end
 
   # Integrity checking
@@ -64,8 +93,15 @@ module Ancestry::ClassMethods
   # just in case, raise an AncestryIntegrityException if issues are detected
   # specify :report => :list to return an array of exceptions or :report => :echo to echo any error messages
   #
-  # source://ancestry//lib/ancestry/class_methods.rb#121
+  # source://ancestry//lib/ancestry/class_methods.rb#127
   def check_ancestry_integrity!(options = T.unsafe(nil)); end
+
+  # convert a hash of the form {node => children} to an array of nodes, child first
+  #
+  # @param arranged [Hash{Node => {Node => {}, Node => {}}}] arranged nodes
+  #
+  # source://ancestry//lib/ancestry/class_methods.rb#69
+  def flatten_arranged_nodes(arranged, nodes = T.unsafe(nil)); end
 
   # Orphan strategy writer
   #
@@ -74,19 +110,19 @@ module Ancestry::ClassMethods
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/class_methods.rb#238
+  # source://ancestry//lib/ancestry/class_methods.rb#244
   def primary_key_is_an_integer?; end
 
   # Rebuild depth cache if it got corrupted or if depth caching was just turned on
   #
   # @raise [Ancestry::AncestryException]
   #
-  # source://ancestry//lib/ancestry/class_methods.rb#221
+  # source://ancestry//lib/ancestry/class_methods.rb#227
   def rebuild_depth_cache!; end
 
   # Integrity restoration
   #
-  # source://ancestry//lib/ancestry/class_methods.rb#169
+  # source://ancestry//lib/ancestry/class_methods.rb#175
   def restore_ancestry_integrity!; end
 
   # Scope on relative depth options
@@ -95,8 +131,9 @@ module Ancestry::ClassMethods
   def scope_depth(depth_options, depth); end
 
   # Pseudo-preordered array of nodes.  Children will always follow parents,
+  # This is deterministic unless the parents are missing *and* a sort block is specified
   #
-  # source://ancestry//lib/ancestry/class_methods.rb#92
+  # source://ancestry//lib/ancestry/class_methods.rb#107
   def sort_by_ancestry(nodes, &block); end
 
   # Fetch tree node if necessary
@@ -104,65 +141,54 @@ module Ancestry::ClassMethods
   # source://ancestry//lib/ancestry/class_methods.rb#4
   def to_node(object); end
 
-  # source://ancestry//lib/ancestry/class_methods.rb#77
+  # source://ancestry//lib/ancestry/class_methods.rb#91
   def tree_view(column, data = T.unsafe(nil)); end
 
   # @yield [self.ancestry_base_class.default_scoped.unscope(:where)]
   #
-  # source://ancestry//lib/ancestry/class_methods.rb#233
+  # source://ancestry//lib/ancestry/class_methods.rb#239
   def unscoped_where; end
 end
 
-# source://ancestry//lib/ancestry/class_methods.rb#237
+# source://ancestry//lib/ancestry/class_methods.rb#243
 Ancestry::ClassMethods::ANCESTRY_UNCAST_TYPES = T.let(T.unsafe(nil), Array)
 
 # source://ancestry//lib/ancestry/has_ancestry.rb#2
 module Ancestry::HasAncestry
-  # source://ancestry//lib/ancestry/has_ancestry.rb#98
+  # source://ancestry//lib/ancestry/has_ancestry.rb#108
   def acts_as_tree(*args); end
 
   # @raise [Ancestry::AncestryException]
   #
   # source://ancestry//lib/ancestry/has_ancestry.rb#3
   def has_ancestry(options = T.unsafe(nil)); end
-
-  private
-
-  # source://ancestry//lib/ancestry/has_ancestry.rb#115
-  def derive_materialized2_pattern(primary_key_format, delimiter = T.unsafe(nil)); end
-
-  # source://ancestry//lib/ancestry/has_ancestry.rb#105
-  def derive_materialized_pattern(primary_key_format, delimiter = T.unsafe(nil)); end
 end
 
 # source://ancestry//lib/ancestry/instance_methods.rb#2
 module Ancestry::InstanceMethods
-  # source://ancestry//lib/ancestry/instance_methods.rb#92
-  def _counter_cache_column; end
-
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#152
+  # source://ancestry//lib/ancestry/instance_methods.rb#148
   def ancestor_of?(node); end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#127
+  # source://ancestry//lib/ancestry/instance_methods.rb#123
   def ancestors(depth_options = T.unsafe(nil)); end
 
   # Ancestors
   #
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#98
+  # source://ancestry//lib/ancestry/instance_methods.rb#94
   def ancestors?; end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#304
+  # source://ancestry//lib/ancestry/instance_methods.rb#300
   def ancestry_callbacks_disabled?; end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#103
+  # source://ancestry//lib/ancestry/instance_methods.rb#99
   def ancestry_changed?; end
 
   # Validate that the ancestors don't include itself
@@ -175,66 +201,66 @@ module Ancestry::InstanceMethods
   # source://ancestry//lib/ancestry/instance_methods.rb#24
   def apply_orphan_strategy; end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#148
+  # source://ancestry//lib/ancestry/instance_methods.rb#144
   def cache_depth; end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#214
+  # source://ancestry//lib/ancestry/instance_methods.rb#210
   def child_ids; end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#228
+  # source://ancestry//lib/ancestry/instance_methods.rb#224
   def child_of?(node); end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#223
+  # source://ancestry//lib/ancestry/instance_methods.rb#219
   def childless?; end
 
   # Children
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#210
+  # source://ancestry//lib/ancestry/instance_methods.rb#206
   def children; end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#218
+  # source://ancestry//lib/ancestry/instance_methods.rb#214
   def children?; end
 
   # source://ancestry//lib/ancestry/instance_methods.rb#68
   def decrease_parent_counter_cache; end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#144
+  # source://ancestry//lib/ancestry/instance_methods.rb#140
   def depth; end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#263
+  # source://ancestry//lib/ancestry/instance_methods.rb#259
   def descendant_ids(depth_options = T.unsafe(nil)); end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#267
+  # source://ancestry//lib/ancestry/instance_methods.rb#263
   def descendant_of?(node); end
 
   # Descendants
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#259
+  # source://ancestry//lib/ancestry/instance_methods.rb#255
   def descendants(depth_options = T.unsafe(nil)); end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#218
+  # source://ancestry//lib/ancestry/instance_methods.rb#214
   def has_children?; end
 
   # Ancestors
   #
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#98
+  # source://ancestry//lib/ancestry/instance_methods.rb#94
   def has_parent?; end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#243
+  # source://ancestry//lib/ancestry/instance_methods.rb#239
   def has_siblings?; end
 
   # Counter Cache
@@ -242,124 +268,124 @@ module Ancestry::InstanceMethods
   # source://ancestry//lib/ancestry/instance_methods.rb#64
   def increase_parent_counter_cache; end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#277
+  # source://ancestry//lib/ancestry/instance_methods.rb#273
   def indirect_ids(depth_options = T.unsafe(nil)); end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#281
+  # source://ancestry//lib/ancestry/instance_methods.rb#277
   def indirect_of?(node); end
 
   # Indirects
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#273
+  # source://ancestry//lib/ancestry/instance_methods.rb#269
   def indirects(depth_options = T.unsafe(nil)); end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#223
+  # source://ancestry//lib/ancestry/instance_methods.rb#219
   def is_childless?; end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#248
+  # source://ancestry//lib/ancestry/instance_methods.rb#244
   def is_only_child?; end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#199
+  # source://ancestry//lib/ancestry/instance_methods.rb#195
   def is_root?; end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#248
+  # source://ancestry//lib/ancestry/instance_methods.rb#244
   def only_child?; end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#173
+  # source://ancestry//lib/ancestry/instance_methods.rb#169
   def parent; end
 
   # currently parent= does not work in after save callbacks
   # assuming that parent hasn't changed
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#160
+  # source://ancestry//lib/ancestry/instance_methods.rb#156
   def parent=(parent); end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#168
+  # source://ancestry//lib/ancestry/instance_methods.rb#164
   def parent_id; end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#164
+  # source://ancestry//lib/ancestry/instance_methods.rb#160
   def parent_id=(new_parent_id); end
 
   # Ancestors
   #
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#98
+  # source://ancestry//lib/ancestry/instance_methods.rb#94
   def parent_id?; end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#181
+  # source://ancestry//lib/ancestry/instance_methods.rb#177
   def parent_of?(node); end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#140
+  # source://ancestry//lib/ancestry/instance_methods.rb#136
   def path(depth_options = T.unsafe(nil)); end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#132
+  # source://ancestry//lib/ancestry/instance_methods.rb#128
   def path_ids; end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#136
-  def path_ids_in_database; end
+  # source://ancestry//lib/ancestry/instance_methods.rb#132
+  def path_ids_before_last_save; end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#191
+  # source://ancestry//lib/ancestry/instance_methods.rb#187
   def root; end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#199
+  # source://ancestry//lib/ancestry/instance_methods.rb#195
   def root?; end
 
   # Root
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#187
+  # source://ancestry//lib/ancestry/instance_methods.rb#183
   def root_id; end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#204
+  # source://ancestry//lib/ancestry/instance_methods.rb#200
   def root_of?(node); end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#110
+  # source://ancestry//lib/ancestry/instance_methods.rb#106
   def sane_ancestor_ids?; end
 
   # NOTE: includes self
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#239
+  # source://ancestry//lib/ancestry/instance_methods.rb#235
   def sibling_ids; end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#253
+  # source://ancestry//lib/ancestry/instance_methods.rb#249
   def sibling_of?(node); end
 
   # Siblings
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#234
+  # source://ancestry//lib/ancestry/instance_methods.rb#230
   def siblings; end
 
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#243
+  # source://ancestry//lib/ancestry/instance_methods.rb#239
   def siblings?; end
 
   # Subtree
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#287
+  # source://ancestry//lib/ancestry/instance_methods.rb#283
   def subtree(depth_options = T.unsafe(nil)); end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#291
+  # source://ancestry//lib/ancestry/instance_methods.rb#287
   def subtree_ids(depth_options = T.unsafe(nil)); end
 
   # Touch each of this record's ancestors (after save)
@@ -367,7 +393,7 @@ module Ancestry::InstanceMethods
   # source://ancestry//lib/ancestry/instance_methods.rb#52
   def touch_ancestors_callback; end
 
-  # Update descendants with new ancestry (before save)
+  # Update descendants with new ancestry (after update)
   #
   # source://ancestry//lib/ancestry/instance_methods.rb#9
   def update_descendants_with_new_ancestry; end
@@ -377,23 +403,26 @@ module Ancestry::InstanceMethods
 
   # Callback disabling
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#297
+  # source://ancestry//lib/ancestry/instance_methods.rb#293
   def without_ancestry_callbacks; end
 
   private
 
   # works with after save context (hence before_last_save)
   #
-  # source://ancestry//lib/ancestry/instance_methods.rb#316
+  # source://ancestry//lib/ancestry/instance_methods.rb#318
   def unscoped_current_and_previous_ancestors; end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#309
+  # source://ancestry//lib/ancestry/instance_methods.rb#305
   def unscoped_descendants; end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#322
+  # source://ancestry//lib/ancestry/instance_methods.rb#311
+  def unscoped_descendants_before_save; end
+
+  # source://ancestry//lib/ancestry/instance_methods.rb#324
   def unscoped_find(id); end
 
-  # source://ancestry//lib/ancestry/instance_methods.rb#328
+  # source://ancestry//lib/ancestry/instance_methods.rb#330
   def unscoped_where; end
 end
 
@@ -403,82 +432,147 @@ end
 #
 # source://ancestry//lib/ancestry/materialized_path.rb#5
 module Ancestry::MaterializedPath
-  # source://ancestry//lib/ancestry/materialized_path.rb#23
+  # source://ancestry//lib/ancestry/materialized_path.rb#18
   def ancestors_of(object); end
 
-  # source://ancestry//lib/ancestry/materialized_path.rb#35
+  # source://ancestry//lib/ancestry/materialized_path.rb#91
+  def ancestry_root; end
+
+  # source://ancestry//lib/ancestry/materialized_path.rb#30
   def children_of(object); end
 
-  # deprecated
-  #
-  # source://ancestry//lib/ancestry/materialized_path.rb#54
+  # source://ancestry//lib/ancestry/materialized_path.rb#57
+  def descendant_before_save_conditions(object); end
+
+  # source://ancestry//lib/ancestry/materialized_path.rb#52
   def descendant_conditions(object); end
 
-  # source://ancestry//lib/ancestry/materialized_path.rb#48
+  # source://ancestry//lib/ancestry/materialized_path.rb#47
+  def descendants_by_ancestry(ancestry); end
+
+  # source://ancestry//lib/ancestry/materialized_path.rb#43
   def descendants_of(object); end
 
   # indirect = anyone who is a descendant, but not a child
   #
-  # source://ancestry//lib/ancestry/materialized_path.rb#42
+  # source://ancestry//lib/ancestry/materialized_path.rb#37
   def indirects_of(object); end
 
-  # source://ancestry//lib/ancestry/materialized_path.rb#29
+  # source://ancestry//lib/ancestry/materialized_path.rb#24
   def inpath_of(object); end
 
-  # source://ancestry//lib/ancestry/materialized_path.rb#72
+  # source://ancestry//lib/ancestry/materialized_path.rb#74
   def ordered_by_ancestry(order = T.unsafe(nil)); end
 
-  # source://ancestry//lib/ancestry/materialized_path.rb#85
+  # source://ancestry//lib/ancestry/materialized_path.rb#87
   def ordered_by_ancestry_and(order); end
 
-  # source://ancestry//lib/ancestry/materialized_path.rb#15
+  # source://ancestry//lib/ancestry/materialized_path.rb#10
   def path_of(object); end
 
-  # source://ancestry//lib/ancestry/materialized_path.rb#19
+  # source://ancestry//lib/ancestry/materialized_path.rb#14
   def roots; end
 
-  # source://ancestry//lib/ancestry/materialized_path.rb#66
+  # source://ancestry//lib/ancestry/materialized_path.rb#68
   def siblings_of(object); end
 
-  # source://ancestry//lib/ancestry/materialized_path.rb#60
+  # source://ancestry//lib/ancestry/materialized_path.rb#62
   def subtree_of(object); end
+
+  private
+
+  # source://ancestry//lib/ancestry/materialized_path.rb#108
+  def ancestry_format_regexp; end
+
+  # @return [Boolean]
+  #
+  # source://ancestry//lib/ancestry/materialized_path.rb#104
+  def ancestry_nil_allowed?; end
+
+  # source://ancestry//lib/ancestry/materialized_path.rb#97
+  def ancestry_validation_options; end
 
   class << self
     # @private
     #
-    # source://ancestry//lib/ancestry/materialized_path.rb#11
+    # source://ancestry//lib/ancestry/materialized_path.rb#6
     def extended(base); end
   end
 end
 
-# source://ancestry//lib/ancestry/materialized_path.rb#8
-Ancestry::MaterializedPath::ANCESTRY_DELIMITER = T.let(T.unsafe(nil), String)
+# store ancestry as /grandparent_id/parent_id/
+# root: a=/,id=1    children=#{a}#{id}/% == /1/%
+# 3:    a=/1/2/,id=3 children=#{a}#{id}/% == /1/2/3/%
+#
+# source://ancestry//lib/ancestry/materialized_path2.rb#5
+module Ancestry::MaterializedPath2
+  include ::Ancestry::MaterializedPath
 
-# source://ancestry//lib/ancestry/materialized_path.rb#6
-Ancestry::MaterializedPath::BEFORE_LAST_SAVE_SUFFIX = T.let(T.unsafe(nil), String)
+  # source://ancestry//lib/ancestry/materialized_path2.rb#27
+  def ancestry_root; end
 
-# source://ancestry//lib/ancestry/materialized_path.rb#7
-Ancestry::MaterializedPath::IN_DATABASE_SUFFIX = T.let(T.unsafe(nil), String)
+  # source://ancestry//lib/ancestry/materialized_path2.rb#23
+  def descendants_by_ancestry(ancestry); end
 
-# source://ancestry//lib/ancestry/materialized_path.rb#89
+  # source://ancestry//lib/ancestry/materialized_path2.rb#13
+  def indirects_of(object); end
+
+  # source://ancestry//lib/ancestry/materialized_path2.rb#19
+  def ordered_by_ancestry(order = T.unsafe(nil)); end
+
+  private
+
+  # source://ancestry//lib/ancestry/materialized_path2.rb#37
+  def ancestry_format_regexp; end
+
+  # @return [Boolean]
+  #
+  # source://ancestry//lib/ancestry/materialized_path2.rb#33
+  def ancestry_nil_allowed?; end
+
+  class << self
+    # @private
+    #
+    # source://ancestry//lib/ancestry/materialized_path2.rb#8
+    def extended(base); end
+  end
+end
+
+# source://ancestry//lib/ancestry/materialized_path2.rb#41
+module Ancestry::MaterializedPath2::InstanceMethods
+  # @raise [Ancestry::AncestryException]
+  #
+  # source://ancestry//lib/ancestry/materialized_path2.rb#42
+  def child_ancestry; end
+
+  # @raise [Ancestry::AncestryException]
+  #
+  # source://ancestry//lib/ancestry/materialized_path2.rb#48
+  def child_ancestry_before_save; end
+
+  # source://ancestry//lib/ancestry/materialized_path2.rb#54
+  def generate_ancestry(ancestor_ids); end
+end
+
+# source://ancestry//lib/ancestry/materialized_path.rb#112
 module Ancestry::MaterializedPath::InstanceMethods
-  # source://ancestry//lib/ancestry/materialized_path.rb#101
+  # source://ancestry//lib/ancestry/materialized_path.rb#123
   def ancestor_ids; end
 
-  # source://ancestry//lib/ancestry/materialized_path.rb#96
+  # source://ancestry//lib/ancestry/materialized_path.rb#119
   def ancestor_ids=(value); end
 
-  # source://ancestry//lib/ancestry/materialized_path.rb#109
+  # source://ancestry//lib/ancestry/materialized_path.rb#131
   def ancestor_ids_before_last_save; end
 
-  # source://ancestry//lib/ancestry/materialized_path.rb#105
+  # source://ancestry//lib/ancestry/materialized_path.rb#127
   def ancestor_ids_in_database; end
 
   # optimization - better to go directly to column and avoid parsing
   #
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/materialized_path.rb#91
+  # source://ancestry//lib/ancestry/materialized_path.rb#114
   def ancestors?; end
 
   # private (public so class methods can find it)
@@ -487,39 +581,44 @@ module Ancestry::MaterializedPath::InstanceMethods
   #
   # @raise [Ancestry::AncestryException]
   #
-  # source://ancestry//lib/ancestry/materialized_path.rb#128
+  # source://ancestry//lib/ancestry/materialized_path.rb#151
   def child_ancestry; end
 
-  # source://ancestry//lib/ancestry/materialized_path.rb#141
+  # @raise [Ancestry::AncestryException]
+  #
+  # source://ancestry//lib/ancestry/materialized_path.rb#157
+  def child_ancestry_before_save; end
+
+  # source://ancestry//lib/ancestry/materialized_path.rb#169
   def generate_ancestry(ancestor_ids); end
 
   # optimization - better to go directly to column and avoid parsing
   #
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/materialized_path.rb#91
+  # source://ancestry//lib/ancestry/materialized_path.rb#114
   def has_parent?; end
 
-  # source://ancestry//lib/ancestry/materialized_path.rb#113
+  # source://ancestry//lib/ancestry/materialized_path.rb#139
   def parent_id_before_last_save; end
 
   # source://ancestry//lib/ancestry/materialized_path.rb#135
+  def parent_id_in_database; end
+
+  # source://ancestry//lib/ancestry/materialized_path.rb#163
   def parse_ancestry_column(obj); end
 
   # optimization - better to go directly to column and avoid parsing
   #
   # @return [Boolean]
   #
-  # source://ancestry//lib/ancestry/materialized_path.rb#121
+  # source://ancestry//lib/ancestry/materialized_path.rb#144
   def sibling_of?(node); end
 end
 
-# source://ancestry//lib/ancestry/materialized_path.rb#9
-Ancestry::MaterializedPath::ROOT = T.let(T.unsafe(nil), T.untyped)
-
 # source://ancestry//lib/ancestry/materialized_path_pg.rb#2
 module Ancestry::MaterializedPathPg
-  # Update descendants with new ancestry (before save)
+  # Update descendants with new ancestry (after update)
   #
   # source://ancestry//lib/ancestry/materialized_path_pg.rb#4
   def update_descendants_with_new_ancestry; end

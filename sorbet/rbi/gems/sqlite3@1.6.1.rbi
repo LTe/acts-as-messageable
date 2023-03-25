@@ -744,7 +744,7 @@ SQLite3::Database::NULL_TRANSLATOR = T.let(T.unsafe(nil), Proc)
 # source://sqlite3//lib/sqlite3/errors.rb#24
 class SQLite3::EmptyException < ::SQLite3::Exception; end
 
-# source://sqlite3//lib/sqlite3/errors.rb#5
+# source://sqlite3//lib/sqlite3/errors.rb#4
 class SQLite3::Exception < ::StandardError
   # A convenience for accessing the error code for this exception.
   #
@@ -1671,9 +1671,3 @@ class String
   # source://sqlite3//lib/sqlite3/statement.rb#5
   def to_blob; end
 end
-
-# source://activesupport/7.0.4.1/lib/active_support/core_ext/object/blank.rb#104
-String::BLANK_RE = T.let(T.unsafe(nil), Regexp)
-
-# source://activesupport/7.0.4.1/lib/active_support/core_ext/object/blank.rb#105
-String::ENCODED_BLANKS = T.let(T.unsafe(nil), Concurrent::Map)

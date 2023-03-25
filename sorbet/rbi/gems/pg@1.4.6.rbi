@@ -13,7 +13,7 @@ module PG
   class << self
     # Convenience alias for PG::Connection.new.
     #
-    # source://pg//lib/pg.rb#68
+    # source://pg//lib/pg.rb#62
     def connect(*args, &block); end
 
     def init_openssl(_arg0, _arg1); end
@@ -27,7 +27,7 @@ module PG
     #
     # +include_buildnum+ is no longer used and any value passed will be ignored.
     #
-    # source://pg//lib/pg.rb#62
+    # source://pg//lib/pg.rb#56
     def version_string(include_buildnum = T.unsafe(nil)); end
   end
 end
@@ -102,7 +102,7 @@ end
 #   # The format of the parameter is set to 0 (text) and the OID of this parameter is set to 20 (int8).
 #   res = conn.exec_params( "SELECT $1", [5] )
 #
-# source://pg//lib/pg/basic_type_map_for_queries.rb#36
+# source://pg//lib/pg/basic_type_map_for_queries.rb#24
 class PG::BasicTypeMapForQueries < ::PG::TypeMapByClass
   include ::PG::BasicTypeRegistry::Checker
 
@@ -700,7 +700,7 @@ class PG::Connection
   # Returns +nil+ on success, or a string containing the
   # error message if a failure occurs.
   #
-  # source://pg//lib/pg/connection.rb#518
+  # source://pg//lib/pg/connection.rb#519
   def async_cancel; end
 
   def async_describe_portal(_arg0); end
@@ -727,7 +727,7 @@ class PG::Connection
   # Available since PostgreSQL-10.
   # See also corresponding {libpq function}[https://www.postgresql.org/docs/current/libpq-misc.html#LIBPQ-PQENCRYPTPASSWORDCONN].
   #
-  # source://pg//lib/pg/connection.rb#491
+  # source://pg//lib/pg/connection.rb#492
   def async_encrypt_password(password, username, algorithm = T.unsafe(nil)); end
 
   def async_exec(*_arg0); end
@@ -752,7 +752,7 @@ class PG::Connection
   #
   # See also #copy_data.
   #
-  # source://pg//lib/pg/connection.rb#359
+  # source://pg//lib/pg/connection.rb#360
   def async_get_copy_data(async = T.unsafe(nil), decoder = T.unsafe(nil)); end
 
   def async_get_last_result; end
@@ -772,7 +772,7 @@ class PG::Connection
   # and the PG::Result object will  automatically be cleared when the block terminates.
   # In this instance, <code>conn.exec</code> returns the value of the block.
   #
-  # source://pg//lib/pg/connection.rb#336
+  # source://pg//lib/pg/connection.rb#337
   def async_get_result; end
 
   # call-seq:
@@ -781,7 +781,7 @@ class PG::Connection
   # Returns the blocking status of the database connection.
   # Returns +true+ if the connection is set to nonblocking mode and +false+ if blocking.
   #
-  # source://pg//lib/pg/connection.rb#407
+  # source://pg//lib/pg/connection.rb#408
   def async_isnonblocking; end
 
   def async_prepare(*_arg0); end
@@ -804,7 +804,7 @@ class PG::Connection
   #
   # See also #copy_data.
   #
-  # source://pg//lib/pg/connection.rb#431
+  # source://pg//lib/pg/connection.rb#432
   def async_put_copy_data(buffer, encoder = T.unsafe(nil)); end
 
   # call-seq:
@@ -820,7 +820,7 @@ class PG::Connection
   # not sent (*false* is only possible if the connection
   # is in nonblocking mode, and this command would block).
   #
-  # source://pg//lib/pg/connection.rb#461
+  # source://pg//lib/pg/connection.rb#462
   def async_put_copy_end(*args); end
 
   def async_query(*_arg0); end
@@ -831,7 +831,7 @@ class PG::Connection
   # Resets the backend connection. This method closes the
   # backend connection and tries to re-connect.
   #
-  # source://pg//lib/pg/connection.rb#503
+  # source://pg//lib/pg/connection.rb#504
   def async_reset; end
 
   def async_set_client_encoding(_arg0); end
@@ -852,7 +852,7 @@ class PG::Connection
   #
   # Returns +nil+.
   #
-  # source://pg//lib/pg/connection.rb#393
+  # source://pg//lib/pg/connection.rb#394
   def async_setnonblocking(enabled); end
 
   def backend_key; end
@@ -868,7 +868,7 @@ class PG::Connection
   # Returns +nil+ on success, or a string containing the
   # error message if a failure occurs.
   #
-  # source://pg//lib/pg/connection.rb#518
+  # source://pg//lib/pg/connection.rb#519
   def cancel; end
 
   def client_encoding=(_arg0); end
@@ -877,13 +877,13 @@ class PG::Connection
   # Returns an array of Hashes with connection defaults. See ::conndefaults
   # for details.
   #
-  # source://pg//lib/pg/connection.rb#274
+  # source://pg//lib/pg/connection.rb#275
   def conndefaults; end
 
   # Returns a Hash with connection defaults. See ::conndefaults_hash
   # for details.
   #
-  # source://pg//lib/pg/connection.rb#290
+  # source://pg//lib/pg/connection.rb#291
   def conndefaults_hash; end
 
   def connect_poll; end
@@ -896,7 +896,7 @@ class PG::Connection
   #
   # See also #conninfo
   #
-  # source://pg//lib/pg/connection.rb#298
+  # source://pg//lib/pg/connection.rb#299
   def conninfo_hash; end
 
   def consume_input; end
@@ -1004,7 +1004,7 @@ class PG::Connection
   # Available since PostgreSQL-10.
   # See also corresponding {libpq function}[https://www.postgresql.org/docs/current/libpq-misc.html#LIBPQ-PQENCRYPTPASSWORDCONN].
   #
-  # source://pg//lib/pg/connection.rb#491
+  # source://pg//lib/pg/connection.rb#492
   def encrypt_password(password, username, algorithm = T.unsafe(nil)); end
 
   def enter_pipeline_mode; end
@@ -1043,7 +1043,7 @@ class PG::Connection
   #
   # See also #copy_data.
   #
-  # source://pg//lib/pg/connection.rb#359
+  # source://pg//lib/pg/connection.rb#360
   def get_copy_data(async = T.unsafe(nil), decoder = T.unsafe(nil)); end
 
   def get_last_result; end
@@ -1063,7 +1063,7 @@ class PG::Connection
   # and the PG::Result object will  automatically be cleared when the block terminates.
   # In this instance, <code>conn.exec</code> returns the value of the block.
   #
-  # source://pg//lib/pg/connection.rb#336
+  # source://pg//lib/pg/connection.rb#337
   def get_result; end
 
   def host; end
@@ -1084,7 +1084,7 @@ class PG::Connection
   # Returns the blocking status of the database connection.
   # Returns +true+ if the connection is set to nonblocking mode and +false+ if blocking.
   #
-  # source://pg//lib/pg/connection.rb#407
+  # source://pg//lib/pg/connection.rb#408
   def isnonblocking; end
 
   def lo_close(_arg0); end
@@ -1121,7 +1121,7 @@ class PG::Connection
   # Returns the blocking status of the database connection.
   # Returns +true+ if the connection is set to nonblocking mode and +false+ if blocking.
   #
-  # source://pg//lib/pg/connection.rb#407
+  # source://pg//lib/pg/connection.rb#408
   def nonblocking?; end
 
   def notifies; end
@@ -1153,7 +1153,7 @@ class PG::Connection
   #
   # See also #copy_data.
   #
-  # source://pg//lib/pg/connection.rb#431
+  # source://pg//lib/pg/connection.rb#432
   def put_copy_data(buffer, encoder = T.unsafe(nil)); end
 
   # call-seq:
@@ -1169,7 +1169,7 @@ class PG::Connection
   # not sent (*false* is only possible if the connection
   # is in nonblocking mode, and this command would block).
   #
-  # source://pg//lib/pg/connection.rb#461
+  # source://pg//lib/pg/connection.rb#462
   def put_copy_end(*args); end
 
   def query(*_arg0); end
@@ -1181,7 +1181,7 @@ class PG::Connection
   # Resets the backend connection. This method closes the
   # backend connection and tries to re-connect.
   #
-  # source://pg//lib/pg/connection.rb#503
+  # source://pg//lib/pg/connection.rb#504
   def reset; end
 
   def reset_poll; end
@@ -1218,7 +1218,7 @@ class PG::Connection
   #
   # Returns +nil+.
   #
-  # source://pg//lib/pg/connection.rb#393
+  # source://pg//lib/pg/connection.rb#394
   def setnonblocking(enabled); end
 
   def socket; end
@@ -1236,7 +1236,7 @@ class PG::Connection
   #
   # See also #ssl_attribute
   #
-  # source://pg//lib/pg/connection.rb#315
+  # source://pg//lib/pg/connection.rb#316
   def ssl_attributes; end
 
   def ssl_in_use?; end
@@ -1268,7 +1268,7 @@ class PG::Connection
   # and a +COMMIT+ at the end of the block, or
   # +ROLLBACK+ if any exception occurs.
   #
-  # source://pg//lib/pg/connection.rb#258
+  # source://pg//lib/pg/connection.rb#259
   def transaction; end
 
   def transaction_status; end
@@ -1284,7 +1284,7 @@ class PG::Connection
 
   private
 
-  # source://pg//lib/pg/connection.rb#573
+  # source://pg//lib/pg/connection.rb#574
   def async_connect_or_reset(poll_meth); end
 
   def flush_data=(_arg0); end
@@ -1306,7 +1306,7 @@ class PG::Connection
     # Do not use this method in production code.
     # Any issues with the default setting of <tt>async_api=true</tt> should be reported to the maintainers instead.
     #
-    # source://pg//lib/pg/connection.rb#864
+    # source://pg//lib/pg/connection.rb#865
     def async_api=(enable); end
 
     # call-seq:
@@ -1361,7 +1361,7 @@ class PG::Connection
     #
     # Raises a PG::Error if the connection fails.
     #
-    # source://pg//lib/pg/connection.rb#694
+    # source://pg//lib/pg/connection.rb#695
     def async_connect(*args); end
 
     # call-seq:
@@ -1383,10 +1383,10 @@ class PG::Connection
     # [+PQPING_NO_ATTEMPT+]
     #   connection not attempted (bad params)
     #
-    # source://pg//lib/pg/connection.rb#789
+    # source://pg//lib/pg/connection.rb#790
     def async_ping(*args); end
 
-    # source://pg//lib/pg/connection.rb#841
+    # source://pg//lib/pg/connection.rb#842
     def async_send_api=(enable); end
 
     def conndefaults; end
@@ -1396,7 +1396,7 @@ class PG::Connection
     #
     # See also #conndefaults
     #
-    # source://pg//lib/pg/connection.rb#282
+    # source://pg//lib/pg/connection.rb#283
     def conndefaults_hash; end
 
     # call-seq:
@@ -1451,7 +1451,7 @@ class PG::Connection
     #
     # Raises a PG::Error if the connection fails.
     #
-    # source://pg//lib/pg/connection.rb#694
+    # source://pg//lib/pg/connection.rb#695
     def connect(*args); end
 
     # Convert Hash options to connection String
@@ -1521,7 +1521,7 @@ class PG::Connection
     #
     # Raises a PG::Error if the connection fails.
     #
-    # source://pg//lib/pg/connection.rb#694
+    # source://pg//lib/pg/connection.rb#695
     def new(*args); end
 
     # call-seq:
@@ -1576,7 +1576,7 @@ class PG::Connection
     #
     # Raises a PG::Error if the connection fails.
     #
-    # source://pg//lib/pg/connection.rb#694
+    # source://pg//lib/pg/connection.rb#695
     def open(*args); end
 
     # Parse the connection +args+ into a connection-parameter string.
@@ -1614,7 +1614,7 @@ class PG::Connection
     # [+PQPING_NO_ATTEMPT+]
     #   connection not attempted (bad params)
     #
-    # source://pg//lib/pg/connection.rb#789
+    # source://pg//lib/pg/connection.rb#790
     def ping(*args); end
 
     # Quote a single +value+ for use in a connection-parameter string.
@@ -1676,7 +1676,7 @@ class PG::Connection
     #
     # Raises a PG::Error if the connection fails.
     #
-    # source://pg//lib/pg/connection.rb#694
+    # source://pg//lib/pg/connection.rb#695
     def setdb(*args); end
 
     # call-seq:
@@ -1731,7 +1731,7 @@ class PG::Connection
     #
     # Raises a PG::Error if the connection fails.
     #
-    # source://pg//lib/pg/connection.rb#694
+    # source://pg//lib/pg/connection.rb#695
     def setdblogin(*args); end
 
     def sync_connect(*_arg0); end
@@ -1740,10 +1740,10 @@ class PG::Connection
 
     private
 
-    # source://pg//lib/pg/connection.rb#712
+    # source://pg//lib/pg/connection.rb#713
     def connect_to_hosts(*args); end
 
-    # source://pg//lib/pg/connection.rb#764
+    # source://pg//lib/pg/connection.rb#765
     def host_is_named_pipe?(host_string); end
   end
 end
@@ -2017,6 +2017,10 @@ class PG::LEInvalidSpecification < ::PG::LocatorException; end
 class PG::LocatorException < ::PG::ServerError; end
 class PG::LockFileExists < ::PG::ConfigFileError; end
 class PG::LockNotAvailable < ::PG::ObjectNotInPrerequisiteState; end
+
+# source://pg//lib/pg/exceptions.rb#19
+class PG::LostCopyState < ::PG::Error; end
+
 class PG::MoreThanOneSqlJsonItem < ::PG::DataException; end
 class PG::MostSpecificTypeMismatch < ::PG::DataException; end
 class PG::NameTooLong < ::PG::SyntaxErrorOrAccessRuleViolation; end
@@ -2029,12 +2033,12 @@ class PG::NonNumericSqlJsonItem < ::PG::DataException; end
 class PG::NonUniqueKeysInAJsonObject < ::PG::DataException; end
 class PG::NonstandardUseOfEscapeCharacter < ::PG::DataException; end
 
-# source://pg//lib/pg.rb#54
+# source://pg//lib/pg/exceptions.rb#17
 class PG::NotAllCopyDataRetrieved < ::PG::Error; end
 
 class PG::NotAnXmlDocument < ::PG::DataException; end
 
-# source://pg//lib/pg.rb#56
+# source://pg//lib/pg/exceptions.rb#21
 class PG::NotInBlockingMode < ::PG::Error; end
 
 class PG::NotNullViolation < ::PG::IntegrityConstraintViolation; end
