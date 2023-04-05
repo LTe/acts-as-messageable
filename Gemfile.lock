@@ -1,14 +1,14 @@
 GIT
   remote: https://github.com/Shopify/tapioca.git
-  revision: 81e2e19206fda677ca17722d9e016c52afb92eea
+  revision: bf320eaa63258c77d99656e52a3848ea29afab9f
   specs:
-    tapioca (0.11.3)
+    tapioca (0.11.4)
       bundler (>= 2.2.25)
       netrc (>= 0.11.0)
       parallel (>= 1.21.0)
       rbi (~> 0.0.0, >= 0.0.16)
       sorbet-static-and-runtime (>= 0.5.10187)
-      spoom (~> 1.1.0, >= 1.1.11)
+      spoom (~> 1.2.0, >= 1.2.0)
       thor (>= 1.2.0)
       yard-sorbet
 
@@ -116,7 +116,7 @@ GEM
       parser
       rainbow (~> 3.0)
       sorbet-runtime (>= 0.5)
-    parser (3.2.1.1)
+    parser (3.2.2.0)
       ast (~> 2.4.1)
     pg (1.4.6)
     polyfill (1.9.0)
@@ -215,7 +215,7 @@ GEM
       rbs (~> 2.0)
       sorbet-runtime
       yard
-    spoom (1.1.16)
+    spoom (1.2.1)
       sorbet (>= 0.5.10187)
       sorbet-runtime (>= 0.5.9204)
       thor (>= 0.19.2)
@@ -239,7 +239,7 @@ GEM
     webrick (1.7.0)
     yard (0.9.28)
       webrick (~> 1.7.0)
-    yard-sorbet (0.8.0)
+    yard-sorbet (0.8.1)
       sorbet-runtime (>= 0.5)
       yard (>= 0.9)
     zeitwerk (2.6.7)
