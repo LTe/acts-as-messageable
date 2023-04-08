@@ -3,11 +3,11 @@
 # Instead, edit Jeweler::Tasks in Rakefile, and run 'rake gemspec'
 # frozen_string_literal: true
 
-# stub: acts-as-messageable 1.0.1 ruby lib
+# stub: acts-as-messageable 1.0.2 ruby lib
 
 Gem::Specification.new do |s|
   s.name = 'acts-as-messageable'
-  s.version = '1.0.1'
+  s.version = '1.0.2'
 
   s.required_rubygems_version = Gem::Requirement.new('>= 0') if s.respond_to? :required_rubygems_version=
   s.metadata = { 'rubygems_mfa_required' => 'true' } if s.respond_to? :metadata=
