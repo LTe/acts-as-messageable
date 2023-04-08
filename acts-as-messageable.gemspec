@@ -3,11 +3,11 @@
 # Instead, edit Jeweler::Tasks in Rakefile, and run 'rake gemspec'
 # frozen_string_literal: true
 
-# stub: acts-as-messageable 1.0.0 ruby lib
+# stub: acts-as-messageable 1.0.1 ruby lib
 
 Gem::Specification.new do |s|
   s.name = 'acts-as-messageable'
-  s.version = '1.0.0'
+  s.version = '1.0.1'
 
   s.required_rubygems_version = Gem::Requirement.new('>= 0') if s.respond_to? :required_rubygems_version=
   s.metadata = { 'rubygems_mfa_required' => 'true' } if s.respond_to? :metadata=
@@ -134,6 +134,7 @@ Gem::Specification.new do |s|
     'sorbet/rbi/gems/activerecord@7.0.4.3.rbi',
     'sorbet/rbi/gems/activesupport@7.0.4.3.rbi',
     'sorbet/rbi/gems/addressable@2.4.0.rbi',
+    'sorbet/rbi/gems/ancestry@4.3.2.rbi',
     'sorbet/rbi/gems/appraisal@2.4.1.rbi',
     'sorbet/rbi/gems/ast@2.4.2.rbi',
     'sorbet/rbi/gems/builder@3.2.4.rbi',
@@ -166,6 +167,7 @@ Gem::Specification.new do |s|
     'sorbet/rbi/gems/nokogiri@1.14.2.rbi',
     'sorbet/rbi/gems/oauth2@1.4.8.rbi',
     'sorbet/rbi/gems/parallel@1.22.1.rbi',
+    'sorbet/rbi/gems/parser@3.2.2.0.rbi',
     'sorbet/rbi/gems/pg@1.4.6.rbi',
     'sorbet/rbi/gems/polyfill@1.9.0.rbi',
     'sorbet/rbi/gems/pry@0.14.2.rbi',
@@ -189,6 +191,7 @@ Gem::Specification.new do |s|
     'sorbet/rbi/gems/rspec-mocks@3.12.0.rbi',
     'sorbet/rbi/gems/rspec-support@3.12.0.rbi',
     'sorbet/rbi/gems/rspec@3.12.0.rbi',
+    'sorbet/rbi/gems/rubocop-ast@1.28.0.rbi',
     'sorbet/rbi/gems/ruby-progressbar@1.13.0.rbi',
     'sorbet/rbi/gems/safe_type@1.1.1.rbi',
     'sorbet/rbi/gems/semver2@3.4.2.rbi',
@@ -196,8 +199,11 @@ Gem::Specification.new do |s|
     'sorbet/rbi/gems/simplecov@0.22.0.rbi',
     'sorbet/rbi/gems/simplecov_json_formatter@0.1.4.rbi',
     'sorbet/rbi/gems/sorbet-coerce@0.7.0.rbi',
+    'sorbet/rbi/gems/spoom@1.2.1.rbi',
+    'sorbet/rbi/gems/sqlite3@1.6.2.rbi',
     'sorbet/rbi/gems/stringio@3.0.2.rbi',
     'sorbet/rbi/gems/sync@0.5.0.rbi',
+    'sorbet/rbi/gems/tapioca@0.11.4-a4319794491b54d9db1c06df7f3bdffcdf7bf684.rbi',
     'sorbet/rbi/gems/term-ansicolor@1.7.1.rbi',
     'sorbet/rbi/gems/thor@1.2.1.rbi',
     'sorbet/rbi/gems/thread_safe@0.3.6.rbi',
@@ -207,6 +213,7 @@ Gem::Specification.new do |s|
     'sorbet/rbi/gems/unicode-display_width@2.4.2.rbi',
     'sorbet/rbi/gems/unparser@0.6.7.rbi',
     'sorbet/rbi/gems/webrick@1.7.0.rbi',
+    'sorbet/rbi/gems/yard-sorbet@0.8.1.rbi',
     'sorbet/rbi/gems/yard@0.9.28.rbi',
     'sorbet/rbi/gems/zeitwerk@2.6.7.rbi',
     'sorbet/rbi/models/acts-as-messageable/message.rbi',
