@@ -116,7 +116,7 @@ GEM
       parser
       rainbow (~> 3.0)
       sorbet-runtime (>= 0.5)
-    parser (3.2.2.0)
+    parser (3.2.2.1)
       ast (~> 2.4.1)
     pg (1.4.6)
     polyfill (1.9.0)
@@ -148,7 +148,7 @@ GEM
       parser (>= 2.6.4.0)
       sorbet-runtime (>= 0.5.9204)
       unparser
-    rbs (2.8.0)
+    rbs (2.8.4)
     rchardet (1.8.0)
     rdoc (6.5.0)
       psych (>= 4.0.0)
@@ -209,7 +209,7 @@ GEM
     sorbet-static-and-runtime (0.5.10751)
       sorbet (= 0.5.10751)
       sorbet-runtime (= 0.5.10751)
-    sord (5.0.0)
+    sord (5.0.1)
       commander (~> 4.5)
       parlour (~> 5.0)
       rbs (~> 2.0)
