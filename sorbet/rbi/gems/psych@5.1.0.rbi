@@ -519,7 +519,7 @@ module Psych
     # A Psych::DisallowedClass exception will be raised if the yaml contains a
     # class that isn't in the +permitted_classes+ list.
     #
-    # A Psych::BadAlias exception will be raised if the yaml contains aliases
+    # A Psych::AliasesNotEnabled exception will be raised if the yaml contains aliases
     # but the +aliases+ keyword argument is set to false.
     #
     # +filename+ will be used in the exception message if any exception is raised
@@ -605,6 +605,26 @@ module Psych
   end
 end
 
+# Subclasses `BadAlias` for backwards compatibility
+#
+# source://psych//lib/psych/exception.rb#10
+class Psych::AliasesNotEnabled < ::Psych::BadAlias
+  # @return [AliasesNotEnabled] a new instance of AliasesNotEnabled
+  #
+  # source://psych//lib/psych/exception.rb#11
+  def initialize; end
+end
+
+# Subclasses `BadAlias` for backwards compatibility
+#
+# source://psych//lib/psych/exception.rb#17
+class Psych::AnchorNotDefined < ::Psych::BadAlias
+  # @return [AnchorNotDefined] a new instance of AnchorNotDefined
+  #
+  # source://psych//lib/psych/exception.rb#18
+  def initialize(anchor_name); end
+end
+
 # source://psych//lib/psych/class_loader.rb#6
 class Psych::ClassLoader
   # @return [ClassLoader] a new instance of ClassLoader
@@ -612,8 +632,47 @@ class Psych::ClassLoader
   # source://psych//lib/psych/class_loader.rb#21
   def initialize; end
 
+  # source://psych//lib/psych/class_loader.rb#39
+  def big_decimal; end
+
+  # source://psych//lib/psych/class_loader.rb#39
+  def complex; end
+
+  # source://psych//lib/psych/class_loader.rb#39
+  def date; end
+
+  # source://psych//lib/psych/class_loader.rb#39
+  def date_time; end
+
+  # source://psych//lib/psych/class_loader.rb#39
+  def exception; end
+
   # source://psych//lib/psych/class_loader.rb#25
   def load(klassname); end
+
+  # source://psych//lib/psych/class_loader.rb#39
+  def object; end
+
+  # source://psych//lib/psych/class_loader.rb#39
+  def psych_omap; end
+
+  # source://psych//lib/psych/class_loader.rb#39
+  def psych_set; end
+
+  # source://psych//lib/psych/class_loader.rb#39
+  def range; end
+
+  # source://psych//lib/psych/class_loader.rb#39
+  def rational; end
+
+  # source://psych//lib/psych/class_loader.rb#39
+  def regexp; end
+
+  # source://psych//lib/psych/class_loader.rb#39
+  def struct; end
+
+  # source://psych//lib/psych/class_loader.rb#39
+  def symbol; end
 
   # source://psych//lib/psych/class_loader.rb#31
   def symbolize(sym); end
@@ -770,11 +829,11 @@ class Psych::Coder
   def type; end
 end
 
-# source://psych//lib/psych/exception.rb#9
+# source://psych//lib/psych/exception.rb#23
 class Psych::DisallowedClass < ::Psych::Exception
   # @return [DisallowedClass] a new instance of DisallowedClass
   #
-  # source://psych//lib/psych/exception.rb#10
+  # source://psych//lib/psych/exception.rb#24
   def initialize(action, klass_name); end
 end
 
@@ -1236,6 +1295,17 @@ class Psych::Parser
   #
   # source://psych//lib/psych/parser.rb#38
   def handler=(_arg0); end
+
+  # call-seq:
+  #    parser.parse(yaml)
+  #
+  # Parse the YAML document contained in +yaml+.  Events will be called on
+  # the handler set on the parser instance.
+  #
+  # See Psych::Parser and Psych::Parser#handler
+  #
+  # source://psych//lib/psych/parser.rb#61
+  def parse(yaml, path = T.unsafe(nil)); end
 end
 
 # Scan scalars for built in types
@@ -1410,6 +1480,12 @@ class Psych::TreeBuilder < ::Psych::Handler
   # source://psych//lib/psych/tree_builder.rb#77
   def end_document(implicit_end = T.unsafe(nil)); end
 
+  # source://psych//lib/psych/tree_builder.rb#52
+  def end_mapping; end
+
+  # source://psych//lib/psych/tree_builder.rb#52
+  def end_sequence; end
+
   # source://psych//lib/psych/tree_builder.rb#90
   def end_stream; end
 
@@ -1431,6 +1507,12 @@ class Psych::TreeBuilder < ::Psych::Handler
   #
   # source://psych//lib/psych/tree_builder.rb#65
   def start_document(version, tag_directives, implicit); end
+
+  # source://psych//lib/psych/tree_builder.rb#45
+  def start_mapping(anchor, tag, implicit, style); end
+
+  # source://psych//lib/psych/tree_builder.rb#45
+  def start_sequence(anchor, tag, implicit, style); end
 
   # source://psych//lib/psych/tree_builder.rb#84
   def start_stream(encoding); end
