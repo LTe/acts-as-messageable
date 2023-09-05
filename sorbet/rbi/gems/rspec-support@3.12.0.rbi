@@ -112,12 +112,6 @@ RSpec::CallerFilter::LIB_REGEX = T.let(T.unsafe(nil), Regexp)
 # source://rspec-support//lib/rspec/support/caller_filter.rb#9
 RSpec::CallerFilter::RSPEC_LIBS = T.let(T.unsafe(nil), Array)
 
-# source://rspec-core/3.12.0/lib/rspec/core.rb#187
-RSpec::MODULES_TO_AUTOLOAD = T.let(T.unsafe(nil), Hash)
-
-# source://rspec-core/3.12.0/lib/rspec/core/shared_context.rb#54
-RSpec::SharedContext = RSpec::Core::SharedContext
-
 # source://rspec-support//lib/rspec/support.rb#2
 module RSpec::Support
   class << self
@@ -863,7 +857,7 @@ end
 
 # On 1.9 and up, this is in core, so we just use the real one
 #
-# source://rspec-support//lib/rspec/support/reentrant_mutex.rb#65
+# source://rspec-support//lib/rspec/support/reentrant_mutex.rb#63
 class RSpec::Support::Mutex < ::Thread::Mutex
   class << self
     # source://rspec-support//lib/rspec/support/reentrant_mutex.rb#68

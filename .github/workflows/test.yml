@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: 3.2.2
           bundler-cache: true
       - run : bundle exec rake rubocop
   rbi-check:
@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: 3.2.2
           bundler-cache: true
       - run : bundle exec tapioca gem --verify
   typecheck:
@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: 3.2.2
           bundler-cache: true
       - run : bundle exec srb
   test:
@@ -62,7 +62,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        rvm: ["2.7"]
+        rvm: ["3.2.2"]
         gemfile: ["Gemfile"]
         bundler: ['default']
         run_generators: ["false"]
@@ -143,7 +143,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: 3.2.2
           bundler-cache: true
       - run: 'bundle exec yard doc --private'
       - uses: JamesIves/github-pages-deploy-action@v4.4.1

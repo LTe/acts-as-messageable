@@ -1228,9 +1228,6 @@ module RSpec::Expectations::Version; end
 # source://rspec-expectations//lib/rspec/expectations/version.rb#5
 RSpec::Expectations::Version::STRING = T.let(T.unsafe(nil), String)
 
-# source://rspec-core/3.12.0/lib/rspec/core.rb#187
-RSpec::MODULES_TO_AUTOLOAD = T.let(T.unsafe(nil), Hash)
-
 # RSpec::Matchers provides a number of useful matchers we use to define
 # expectations. Any object that implements the [matcher protocol](Matchers/MatcherProtocol)
 # can be used as a matcher.
@@ -3304,7 +3301,7 @@ end
 #
 # @private
 #
-# source://rspec-expectations//lib/rspec/matchers/aliased_matcher.rb#65
+# source://rspec-expectations//lib/rspec/matchers/aliased_matcher.rb#64
 class RSpec::Matchers::AliasedMatcherWithOperatorSupport < ::RSpec::Matchers::AliasedMatcher; end
 
 # @private
@@ -3365,7 +3362,7 @@ module RSpec::Matchers::BuiltIn; end
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/all.rb#8
+# source://rspec-expectations//lib/rspec/matchers/built_in/all.rb#7
 class RSpec::Matchers::BuiltIn::All < ::RSpec::Matchers::BuiltIn::BaseMatcher
   # @api private
   # @return [All] a new instance of All
@@ -3761,7 +3758,7 @@ end
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/be_instance_of.rb#9
+# source://rspec-expectations//lib/rspec/matchers/built_in/be_instance_of.rb#7
 class RSpec::Matchers::BuiltIn::BeAnInstanceOf < ::RSpec::Matchers::BuiltIn::BaseMatcher
   # @api private
   # @return [String]
@@ -3905,7 +3902,7 @@ end
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/be.rb#32
+# source://rspec-expectations//lib/rspec/matchers/built_in/be.rb#30
 class RSpec::Matchers::BuiltIn::BeFalsey < ::RSpec::Matchers::BuiltIn::BaseMatcher
   # @api private
   # @return [String]
@@ -3954,7 +3951,7 @@ end
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/be.rb#55
+# source://rspec-expectations//lib/rspec/matchers/built_in/be.rb#53
 class RSpec::Matchers::BuiltIn::BeNil < ::RSpec::Matchers::BuiltIn::BaseMatcher
   # @api private
   # @return [String]
@@ -3981,7 +3978,7 @@ end
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/has.rb#138
+# source://rspec-expectations//lib/rspec/matchers/built_in/has.rb#137
 class RSpec::Matchers::BuiltIn::BePredicate < ::RSpec::Matchers::BuiltIn::DynamicPredicate
   private
 
@@ -4022,7 +4019,7 @@ RSpec::Matchers::BuiltIn::BePredicate::REGEX = T.let(T.unsafe(nil), Regexp)
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/be.rb#9
+# source://rspec-expectations//lib/rspec/matchers/built_in/be.rb#7
 class RSpec::Matchers::BuiltIn::BeTruthy < ::RSpec::Matchers::BuiltIn::BaseMatcher
   # @api private
   # @return [String]
@@ -4155,7 +4152,7 @@ end
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/change.rb#9
+# source://rspec-expectations//lib/rspec/matchers/built_in/change.rb#7
 class RSpec::Matchers::BuiltIn::Change < ::RSpec::Matchers::BuiltIn::BaseMatcher
   # @api private
   # @return [Change] a new instance of Change
@@ -4473,7 +4470,7 @@ end
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/compound.rb#7
+# source://rspec-expectations//lib/rspec/matchers/built_in/compound.rb#6
 class RSpec::Matchers::BuiltIn::Compound < ::RSpec::Matchers::BuiltIn::BaseMatcher
   # @api private
   # @return [Compound] a new instance of Compound
@@ -4612,7 +4609,7 @@ end
 #
 # @api public
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/compound.rb#244
+# source://rspec-expectations//lib/rspec/matchers/built_in/compound.rb#242
 class RSpec::Matchers::BuiltIn::Compound::And < ::RSpec::Matchers::BuiltIn::Compound
   # @api private
   # @return [String]
@@ -4721,7 +4718,7 @@ end
 #
 # @api public
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/compound.rb#271
+# source://rspec-expectations//lib/rspec/matchers/built_in/compound.rb#269
 class RSpec::Matchers::BuiltIn::Compound::Or < ::RSpec::Matchers::BuiltIn::Compound
   # @api private
   # @return [String]
@@ -4766,7 +4763,7 @@ end
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/contain_exactly.rb#10
+# source://rspec-expectations//lib/rspec/matchers/built_in/contain_exactly.rb#8
 class RSpec::Matchers::BuiltIn::ContainExactly < ::RSpec::Matchers::BuiltIn::BaseMatcher
   # @api private
   # @return [String]
@@ -5364,7 +5361,7 @@ end
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/eq.rb#9
+# source://rspec-expectations//lib/rspec/matchers/built_in/eq.rb#7
 class RSpec::Matchers::BuiltIn::Eq < ::RSpec::Matchers::BuiltIn::BaseMatcher
   # @api private
   # @return [String]
@@ -5403,7 +5400,7 @@ end
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/eql.rb#9
+# source://rspec-expectations//lib/rspec/matchers/built_in/eql.rb#7
 class RSpec::Matchers::BuiltIn::Eql < ::RSpec::Matchers::BuiltIn::BaseMatcher
   # @api private
   # @return [Boolean]
@@ -5436,7 +5433,7 @@ end
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/equal.rb#9
+# source://rspec-expectations//lib/rspec/matchers/built_in/equal.rb#7
 class RSpec::Matchers::BuiltIn::Equal < ::RSpec::Matchers::BuiltIn::BaseMatcher
   # @api private
   # @return [Boolean]
@@ -5538,7 +5535,7 @@ end
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/exist.rb#45
+# source://rspec-expectations//lib/rspec/matchers/built_in/exist.rb#43
 class RSpec::Matchers::BuiltIn::Exist::ExistenceTest < ::Struct
   # @api private
   # @return [Boolean]
@@ -5586,7 +5583,7 @@ end
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/has.rb#126
+# source://rspec-expectations//lib/rspec/matchers/built_in/has.rb#125
 class RSpec::Matchers::BuiltIn::Has < ::RSpec::Matchers::BuiltIn::DynamicPredicate
   private
 
@@ -5606,7 +5603,7 @@ RSpec::Matchers::BuiltIn::Has::REGEX = T.let(T.unsafe(nil), Regexp)
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/have_attributes.rb#8
+# source://rspec-expectations//lib/rspec/matchers/built_in/have_attributes.rb#7
 class RSpec::Matchers::BuiltIn::HaveAttributes < ::RSpec::Matchers::BuiltIn::BaseMatcher
   # @api private
   # @return [HaveAttributes] a new instance of HaveAttributes
@@ -6648,7 +6645,7 @@ end
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/change.rb#182
+# source://rspec-expectations//lib/rspec/matchers/built_in/change.rb#181
 class RSpec::Matchers::BuiltIn::SpecificValuesChange < ::RSpec::Matchers::BuiltIn::BaseMatcher
   # @api private
   # @return [SpecificValuesChange] a new instance of SpecificValuesChange
@@ -7195,7 +7192,7 @@ end
 #
 # @api private
 #
-# source://rspec-expectations//lib/rspec/matchers/built_in/yield.rb#150
+# source://rspec-expectations//lib/rspec/matchers/built_in/yield.rb#149
 class RSpec::Matchers::BuiltIn::YieldWithNoArgs < ::RSpec::Matchers::BuiltIn::BaseMatcher
   # @api private
   # @private
@@ -8085,6 +8082,3 @@ class RSpec::Matchers::MatcherDelegator
   # source://rspec-expectations//lib/rspec/matchers/matcher_delegator.rb#18
   def respond_to_missing?(name, include_all = T.unsafe(nil)); end
 end
-
-# source://rspec-core/3.12.0/lib/rspec/core/shared_context.rb#54
-RSpec::SharedContext = RSpec::Core::SharedContext

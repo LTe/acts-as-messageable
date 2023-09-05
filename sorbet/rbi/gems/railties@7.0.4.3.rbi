@@ -3238,16 +3238,16 @@ class Rails::Generators::NamedBase < ::Rails::Generators::Base
 
   # Returns the value of attribute file_name.
   #
-  # source://thor/1.2.1/lib/thor/base.rb#139
+  # source://thor/1.2.2/lib/thor/base.rb#139
   def file_name; end
 
   # source://railties//lib/rails/generators/named_base.rb#29
   def js_template(source, destination); end
 
-  # source://thor/1.2.1/lib/thor/base.rb#147
+  # source://thor/1.2.2/lib/thor/base.rb#147
   def name; end
 
-  # source://thor/1.2.1/lib/thor/base.rb#147
+  # source://thor/1.2.2/lib/thor/base.rb#147
   def name=(_arg0); end
 
   # source://railties//lib/rails/generators/named_base.rb#23

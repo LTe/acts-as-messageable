@@ -18,6 +18,9 @@ AllCops:
 Gemspec/RequiredRubyVersion:
   Enabled: false
 
+Gemspec/DevelopmentDependencies:
+  EnforcedStyle: gemspec
+
 Style/OptionalBooleanParameter:
   Enabled: false
 
@@ -30,3 +33,4 @@ Metrics/BlockLength:
 Naming/FileName:
   Exclude:
     - 'lib/acts-as-messageable.rb'
+

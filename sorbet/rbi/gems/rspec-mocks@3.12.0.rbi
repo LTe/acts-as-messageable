@@ -78,9 +78,6 @@ module RSpec
   end
 end
 
-# source://rspec-core/3.12.0/lib/rspec/core.rb#187
-RSpec::MODULES_TO_AUTOLOAD = T.let(T.unsafe(nil), Hash)
-
 # Contains top-level utility methods. While this contains a few
 # public methods, these are not generally meant to be called from
 # a test or example. They exist primarily for integration with
@@ -868,7 +865,7 @@ end
 
 # @private
 #
-# source://rspec-mocks//lib/rspec/mocks/any_instance/stub_chain.rb#6
+# source://rspec-mocks//lib/rspec/mocks/any_instance/stub_chain.rb#5
 class RSpec::Mocks::AnyInstance::StubChain < ::RSpec::Mocks::AnyInstance::Chain
   # @private
   # @return [Boolean]
@@ -1344,6 +1341,10 @@ class RSpec::Mocks::ArgumentMatchers::SingletonMatcher
     #
     # source://rspec-mocks//lib/rspec/mocks/argument_matchers.rb#136
     def inherited(subklass); end
+
+    private
+
+    def new(*_arg0); end
   end
 end
 
@@ -2525,7 +2526,7 @@ end
 
 # @private
 #
-# source://rspec-mocks//lib/rspec/mocks/message_chain.rb#62
+# source://rspec-mocks//lib/rspec/mocks/message_chain.rb#61
 class RSpec::Mocks::ExpectChain < ::RSpec::Mocks::MessageChain
   private
 
@@ -5128,7 +5129,7 @@ end
 #
 # @api private
 #
-# source://rspec-mocks//lib/rspec/mocks/verifying_message_expectation.rb#17
+# source://rspec-mocks//lib/rspec/mocks/verifying_message_expectation.rb#9
 class RSpec::Mocks::VerifyingMessageExpectation < ::RSpec::Mocks::MessageExpectation
   # @api private
   # @return [VerifyingMessageExpectation] a new instance of VerifyingMessageExpectation
@@ -5291,6 +5292,3 @@ module RSpec::Mocks::Version; end
 #
 # source://rspec-mocks//lib/rspec/mocks/version.rb#6
 RSpec::Mocks::Version::STRING = T.let(T.unsafe(nil), String)
-
-# source://rspec-core/3.12.0/lib/rspec/core/shared_context.rb#54
-RSpec::SharedContext = RSpec::Core::SharedContext

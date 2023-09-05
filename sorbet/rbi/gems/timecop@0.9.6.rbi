@@ -38,15 +38,6 @@ class Date
   end
 end
 
-# source://activesupport/7.0.4.1/lib/active_support/core_ext/date/conversions.rb#9
-Date::DATE_FORMATS = T.let(T.unsafe(nil), Hash)
-
-# source://activesupport/7.0.4.1/lib/active_support/core_ext/date/deprecated_conversions.rb#6
-Date::NOT_SET = T.let(T.unsafe(nil), Object)
-
-# source://date/3.2.2/date.rb#7
-Date::VERSION = T.let(T.unsafe(nil), String)
-
 # source://timecop//lib/timecop/time_extensions.rb#113
 class DateTime < ::Date
   class << self
@@ -70,9 +61,6 @@ class DateTime < ::Date
   end
 end
 
-# source://activesupport/7.0.4.1/lib/active_support/core_ext/date_time/deprecated_conversions.rb#6
-DateTime::NOT_SET = T.let(T.unsafe(nil), Object)
-
 # source://timecop//lib/timecop/time_extensions.rb#4
 class Time
   include ::Comparable
@@ -94,15 +82,6 @@ class Time
     def now_with_mock_time; end
   end
 end
-
-# source://activesupport/7.0.4.1/lib/active_support/core_ext/time/calculations.rb#14
-Time::COMMON_YEAR_DAYS_IN_MONTH = T.let(T.unsafe(nil), Array)
-
-# source://activesupport/7.0.4.1/lib/active_support/core_ext/time/conversions.rb#8
-Time::DATE_FORMATS = T.let(T.unsafe(nil), Hash)
-
-# source://activesupport/7.0.4.1/lib/active_support/core_ext/time/deprecated_conversions.rb#6
-Time::NOT_SET = T.let(T.unsafe(nil), Object)
 
 # Timecop
 # * Wrapper class for manipulating the extensions to the Time, Date, and DateTime objects
@@ -267,6 +246,13 @@ class Timecop
     def unfreeze(&block); end
 
     private
+
+    def allocate; end
+
+    # source://singleton/0.1.1/singleton.rb#123
+    def instance; end
+
+    def new(*_arg0); end
 
     # source://timecop//lib/timecop/timecop.rb#130
     def send_travel(mock_type, *args, &block); end
