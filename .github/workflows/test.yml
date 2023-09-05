@@ -62,7 +62,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        rvm: ["2.7"]
+        rvm: ["3.2.2"]
         gemfile: ["Gemfile"]
         bundler: ['default']
         run_generators: ["false"]
