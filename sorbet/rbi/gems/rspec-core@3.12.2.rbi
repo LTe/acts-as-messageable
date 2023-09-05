@@ -657,7 +657,7 @@ class RSpec::Core::Configuration
 
   # Set regular expressions used to exclude lines in backtrace.
   #
-  # @param patterns [Array<Regexp>] set backtrace_formatter exlusion_patterns
+  # @param patterns [Array<Regexp>] set backtrace_formatter exclusion_patterns
   #
   # source://rspec-core//lib/rspec/core/configuration.rb#682
   def backtrace_exclusion_patterns=(patterns); end
@@ -964,7 +964,7 @@ class RSpec::Core::Configuration
   #   if the user is using those (either explicitly or implicitly
   #   by not setting `mock_with` or `expect_with` to anything else).
   # @note If the user uses this options with `mock_with :mocha`
-  #   (or similiar) they will still have monkey patching active
+  #   (or similar) they will still have monkey patching active
   #   in their test environment from mocha.
   #
   # source://rspec-core//lib/rspec/core/configuration.rb#1846
@@ -4308,7 +4308,7 @@ end
 # were loaded but not executed (due to filtering, `--fail-fast`
 # or whatever) should have a `:status` of `UNKNOWN_STATUS`.
 #
-# This willl produce a new list that:
+# This will produce a new list that:
 #   - Will be missing examples from previous runs that we know for sure
 #     no longer exist.
 #   - Will have the latest known status for any examples that either
@@ -4648,7 +4648,7 @@ end
 #
 # This is ideal for use by a example or example group, which may
 # be updated multiple times with globally configured hooks, etc,
-# but will not be queried frequently by other examples or examle
+# but will not be queried frequently by other examples or example
 # groups.
 #
 # @private
@@ -9697,7 +9697,7 @@ class RSpec::Core::Reporter
   # Registers a listener to a list of notifications. The reporter will send
   # notification of events to all registered listeners.
   #
-  # @param listener [Object] An obect that wishes to be notified of reporter
+  # @param listener [Object] An object that wishes to be notified of reporter
   #   events
   # @param notifications [Array] Array of symbols represents the events a
   #   listener wishes to subscribe too

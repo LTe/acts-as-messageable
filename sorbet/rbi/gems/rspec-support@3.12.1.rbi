@@ -9,70 +9,70 @@ module RSpec
   extend ::RSpec::Support::Warnings
 
   class << self
-    # source://rspec-core/3.12.0/lib/rspec/core.rb#70
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#70
     def clear_examples; end
 
-    # source://rspec-core/3.12.0/lib/rspec/core.rb#85
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#85
     def configuration; end
 
-    # source://rspec-core/3.12.0/lib/rspec/core.rb#49
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#49
     def configuration=(_arg0); end
 
-    # source://rspec-core/3.12.0/lib/rspec/core.rb#97
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#97
     def configure; end
 
-    # source://rspec-core/3.12.0/lib/rspec/core.rb#194
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#194
     def const_missing(name); end
 
-    # source://rspec-core/3.12.0/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
     def context(*args, &example_group_block); end
 
-    # source://rspec-core/3.12.0/lib/rspec/core.rb#122
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#122
     def current_example; end
 
-    # source://rspec-core/3.12.0/lib/rspec/core.rb#128
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#128
     def current_example=(example); end
 
-    # source://rspec-core/3.12.0/lib/rspec/core.rb#154
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#154
     def current_scope; end
 
-    # source://rspec-core/3.12.0/lib/rspec/core.rb#134
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#134
     def current_scope=(scope); end
 
-    # source://rspec-core/3.12.0/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
     def describe(*args, &example_group_block); end
 
-    # source://rspec-core/3.12.0/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
     def example_group(*args, &example_group_block); end
 
-    # source://rspec-core/3.12.0/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
     def fcontext(*args, &example_group_block); end
 
-    # source://rspec-core/3.12.0/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
     def fdescribe(*args, &example_group_block); end
 
-    # source://rspec-core/3.12.0/lib/rspec/core.rb#58
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#58
     def reset; end
 
-    # source://rspec-core/3.12.0/lib/rspec/core/shared_example_group.rb#110
+    # source://rspec-core/3.12.2/lib/rspec/core/shared_example_group.rb#110
     def shared_context(name, *args, &block); end
 
-    # source://rspec-core/3.12.0/lib/rspec/core/shared_example_group.rb#110
+    # source://rspec-core/3.12.2/lib/rspec/core/shared_example_group.rb#110
     def shared_examples(name, *args, &block); end
 
-    # source://rspec-core/3.12.0/lib/rspec/core/shared_example_group.rb#110
+    # source://rspec-core/3.12.2/lib/rspec/core/shared_example_group.rb#110
     def shared_examples_for(name, *args, &block); end
 
-    # source://rspec-core/3.12.0/lib/rspec/core.rb#160
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#160
     def world; end
 
-    # source://rspec-core/3.12.0/lib/rspec/core.rb#49
+    # source://rspec-core/3.12.2/lib/rspec/core.rb#49
     def world=(_arg0); end
 
-    # source://rspec-core/3.12.0/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
     def xcontext(*args, &example_group_block); end
 
-    # source://rspec-core/3.12.0/lib/rspec/core/dsl.rb#42
+    # source://rspec-core/3.12.2/lib/rspec/core/dsl.rb#42
     def xdescribe(*args, &example_group_block); end
   end
 end
@@ -147,12 +147,12 @@ module RSpec::Support
 
     # @api private
     #
-    # source://rspec-support//lib/rspec/support.rb#105
+    # source://rspec-support//lib/rspec/support.rb#111
     def failure_notifier; end
 
     # @api private
     #
-    # source://rspec-support//lib/rspec/support.rb#97
+    # source://rspec-support//lib/rspec/support.rb#103
     def failure_notifier=(callable); end
 
     # @private
@@ -171,7 +171,7 @@ module RSpec::Support
 
     # @api private
     #
-    # source://rspec-support//lib/rspec/support.rb#110
+    # source://rspec-support//lib/rspec/support.rb#116
     def notify_failure(failure, options = T.unsafe(nil)); end
 
     # Used internally to break cyclic dependency between mocks, expectations,
@@ -197,34 +197,32 @@ module RSpec::Support
     # source://rspec-support//lib/rspec/support/matcher_definition.rb#34
     def rspec_description_for_object(object); end
 
-    # A single thread local variable so we don't excessively pollute that namespace.
-    #
-    # source://rspec-support//lib/rspec/support.rb#92
+    # source://rspec-support//lib/rspec/support.rb#93
     def thread_local_data; end
 
     # @api private
     #
-    # source://rspec-support//lib/rspec/support.rb#132
+    # source://rspec-support//lib/rspec/support.rb#138
     def warning_notifier; end
 
     # @api private
     #
-    # source://rspec-support//lib/rspec/support.rb#125
+    # source://rspec-support//lib/rspec/support.rb#131
     def warning_notifier=(_arg0); end
 
     # @api private
     #
-    # source://rspec-support//lib/rspec/support.rb#115
+    # source://rspec-support//lib/rspec/support.rb#121
     def with_failure_notifier(callable); end
   end
 end
 
 # @private
 #
-# source://rspec-support//lib/rspec/support.rb#137
+# source://rspec-support//lib/rspec/support.rb#143
 module RSpec::Support::AllExceptionsExceptOnesWeMustNotRescue
   class << self
-    # source://rspec-support//lib/rspec/support.rb#142
+    # source://rspec-support//lib/rspec/support.rb#148
     def ===(exception); end
   end
 end
@@ -232,7 +230,7 @@ end
 # These exceptions are dangerous to rescue as rescuing them
 # would interfere with things we should not interfere with.
 #
-# source://rspec-support//lib/rspec/support.rb#140
+# source://rspec-support//lib/rspec/support.rb#146
 RSpec::Support::AllExceptionsExceptOnesWeMustNotRescue::AVOID_RESCUING = T.let(T.unsafe(nil), Array)
 
 # Deals with the slightly different semantics of block arguments.
@@ -278,12 +276,12 @@ end
 
 # @private
 #
-# source://rspec-support//lib/rspec/support.rb#102
+# source://rspec-support//lib/rspec/support.rb#108
 RSpec::Support::DEFAULT_FAILURE_NOTIFIER = T.let(T.unsafe(nil), Proc)
 
 # @private
 #
-# source://rspec-support//lib/rspec/support.rb#129
+# source://rspec-support//lib/rspec/support.rb#135
 RSpec::Support::DEFAULT_WARNING_NOTIFIER = T.let(T.unsafe(nil), Proc)
 
 # source://rspec-support//lib/rspec/support/differ.rb#10

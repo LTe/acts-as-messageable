@@ -104,22 +104,22 @@ end
 class Zeitwerk::GemLoader < ::Zeitwerk::Loader
   # @return [GemLoader] a new instance of GemLoader
   #
-  # source://zeitwerk//lib/zeitwerk/gem_loader.rb#17
-  def initialize(root_file, warn_on_extra_files:); end
+  # source://zeitwerk//lib/zeitwerk/gem_loader.rb#19
+  def initialize(root_file, namespace:, warn_on_extra_files:); end
 
-  # source://zeitwerk//lib/zeitwerk/gem_loader.rb#30
+  # source://zeitwerk//lib/zeitwerk/gem_loader.rb#34
   def setup; end
 
   private
 
-  # source://zeitwerk//lib/zeitwerk/gem_loader.rb#38
+  # source://zeitwerk//lib/zeitwerk/gem_loader.rb#42
   def warn_on_extra_files; end
 
   class << self
     # @private
     #
-    # source://zeitwerk//lib/zeitwerk/gem_loader.rb#12
-    def _new(root_file, warn_on_extra_files:); end
+    # source://zeitwerk//lib/zeitwerk/gem_loader.rb#14
+    def __new(root_file, namespace:, warn_on_extra_files:); end
 
     private
 
@@ -173,7 +173,7 @@ module Zeitwerk::Internal
   def internal(method_name); end
 end
 
-# source://zeitwerk//lib/zeitwerk/loader.rb#6
+# source://zeitwerk//lib/zeitwerk/loader.rb#7
 class Zeitwerk::Loader
   include ::Zeitwerk::RealModName
   include ::Zeitwerk::Loader::Callbacks
@@ -181,29 +181,35 @@ class Zeitwerk::Loader
   include ::Zeitwerk::Loader::Config
   include ::Zeitwerk::Loader::EagerLoad
   extend ::Zeitwerk::Internal
+  extend ::Zeitwerk::RealModName
 
   # @return [Loader] a new instance of Loader
   #
-  # source://zeitwerk//lib/zeitwerk/loader.rb#98
+  # source://zeitwerk//lib/zeitwerk/loader.rb#99
   def initialize; end
 
-  # source://zeitwerk//lib/zeitwerk/loader.rb#42
+  # source://zeitwerk//lib/zeitwerk/loader.rb#43
   def __autoloaded_dirs; end
 
-  # source://zeitwerk//lib/zeitwerk/loader.rb#32
+  # source://zeitwerk//lib/zeitwerk/loader.rb#33
   def __autoloads; end
 
-  # source://zeitwerk//lib/zeitwerk/loader.rb#76
+  # source://zeitwerk//lib/zeitwerk/loader.rb#77
   def __namespace_dirs; end
 
-  # source://zeitwerk//lib/zeitwerk/loader.rb#260
+  # source://zeitwerk//lib/zeitwerk/loader.rb#310
   def __shadowed_file?(file); end
 
-  # source://zeitwerk//lib/zeitwerk/loader.rb#87
+  # source://zeitwerk//lib/zeitwerk/loader.rb#88
   def __shadowed_files; end
 
-  # source://zeitwerk//lib/zeitwerk/loader.rb#58
+  # source://zeitwerk//lib/zeitwerk/loader.rb#59
   def __to_unload; end
+
+  # @raise [Zeitwerk::Error]
+  #
+  # source://zeitwerk//lib/zeitwerk/loader.rb#234
+  def cpath_expected_at(path); end
 
   # Unloads all loaded code, and calls setup again so that the loader is able
   # to pick any changes in the file system.
@@ -213,12 +219,12 @@ class Zeitwerk::Loader
   #
   # @raise [Zeitwerk::Error]
   #
-  # source://zeitwerk//lib/zeitwerk/loader.rb#221
+  # source://zeitwerk//lib/zeitwerk/loader.rb#223
   def reload; end
 
   # Sets autoloads in the root namespaces.
   #
-  # source://zeitwerk//lib/zeitwerk/loader.rb#117
+  # source://zeitwerk//lib/zeitwerk/loader.rb#119
   def setup; end
 
   # Removes loaded constants and configured autoloads.
@@ -232,7 +238,7 @@ class Zeitwerk::Loader
   # means `unload` + `setup`. This one is available to be used together with
   # `unregister`, which is undocumented too.
   #
-  # source://zeitwerk//lib/zeitwerk/loader.rb#143
+  # source://zeitwerk//lib/zeitwerk/loader.rb#145
   def unload; end
 
   # Says if the given constant path would be unloaded on reload. This
@@ -240,31 +246,31 @@ class Zeitwerk::Loader
   #
   # @return [Boolean]
   #
-  # source://zeitwerk//lib/zeitwerk/loader.rb#235
+  # source://zeitwerk//lib/zeitwerk/loader.rb#285
   def unloadable_cpath?(cpath); end
 
   # Returns an array with the constant paths that would be unloaded on reload.
   # This predicate returns an empty array if reloading is disabled.
   #
-  # source://zeitwerk//lib/zeitwerk/loader.rb#243
+  # source://zeitwerk//lib/zeitwerk/loader.rb#293
   def unloadable_cpaths; end
 
   # This is a dangerous method.
   #
-  # source://zeitwerk//lib/zeitwerk/loader.rb#251
+  # source://zeitwerk//lib/zeitwerk/loader.rb#301
   def unregister; end
 
   private
 
-  # source://zeitwerk//lib/zeitwerk/loader.rb#393
+  # source://zeitwerk//lib/zeitwerk/loader.rb#456
   def autoload_file(parent, cname, file); end
 
   # @return [Boolean]
   #
-  # source://zeitwerk//lib/zeitwerk/loader.rb#451
+  # source://zeitwerk//lib/zeitwerk/loader.rb#514
   def autoload_path_set_by_me_for?(parent, cname); end
 
-  # source://zeitwerk//lib/zeitwerk/loader.rb#363
+  # source://zeitwerk//lib/zeitwerk/loader.rb#426
   def autoload_subdir(parent, cname, subdir); end
 
   # We keep track of autoloaded directories to remove them from the registry
@@ -273,7 +279,7 @@ class Zeitwerk::Loader
   # Files are removed as they are autoloaded, but directories need to wait due
   # to concurrency (see why in Zeitwerk::Loader::Callbacks#on_dir_autoloaded).
   #
-  # source://zeitwerk//lib/zeitwerk/loader.rb#42
+  # source://zeitwerk//lib/zeitwerk/loader.rb#43
   def autoloaded_dirs; end
 
   # Maps absolute paths for which an autoload has been set ---and not
@@ -284,18 +290,18 @@ class Zeitwerk::Loader
   #   "/Users/fxn/blog/app/models/hotel/pricing.rb" => [Hotel, :Pricing]
   #   ...
   #
-  # source://zeitwerk//lib/zeitwerk/loader.rb#32
+  # source://zeitwerk//lib/zeitwerk/loader.rb#33
   def autoloads; end
+
+  # Returns the value of attribute dirs_autoload_monitor.
+  #
+  # source://zeitwerk//lib/zeitwerk/loader.rb#96
+  def dirs_autoload_monitor; end
 
   # Returns the value of attribute mutex.
   #
-  # source://zeitwerk//lib/zeitwerk/loader.rb#91
+  # source://zeitwerk//lib/zeitwerk/loader.rb#92
   def mutex; end
-
-  # Returns the value of attribute mutex2.
-  #
-  # source://zeitwerk//lib/zeitwerk/loader.rb#95
-  def mutex2; end
 
   # Maps namespace constant paths to their respective directories.
   #
@@ -311,31 +317,31 @@ class Zeitwerk::Loader
   # and that its children are spread over those directories. We'll visit them
   # to set up the corresponding autoloads.
   #
-  # source://zeitwerk//lib/zeitwerk/loader.rb#76
+  # source://zeitwerk//lib/zeitwerk/loader.rb#77
   def namespace_dirs; end
 
   # `dir` is the directory that would have autovivified a namespace. `file` is
   # the file where we've found the namespace is explicitly defined.
   #
-  # source://zeitwerk//lib/zeitwerk/loader.rb#419
+  # source://zeitwerk//lib/zeitwerk/loader.rb#482
   def promote_namespace_from_implicit_to_explicit(dir:, file:, parent:, cname:); end
 
-  # source://zeitwerk//lib/zeitwerk/loader.rb#465
+  # source://zeitwerk//lib/zeitwerk/loader.rb#528
   def raise_if_conflicting_directory(dir); end
 
-  # source://zeitwerk//lib/zeitwerk/loader.rb#460
+  # source://zeitwerk//lib/zeitwerk/loader.rb#523
   def register_explicit_namespace(cpath); end
 
-  # source://zeitwerk//lib/zeitwerk/loader.rb#490
+  # source://zeitwerk//lib/zeitwerk/loader.rb#552
   def run_on_unload_callbacks(cpath, value, abspath); end
 
-  # source://zeitwerk//lib/zeitwerk/loader.rb#430
+  # source://zeitwerk//lib/zeitwerk/loader.rb#493
   def set_autoload(parent, cname, abspath); end
 
-  # source://zeitwerk//lib/zeitwerk/loader.rb#328
+  # source://zeitwerk//lib/zeitwerk/loader.rb#410
   def set_autoloads_in_dir(dir, parent); end
 
-  # source://zeitwerk//lib/zeitwerk/loader.rb#260
+  # source://zeitwerk//lib/zeitwerk/loader.rb#310
   def shadowed_file?(file); end
 
   # A shadowed file is a file managed by this loader that is ignored when
@@ -345,7 +351,7 @@ class Zeitwerk::Loader
   # has only scanned the top-level, `shadowed_files` does not have shadowed
   # files that may exist deep in the project tree yet.
   #
-  # source://zeitwerk//lib/zeitwerk/loader.rb#87
+  # source://zeitwerk//lib/zeitwerk/loader.rb#88
   def shadowed_files; end
 
   # Stores metadata needed for unloading. Its entries look like this:
@@ -360,49 +366,50 @@ class Zeitwerk::Loader
   # If reloading is enabled, this hash is filled as constants are autoloaded
   # or eager loaded. Otherwise, the collection remains empty.
   #
-  # source://zeitwerk//lib/zeitwerk/loader.rb#58
+  # source://zeitwerk//lib/zeitwerk/loader.rb#59
   def to_unload; end
 
-  # source://zeitwerk//lib/zeitwerk/loader.rb#497
+  # source://zeitwerk//lib/zeitwerk/loader.rb#559
   def unload_autoload(parent, cname); end
 
-  # source://zeitwerk//lib/zeitwerk/loader.rb#503
+  # source://zeitwerk//lib/zeitwerk/loader.rb#565
   def unload_cref(parent, cname); end
 
   class << self
     # Returns an array with the absolute paths of the root directories of all
     # registered loaders. This is a read-only collection.
     #
-    # source://zeitwerk//lib/zeitwerk/loader.rb#322
+    # source://zeitwerk//lib/zeitwerk/loader.rb#404
     def all_dirs; end
 
     # Returns the value of attribute default_logger.
     #
-    # source://zeitwerk//lib/zeitwerk/loader.rb#268
+    # source://zeitwerk//lib/zeitwerk/loader.rb#320
     def default_logger; end
 
     # Sets the attribute default_logger
     #
     # @param value the value to set the attribute default_logger to.
     #
-    # source://zeitwerk//lib/zeitwerk/loader.rb#268
+    # source://zeitwerk//lib/zeitwerk/loader.rb#320
     def default_logger=(_arg0); end
 
     # Broadcasts `eager_load` to all loaders. Those that have not been setup
     # are skipped.
     #
-    # source://zeitwerk//lib/zeitwerk/loader.rb#294
+    # source://zeitwerk//lib/zeitwerk/loader.rb#376
     def eager_load_all; end
 
     # Broadcasts `eager_load_namespace` to all loaders. Those that have not
     # been setup are skipped.
     #
-    # source://zeitwerk//lib/zeitwerk/loader.rb#308
+    # source://zeitwerk//lib/zeitwerk/loader.rb#390
     def eager_load_namespace(mod); end
 
     # This is a shortcut for
     #
     #   require "zeitwerk"
+    #
     #   loader = Zeitwerk::Loader.new
     #   loader.tag = File.basename(__FILE__, ".rb")
     #   loader.inflector = Zeitwerk::GemInflector.new(__FILE__)
@@ -414,8 +421,26 @@ class Zeitwerk::Loader
     # This method returns a subclass of Zeitwerk::Loader, but the exact type
     # is private, client code can only rely on the interface.
     #
-    # source://zeitwerk//lib/zeitwerk/loader.rb#285
+    # source://zeitwerk//lib/zeitwerk/loader.rb#338
     def for_gem(warn_on_extra_files: T.unsafe(nil)); end
+
+    # This is a shortcut for
+    #
+    #   require "zeitwerk"
+    #
+    #   loader = Zeitwerk::Loader.new
+    #   loader.tag = namespace.name + "-" + File.basename(__FILE__, ".rb")
+    #   loader.inflector = Zeitwerk::GemInflector.new(__FILE__)
+    #   loader.push_dir(__dir__, namespace: namespace)
+    #
+    # except that this method returns the same object in subsequent calls from
+    # the same file, in the unlikely case the gem wants to be able to reload.
+    #
+    # This method returns a subclass of Zeitwerk::Loader, but the exact type
+    # is private, client code can only rely on the interface.
+    #
+    # source://zeitwerk//lib/zeitwerk/loader.rb#359
+    def for_gem_extension(namespace); end
   end
 end
 
@@ -444,12 +469,12 @@ module Zeitwerk::Loader::Callbacks
   #
   # @private
   #
-  # source://zeitwerk//lib/zeitwerk/loader/callbacks.rb#73
+  # source://zeitwerk//lib/zeitwerk/loader/callbacks.rb#74
   def on_namespace_loaded(namespace); end
 
   private
 
-  # source://zeitwerk//lib/zeitwerk/loader/callbacks.rb#84
+  # source://zeitwerk//lib/zeitwerk/loader/callbacks.rb#85
   def run_on_load_callbacks(cpath, value, abspath); end
 end
 
@@ -461,14 +486,14 @@ module Zeitwerk::Loader::Config
   # source://zeitwerk//lib/zeitwerk/loader/config.rb#86
   def initialize; end
 
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#297
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#296
   def __ignores?(abspath); end
 
   def __roots; end
 
   # Configure directories or glob patterns to be collapsed.
   #
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#217
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#216
   def collapse(*glob_patterns); end
 
   # If `namespaces` is falsey (default), returns an array with the absolute
@@ -480,13 +505,13 @@ module Zeitwerk::Loader::Config
   #
   # These are read-only collections, please add to them with `push_dir`.
   #
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#157
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#156
   def dirs(namespaces: T.unsafe(nil), ignored: T.unsafe(nil)); end
 
   # Let eager load ignore the given files or directories. The constants defined
   # in those files are still autoloadable.
   #
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#199
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#198
   def do_not_eager_load(*paths); end
 
   # You need to call this method before setup in order to be able to reload.
@@ -494,12 +519,12 @@ module Zeitwerk::Loader::Config
   #
   # @raise [Zeitwerk::Error]
   #
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#178
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#177
   def enable_reloading; end
 
   # Configure files, directories, or glob patterns to be totally ignored.
   #
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#206
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#205
   def ignore(*glob_patterns); end
 
   # Returns the value of attribute inflector.
@@ -516,7 +541,7 @@ module Zeitwerk::Loader::Config
 
   # Logs to `$stdout`, handy shortcut for debugging.
   #
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#289
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#288
   def log!; end
 
   # Returns the value of attribute logger.
@@ -547,13 +572,13 @@ module Zeitwerk::Loader::Config
   #
   # @raise [TypeError]
   #
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#253
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#252
   def on_load(cpath = T.unsafe(nil), &block); end
 
   # Configure a block to be called after setup and on each reload.
   # If setup was already done, the block runs immediately.
   #
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#229
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#228
   def on_setup(&block); end
 
   # Configure a block to be invoked right before a certain constant is removed.
@@ -572,7 +597,7 @@ module Zeitwerk::Loader::Config
   #
   # @raise [TypeError]
   #
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#278
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#277
   def on_unload(cpath = T.unsafe(nil), &block); end
 
   # Pushes `path` to the list of root directories.
@@ -588,7 +613,7 @@ module Zeitwerk::Loader::Config
 
   # @return [Boolean]
   #
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#191
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#190
   def reloading_enabled?; end
 
   # Returns the loader's tag.
@@ -596,22 +621,22 @@ module Zeitwerk::Loader::Config
   # Implemented as a method instead of via attr_reader for symmetry with the
   # writer below.
   #
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#136
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#135
   def tag; end
 
   # Sets a tag for the loader, useful for logging.
   #
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#143
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#142
   def tag=(tag); end
 
   private
 
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#315
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#314
   def actual_roots; end
 
   # @return [Boolean]
   #
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#340
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#339
   def collapse?(dir); end
 
   # The actual collection of absolute directory names at the time the collapse
@@ -632,13 +657,13 @@ module Zeitwerk::Loader::Config
 
   # @return [Boolean]
   #
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#327
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#326
   def excluded_from_eager_load?(abspath); end
 
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#350
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#349
   def expand_glob_patterns(glob_patterns); end
 
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#345
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#344
   def expand_paths(paths); end
 
   # Absolute paths of files, directories, or glob patterns to be totally
@@ -649,7 +674,7 @@ module Zeitwerk::Loader::Config
 
   # @return [Boolean]
   #
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#310
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#309
   def ignored_path?(abspath); end
 
   # The actual collection of absolute file and directory names at the time the
@@ -659,7 +684,7 @@ module Zeitwerk::Loader::Config
   # source://zeitwerk//lib/zeitwerk/loader/config.rb#44
   def ignored_paths; end
 
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#297
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#296
   def ignores?(abspath); end
 
   # User-oriented callbacks to be fired when a constant is loaded.
@@ -677,15 +702,15 @@ module Zeitwerk::Loader::Config
   # source://zeitwerk//lib/zeitwerk/loader/config.rb#83
   def on_unload_callbacks; end
 
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#362
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#361
   def recompute_collapse_dirs; end
 
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#357
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#356
   def recompute_ignored_paths; end
 
   # @return [Boolean]
   #
-  # source://zeitwerk//lib/zeitwerk/loader/config.rb#322
+  # source://zeitwerk//lib/zeitwerk/loader/config.rb#321
   def root_dir?(dir); end
 
   # Absolute paths of the root directories, mapped to their respective root namespaces:
@@ -722,7 +747,7 @@ module Zeitwerk::Loader::EagerLoad
 
   # @raise [Zeitwerk::SetupRequired]
   #
-  # source://zeitwerk//lib/zeitwerk/loader/eager_load.rb#72
+  # source://zeitwerk//lib/zeitwerk/loader/eager_load.rb#74
   def eager_load_namespace(mod); end
 
   # Loads the given Ruby file.
@@ -734,7 +759,7 @@ module Zeitwerk::Loader::EagerLoad
   #
   # @raise [Zeitwerk::Error]
   #
-  # source://zeitwerk//lib/zeitwerk/loader/eager_load.rb#114
+  # source://zeitwerk//lib/zeitwerk/loader/eager_load.rb#116
   def load_file(path); end
 
   private
@@ -742,13 +767,13 @@ module Zeitwerk::Loader::EagerLoad
   # The caller is responsible for making sure `namespace` is the namespace that
   # corresponds to `dir`.
   #
-  # source://zeitwerk//lib/zeitwerk/loader/eager_load.rb#154
+  # source://zeitwerk//lib/zeitwerk/loader/eager_load.rb#160
   def actual_eager_load_dir(dir, namespace, force: T.unsafe(nil)); end
 
   # In order to invoke this method, the caller has to ensure `child` is a
   # strict namespace descendant of `root_namespace`.
   #
-  # source://zeitwerk//lib/zeitwerk/loader/eager_load.rb#189
+  # source://zeitwerk//lib/zeitwerk/loader/eager_load.rb#195
   def eager_load_child_namespace(child, child_name, root_dir, root_namespace); end
 end
 
@@ -765,6 +790,11 @@ module Zeitwerk::Loader::Helpers
   #
   # source://zeitwerk//lib/zeitwerk/loader/helpers.rb#134
   def cget(parent, cname); end
+
+  # @raise [Zeitwerk::NameError]
+  #
+  # source://zeitwerk//lib/zeitwerk/loader/helpers.rb#149
+  def cname_for(basename, abspath); end
 
   # Symbol#name was introduced in Ruby 3.0. It returns always the same
   # frozen object, so we may save a few string allocations.
@@ -810,7 +840,10 @@ module Zeitwerk::Loader::Helpers
   def walk_up(abspath); end
 end
 
-# source://zeitwerk//lib/zeitwerk/loader.rb#20
+# source://zeitwerk//lib/zeitwerk/loader/helpers.rb#144
+module Zeitwerk::Loader::Helpers::CNAME_VALIDATOR; end
+
+# source://zeitwerk//lib/zeitwerk/loader.rb#21
 Zeitwerk::Loader::MUTEX = T.let(T.unsafe(nil), Thread::Mutex)
 
 # source://zeitwerk//lib/zeitwerk/error.rb#13
@@ -902,7 +935,7 @@ module Zeitwerk::Registry
     # @private
     #
     # source://zeitwerk//lib/zeitwerk/registry.rb#89
-    def loader_for_gem(root_file, warn_on_extra_files:); end
+    def loader_for_gem(root_file, namespace:, warn_on_extra_files:); end
 
     # Keeps track of all loaders. Useful to broadcast messages and to prevent
     # them from being garbage collected.
