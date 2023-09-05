@@ -75,12 +75,6 @@ module RSpec
   end
 end
 
-# source://rspec-core/3.12.0/lib/rspec/core.rb#187
-RSpec::MODULES_TO_AUTOLOAD = T.let(T.unsafe(nil), Hash)
-
-# source://rspec-core/3.12.0/lib/rspec/core/shared_context.rb#54
-RSpec::SharedContext = RSpec::Core::SharedContext
-
 # source://rspec//lib/rspec/version.rb#2
 module RSpec::Version; end
 

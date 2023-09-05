@@ -32,6 +32,9 @@ class Racc::Parser
   # source://racc//lib/racc/parser.rb#331
   def _racc_yyparse_rb(recv, mid, arg, c_debug); end
 
+  # source://racc//lib/racc/parser.rb#264
+  def do_parse; end
+
   # The method to fetch next token.
   # If you use #do_parse method, you must implement #next_token.
   #
@@ -116,6 +119,9 @@ class Racc::Parser
   #
   # source://racc//lib/racc/parser.rb#544
   def yyerror; end
+
+  # source://racc//lib/racc/parser.rb#326
+  def yyparse(recv, mid); end
 
   class << self
     # source://racc//lib/racc/parser.rb#218

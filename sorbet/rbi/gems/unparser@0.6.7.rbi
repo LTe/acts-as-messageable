@@ -1562,7 +1562,7 @@ class Unparser::Either
   end
 end
 
-# source://unparser//lib/unparser/either.rb#56
+# source://unparser//lib/unparser/either.rb#53
 class Unparser::Either::Left < ::Unparser::Either
   # Evaluate applicative block
   #
@@ -1610,7 +1610,7 @@ end
 
 # Left
 #
-# source://unparser//lib/unparser/either.rb#106
+# source://unparser//lib/unparser/either.rb#103
 class Unparser::Either::Right < ::Unparser::Either
   # Evaluate applicative block
   #
@@ -2764,7 +2764,7 @@ Unparser::Emitter::MLHS::NO_COMMA = T.let(T.unsafe(nil), Array)
 
 # Base class for special match node emitters
 #
-# source://unparser//lib/unparser/emitter/match.rb#8
+# source://unparser//lib/unparser/emitter/match.rb#7
 class Unparser::Emitter::Match < ::Unparser::Emitter; end
 
 # Emitter for match current line
@@ -3287,11 +3287,20 @@ end
 class Unparser::Emitter::Root < ::Unparser::Emitter
   include ::Unparser::Emitter::LocalVariableRoot
 
+  # source://unparser//lib/unparser/concord.rb#60
+  def buffer; end
+
+  # source://unparser//lib/unparser/concord.rb#60
+  def comments; end
+
   # source://unparser//lib/unparser/emitter/root.rb#14
   def dispatch; end
 
   # source://unparser//lib/unparser/adamantium/method_builder.rb#87
   def local_variable_scope(&block); end
+
+  # source://unparser//lib/unparser/concord.rb#60
+  def node; end
 end
 
 # source://unparser//lib/unparser/emitter/root.rb#10
@@ -3466,7 +3475,7 @@ end
 #
 # Original code before vendoring and reduction from: https://github.com/dkubb/equalizer.
 #
-# source://unparser//lib/unparser/equalizer.rb#19
+# source://unparser//lib/unparser/equalizer.rb#7
 class Unparser::Equalizer < ::Module
   # Initialize an Equalizer with the given keys
   #

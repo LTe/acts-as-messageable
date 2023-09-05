@@ -180,10 +180,10 @@ class Faraday::Connection
   # source://faraday//lib/faraday/connection.rb#57
   def initialize(url = T.unsafe(nil), options = T.unsafe(nil)); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def adapter(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def app(*args, **_arg1, &block); end
 
   # Public: Sets up a custom Authorization header.
@@ -225,7 +225,7 @@ class Faraday::Connection
   # source://faraday//lib/faraday/connection.rb#195
   def basic_auth(login, pass); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def build(*args, **_arg1, &block); end
 
   # Internal: Build an absolute URL based on url_prefix.
@@ -306,10 +306,10 @@ class Faraday::Connection
   # source://faraday//lib/faraday/connection.rb#102
   def headers=(hash); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def host(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def host=(*args, **_arg1, &block); end
 
   # Public: Sets up the parallel manager to make a set of requests.
@@ -354,7 +354,7 @@ class Faraday::Connection
   # source://faraday//lib/faraday/connection.rb#176
   def patch(url = T.unsafe(nil), body = T.unsafe(nil), headers = T.unsafe(nil), &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def path_prefix(*args, **_arg1, &block); end
 
   # Public: Sets the path prefix and ensures that it always has a leading
@@ -367,10 +367,10 @@ class Faraday::Connection
   # source://faraday//lib/faraday/connection.rb#329
   def path_prefix=(value); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def port(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def port=(*args, **_arg1, &block); end
 
   # source://faraday//lib/faraday/connection.rb#176
@@ -384,10 +384,10 @@ class Faraday::Connection
   # source://faraday//lib/faraday/connection.rb#176
   def put(url = T.unsafe(nil), body = T.unsafe(nil), headers = T.unsafe(nil), &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def request(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def response(*args, **_arg1, &block); end
 
   # Builds and runs the Faraday::Request.
@@ -402,10 +402,10 @@ class Faraday::Connection
   # source://faraday//lib/faraday/connection.rb#365
   def run_request(method, url, body, headers); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def scheme(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def scheme=(*args, **_arg1, &block); end
 
   # source://faraday//lib/faraday/connection.rb#431
@@ -459,7 +459,7 @@ class Faraday::Connection
   # source://faraday//lib/faraday/connection.rb#308
   def url_prefix=(url, encoder = T.unsafe(nil)); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def use(*args, **_arg1, &block); end
 
   # Internal: Yields username and password extracted from a URI if they both exist.
@@ -537,7 +537,7 @@ end
 # Subclasses Struct with some special helpers for converting from a Hash to
 # a Struct.
 #
-# source://faraday//lib/faraday/options.rb#5
+# source://faraday//lib/faraday/options.rb#4
 class Faraday::Options < ::Struct
   # source://faraday//lib/faraday/options.rb#163
   def [](key); end
@@ -686,28 +686,28 @@ end
 class Faraday::ProxyOptions < ::Faraday::Options
   extend ::Forwardable
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def host(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def host=(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def path(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def path=(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def port(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def port=(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def scheme(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def scheme=(*args, **_arg1, &block); end
 
   class << self

@@ -1039,7 +1039,7 @@ class Jeweler::GemspecError < ::StandardError; end
 #
 # See also http://wiki.github.com/technicalpickles/jeweler/rubyforge
 #
-# source://jeweler//lib/jeweler/rubyforge_tasks.rb#22
+# source://jeweler//lib/jeweler/rubyforge_tasks.rb#21
 class Jeweler::RubyforgeTasks < ::Rake::TaskLib
   # @return [RubyforgeTasks] a new instance of RubyforgeTasks
   # @yield [_self]
@@ -1586,6 +1586,3 @@ class Rake::Application
   # source://rake/13.0.6/lib/rake/application.rb#744
   def standard_system_dir; end
 end
-
-# source://rake/13.0.6/lib/rake/application.rb#41
-Rake::Application::DEFAULT_RAKEFILES = T.let(T.unsafe(nil), Array)

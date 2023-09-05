@@ -9,192 +9,18 @@
 # source://rack-test//lib/rack/test/cookie_jar.rb#6
 module Rack
   class << self
-    # source://rack/2.2.6.2/lib/rack/version.rb#26
+    # source://rack/2.2.6.4/lib/rack/version.rb#26
     def release; end
 
-    # source://rack/2.2.6.2/lib/rack/version.rb#19
+    # source://rack/2.2.6.4/lib/rack/version.rb#19
     def version; end
   end
 end
-
-# source://rack/2.2.6.2/lib/rack.rb#29
-Rack::CACHE_CONTROL = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#31
-Rack::CONTENT_LENGTH = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#32
-Rack::CONTENT_TYPE = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#43
-Rack::DELETE = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#36
-Rack::ETAG = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#30
-Rack::EXPIRES = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack/file.rb#6
-Rack::File = Rack::Files
-
-# source://rack/2.2.6.2/lib/rack.rb#39
-Rack::GET = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#44
-Rack::HEAD = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#20
-Rack::HTTPS = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#35
-Rack::HTTP_COOKIE = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#17
-Rack::HTTP_HOST = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#18
-Rack::HTTP_PORT = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#19
-Rack::HTTP_VERSION = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#46
-Rack::LINK = T.let(T.unsafe(nil), String)
 
 # For backwards compatibility with 1.1.0 and below
 #
 # source://rack-test//lib/rack/test.rb#413
 Rack::MockSession = Rack::Test::Session
-
-# source://rack/2.2.6.2/lib/rack.rb#45
-Rack::OPTIONS = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#42
-Rack::PATCH = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#21
-Rack::PATH_INFO = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#40
-Rack::POST = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#41
-Rack::PUT = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#25
-Rack::QUERY_STRING = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#53
-Rack::RACK_ERRORS = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#63
-Rack::RACK_HIJACK = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#65
-Rack::RACK_HIJACK_IO = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#55
-Rack::RACK_INPUT = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#64
-Rack::RACK_IS_HIJACK = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#54
-Rack::RACK_LOGGER = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#76
-Rack::RACK_METHODOVERRIDE_ORIGINAL_METHOD = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#67
-Rack::RACK_MULTIPART_BUFFER_SIZE = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#68
-Rack::RACK_MULTIPART_TEMPFILE_FACTORY = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#60
-Rack::RACK_MULTIPROCESS = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#59
-Rack::RACK_MULTITHREAD = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#66
-Rack::RACK_RECURSIVE_INCLUDE = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#72
-Rack::RACK_REQUEST_COOKIE_HASH = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#73
-Rack::RACK_REQUEST_COOKIE_STRING = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#70
-Rack::RACK_REQUEST_FORM_HASH = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#69
-Rack::RACK_REQUEST_FORM_INPUT = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#71
-Rack::RACK_REQUEST_FORM_VARS = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#74
-Rack::RACK_REQUEST_QUERY_HASH = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#75
-Rack::RACK_REQUEST_QUERY_STRING = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#61
-Rack::RACK_RUNONCE = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#56
-Rack::RACK_SESSION = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#57
-Rack::RACK_SESSION_OPTIONS = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#77
-Rack::RACK_SESSION_UNPACKED_COOKIE_DATA = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#58
-Rack::RACK_SHOWSTATUS_DETAIL = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#52
-Rack::RACK_TEMPFILES = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#62
-Rack::RACK_URL_SCHEME = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#51
-Rack::RACK_VERSION = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack/version.rb#23
-Rack::RELEASE = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#22
-Rack::REQUEST_METHOD = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#23
-Rack::REQUEST_PATH = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#24
-Rack::SCRIPT_NAME = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#27
-Rack::SERVER_NAME = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#28
-Rack::SERVER_PORT = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#26
-Rack::SERVER_PROTOCOL = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#33
-Rack::SET_COOKIE = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#48
-Rack::TRACE = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#34
-Rack::TRANSFER_ENCODING = T.let(T.unsafe(nil), String)
 
 # source://rack-test//lib/rack/test/cookie_jar.rb#7
 module Rack::Test
@@ -448,10 +274,10 @@ module Rack::Test::Methods
   # source://rack-test//lib/rack/test/methods.rb#91
   def _rack_test_current_session=(_arg0); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def authorize(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def basic_authorize(*args, **_arg1, &block); end
 
   # Create a new Rack::Test::Session for #app.
@@ -459,7 +285,7 @@ module Rack::Test::Methods
   # source://rack-test//lib/rack/test/methods.rb#40
   def build_rack_test_session(_name); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def clear_cookies(*args, **_arg1, &block); end
 
   # Return the currently actively session.  This is the session to
@@ -468,46 +294,46 @@ module Rack::Test::Methods
   # source://rack-test//lib/rack/test/methods.rb#51
   def current_session; end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def custom_request(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def delete(*args, **_arg1, &block); end
 
   # source://rack-test//lib/rack/test/methods.rb#64
   def digest_authorize(username, password); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def env(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def follow_redirect!(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def get(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def head(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def header(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def last_request(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def last_response(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def options(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def patch(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def post(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def put(*args, **_arg1, &block); end
 
   # Return the existing session with the given name, or a new
@@ -523,10 +349,10 @@ module Rack::Test::Methods
   # source://rack-test//lib/rack/test/methods.rb#29
   def rack_test_session(name = T.unsafe(nil)); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def request(*args, **_arg1, &block); end
 
-  # source://forwardable/1.3.2/forwardable.rb#229
+  # source://forwardable/1.3.3/forwardable.rb#231
   def set_cookie(*args, **_arg1, &block); end
 
   # Create a new session (or reuse an existing session with the given name),
@@ -935,9 +761,3 @@ end
 
 # source://rack-test//lib/rack/test/version.rb#3
 Rack::Test::VERSION = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack.rb#47
-Rack::UNLINK = T.let(T.unsafe(nil), String)
-
-# source://rack/2.2.6.2/lib/rack/version.rb#16
-Rack::VERSION = T.let(T.unsafe(nil), Array)

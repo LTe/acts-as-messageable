@@ -14711,6 +14711,7 @@ ERB::Util::TAG_NAME_START_REGEXP_SET = T.let(T.unsafe(nil), String)
 
 # source://activesupport//lib/active_support/core_ext/enumerable.rb#18
 module Enumerable
+  include ::ActiveSupport::ToJsonWithActiveSupportEncoder
   extend ::ActiveSupport::EnumerableCoreExt::Constants
 
   # source://activesupport//lib/active_support/core_ext/object/json.rb#140
