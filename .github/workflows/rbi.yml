@@ -29,6 +29,6 @@ jobs:
       - run : bundle exec tapioca gems
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Update RBIs
+          commit_message: Update RBIs [dependabot skip]
           file_pattern: './sorbet'
 
