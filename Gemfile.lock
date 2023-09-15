@@ -238,7 +238,7 @@ GEM
       tins (~> 1.0)
     thor (1.2.2)
     thread_safe (0.3.6)
-    timecop (0.9.6)
+    timecop (0.9.8)
     tins (1.32.1)
       sync
     tzinfo (2.0.6)
