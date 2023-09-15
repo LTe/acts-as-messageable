@@ -8,6 +8,25 @@ class Bundler::Dependency < ::Gem::Dependency
   include ::Tapioca::BundlerExt::AutoRequireHook
 end
 
+# source://tapioca//lib/tapioca/helpers/git_attributes.rb#4
+class GitAttributes
+  class << self
+    # source://tapioca//lib/tapioca/helpers/git_attributes.rb#9
+    sig { params(path: ::Pathname).void }
+    def create_generated_attribute_file(path); end
+
+    # source://tapioca//lib/tapioca/helpers/git_attributes.rb#16
+    sig { params(path: ::Pathname).void }
+    def create_vendored_attribute_file(path); end
+
+    private
+
+    # source://tapioca//lib/tapioca/helpers/git_attributes.rb#25
+    sig { params(path: ::Pathname, content: ::String).void }
+    def create_gitattributes_file(path, content); end
+  end
+end
+
 # We need to do the alias-method-chain dance since Bootsnap does the same,
 # and prepended modules and alias-method-chain don't play well together.
 #
@@ -35,7 +54,7 @@ module RBI; end
 
 # source://tapioca//lib/tapioca/rbi_ext/model.rb#5
 class RBI::Tree < ::RBI::NodeWithComments
-  # source://rbi/0.0.17/lib/rbi/model.rb#119
+  # source://rbi/0.1.1/lib/rbi/model.rb#119
   sig do
     params(
       loc: T.nilable(::RBI::Loc),
@@ -45,19 +64,19 @@ class RBI::Tree < ::RBI::NodeWithComments
   end
   def initialize(loc: T.unsafe(nil), comments: T.unsafe(nil), &block); end
 
-  # source://rbi/0.0.17/lib/rbi/model.rb#126
+  # source://rbi/0.1.1/lib/rbi/model.rb#126
   sig { params(node: ::RBI::Node).void }
   def <<(node); end
 
-  # source://rbi/0.0.17/lib/rbi/printer.rb#226
+  # source://rbi/0.1.1/lib/rbi/printer.rb#226
   sig { override.params(v: ::RBI::Printer).void }
   def accept_printer(v); end
 
-  # source://rbi/0.0.17/lib/rbi/rewriters/add_sig_templates.rb#66
+  # source://rbi/0.1.1/lib/rbi/rewriters/add_sig_templates.rb#66
   sig { params(with_todo_comment: T::Boolean).void }
   def add_sig_templates!(with_todo_comment: T.unsafe(nil)); end
 
-  # source://rbi/0.0.17/lib/rbi/rewriters/annotate.rb#49
+  # source://rbi/0.1.1/lib/rbi/rewriters/annotate.rb#49
   sig { params(annotation: ::String, annotate_scopes: T::Boolean, annotate_properties: T::Boolean).void }
   def annotate!(annotation, annotate_scopes: T.unsafe(nil), annotate_properties: T.unsafe(nil)); end
 
@@ -121,23 +140,23 @@ class RBI::Tree < ::RBI::NodeWithComments
   end
   def create_type_variable(name, type:, variance: T.unsafe(nil), fixed: T.unsafe(nil), upper: T.unsafe(nil), lower: T.unsafe(nil)); end
 
-  # source://rbi/0.0.17/lib/rbi/rewriters/deannotate.rb#41
+  # source://rbi/0.1.1/lib/rbi/rewriters/deannotate.rb#41
   sig { params(annotation: ::String).void }
   def deannotate!(annotation); end
 
-  # source://rbi/0.0.17/lib/rbi/model.rb#132
+  # source://rbi/0.1.1/lib/rbi/model.rb#132
   sig { returns(T::Boolean) }
   def empty?; end
 
-  # source://rbi/0.0.17/lib/rbi/rewriters/group_nodes.rb#38
+  # source://rbi/0.1.1/lib/rbi/rewriters/group_nodes.rb#38
   sig { void }
   def group_nodes!; end
 
-  # source://rbi/0.0.17/lib/rbi/index.rb#68
+  # source://rbi/0.1.1/lib/rbi/index.rb#68
   sig { returns(::RBI::Index) }
   def index; end
 
-  # source://rbi/0.0.17/lib/rbi/rewriters/merge_trees.rb#324
+  # source://rbi/0.1.1/lib/rbi/rewriters/merge_trees.rb#324
   sig do
     params(
       other: ::RBI::Tree,
@@ -148,23 +167,23 @@ class RBI::Tree < ::RBI::NodeWithComments
   end
   def merge(other, left_name: T.unsafe(nil), right_name: T.unsafe(nil), keep: T.unsafe(nil)); end
 
-  # source://rbi/0.0.17/lib/rbi/rewriters/nest_non_public_methods.rb#46
+  # source://rbi/0.1.1/lib/rbi/rewriters/nest_non_public_methods.rb#46
   sig { void }
   def nest_non_public_methods!; end
 
-  # source://rbi/0.0.17/lib/rbi/rewriters/nest_singleton_methods.rb#36
+  # source://rbi/0.1.1/lib/rbi/rewriters/nest_singleton_methods.rb#36
   sig { void }
   def nest_singleton_methods!; end
 
-  # source://rbi/0.0.17/lib/rbi/model.rb#110
+  # source://rbi/0.1.1/lib/rbi/model.rb#110
   sig { returns(T::Array[::RBI::Node]) }
   def nodes; end
 
-  # source://rbi/0.0.17/lib/rbi/printer.rb#233
+  # source://rbi/0.1.1/lib/rbi/printer.rb#233
   sig { override.returns(T::Boolean) }
   def oneline?; end
 
-  # source://rbi/0.0.17/lib/rbi/rewriters/sort_nodes.rb#119
+  # source://rbi/0.1.1/lib/rbi/rewriters/sort_nodes.rb#119
   sig { void }
   def sort_nodes!; end
 
@@ -732,67 +751,67 @@ class Tapioca::Commands::Annotations < ::Tapioca::Commands::CommandWithoutTracke
 
   private
 
-  # source://tapioca//lib/tapioca/commands/annotations.rb#191
+  # source://tapioca//lib/tapioca/commands/annotations.rb#193
   sig { params(name: ::String, content: ::String).returns(::String) }
   def add_header(name, content); end
 
-  # source://tapioca//lib/tapioca/commands/annotations.rb#211
+  # source://tapioca//lib/tapioca/commands/annotations.rb#213
   sig { params(name: ::String, content: ::String).returns(::String) }
   def apply_typed_override(name, content); end
 
-  # source://tapioca//lib/tapioca/commands/annotations.rb#38
+  # source://tapioca//lib/tapioca/commands/annotations.rb#39
   sig { override.void }
   def execute; end
 
-  # source://tapioca//lib/tapioca/commands/annotations.rb#132
+  # source://tapioca//lib/tapioca/commands/annotations.rb#136
   sig { params(repo_uris: T::Array[::String], gem_name: ::String).void }
   def fetch_annotation(repo_uris, gem_name); end
 
-  # source://tapioca//lib/tapioca/commands/annotations.rb#109
+  # source://tapioca//lib/tapioca/commands/annotations.rb#113
   sig { params(gem_names: T::Array[::String]).returns(T::Array[::String]) }
   def fetch_annotations(gem_names); end
 
-  # source://tapioca//lib/tapioca/commands/annotations.rb#150
+  # source://tapioca//lib/tapioca/commands/annotations.rb#152
   sig { params(repo_uri: ::String, path: ::String).returns(T.nilable(::String)) }
   def fetch_file(repo_uri, path); end
 
-  # source://tapioca//lib/tapioca/commands/annotations.rb#167
+  # source://tapioca//lib/tapioca/commands/annotations.rb#169
   sig { params(repo_uri: ::String, path: ::String).returns(T.nilable(::String)) }
   def fetch_http_file(repo_uri, path); end
 
-  # source://tapioca//lib/tapioca/commands/annotations.rb#98
+  # source://tapioca//lib/tapioca/commands/annotations.rb#102
   sig { params(repo_uri: ::String, repo_number: T.nilable(::Integer)).returns(T.nilable(Tapioca::RepoIndex)) }
   def fetch_index(repo_uri, repo_number:); end
 
-  # source://tapioca//lib/tapioca/commands/annotations.rb#77
+  # source://tapioca//lib/tapioca/commands/annotations.rb#81
   sig { returns(T::Hash[::String, Tapioca::RepoIndex]) }
   def fetch_indexes; end
 
-  # source://tapioca//lib/tapioca/commands/annotations.rb#159
+  # source://tapioca//lib/tapioca/commands/annotations.rb#161
   sig { params(repo_uri: ::String, path: ::String).returns(T.nilable(::String)) }
   def fetch_local_file(repo_uri, path); end
 
-  # source://tapioca//lib/tapioca/commands/annotations.rb#46
+  # source://tapioca//lib/tapioca/commands/annotations.rb#50
   sig { returns(T::Array[::String]) }
   def list_gemfile_gems; end
 
-  # source://tapioca//lib/tapioca/commands/annotations.rb#223
+  # source://tapioca//lib/tapioca/commands/annotations.rb#225
   sig { params(gem_name: ::String, contents: T::Array[::String]).returns(T.nilable(::String)) }
   def merge_files(gem_name, contents); end
 
-  # source://tapioca//lib/tapioca/commands/annotations.rb#56
+  # source://tapioca//lib/tapioca/commands/annotations.rb#60
   sig { params(project_gems: T::Array[::String]).void }
   def remove_expired_annotations(project_gems); end
 
-  # source://tapioca//lib/tapioca/commands/annotations.rb#250
+  # source://tapioca//lib/tapioca/commands/annotations.rb#252
   sig { returns(T::Hash[::String, T.nilable(::String)]) }
   def repo_tokens; end
 
-  # source://tapioca//lib/tapioca/commands/annotations.rb#278
+  # source://tapioca//lib/tapioca/commands/annotations.rb#280
   sig { params(path: ::String, repo_uri: ::String, message: ::String).void }
   def say_http_error(path, repo_uri, message:); end
 
-  # source://tapioca//lib/tapioca/commands/annotations.rb#262
+  # source://tapioca//lib/tapioca/commands/annotations.rb#264
   sig { params(repo_uri: ::String).returns(T.nilable(::String)) }
   def token_for(repo_uri); end
 end
@@ -3435,14 +3454,14 @@ class URI::Source < ::URI::File
   sig { params(v: T.nilable(::String)).returns(T::Boolean) }
   def check_host(v); end
 
-  # source://uri/0.12.0/uri/generic.rb#243
+  # source://uri/0.12.1/uri/generic.rb#243
   def gem_name; end
 
   # source://tapioca//lib/tapioca/helpers/source_uri.rb#25
   sig { returns(T.nilable(::String)) }
   def gem_version; end
 
-  # source://uri/0.12.0/uri/generic.rb#283
+  # source://uri/0.12.1/uri/generic.rb#283
   def line_number; end
 
   # source://tapioca//lib/tapioca/helpers/source_uri.rb#51
