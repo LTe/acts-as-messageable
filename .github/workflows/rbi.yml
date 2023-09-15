@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          token: ${{ secrets.TOKEN || github.token }}
+          token: ${{ secrets.TOKEN }}
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2.2
@@ -29,6 +29,7 @@ jobs:
       - run : bundle exec tapioca gems
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
+
           commit_message: Update RBIs
           file_pattern: './sorbet'
 
