@@ -1,16 +1,18 @@
 name: Regenerate RBIs
 
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  repository-projects: write
+
 on:
+  workflow_call:
   pull_request:
     branches: [ master ]
   label:
     types:
       - dependencies
-
-permissions:
-  pull-requests: write
-  issues: write
-  repository-projects: write
 
 jobs:
   rbi:
@@ -18,6 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.TOKEN || github.token }}
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2.2
