@@ -9,19 +9,19 @@ class Date
   include ::Comparable
 
   class << self
-    # source://timecop//lib/timecop/time_extensions.rb#104
+    # source://timecop//lib/timecop/time_extensions.rb#111
     def closest_wday(wday); end
 
     # source://timecop//lib/timecop/time_extensions.rb#33
     def mock_date; end
 
-    # source://timecop//lib/timecop/time_extensions.rb#100
+    # source://timecop//lib/timecop/time_extensions.rb#107
     def mocked_time_stack_item; end
 
-    # source://timecop//lib/timecop/time_extensions.rb#78
+    # source://timecop//lib/timecop/time_extensions.rb#85
     def parse(*args); end
 
-    # source://timecop//lib/timecop/time_extensions.rb#78
+    # source://timecop//lib/timecop/time_extensions.rb#85
     def parse_with_mock_date(*args); end
 
     # source://timecop//lib/timecop/time_extensions.rb#47
@@ -38,25 +38,25 @@ class Date
   end
 end
 
-# source://timecop//lib/timecop/time_extensions.rb#113
+# source://timecop//lib/timecop/time_extensions.rb#120
 class DateTime < ::Date
   class << self
-    # source://timecop//lib/timecop/time_extensions.rb#115
+    # source://timecop//lib/timecop/time_extensions.rb#122
     def mock_time; end
 
-    # source://timecop//lib/timecop/time_extensions.rb#150
+    # source://timecop//lib/timecop/time_extensions.rb#156
     def mocked_time_stack_item; end
 
-    # source://timecop//lib/timecop/time_extensions.rb#119
+    # source://timecop//lib/timecop/time_extensions.rb#126
     def now; end
 
-    # source://timecop//lib/timecop/time_extensions.rb#119
+    # source://timecop//lib/timecop/time_extensions.rb#126
     def now_with_mock_time; end
 
-    # source://timecop//lib/timecop/time_extensions.rb#127
+    # source://timecop//lib/timecop/time_extensions.rb#134
     def parse(*args); end
 
-    # source://timecop//lib/timecop/time_extensions.rb#127
+    # source://timecop//lib/timecop/time_extensions.rb#134
     def parse_with_mock_date(*args); end
   end
 end
@@ -181,7 +181,7 @@ class Timecop
     # source://timecop//lib/timecop/timecop.rb#51
     def freeze(*args, &block); end
 
-    # Returns whether or not Timecop is currently frozen/travelled
+    # Returns whether or not Timecop is currently frozen
     #
     # @return [Boolean]
     #
