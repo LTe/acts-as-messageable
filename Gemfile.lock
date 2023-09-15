@@ -121,7 +121,7 @@ GEM
     parser (3.2.2.3)
       ast (~> 2.4.1)
       racc
-    pg (1.4.6)
+    pg (1.5.4)
     polyfill (1.9.0)
     prettier_print (1.2.1)
     pry (0.14.2)
