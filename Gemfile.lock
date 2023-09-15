@@ -154,7 +154,7 @@ GEM
       parser (>= 3.0.0)
       sorbet-runtime (>= 0.5.9204)
       unparser (>= 0.5.6)
-    rbs (2.8.4)
+    rbs (3.2.1)
     rchardet (1.8.0)
     rdoc (6.5.0)
       psych (>= 4.0.0)
@@ -217,10 +217,10 @@ GEM
     sorbet-static-and-runtime (0.5.10902)
       sorbet (= 0.5.10902)
       sorbet-runtime (= 0.5.10902)
-    sord (5.0.0)
+    sord (6.0.0)
       commander (~> 4.5)
       parlour (~> 5.0)
-      rbs (~> 2.0)
+      rbs (~> 3.0)
       sorbet-runtime
       yard
     spoom (1.2.3)
