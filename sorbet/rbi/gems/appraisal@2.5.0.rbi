@@ -9,139 +9,151 @@ module Appraisal; end
 
 # Represents one appraisal and its dependencies
 #
-# source://appraisal//lib/appraisal/appraisal.rb#9
+# source://appraisal//lib/appraisal/appraisal.rb#10
 class Appraisal::Appraisal
   # @return [Appraisal] a new instance of Appraisal
   #
-  # source://appraisal//lib/appraisal/appraisal.rb#14
+  # source://appraisal//lib/appraisal/appraisal.rb#15
   def initialize(name, source_gemfile); end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#19
+  # source://appraisal//lib/appraisal/appraisal.rb#20
   def gem(*args); end
 
   # Returns the value of attribute gemfile.
   #
-  # source://appraisal//lib/appraisal/appraisal.rb#12
+  # source://appraisal//lib/appraisal/appraisal.rb#13
   def gemfile; end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#87
+  # source://appraisal//lib/appraisal/appraisal.rb#92
   def gemfile_path; end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#51
+  # source://appraisal//lib/appraisal/appraisal.rb#56
   def gemspec(options = T.unsafe(nil)); end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#35
+  # source://appraisal//lib/appraisal/appraisal.rb#36
   def git(*args, &block); end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#55
+  # source://appraisal//lib/appraisal/appraisal.rb#60
   def git_source(*args, &block); end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#43
+  # source://appraisal//lib/appraisal/appraisal.rb#44
   def group(*args, &block); end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#66
+  # source://appraisal//lib/appraisal/appraisal.rb#71
   def install(options = T.unsafe(nil)); end
+
+  # source://appraisal//lib/appraisal/appraisal.rb#48
+  def install_if(*args, &block); end
 
   # Returns the value of attribute name.
   #
-  # source://appraisal//lib/appraisal/appraisal.rb#12
+  # source://appraisal//lib/appraisal/appraisal.rb#13
   def name; end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#39
+  # source://appraisal//lib/appraisal/appraisal.rb#40
   def path(*args, &block); end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#47
+  # source://appraisal//lib/appraisal/appraisal.rb#52
   def platforms(*args, &block); end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#95
+  # source://appraisal//lib/appraisal/appraisal.rb#100
   def relative_gemfile_path; end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#99
+  # source://appraisal//lib/appraisal/appraisal.rb#104
   def relativize; end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#23
+  # source://appraisal//lib/appraisal/appraisal.rb#24
   def remove_gem(*args); end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#31
+  # source://appraisal//lib/appraisal/appraisal.rb#32
   def ruby(*args); end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#27
+  # source://appraisal//lib/appraisal/appraisal.rb#28
   def source(*args, &block); end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#83
+  # source://appraisal//lib/appraisal/appraisal.rb#88
   def update(gems = T.unsafe(nil)); end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#59
+  # source://appraisal//lib/appraisal/appraisal.rb#64
   def write_gemfile; end
 
   private
 
-  # source://appraisal//lib/appraisal/appraisal.rb#145
+  # source://appraisal//lib/appraisal/appraisal.rb#153
   def bundle_options(options); end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#111
+  # source://appraisal//lib/appraisal/appraisal.rb#119
   def check_command; end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#141
+  # source://appraisal//lib/appraisal/appraisal.rb#149
   def clean_name; end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#133
+  # source://appraisal//lib/appraisal/appraisal.rb#179
+  def comment_lines(heading); end
+
+  # source://appraisal//lib/appraisal/appraisal.rb#141
   def gemfile_name; end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#125
+  # source://appraisal//lib/appraisal/appraisal.rb#133
   def gemfile_root; end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#116
+  # source://appraisal//lib/appraisal/appraisal.rb#124
   def install_command(options = T.unsafe(nil)); end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#137
+  # source://appraisal//lib/appraisal/appraisal.rb#145
   def lockfile_path; end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#129
+  # source://appraisal//lib/appraisal/appraisal.rb#137
   def project_root; end
 
-  # source://appraisal//lib/appraisal/appraisal.rb#121
+  # source://appraisal//lib/appraisal/appraisal.rb#189
+  def quoted_gemfile; end
+
+  # source://appraisal//lib/appraisal/appraisal.rb#129
   def update_command(gems); end
 end
 
-# source://appraisal//lib/appraisal/appraisal.rb#10
+# source://appraisal//lib/appraisal/appraisal.rb#11
 Appraisal::Appraisal::DEFAULT_INSTALL_OPTIONS = T.let(T.unsafe(nil), Hash)
 
 # Loads and parses Appraisals file
 #
-# source://appraisal//lib/appraisal/appraisal_file.rb#7
+# source://appraisal//lib/appraisal/appraisal_file.rb#8
 class Appraisal::AppraisalFile
   # @return [AppraisalFile] a new instance of AppraisalFile
   #
-  # source://appraisal//lib/appraisal/appraisal_file.rb#14
+  # source://appraisal//lib/appraisal/appraisal_file.rb#15
   def initialize; end
 
   # Returns the value of attribute appraisals.
   #
-  # source://appraisal//lib/appraisal/appraisal_file.rb#8
+  # source://appraisal//lib/appraisal/appraisal_file.rb#9
   def appraisals; end
 
-  # source://appraisal//lib/appraisal/appraisal_file.rb#30
+  # source://appraisal//lib/appraisal/appraisal_file.rb#31
   def appraise(name, &block); end
 
-  # source://appraisal//lib/appraisal/appraisal_file.rb#26
+  # source://appraisal//lib/appraisal/appraisal_file.rb#37
+  def customize_gemfiles(&_block); end
+
+  # source://appraisal//lib/appraisal/appraisal_file.rb#27
   def each(&block); end
 
   # Returns the value of attribute gemfile.
   #
-  # source://appraisal//lib/appraisal/appraisal_file.rb#8
+  # source://appraisal//lib/appraisal/appraisal_file.rb#9
   def gemfile; end
 
   private
 
-  # source://appraisal//lib/appraisal/appraisal_file.rb#42
+  # source://appraisal//lib/appraisal/appraisal_file.rb#47
   def path; end
 
-  # source://appraisal//lib/appraisal/appraisal_file.rb#38
+  # source://appraisal//lib/appraisal/appraisal_file.rb#43
   def run(definitions); end
 
   class << self
-    # source://appraisal//lib/appraisal/appraisal_file.rb#10
+    # source://appraisal//lib/appraisal/appraisal_file.rb#11
     def each(&block); end
   end
 end
@@ -166,46 +178,49 @@ class Appraisal::BundlerDSL
   # source://appraisal//lib/appraisal/bundler_dsl.rb#5
   def dependencies; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#79
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#86
   def for_dup; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#27
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#28
   def gem(name, *requirements); end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#83
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#90
   def gemspec(options = T.unsafe(nil)); end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#63
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#70
   def git(source, options = T.unsafe(nil), &block); end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#87
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#94
   def git_source(source, &block); end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#35
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#36
   def group(*names, &block); end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#69
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#42
+  def install_if(condition, &block); end
+
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#76
   def path(source, options = T.unsafe(nil), &block); end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#41
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#48
   def platform(*names, &block); end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#41
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#48
   def platforms(*names, &block); end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#31
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#32
   def remove_gem(name); end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#59
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#66
   def ruby(ruby_version); end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#23
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#24
   def run(&block); end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#49
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#56
   def source(source, &block); end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#75
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#82
   def to_s; end
 
   protected
@@ -214,69 +229,75 @@ class Appraisal::BundlerDSL
   #
   # @param value the value to set the attribute git_sources to.
   #
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#93
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#100
   def git_sources=(_arg0); end
 
   private
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#119
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#126
   def dependencies_entry; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#123
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#130
   def dependencies_entry_for_dup; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#111
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#118
   def gemspec_entry; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#115
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#122
   def gemspec_entry_for_dup; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#131
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#138
   def gits_entry; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#137
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#144
   def gits_entry_for_dup; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#131
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#138
   def groups_entry; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#137
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#144
   def groups_entry_for_dup; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#142
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#149
   def indent(string); end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#131
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#138
+  def install_if_entry; end
+
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#144
+  def install_if_entry_for_dup; end
+
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#138
   def paths_entry; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#137
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#144
   def paths_entry_for_dup; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#131
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#138
   def platforms_entry; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#137
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#144
   def platforms_entry_for_dup; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#103
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#110
   def ruby_version_entry; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#103
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#110
   def ruby_version_entry_for_dup; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#131
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#138
   def source_blocks_entry; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#137
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#144
   def source_blocks_entry_for_dup; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#97
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#104
   def source_entry; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#97
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#104
   def source_entry_for_dup; end
 
-  # source://appraisal//lib/appraisal/bundler_dsl.rb#146
+  # source://appraisal//lib/appraisal/bundler_dsl.rb#153
   def substitute_git_source(requirements); end
 end
 
@@ -289,63 +310,79 @@ Appraisal::BundlerDSL::PARTS = T.let(T.unsafe(nil), Array)
 class Appraisal::Command
   # @return [Command] a new instance of Command
   #
-  # source://appraisal//lib/appraisal/command.rb#10
+  # source://appraisal//lib/appraisal/command.rb#8
   def initialize(command, options = T.unsafe(nil)); end
 
   # Returns the value of attribute command.
   #
-  # source://appraisal//lib/appraisal/command.rb#8
+  # source://appraisal//lib/appraisal/command.rb#6
   def command; end
 
   # Returns the value of attribute env.
   #
-  # source://appraisal//lib/appraisal/command.rb#8
+  # source://appraisal//lib/appraisal/command.rb#6
   def env; end
 
   # Returns the value of attribute gemfile.
   #
-  # source://appraisal//lib/appraisal/command.rb#8
+  # source://appraisal//lib/appraisal/command.rb#6
   def gemfile; end
 
-  # Returns the value of attribute original_env.
-  #
-  # source://appraisal//lib/appraisal/command.rb#8
-  def original_env; end
-
-  # source://appraisal//lib/appraisal/command.rb#17
+  # source://appraisal//lib/appraisal/command.rb#14
   def run; end
 
   private
 
-  # source://appraisal//lib/appraisal/command.rb#61
+  # source://appraisal//lib/appraisal/command.rb#53
   def announce; end
 
-  # source://appraisal//lib/appraisal/command.rb#96
+  # source://appraisal//lib/appraisal/command.rb#77
   def command_as_string; end
 
-  # source://appraisal//lib/appraisal/command.rb#88
+  # source://appraisal//lib/appraisal/command.rb#69
   def command_starting_with_bundle(original_command); end
 
   # @return [Boolean]
   #
-  # source://appraisal//lib/appraisal/command.rb#80
+  # source://appraisal//lib/appraisal/command.rb#61
   def command_starts_with_bundle?(original_command); end
 
-  # source://appraisal//lib/appraisal/command.rb#43
+  # source://appraisal//lib/appraisal/command.rb#35
   def ensure_bundler_is_available; end
 
-  # source://appraisal//lib/appraisal/command.rb#76
-  def restore_env; end
-
-  # source://appraisal//lib/appraisal/command.rb#69
-  def unset_bundler_env_vars; end
-
-  # source://appraisal//lib/appraisal/command.rb#34
-  def with_clean_env; end
+  # source://appraisal//lib/appraisal/command.rb#85
+  def test_environment; end
 end
 
-# source://appraisal//lib/appraisal/command.rb#6
-Appraisal::Command::BUNDLER_ENV_VARS = T.let(T.unsafe(nil), Array)
+# source://appraisal//lib/appraisal/conditional.rb#5
+class Appraisal::Conditional < ::Appraisal::BundlerDSL
+  # @return [Conditional] a new instance of Conditional
+  #
+  # source://appraisal//lib/appraisal/conditional.rb#6
+  def initialize(condition); end
+
+  # source://appraisal//lib/appraisal/conditional.rb#16
+  def for_dup; end
+
+  # source://appraisal//lib/appraisal/conditional.rb#11
+  def to_s; end
+end
+
+# source://appraisal//lib/appraisal/customize.rb#2
+class Appraisal::Customize
+  # @return [Customize] a new instance of Customize
+  #
+  # source://appraisal//lib/appraisal/customize.rb#3
+  def initialize(heading: T.unsafe(nil), single_quotes: T.unsafe(nil)); end
+
+  class << self
+    # source://appraisal//lib/appraisal/customize.rb#8
+    def heading; end
+
+    # source://appraisal//lib/appraisal/customize.rb#12
+    def single_quotes; end
+  end
+end
 
 # Dependency on a gem and optional version requirements
 #
@@ -418,16 +455,16 @@ end
 
 # Load bundler Gemfiles and merge dependencies
 #
-# source://appraisal//lib/appraisal/gemfile.rb#12
+# source://appraisal//lib/appraisal/gemfile.rb#13
 class Appraisal::Gemfile < ::Appraisal::BundlerDSL
-  # source://appraisal//lib/appraisal/gemfile.rb#23
+  # source://appraisal//lib/appraisal/gemfile.rb#22
   def dup; end
 
-  # source://appraisal//lib/appraisal/gemfile.rb#13
+  # source://appraisal//lib/appraisal/gemfile.rb#14
   def load(path); end
 
-  # source://appraisal//lib/appraisal/gemfile.rb#19
-  def run(definitions); end
+  # source://appraisal//lib/appraisal/gemfile.rb#18
+  def run(definitions, path, line = T.unsafe(nil)); end
 end
 
 # source://appraisal//lib/appraisal/gemspec.rb#4
