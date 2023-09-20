@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/Shopify/tapioca.git
-  revision: df1ba95c0e0c6f1f061bd202c5e5805ed3cb48f6
+  revision: fa61b834119d4a9dc0643862d4ad4804225b0ab9
   specs:
     tapioca (0.11.9)
       bundler (>= 2.2.25)
@@ -220,7 +220,7 @@ GEM
       rbs (~> 3.0)
       sorbet-runtime
       yard
-    spoom (1.2.3)
+    spoom (1.2.4)
       erubi (>= 1.10.0)
       sorbet-static-and-runtime (>= 0.5.10187)
       syntax_tree (>= 6.1.1)
@@ -248,7 +248,7 @@ GEM
     yard-sorbet (0.8.1)
       sorbet-runtime (>= 0.5)
       yard (>= 0.9)
-    yarp (0.11.0)
+    yarp (0.12.0)
     zeitwerk (2.6.11)
 
 PLATFORMS
