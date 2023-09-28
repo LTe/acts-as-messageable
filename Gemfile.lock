@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/Shopify/tapioca.git
-  revision: fa61b834119d4a9dc0643862d4ad4804225b0ab9
+  revision: 1a6c8a0db372f0b5a7df25d97c4a13b87593271c
   specs:
     tapioca (0.11.9)
       bundler (>= 2.2.25)
@@ -229,7 +229,7 @@ GEM
     sqlite3 (1.6.6-x86_64-linux)
     stringio (3.0.8)
     sync (0.5.0)
-    syntax_tree (6.1.1)
+    syntax_tree (6.2.0)
       prettier_print (>= 1.2.0)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
