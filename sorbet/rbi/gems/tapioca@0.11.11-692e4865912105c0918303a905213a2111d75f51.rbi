@@ -54,7 +54,7 @@ module RBI; end
 
 # source://tapioca//lib/tapioca/rbi_ext/model.rb#5
 class RBI::Tree < ::RBI::NodeWithComments
-  # source://rbi/0.1.1/lib/rbi/model.rb#119
+  # source://rbi/0.1.4/lib/rbi/model.rb#119
   sig do
     params(
       loc: T.nilable(::RBI::Loc),
@@ -64,19 +64,19 @@ class RBI::Tree < ::RBI::NodeWithComments
   end
   def initialize(loc: T.unsafe(nil), comments: T.unsafe(nil), &block); end
 
-  # source://rbi/0.1.1/lib/rbi/model.rb#126
+  # source://rbi/0.1.4/lib/rbi/model.rb#126
   sig { params(node: ::RBI::Node).void }
   def <<(node); end
 
-  # source://rbi/0.1.1/lib/rbi/printer.rb#226
+  # source://rbi/0.1.4/lib/rbi/printer.rb#226
   sig { override.params(v: ::RBI::Printer).void }
   def accept_printer(v); end
 
-  # source://rbi/0.1.1/lib/rbi/rewriters/add_sig_templates.rb#66
+  # source://rbi/0.1.4/lib/rbi/rewriters/add_sig_templates.rb#66
   sig { params(with_todo_comment: T::Boolean).void }
   def add_sig_templates!(with_todo_comment: T.unsafe(nil)); end
 
-  # source://rbi/0.1.1/lib/rbi/rewriters/annotate.rb#49
+  # source://rbi/0.1.4/lib/rbi/rewriters/annotate.rb#49
   sig { params(annotation: ::String, annotate_scopes: T::Boolean, annotate_properties: T::Boolean).void }
   def annotate!(annotation, annotate_scopes: T.unsafe(nil), annotate_properties: T.unsafe(nil)); end
 
@@ -140,23 +140,23 @@ class RBI::Tree < ::RBI::NodeWithComments
   end
   def create_type_variable(name, type:, variance: T.unsafe(nil), fixed: T.unsafe(nil), upper: T.unsafe(nil), lower: T.unsafe(nil)); end
 
-  # source://rbi/0.1.1/lib/rbi/rewriters/deannotate.rb#41
+  # source://rbi/0.1.4/lib/rbi/rewriters/deannotate.rb#41
   sig { params(annotation: ::String).void }
   def deannotate!(annotation); end
 
-  # source://rbi/0.1.1/lib/rbi/model.rb#132
+  # source://rbi/0.1.4/lib/rbi/model.rb#132
   sig { returns(T::Boolean) }
   def empty?; end
 
-  # source://rbi/0.1.1/lib/rbi/rewriters/group_nodes.rb#38
+  # source://rbi/0.1.4/lib/rbi/rewriters/group_nodes.rb#38
   sig { void }
   def group_nodes!; end
 
-  # source://rbi/0.1.1/lib/rbi/index.rb#68
+  # source://rbi/0.1.4/lib/rbi/index.rb#68
   sig { returns(::RBI::Index) }
   def index; end
 
-  # source://rbi/0.1.1/lib/rbi/rewriters/merge_trees.rb#324
+  # source://rbi/0.1.4/lib/rbi/rewriters/merge_trees.rb#324
   sig do
     params(
       other: ::RBI::Tree,
@@ -167,23 +167,23 @@ class RBI::Tree < ::RBI::NodeWithComments
   end
   def merge(other, left_name: T.unsafe(nil), right_name: T.unsafe(nil), keep: T.unsafe(nil)); end
 
-  # source://rbi/0.1.1/lib/rbi/rewriters/nest_non_public_methods.rb#46
+  # source://rbi/0.1.4/lib/rbi/rewriters/nest_non_public_methods.rb#46
   sig { void }
   def nest_non_public_methods!; end
 
-  # source://rbi/0.1.1/lib/rbi/rewriters/nest_singleton_methods.rb#36
+  # source://rbi/0.1.4/lib/rbi/rewriters/nest_singleton_methods.rb#36
   sig { void }
   def nest_singleton_methods!; end
 
-  # source://rbi/0.1.1/lib/rbi/model.rb#110
+  # source://rbi/0.1.4/lib/rbi/model.rb#110
   sig { returns(T::Array[::RBI::Node]) }
   def nodes; end
 
-  # source://rbi/0.1.1/lib/rbi/printer.rb#233
+  # source://rbi/0.1.4/lib/rbi/printer.rb#233
   sig { override.returns(T::Boolean) }
   def oneline?; end
 
-  # source://rbi/0.1.1/lib/rbi/rewriters/sort_nodes.rb#119
+  # source://rbi/0.1.4/lib/rbi/rewriters/sort_nodes.rb#119
   sig { void }
   def sort_nodes!; end
 
@@ -204,7 +204,7 @@ class RBI::TypedParam < ::T::Struct
   const :type, ::String
 
   class << self
-    # source://sorbet-runtime/0.5.11064/lib/types/struct.rb#13
+    # source://sorbet-runtime/0.5.11066/lib/types/struct.rb#13
     def inherited(s); end
   end
 end
@@ -859,7 +859,7 @@ class Tapioca::Commands::Command
   sig { void }
   def initialize; end
 
-  # source://thor/1.2.2/lib/thor/base.rb#139
+  # source://thor/1.3.0/lib/thor/base.rb#155
   sig { returns(::Thor::Actions) }
   def file_writer; end
 
@@ -1121,7 +1121,7 @@ class Tapioca::ConfigHelper::ConfigError < ::T::Struct
   const :message_parts, T::Array[::Tapioca::ConfigHelper::ConfigErrorMessagePart]
 
   class << self
-    # source://sorbet-runtime/0.5.11064/lib/types/struct.rb#13
+    # source://sorbet-runtime/0.5.11066/lib/types/struct.rb#13
     def inherited(s); end
   end
 end
@@ -1132,7 +1132,7 @@ class Tapioca::ConfigHelper::ConfigErrorMessagePart < ::T::Struct
   const :colors, T::Array[::Symbol]
 
   class << self
-    # source://sorbet-runtime/0.5.11064/lib/types/struct.rb#13
+    # source://sorbet-runtime/0.5.11066/lib/types/struct.rb#13
     def inherited(s); end
   end
 end
@@ -2421,6 +2421,15 @@ class Tapioca::Loaders::Loader
 
   private
 
+  # Rails 7.2 renamed `eager_load_paths` to `all_eager_load_paths`, which maintains the same original functionality.
+  # The `eager_load_paths` method still exists, but doesn't return all paths anymore and causes Tapioca to miss some
+  # engine paths. The following commit is the change:
+  # https://github.com/rails/rails/commit/ebfca905db14020589c22e6937382e6f8f687664
+  #
+  # source://tapioca//lib/tapioca/loaders/loader.rb#233
+  sig { params(engine: T.class_of(Rails::Engine)).returns(T::Array[::String]) }
+  def eager_load_paths(engine); end
+
   # source://tapioca//lib/tapioca/loaders/loader.rb#198
   sig { void }
   def eager_load_rails_app; end
@@ -3306,7 +3315,7 @@ module Tapioca::Static::SymbolLoader
     sig { params(gem: ::Tapioca::Gemfile::GemSpec).returns(T::Set[::String]) }
     def engine_symbols(gem); end
 
-    # source://tapioca//lib/tapioca/static/symbol_loader.rb#40
+    # source://tapioca//lib/tapioca/static/symbol_loader.rb#48
     sig { params(gem: ::Tapioca::Gemfile::GemSpec).returns(T::Set[::String]) }
     def gem_symbols(gem); end
 
@@ -3314,17 +3323,17 @@ module Tapioca::Static::SymbolLoader
     sig { returns(T::Set[::String]) }
     def payload_symbols; end
 
-    # source://tapioca//lib/tapioca/static/symbol_loader.rb#45
+    # source://tapioca//lib/tapioca/static/symbol_loader.rb#53
     sig { params(paths: T::Array[::Pathname]).returns(T::Set[::String]) }
     def symbols_from_paths(paths); end
 
     private
 
-    # source://tapioca//lib/tapioca/static/symbol_loader.rb#61
+    # source://tapioca//lib/tapioca/static/symbol_loader.rb#69
     sig { returns(T::Array[T.class_of(Rails::Engine)]) }
     def engines; end
 
-    # source://tapioca//lib/tapioca/static/symbol_loader.rb#74
+    # source://tapioca//lib/tapioca/static/symbol_loader.rb#82
     sig { params(input: ::String, table_type: ::String).returns(::String) }
     def symbol_table_json_from(input, table_type: T.unsafe(nil)); end
   end
