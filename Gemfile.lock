@@ -108,6 +108,8 @@ GEM
       semver2
     json (2.7.1)
     jwt (2.7.1)
+    kramdown (2.4.0)
+      rexml
     language_server-protocol (3.17.0.3)
     loofah (2.22.0)
       crass (~> 1.0.2)
@@ -291,6 +293,7 @@ DEPENDENCIES
   appraisal
   coveralls_reborn
   jeweler
+  kramdown
   pg
   pry
   railties

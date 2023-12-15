@@ -13,6 +13,7 @@ group :development do
   gem 'appraisal', require: false
   gem 'coveralls_reborn', require: false
   gem 'jeweler', require: false
+  gem 'kramdown', require: false
   gem 'pg', require: false
   gem 'pry', require: false
   gem 'rspec', require: false

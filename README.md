@@ -1,5 +1,4 @@
-ActsAsMessageable
-=================
+# ActsAsMessageable
 
 ActsAsMessageable is a Ruby gem that provides a flexible and robust messaging system between models in Rails 
 applications. With this gem, you can easily implement features such as private messaging between users, 
@@ -11,8 +10,48 @@ users or other models is required.
 [![Coverage Status](https://coveralls.io/repos/LTe/acts-as-messageable/badge.png?branch=master)](https://coveralls.io/r/LTe/acts-as-messageable?branch=master)
 [![Gem Version](https://badge.fury.io/rb/acts-as-messageable.png)](http://badge.fury.io/rb/acts-as-messageable)
 
-Usage
-=====
+<!-- START_TOC -->
+* [ActsAsMessageable](#actsasmessageable)
+* [Usage](#usage)
+    * [Rails >= 3](#rails--3)
+    * [Rails 2](#rails-2)
+* [Post installation](#post-installation)
+* [Usage](#usage-1)
+* [Upgrade](#upgrade)
+* [Send message](#send-message)
+  * [With hash](#with-hash)
+* [Custom required (validation)](#custom-required-validation)
+  * [With hash](#with-hash-1)
+  * [Normal](#normal)
+  * [Required sequence](#required-sequence)
+  * [First topic](#first-topic)
+* [Custom class](#custom-class)
+* [Conversation](#conversation)
+  * [Get conversation for a specific message](#get-conversation-for-a-specific-message)
+* [Search](#search)
+    * [Search text from messages](#search-text-from-messages)
+    * [Inbox](#inbox)
+    * [Outbox](#outbox)
+    * [Trash](#trash)
+  * [Filters](#filters)
+* [Read messages](#read-messages)
+    * [Read message](#read-message)
+    * [Unread message](#unread-message)
+* [Delete message](#delete-message)
+  * [Delete message without context](#delete-message-without-context)
+* [Restore message](#restore-message)
+  * [Restore message without context](#restore-message-without-context)
+* [Group message](#group-message)
+  * [Enable group messages](#enable-group-messages)
+  * [How to join other users's conversation](#how-to-join-other-userss-conversation)
+  * [Know the people involved in conversation](#know-the-people-involved-in-conversation)
+* [Search](#search-1)
+  * [Search text from messages](#search-text-from-messages-1)
+* [License](#license)
+* [Contributing](#contributing)
+<!-- END_TOC -->
+
+# Usage
 
 To use it, add it to your Gemfile:
 
@@ -32,8 +71,7 @@ gem 'acts-as-messageable', :git => 'git://github.com/openfirmware/acts-as-messag
                            :branch => 'rails2.3.11_compatible'
 ```
 
-Post installation
-=================
+# Post installation
 
 ```
 rails g acts_as_messageable:migration [messages] [--uuid]
@@ -64,8 +102,7 @@ rails g acts_as_messageable:migration my_messages
 rails g acts_as_messageable:migration my_messages --uuid
 ```
 
-Usage
-=====
+# Usage
 
 ```ruby
 class User < ActiveRecord::Base
@@ -78,8 +115,7 @@ class User < ActiveRecord::Base
 end
 ```
 
-Upgrade
-=======
+# Upgrade
 
 Just type once again
 
@@ -94,8 +130,7 @@ And new migrations should be created.
     create  db/migrate/20110811223435_add_recipient_permanent_delete_and_sender_permanent_delete_to_messages.rb
 ```
 
-Send message
-============
+# Send message
 
 ```ruby
 @alice = User.first
@@ -111,8 +146,7 @@ Send message
 @alice.send_message(@bob, { :body => "Hash body", :topic => "Hash topic" })
 ```
 
-Custom required (validation)
-============================
+# Custom required (validation)
 
 In User model
 
@@ -154,8 +188,7 @@ end
 @alice.send_message(@bob, "topic", "body")
 ```
 
-Custom class
-============
+# Custom class
 
 You can use your own class that will represent the message object. First of all create custom class
 
@@ -183,8 +216,7 @@ From now on, your message has custom class.
 @message.capitalize_title # => "Hi!"
 ```
 
-Conversation
-============
+# Conversation
 
 You can get a conversation list from messages scope. For example:
 
@@ -224,8 +256,7 @@ To create conversation just reply to a message.
 @reply_message.conversation #=> [@message, @reply_message]
 ```
 
-Search
-======
+# Search
 
 You can search for text within messages and get the records where a match exists.
 
@@ -271,8 +302,7 @@ records = @alice.messages.search("Search me") # @alice searches for the text "Se
 @alice.deleted_messages.are_from(@bob) # all deleted messages from @bob
 ```
 
-Read messages
-=============
+# Read messages
 
 ### Read message
 
@@ -290,8 +320,7 @@ Read messages
 ```
 
 
-Delete message
-==============
+# Delete message
 
 **__We must know who deleted the message. That's why we use the *.process* method to save context__**
 
@@ -327,8 +356,7 @@ The message has been deleted **permanently**
 @alice.delete_message(@message) # @alice delete @message
 ```
 
-Restore message
-===============
+# Restore message
 
 ```ruby
 @alice.deleted_messages.process do |m|
@@ -342,8 +370,7 @@ end
 @alice.restore_message(@message) # @alice restore message from the trash
 ```
 
-Group message
-=============
+# Group message
 
 ## Enable group messages
 
@@ -369,8 +396,7 @@ end
 @message.people # => [@alice, @bob, @sukhi]
 ```
 
-Search
-======
+# Search
 
 ## Search text from messages
 
@@ -378,11 +404,11 @@ Search
 @alice.messages.search("Search me") # @alice searches for the text "Search me" in all messages"
 ```
 
-## License
+# License
 
 ActsAsMessageable is released under the MIT License. See the bundled LICENSE file for details.
 
-## Contributing
+# Contributing
 
 Contributions are welcome! To contribute:
 
