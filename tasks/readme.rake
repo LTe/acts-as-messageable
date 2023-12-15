@@ -30,6 +30,23 @@ end
 
 desc('Updates the README file')
 task :readme do
+  def assert_synchronized(path)
+    # Do not print diff and yield whether exit code was zero
+    sh("test -z \"$(git status --porcelain #{path})\"") do |outcome, _|
+      return if outcome
+
+      # Output diff before raising error
+      sh("git status --porcelain #{path}")
+
+      warn(<<~WARNING)
+        The `#{path}` is out of sync.
+        Run `bundle exec rake readme` and commit the results.
+      WARNING
+
+      exit!
+    end
+  end
+
   def replace_section(contents, section_name, replacement)
     contents.sub(
       /(<!-- START_#{section_name} -->).+(<!-- END_#{section_name} -->)/m, <<~OUT.chomp
@@ -54,4 +71,6 @@ task :readme do
   contents = File.read(path)
   contents = print_toc(contents)
   File.write(path, contents)
+
+  assert_synchronized(path)
 end

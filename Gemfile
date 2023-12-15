@@ -16,6 +16,7 @@ group :development do
   gem 'kramdown', require: false
   gem 'pg', require: false
   gem 'pry', require: false
+  gem 'rake', require: false
   gem 'rspec', require: false
   gem 'rubocop', require: false
   gem 'rubocop-sorbet', require: false
