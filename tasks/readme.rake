@@ -29,7 +29,7 @@ class TocConverter < Kramdown::Converter::Toc
 end
 
 desc('Updates the README file')
-task :readme do
+task :readme do # rubocop:disable Metrics/BlockLength
   def assert_synchronized(path)
     # Do not print diff and yield whether exit code was zero
     sh("test -z \"$(git status --porcelain #{path})\"") do |outcome, _|
