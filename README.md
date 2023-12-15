@@ -377,3 +377,17 @@ Search
 ```ruby
 @alice.messages.search("Search me") # @alice searches for the text "Search me" in all messages"
 ```
+
+## License
+
+ActsAsMessageable is released under the MIT License. See the bundled LICENSE file for details.
+
+## Contributing
+
+Contributions are welcome! To contribute:
+
+1. Fork the project.
+2. Create your feature branch (`git checkout -b my-new-feature`).
+3. Commit your changes (`git commit -am 'Add some feature'`).
+4. Push to the branch (`git push origin my-new-feature`).
+5. Create a new Pull Request.
