@@ -1,7 +1,11 @@
 ActsAsMessageable
 =================
 
-The Acts As Messageable allows communication between the models.
+ActsAsMessageable is a Ruby gem that provides a flexible and robust messaging system between models in Rails 
+applications. With this gem, you can easily implement features such as private messaging between users, 
+conversations, message search, and much more. This gem is perfect for applications where communication between 
+users or other models is required.
+
 [![Build Status](https://github.com/LTe/acts-as-messageable/actions/workflows/test.yml/badge.svg)](https://github.com/LTe/acts-as-messageable/actions/workflows/test.yml)
 [![Code Climate](https://codeclimate.com/github/LTe/acts-as-messageable.png)](https://codeclimate.com/github/LTe/acts-as-messageable)
 [![Coverage Status](https://coveralls.io/repos/LTe/acts-as-messageable/badge.png?branch=master)](https://coveralls.io/r/LTe/acts-as-messageable?branch=master)
@@ -36,7 +40,7 @@ rails g acts_as_messageable:migration [messages] [--uuid]
 rake db:migrate
 ```
 
-You need to run migration generator to create tables in database. You can do this with `acts_as_messageable:migration`
+You need to run migration generator to create tables in database. You can do this with the `acts_as_messageable:migration`
 generator. Default table name is `messages`, you can pass table name and uuid option to enable `uuid` support (by 
 default disabled). UUID support is required in case when your user primary key is `uuid` type.
 
@@ -182,7 +186,7 @@ From now on, your message has custom class.
 Conversation
 ============
 
-You can get conversation list from messages scope. For example:
+You can get a conversation list from messages scope. For example:
 
 ```ruby
 @message = @alice.send_message(@bob, "Hello bob!", "How are you?")
@@ -191,7 +195,7 @@ You can get conversation list from messages scope. For example:
 @alice.received_messages.conversations # => [@reply_message]
 ```
 
-should receive list of latest messages in conversations (like in facebook).
+This should receive list of latest messages in conversations.
 
 To create conversation just reply to a message.
 
@@ -223,12 +227,12 @@ To create conversation just reply to a message.
 Search
 ======
 
-You can search text from messages and get the records where match exist. For example:
+You can search for text within messages and get the records where a match exists.
 
 ### Search text from messages
 
 ```ruby
-records = @alice.messages.search("Search me")  @alice search text "Search me" from all messages
+records = @alice.messages.search("Search me") # @alice searches for the text "Search me" in all messages"
 ```
 
 ### Inbox
@@ -256,10 +260,9 @@ records = @alice.messages.search("Search me")  @alice search text "Search me" fr
 @alice.messages.are_from(@bob) # all message from @bob
 @alice.messages.are_to(@bob) # all message to @bob
 @alice.messages.with_id(@id_of_message) # message with id id_of_message
-@alice.messages.readed # all readed @alice  messages
+@alice.messages.readed # all read @alice messages
 @alice.messages.unreaded # all unreaded @alice messages
 ```
-
 
 **You can use multiple filters at the same time**
 
@@ -290,7 +293,7 @@ Read messages
 Delete message
 ==============
 
-**__We must know who delete message. That why we use *.process* method to save context__**
+**__We must know who deleted the message. That's why we use the *.process* method to save context__**
 
 ```ruby
 @message = @alice.send_message(@bob, "Topic", "Body")
@@ -300,7 +303,7 @@ Delete message
 end
 ```
 
-Now we can find message in **trash**
+Now we can find the message in the **trash**
 
 ```ruby
 @alice.deleted_messages #=> [@message]
@@ -316,7 +319,7 @@ end
 @alice.delete_message #=> []
 ```
 
-Message has been deleted **permanently**
+The message has been deleted **permanently**
 
 ## Delete message without context
 
@@ -336,7 +339,7 @@ end
 ## Restore message without context
 
 ```ruby
-@alice.restore_message(@message) # @alice restore message from trash
+@alice.restore_message(@message) # @alice restore message from the trash
 ```
 
 Group message
@@ -372,5 +375,5 @@ Search
 ## Search text from messages
 
 ```ruby
-@alice.messages.search("Search me")  @alice seach text "Search me" from all messages
+@alice.messages.search("Search me") # @alice searches for the text "Search me" in all messages"
 ```
