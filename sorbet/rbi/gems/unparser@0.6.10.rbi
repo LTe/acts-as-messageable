@@ -2973,12 +2973,15 @@ Unparser::Emitter::NthRef::PREFIX = T.let(T.unsafe(nil), String)
 #
 # source://unparser//lib/unparser/emitter/op_assign.rb#33
 class Unparser::Emitter::OpAssign < ::Unparser::Emitter
+  # source://unparser//lib/unparser/emitter/op_assign.rb#38
+  def emit_heredoc_reminders; end
+
   private
 
-  # source://unparser//lib/unparser/emitter/op_assign.rb#40
+  # source://unparser//lib/unparser/emitter/op_assign.rb#45
   def dispatch; end
 
-  # source://unparser//lib/unparser/emitter/op_assign.rb#46
+  # source://unparser//lib/unparser/emitter/op_assign.rb#51
   def emit_operator; end
 
   # source://unparser//lib/unparser/dsl.rb#18
