@@ -15,8 +15,10 @@ group :development do
   gem 'appraisal', require: false
   gem 'coveralls_reborn', require: false
   gem 'jeweler', require: false
+  gem 'kramdown', require: false
   gem 'pg', require: false
   gem 'pry', require: false
+  gem 'rake', require: false
   gem 'rspec', require: false
   gem 'rubocop', require: false
   gem 'rubocop-sorbet', require: false
