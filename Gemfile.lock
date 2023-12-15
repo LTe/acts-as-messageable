@@ -184,7 +184,7 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.30.0)
       parser (>= 3.2.1.0)
-    rubocop-sorbet (0.7.4)
+    rubocop-sorbet (0.7.6)
       rubocop (>= 0.90.0)
     ruby-progressbar (1.13.0)
     safe_type (1.1.1)
