@@ -3551,10 +3551,10 @@ module Unparser::Generation
 
   private
 
-  # source://unparser//lib/unparser/generation.rb#247
+  # source://unparser//lib/unparser/generation.rb#251
   def children; end
 
-  # source://unparser//lib/unparser/generation.rb#239
+  # source://unparser//lib/unparser/generation.rb#243
   def conditional_parentheses(flag, &block); end
 
   # source://unparser//lib/unparser/generation.rb#21
@@ -3563,16 +3563,16 @@ module Unparser::Generation
   # source://unparser//lib/unparser/generation.rb#123
   def emit_body(node, indent: T.unsafe(nil)); end
 
-  # source://unparser//lib/unparser/generation.rb#196
+  # source://unparser//lib/unparser/generation.rb#200
   def emit_body_ensure_rescue(node); end
 
-  # source://unparser//lib/unparser/generation.rb#145
+  # source://unparser//lib/unparser/generation.rb#149
   def emit_body_inner(node); end
 
-  # source://unparser//lib/unparser/generation.rb#158
+  # source://unparser//lib/unparser/generation.rb#162
   def emit_body_member(node); end
 
-  # source://unparser//lib/unparser/generation.rb#180
+  # source://unparser//lib/unparser/generation.rb#184
   def emit_body_rescue(node); end
 
   # source://unparser//lib/unparser/generation.rb#77
@@ -3581,7 +3581,7 @@ module Unparser::Generation
   # source://unparser//lib/unparser/generation.rb#69
   def emit_comments_before(source_part = T.unsafe(nil)); end
 
-  # source://unparser//lib/unparser/generation.rb#166
+  # source://unparser//lib/unparser/generation.rb#170
   def emit_ensure(node); end
 
   # source://unparser//lib/unparser/generation.rb#60
@@ -3596,19 +3596,19 @@ module Unparser::Generation
   # source://unparser//lib/unparser/generation.rb#115
   def emit_optional_body(node, indent: T.unsafe(nil)); end
 
-  # source://unparser//lib/unparser/generation.rb#188
+  # source://unparser//lib/unparser/generation.rb#192
   def emit_optional_body_ensure_rescue(node); end
 
-  # source://unparser//lib/unparser/generation.rb#206
+  # source://unparser//lib/unparser/generation.rb#210
   def emit_rescue_postcontrol(node); end
 
-  # source://unparser//lib/unparser/generation.rb#212
+  # source://unparser//lib/unparser/generation.rb#216
   def emit_rescue_regular(node); end
 
-  # source://unparser//lib/unparser/generation.rb#220
+  # source://unparser//lib/unparser/generation.rb#224
   def emitter(node); end
 
-  # source://unparser//lib/unparser/generation.rb#235
+  # source://unparser//lib/unparser/generation.rb#239
   def first_child; end
 
   # source://unparser//lib/unparser/generation.rb#106
@@ -3623,19 +3623,22 @@ module Unparser::Generation
   # source://unparser//lib/unparser/generation.rb#100
   def parentheses(open = T.unsafe(nil), close = T.unsafe(nil)); end
 
-  # source://unparser//lib/unparser/generation.rb#224
+  # source://unparser//lib/unparser/generation.rb#228
   def visit(node); end
 
-  # source://unparser//lib/unparser/generation.rb#228
+  # source://unparser//lib/unparser/generation.rb#232
   def visit_deep(node); end
 
   # source://unparser//lib/unparser/generation.rb#44
   def with_comments; end
 
+  # source://unparser//lib/unparser/generation.rb#139
+  def with_indent(indent:); end
+
   # source://unparser//lib/unparser/generation.rb#89
   def write(*strings); end
 
-  # source://unparser//lib/unparser/generation.rb#216
+  # source://unparser//lib/unparser/generation.rb#220
   def writer_with(klass, node); end
 
   # source://unparser//lib/unparser/generation.rb#50
