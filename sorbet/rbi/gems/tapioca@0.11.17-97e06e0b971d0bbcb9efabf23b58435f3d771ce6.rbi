@@ -1688,13 +1688,16 @@ end
 
 # source://tapioca//lib/tapioca/gem/listeners/sorbet_props.rb#7
 class Tapioca::Gem::Listeners::SorbetProps < ::Tapioca::Gem::Listeners::Base
+  include ::Tapioca::SorbetHelper
+  include ::Tapioca::RBIHelper
+
   private
 
-  # source://tapioca//lib/tapioca/gem/listeners/sorbet_props.rb#32
+  # source://tapioca//lib/tapioca/gem/listeners/sorbet_props.rb#33
   sig { override.params(event: ::Tapioca::Gem::NodeAdded).returns(T::Boolean) }
   def ignore?(event); end
 
-  # source://tapioca//lib/tapioca/gem/listeners/sorbet_props.rb#13
+  # source://tapioca//lib/tapioca/gem/listeners/sorbet_props.rb#14
   sig { override.params(event: ::Tapioca::Gem::ScopeNodeAdded).void }
   def on_scope(event); end
 end
