@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/Shopify/tapioca.git
-  revision: 868d5e35157e1f8ec2c5c5d3e97b014020266b5b
+  revision: 82794e1218a177fb9bd6faafe3005d9b30479854
   specs:
     tapioca (0.12.0)
       bundler (>= 2.2.25)
@@ -144,7 +144,7 @@ GEM
     pg (1.5.4)
     polyfill (1.9.0)
     prettier_print (1.2.1)
-    prism (0.19.0)
+    prism (0.24.0)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -176,8 +176,8 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.1.0)
-    rbi (0.1.6)
-      prism (>= 0.18.0, < 0.20)
+    rbi (0.1.9)
+      prism (>= 0.18.0, < 0.25)
       sorbet-runtime (>= 0.5.9204)
     rbs (3.2.1)
     rchardet (1.8.0)
