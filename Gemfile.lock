@@ -181,7 +181,7 @@ GEM
       sorbet-runtime (>= 0.5.9204)
     rbs (3.2.1)
     rchardet (1.8.0)
-    rdoc (6.6.2)
+    rdoc (6.6.3.1)
       psych (>= 4.0.0)
     regexp_parser (2.9.0)
     reline (0.4.2)
