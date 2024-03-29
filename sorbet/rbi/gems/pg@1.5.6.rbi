@@ -204,10 +204,10 @@ end
 # source://pg//lib/pg/basic_type_map_for_queries.rb#37
 class PG::BasicTypeMapForQueries::BinaryData < ::String; end
 
-# source://pg//lib/pg/basic_type_map_for_queries.rb#187
+# source://pg//lib/pg/basic_type_map_for_queries.rb#192
 PG::BasicTypeMapForQueries::DEFAULT_ARRAY_TYPE_MAP = T.let(T.unsafe(nil), Hash)
 
-# source://pg//lib/pg/basic_type_map_for_queries.rb#169
+# source://pg//lib/pg/basic_type_map_for_queries.rb#175
 PG::BasicTypeMapForQueries::DEFAULT_TYPE_MAP = T.let(T.unsafe(nil), Hash)
 
 # source://pg//lib/pg/basic_type_map_for_queries.rb#40
@@ -469,7 +469,7 @@ class PG::BasicTypeRegistry::CoderMapsBundle
   def init_maps(registry, result); end
 end
 
-# source://pg//lib/pg/basic_type_registry.rb#297
+# source://pg//lib/pg/basic_type_registry.rb#301
 PG::BasicTypeRegistry::DEFAULT_TYPE_REGISTRY = T.let(T.unsafe(nil), PG::BasicTypeRegistry)
 
 # source://pg//lib/pg.rb#76
@@ -823,7 +823,7 @@ class PG::Connection
   # Returns +nil+ on success, or a string containing the
   # error message if a failure occurs.
   #
-  # source://pg//lib/pg/connection.rb#582
+  # source://pg//lib/pg/connection.rb#587
   def async_cancel; end
 
   def async_describe_portal(_arg0); end
@@ -991,7 +991,7 @@ class PG::Connection
   # Returns +nil+ on success, or a string containing the
   # error message if a failure occurs.
   #
-  # source://pg//lib/pg/connection.rb#582
+  # source://pg//lib/pg/connection.rb#587
   def cancel; end
 
   # Read all pending socket input to internal memory and raise an exception in case of errors.
@@ -1441,10 +1441,11 @@ class PG::Connection
 
   private
 
-  # source://pg//lib/pg/connection.rb#637
+  # source://pg//lib/pg/connection.rb#642
   def async_connect_or_reset(poll_meth); end
 
   def flush_data=(_arg0); end
+  def reset_start2(_arg0); end
 
   class << self
     # Switch between sync and async libpq API.
@@ -1463,7 +1464,7 @@ class PG::Connection
     # Do not use this method in production code.
     # Any issues with the default setting of <tt>async_api=true</tt> should be reported to the maintainers instead.
     #
-    # source://pg//lib/pg/connection.rb#937
+    # source://pg//lib/pg/connection.rb#946
     def async_api=(enable); end
 
     # call-seq:
@@ -1518,7 +1519,7 @@ class PG::Connection
     #
     # Raises a PG::Error if the connection fails.
     #
-    # source://pg//lib/pg/connection.rb#758
+    # source://pg//lib/pg/connection.rb#763
     def async_connect(*args); end
 
     # call-seq:
@@ -1545,10 +1546,10 @@ class PG::Connection
     #
     # See also check_socket for a way to check the connection without doing any server communication.
     #
-    # source://pg//lib/pg/connection.rb#858
+    # source://pg//lib/pg/connection.rb#867
     def async_ping(*args); end
 
-    # source://pg//lib/pg/connection.rb#914
+    # source://pg//lib/pg/connection.rb#923
     def async_send_api=(enable); end
 
     def conndefaults; end
@@ -1613,7 +1614,7 @@ class PG::Connection
     #
     # Raises a PG::Error if the connection fails.
     #
-    # source://pg//lib/pg/connection.rb#758
+    # source://pg//lib/pg/connection.rb#763
     def connect(*args); end
 
     # Convert Hash options to connection String
@@ -1683,7 +1684,7 @@ class PG::Connection
     #
     # Raises a PG::Error if the connection fails.
     #
-    # source://pg//lib/pg/connection.rb#758
+    # source://pg//lib/pg/connection.rb#763
     def new(*args); end
 
     # call-seq:
@@ -1738,7 +1739,7 @@ class PG::Connection
     #
     # Raises a PG::Error if the connection fails.
     #
-    # source://pg//lib/pg/connection.rb#758
+    # source://pg//lib/pg/connection.rb#763
     def open(*args); end
 
     # Parse the connection +args+ into a connection-parameter string.
@@ -1781,7 +1782,7 @@ class PG::Connection
     #
     # See also check_socket for a way to check the connection without doing any server communication.
     #
-    # source://pg//lib/pg/connection.rb#858
+    # source://pg//lib/pg/connection.rb#867
     def ping(*args); end
 
     # Quote a single +value+ for use in a connection-parameter string.
@@ -1843,7 +1844,7 @@ class PG::Connection
     #
     # Raises a PG::Error if the connection fails.
     #
-    # source://pg//lib/pg/connection.rb#758
+    # source://pg//lib/pg/connection.rb#763
     def setdb(*args); end
 
     # call-seq:
@@ -1898,7 +1899,7 @@ class PG::Connection
     #
     # Raises a PG::Error if the connection fails.
     #
-    # source://pg//lib/pg/connection.rb#758
+    # source://pg//lib/pg/connection.rb#763
     def setdblogin(*args); end
 
     def sync_connect(*_arg0); end
@@ -1907,11 +1908,14 @@ class PG::Connection
 
     private
 
-    # source://pg//lib/pg/connection.rb#776
+    # source://pg//lib/pg/connection.rb#815
     def connect_to_hosts(*args); end
 
-    # source://pg//lib/pg/connection.rb#828
+    # source://pg//lib/pg/connection.rb#837
     def host_is_named_pipe?(host_string); end
+
+    # source://pg//lib/pg/connection.rb#784
+    def resolve_hosts(iopts); end
   end
 end
 
