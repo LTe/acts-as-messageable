@@ -3096,24 +3096,24 @@ end
 
 # Emitter for complex literals
 #
-# source://unparser//lib/unparser/emitter/primitive.rb#24
+# source://unparser//lib/unparser/emitter/primitive.rb#50
 class Unparser::Emitter::Primitive::Complex < ::Unparser::Emitter::Primitive
   private
 
-  # source://unparser//lib/unparser/emitter/primitive.rb#39
+  # source://unparser//lib/unparser/emitter/primitive.rb#65
   def dispatch; end
 
-  # source://unparser//lib/unparser/emitter/primitive.rb#44
+  # source://unparser//lib/unparser/emitter/primitive.rb#70
   def emit_imaginary; end
 
-  # source://unparser//lib/unparser/emitter/primitive.rb#48
+  # source://unparser//lib/unparser/emitter/primitive.rb#74
   def imaginary_node; end
 end
 
-# source://unparser//lib/unparser/emitter/primitive.rb#30
+# source://unparser//lib/unparser/emitter/primitive.rb#56
 Unparser::Emitter::Primitive::Complex::MAP = T.let(T.unsafe(nil), Hash)
 
-# source://unparser//lib/unparser/emitter/primitive.rb#28
+# source://unparser//lib/unparser/emitter/primitive.rb#54
 Unparser::Emitter::Primitive::Complex::RATIONAL_FORMAT = T.let(T.unsafe(nil), String)
 
 # Emitter for primitives based on Object#inspect
@@ -3128,29 +3128,48 @@ end
 
 # Emiter for numeric literals
 #
-# source://unparser//lib/unparser/emitter/primitive.rb#80
+# source://unparser//lib/unparser/emitter/primitive.rb#106
 class Unparser::Emitter::Primitive::Numeric < ::Unparser::Emitter::Primitive
   private
 
-  # source://unparser//lib/unparser/emitter/primitive.rb#86
+  # source://unparser//lib/unparser/emitter/primitive.rb#112
   def dispatch; end
 end
 
 # Emitter for rational literals
 #
-# source://unparser//lib/unparser/emitter/primitive.rb#56
+# source://unparser//lib/unparser/emitter/primitive.rb#82
 class Unparser::Emitter::Primitive::Rational < ::Unparser::Emitter::Primitive
   private
 
-  # source://unparser//lib/unparser/emitter/primitive.rb#65
+  # source://unparser//lib/unparser/emitter/primitive.rb#91
   def dispatch; end
 
-  # source://unparser//lib/unparser/emitter/primitive.rb#73
+  # source://unparser//lib/unparser/emitter/primitive.rb#99
   def write_rational(value); end
 end
 
-# source://unparser//lib/unparser/emitter/primitive.rb#60
+# source://unparser//lib/unparser/emitter/primitive.rb#86
 Unparser::Emitter::Primitive::Rational::RATIONAL_FORMAT = T.let(T.unsafe(nil), String)
+
+# Inspect
+#
+# source://unparser//lib/unparser/emitter/primitive.rb#23
+class Unparser::Emitter::Primitive::Symbol < ::Unparser::Emitter::Primitive
+  private
+
+  # mutant:disable
+  #
+  # source://unparser//lib/unparser/emitter/primitive.rb#30
+  def dispatch; end
+
+  # mutant:disable
+  #
+  # @return [Boolean]
+  #
+  # source://unparser//lib/unparser/emitter/primitive.rb#39
+  def inspect_breaks_parsing?; end
+end
 
 # Progarg emitter
 #
