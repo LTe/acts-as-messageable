@@ -6,5 +6,7 @@ gem:
     - rubocop
     - rubocop-sorbet
     - sorbet-rails
+  doc: false
+  loc: false
 dsl:
 
