@@ -667,6 +667,42 @@ class RBI::Method < ::RBI::NodeWithComments
   sig { override.params(v: ::RBI::Printer).void }
   def accept_printer(v); end
 
+  sig { params(name: ::String).void }
+  def add_block_param(name); end
+
+  sig { params(name: ::String, default_value: ::String).void }
+  def add_kw_opt_param(name, default_value); end
+
+  sig { params(name: ::String).void }
+  def add_kw_param(name); end
+
+  sig { params(name: ::String).void }
+  def add_kw_rest_param(name); end
+
+  sig { params(name: ::String, default_value: ::String).void }
+  def add_opt_param(name, default_value); end
+
+  sig { params(name: ::String).void }
+  def add_param(name); end
+
+  sig { params(name: ::String).void }
+  def add_rest_param(name); end
+
+  sig do
+    params(
+      params: T::Array[::RBI::SigParam],
+      return_type: T.nilable(::String),
+      is_abstract: T::Boolean,
+      is_override: T::Boolean,
+      is_overridable: T::Boolean,
+      is_final: T::Boolean,
+      type_params: T::Array[::String],
+      checked: T.nilable(::Symbol),
+      block: T.proc.params(node: ::RBI::Sig).void
+    ).void
+  end
+  def add_sig(params: T.unsafe(nil), return_type: T.unsafe(nil), is_abstract: T.unsafe(nil), is_override: T.unsafe(nil), is_overridable: T.unsafe(nil), is_final: T.unsafe(nil), type_params: T.unsafe(nil), checked: T.unsafe(nil), &block); end
+
   sig { override.params(other: ::RBI::Node).returns(T::Boolean) }
   def compatible_with?(other); end
 
@@ -1570,6 +1606,9 @@ class RBI::Sig < ::RBI::Node
 
   sig { override.params(v: ::RBI::Printer).void }
   def accept_printer(v); end
+
+  sig { params(name: ::String, type: ::String).void }
+  def add_param(name, type); end
 
   sig { returns(T.nilable(::Symbol)) }
   def checked; end
