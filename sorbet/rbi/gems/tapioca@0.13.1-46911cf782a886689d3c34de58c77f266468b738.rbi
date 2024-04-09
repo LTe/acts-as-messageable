@@ -105,8 +105,8 @@ class RBI::Tree < ::RBI::NodeWithComments
   sig { params(constant: ::Module, block: T.nilable(T.proc.params(scope: ::RBI::Scope).void)).returns(::RBI::Scope) }
   def create_path(constant, &block); end
 
-  sig { params(parameters: T::Array[::RBI::TypedParam], return_type: ::String).returns(::RBI::Sig) }
-  def create_sig(parameters: T.unsafe(nil), return_type: T.unsafe(nil)); end
+  sig { params(parameters: T::Hash[T.any(::String, ::Symbol), ::String], return_type: ::String).returns(::RBI::Sig) }
+  def create_sig(parameters:, return_type: T.unsafe(nil)); end
 
   sig do
     params(
