@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/Shopify/tapioca.git
-  revision: 46911cf782a886689d3c34de58c77f266468b738
+  revision: 218b9c0a1985af288d25dbbcc9269173a459f9cf
   specs:
     tapioca (0.13.1)
       bundler (>= 2.2.25)
