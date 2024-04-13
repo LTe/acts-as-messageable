@@ -58,7 +58,7 @@ To use it, add it to your Gemfile:
 ### Rails >= 3
 
 ```ruby
-gem 'acts-as-messageable'
+gem 'acts-as-messageable', require: 'acts_as_messageable'
 ```
 
 ### Rails 2
