@@ -308,6 +308,7 @@ DEPENDENCIES
   timecop
   unparser
   yard
+  zeitwerk
 
 BUNDLED WITH
    2.2.30
