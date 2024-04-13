@@ -8,6 +8,7 @@ gem 'ancestry', require: false
 gem 'railties', require: false
 gem 'sorbet-rails', require: false
 gem 'sorbet-static-and-runtime', require: false
+gem 'zeitwerk', require: false
 
 group :development do
   gem 'appraisal', require: false

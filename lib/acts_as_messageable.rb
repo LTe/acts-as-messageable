@@ -1,19 +1,15 @@
 # typed: strong
 # frozen_string_literal: true
 
+require 'zeitwerk'
 require 'sorbet-runtime'
 require 'sorbet-rails'
-require 'ancestry'
+
+loader = Zeitwerk::Loader.for_gem(warn_on_extra_files: true)
+loader.ignore("#{__dir__}/generators")
+loader.setup
 
 module ActsAsMessageable
-  autoload :Model, 'acts_as_messageable/model'
-  autoload :Scopes, 'acts_as_messageable/scopes'
-  autoload :Message, 'acts_as_messageable/message'
-  autoload :Relation, 'acts_as_messageable/relation'
-  autoload :Rails3, 'acts_as_messageable/rails3'
-  autoload :Rails4, 'acts_as_messageable/rails4'
-  autoload :Rails6, 'acts_as_messageable/rails6'
-
   extend T::Sig
 
   # @return [Class<ActsAsMessageable::Rails4>, Class<ActsAsMessageable::Rails6>, Class<ActsAsMessageable::Rails3>]

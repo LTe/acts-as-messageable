@@ -1,6 +1,8 @@
 # typed: strict
 # frozen_string_literal: true
 
+require 'ancestry'
+
 module ActsAsMessageable
   class Message < ::ActiveRecord::Base
     extend T::Sig
