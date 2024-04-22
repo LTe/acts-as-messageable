@@ -6,9 +6,9 @@
 
 module SQLite3
   class << self
-    def const_missing(name); end
     def libversion; end
     def sqlcipher?; end
+    def status(*_arg0); end
     def threadsafe; end
     def threadsafe?; end
   end
@@ -46,6 +46,7 @@ SQLite3::Constants::ErrorCode::CORRUPT = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::DONE = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::EMPTY = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::ERROR = T.let(T.unsafe(nil), Integer)
+SQLite3::Constants::ErrorCode::FORMAT = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::FULL = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::INTERNAL = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::INTERRUPT = T.let(T.unsafe(nil), Integer)
@@ -55,14 +56,18 @@ SQLite3::Constants::ErrorCode::MISMATCH = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::MISUSE = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::NOLFS = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::NOMEM = T.let(T.unsafe(nil), Integer)
+SQLite3::Constants::ErrorCode::NOTADB = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::NOTFOUND = T.let(T.unsafe(nil), Integer)
+SQLite3::Constants::ErrorCode::NOTICE = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::OK = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::PERM = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::PROTOCOL = T.let(T.unsafe(nil), Integer)
+SQLite3::Constants::ErrorCode::RANGE = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::READONLY = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::ROW = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::SCHEMA = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::ErrorCode::TOOBIG = T.let(T.unsafe(nil), Integer)
+SQLite3::Constants::ErrorCode::WARNING = T.let(T.unsafe(nil), Integer)
 module SQLite3::Constants::Open; end
 SQLite3::Constants::Open::AUTOPROXY = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::Open::CREATE = T.let(T.unsafe(nil), Integer)
@@ -79,11 +84,23 @@ SQLite3::Constants::Open::READONLY = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::Open::READWRITE = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::Open::SHAREDCACHE = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::Open::SUBJOURNAL = T.let(T.unsafe(nil), Integer)
+SQLite3::Constants::Open::SUPER_JOURNAL = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::Open::TEMP_DB = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::Open::TEMP_JOURNAL = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::Open::TRANSIENT_DB = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::Open::URI = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::Open::WAL = T.let(T.unsafe(nil), Integer)
+module SQLite3::Constants::Status; end
+SQLite3::Constants::Status::MALLOC_COUNT = T.let(T.unsafe(nil), Integer)
+SQLite3::Constants::Status::MALLOC_SIZE = T.let(T.unsafe(nil), Integer)
+SQLite3::Constants::Status::MEMORY_USED = T.let(T.unsafe(nil), Integer)
+SQLite3::Constants::Status::PAGECACHE_OVERFLOW = T.let(T.unsafe(nil), Integer)
+SQLite3::Constants::Status::PAGECACHE_SIZE = T.let(T.unsafe(nil), Integer)
+SQLite3::Constants::Status::PAGECACHE_USED = T.let(T.unsafe(nil), Integer)
+SQLite3::Constants::Status::PARSER_STACK = T.let(T.unsafe(nil), Integer)
+SQLite3::Constants::Status::SCRATCH_OVERFLOW = T.let(T.unsafe(nil), Integer)
+SQLite3::Constants::Status::SCRATCH_SIZE = T.let(T.unsafe(nil), Integer)
+SQLite3::Constants::Status::SCRATCH_USED = T.let(T.unsafe(nil), Integer)
 module SQLite3::Constants::TextRep; end
 SQLite3::Constants::TextRep::ANY = T.let(T.unsafe(nil), Integer)
 SQLite3::Constants::TextRep::DETERMINISTIC = T.let(T.unsafe(nil), Integer)
@@ -101,7 +118,9 @@ class SQLite3::Database
 
   def authorizer(&block); end
   def authorizer=(_arg0); end
+  def build_result_set(stmt); end
   def busy_handler(*_arg0); end
+  def busy_handler_timeout=(milliseconds); end
   def busy_timeout(_arg0); end
   def busy_timeout=(_arg0); end
   def changes; end
@@ -121,9 +140,9 @@ class SQLite3::Database
   def encoding; end
   def errcode; end
   def errmsg; end
-  def execute(sql, bind_vars = T.unsafe(nil), *args, &block); end
+  def execute(sql, bind_vars = T.unsafe(nil), &block); end
   def execute2(sql, *bind_vars); end
-  def execute_batch(sql, bind_vars = T.unsafe(nil), *args); end
+  def execute_batch(sql, bind_vars = T.unsafe(nil)); end
   def execute_batch2(sql, &block); end
   def extended_result_codes=(_arg0); end
   def filename(db_name = T.unsafe(nil)); end
@@ -133,19 +152,16 @@ class SQLite3::Database
   def last_insert_row_id; end
   def load_extension(_arg0); end
   def prepare(sql); end
-  def query(sql, bind_vars = T.unsafe(nil), *args); end
+  def query(sql, bind_vars = T.unsafe(nil)); end
   def readonly?; end
   def results_as_hash; end
   def results_as_hash=(_arg0); end
   def rollback; end
+  def statement_timeout=(_arg0); end
   def total_changes; end
   def trace(*_arg0); end
   def transaction(mode = T.unsafe(nil)); end
   def transaction_active?; end
-  def translate_from_db(types, row); end
-  def translator; end
-  def type_translation; end
-  def type_translation=(value); end
 
   private
 
@@ -153,7 +169,6 @@ class SQLite3::Database
   def define_aggregator2(_arg0, _arg1); end
   def disable_quirk_mode; end
   def exec_batch(_arg0, _arg1); end
-  def make_type_translator(should_translate); end
   def open16(_arg0); end
   def open_v2(_arg0, _arg1, _arg2); end
 
@@ -168,13 +183,10 @@ class SQLite3::Database::FunctionProxy
 
   def [](key); end
   def []=(key, value); end
-  def count; end
   def result; end
   def result=(_arg0); end
-  def set_error(error); end
 end
 
-SQLite3::Database::NULL_TRANSLATOR = T.let(T.unsafe(nil), Proc)
 class SQLite3::EmptyException < ::SQLite3::Exception; end
 
 class SQLite3::Exception < ::StandardError
@@ -183,6 +195,11 @@ end
 
 class SQLite3::FormatException < ::SQLite3::Exception; end
 class SQLite3::FullException < ::SQLite3::Exception; end
+
+class SQLite3::HashResultSet < ::SQLite3::ResultSet
+  def next; end
+end
+
 class SQLite3::IOException < ::SQLite3::Exception; end
 class SQLite3::InternalException < ::SQLite3::Exception; end
 class SQLite3::InterruptException < ::SQLite3::Exception; end
@@ -343,26 +360,6 @@ class SQLite3::ResultSet
   def types; end
 end
 
-class SQLite3::ResultSet::ArrayWithTypes < ::Array
-  def types; end
-  def types=(_arg0); end
-end
-
-class SQLite3::ResultSet::ArrayWithTypesAndFields < ::Array
-  def fields; end
-  def fields=(_arg0); end
-  def types; end
-  def types=(_arg0); end
-end
-
-class SQLite3::ResultSet::HashWithTypesAndFields < ::Hash
-  def [](key); end
-  def fields; end
-  def fields=(_arg0); end
-  def types; end
-  def types=(_arg0); end
-end
-
 class SQLite3::SQLException < ::SQLite3::Exception; end
 SQLite3::SQLITE_LOADED_VERSION = T.let(T.unsafe(nil), String)
 SQLite3::SQLITE_VERSION = T.let(T.unsafe(nil), String)
@@ -372,7 +369,7 @@ class SQLite3::SchemaChangedException < ::SQLite3::Exception; end
 class SQLite3::Statement
   include ::Enumerable
 
-  def initialize(_arg0, _arg1); end
+  def initialize(db, sql); end
 
   def active?; end
   def bind_param(_arg0, _arg1); end
@@ -389,31 +386,25 @@ class SQLite3::Statement
   def each; end
   def execute(*bind_vars); end
   def execute!(*bind_vars, &block); end
+  def expanded_sql; end
+  def memused; end
   def must_be_open!; end
   def remainder; end
   def reset!; end
+  def sql; end
+  def stat(key = T.unsafe(nil)); end
   def step; end
   def types; end
 
   private
 
   def get_metadata; end
+  def prepare(_arg0, _arg1); end
+  def stat_for(_arg0); end
+  def stats_as_hash; end
 end
 
 class SQLite3::TooBigException < ::SQLite3::Exception; end
-
-class SQLite3::Translator
-  def initialize; end
-
-  def add_translator(type, &block); end
-  def translate(type, value); end
-
-  private
-
-  def register_default_translators; end
-  def type_name(type); end
-end
-
 class SQLite3::UnsupportedException < ::SQLite3::Exception; end
 SQLite3::VERSION = T.let(T.unsafe(nil), String)
 
@@ -430,14 +421,6 @@ class SQLite3::Value
   def to_s(utf16 = T.unsafe(nil)); end
   def type; end
 end
-
-module SQLite3::VersionProxy; end
-SQLite3::VersionProxy::BUILD = T.let(T.unsafe(nil), T.untyped)
-SQLite3::VersionProxy::MAJOR = T.let(T.unsafe(nil), Integer)
-SQLite3::VersionProxy::MINOR = T.let(T.unsafe(nil), Integer)
-SQLite3::VersionProxy::STRING = T.let(T.unsafe(nil), String)
-SQLite3::VersionProxy::TINY = T.let(T.unsafe(nil), Integer)
-SQLite3::VersionProxy::VERSION = T.let(T.unsafe(nil), String)
 
 class String
   include ::Comparable
