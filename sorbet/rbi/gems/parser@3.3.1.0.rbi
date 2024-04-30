@@ -20,7 +20,9 @@ class Parser::AST::Node < ::AST::Node
   def location; end
 end
 
-class Parser::AST::Processor < ::AST::Processor
+class Parser::AST::Processor
+  include ::AST::Processor::Mixin
+
   def on_alias(node); end
   def on_and(node); end
   def on_and_asgn(node); end
@@ -1826,8 +1828,11 @@ class Parser::StaticEnvironment
   def declare_forward_args; end
   def declared?(name); end
   def declared_anonymous_blockarg?; end
+  def declared_anonymous_blockarg_in_current_scpe?; end
   def declared_anonymous_kwrestarg?; end
+  def declared_anonymous_kwrestarg_in_current_scope?; end
   def declared_anonymous_restarg?; end
+  def declared_anonymous_restarg_in_current_scope?; end
   def declared_forward_args?; end
   def empty?; end
   def extend_dynamic; end
@@ -1839,9 +1844,12 @@ class Parser::StaticEnvironment
   def unextend; end
 end
 
-Parser::StaticEnvironment::ANONYMOUS_BLOCKARG = T.let(T.unsafe(nil), Symbol)
-Parser::StaticEnvironment::ANONYMOUS_KWRESTARG = T.let(T.unsafe(nil), Symbol)
-Parser::StaticEnvironment::ANONYMOUS_RESTARG = T.let(T.unsafe(nil), Symbol)
+Parser::StaticEnvironment::ANONYMOUS_BLOCKARG_INHERITED = T.let(T.unsafe(nil), Symbol)
+Parser::StaticEnvironment::ANONYMOUS_BLOCKARG_IN_CURRENT_SCOPE = T.let(T.unsafe(nil), Symbol)
+Parser::StaticEnvironment::ANONYMOUS_KWRESTARG_INHERITED = T.let(T.unsafe(nil), Symbol)
+Parser::StaticEnvironment::ANONYMOUS_KWRESTARG_IN_CURRENT_SCOPE = T.let(T.unsafe(nil), Symbol)
+Parser::StaticEnvironment::ANONYMOUS_RESTARG_INHERITED = T.let(T.unsafe(nil), Symbol)
+Parser::StaticEnvironment::ANONYMOUS_RESTARG_IN_CURRENT_SCOPE = T.let(T.unsafe(nil), Symbol)
 Parser::StaticEnvironment::FORWARD_ARGS = T.let(T.unsafe(nil), Symbol)
 
 class Parser::SyntaxError < ::StandardError
@@ -1860,6 +1868,7 @@ class Parser::TreeRewriter < ::Parser::AST::Processor
   def wrap(range, before, after); end
 end
 
+class Parser::UnknownEncodingInMagicComment < ::ArgumentError; end
 Parser::VERSION = T.let(T.unsafe(nil), String)
 
 class Parser::VariablesStack
