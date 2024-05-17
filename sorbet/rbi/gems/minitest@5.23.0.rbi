@@ -282,6 +282,8 @@ class Minitest::StatisticsReporter < ::Minitest::Reporter
   def start_time=(_arg0); end
   def total_time; end
   def total_time=(_arg0); end
+  def warnings; end
+  def warnings=(_arg0); end
 end
 
 class Minitest::SummaryReporter < ::Minitest::StatisticsReporter
@@ -348,4 +350,9 @@ class Minitest::UnexpectedError < ::Minitest::Assertion
 end
 
 Minitest::UnexpectedError::BASE_RE = T.let(T.unsafe(nil), Regexp)
+
+class Minitest::UnexpectedWarning < ::Minitest::Assertion
+  def result_label; end
+end
+
 Minitest::VERSION = T.let(T.unsafe(nil), String)
