@@ -31,6 +31,20 @@ class DateTime < ::Date
   end
 end
 
+module Process
+  extend ::ActiveSupport::ForkTracker::ModernCoreExt
+
+  class << self
+    def clock_gettime(clock_id, unit = T.unsafe(nil)); end
+    def clock_gettime_mock_time(clock_id, unit = T.unsafe(nil)); end
+
+    private
+
+    def mock_time_monotonic; end
+    def mock_time_realtime; end
+  end
+end
+
 class Time
   include ::Comparable
 
@@ -71,10 +85,12 @@ class Timecop
     def safe_mode=(safe); end
     def safe_mode?; end
     def scale(*args, &block); end
+    def scaled?; end
     def thread_safe; end
     def thread_safe=(t); end
     def top_stack_item; end
     def travel(*args, &block); end
+    def travelled?; end
     def unfreeze(&block); end
 
     private
@@ -93,12 +109,15 @@ end
 class Timecop::TimeStackItem
   def initialize(mock_type, *args); end
 
+  def current_monotonic; end
+  def current_monotonic_with_mock; end
   def date(date_klass = T.unsafe(nil)); end
   def datetime(datetime_klass = T.unsafe(nil)); end
   def day; end
   def hour; end
   def min; end
   def mock_type; end
+  def monotonic; end
   def month; end
   def scaled_time; end
   def scaling_factor; end
@@ -112,6 +131,7 @@ class Timecop::TimeStackItem
   private
 
   def compute_travel_offset; end
+  def parse_monotonic_time(*args); end
   def parse_time(*args); end
   def rational_to_utc_offset(rational); end
   def time_klass; end
