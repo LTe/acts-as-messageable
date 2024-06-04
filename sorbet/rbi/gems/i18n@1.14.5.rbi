@@ -412,6 +412,7 @@ module I18n::Base
   def exception_handler; end
   def exception_handler=(value); end
   def exists?(key, _locale = T.unsafe(nil), locale: T.unsafe(nil), **options); end
+  def interpolation_keys(key, **options); end
   def l(object, locale: T.unsafe(nil), format: T.unsafe(nil), **options); end
   def load_path; end
   def load_path=(value); end
@@ -431,6 +432,7 @@ module I18n::Base
   private
 
   def handle_exception(handling, exception, locale, key, options); end
+  def interpolation_keys_from_translation(translation); end
   def normalize_key(key, separator); end
   def translate_key(key, throw, raise, locale, backend, options); end
 end
