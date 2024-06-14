@@ -21,7 +21,7 @@ require 'bundler/setup'
 Bundler.require(:default)
 
 require 'pry'
-require 'acts-as-messageable'
+require 'acts_as_messageable'
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each { |f| require f }
 
