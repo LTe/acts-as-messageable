@@ -49,6 +49,11 @@ appraise 'rails-7.0' do
   gem 'activerecord', '~> 7'
   gem 'activesupport', '~> 7'
   gem 'railties', '~> 7'
+
+  group :development do
+    gem 'sqlite3', '~> 1.7.3'
+    remove_gem 'tapioca'
+  end
 end
 
 appraise 'rails-master' do
