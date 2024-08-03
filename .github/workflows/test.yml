@@ -76,13 +76,13 @@ jobs:
             run_generators: "false"
             database_adapter: 'sqlite3'
             database_name: ":memory:"
-          - rvm: 2.3.8
+          - rvm: 2.7
             gemfile: gemfiles/rails_3.2.gemfile
             bundler: '2.3.26'
             run_generators: "false"
             database_adapter: 'sqlite3'
             database_name: ":memory:"
-          - rvm: 2.3.8
+          - rvm: 2.7
             gemfile: gemfiles/rails_4.2.gemfile
             bundler: '2.3.26'
             run_generators: "false"
