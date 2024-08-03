@@ -1,28 +1,5 @@
 # frozen_string_literal: true
 
-appraise 'rails-3.2' do
-  gem 'activerecord', '~> 3.2.22'
-  gem 'activesupport', '~> 3.2.22'
-  gem 'railties', '~> 3.2.22'
-
-  group :development do
-    gem 'sqlite3', '~> 1.3.6'
-    remove_gem 'tapioca'
-  end
-end
-
-appraise 'rails-4.2' do
-  gem 'activerecord', '~> 4.2'
-  gem 'activesupport', '~> 4.2'
-  gem 'railties', '~> 4.2'
-  gem 'rdoc', '6.2.0'
-
-  group :development do
-    gem 'sqlite3', '~> 1.3.6'
-    remove_gem 'tapioca'
-  end
-end
-
 appraise 'rails-5.2' do
   gem 'activerecord', '~> 5.2.0'
   gem 'activesupport', '~> 5.2.0'

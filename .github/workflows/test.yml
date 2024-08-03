@@ -77,18 +77,6 @@ jobs:
             database_adapter: 'sqlite3'
             database_name: ":memory:"
           - rvm: 2.7
-            gemfile: gemfiles/rails_3.2.gemfile
-            bundler: '2.3.26'
-            run_generators: "false"
-            database_adapter: 'sqlite3'
-            database_name: ":memory:"
-          - rvm: 2.7
-            gemfile: gemfiles/rails_4.2.gemfile
-            bundler: '2.3.26'
-            run_generators: "false"
-            database_adapter: 'sqlite3'
-            database_name: ":memory:"
-          - rvm: 2.7
             gemfile: gemfiles/rails_5.2.gemfile
             bundler: 'default'
             run_generators: "false"
