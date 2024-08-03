@@ -4081,7 +4081,6 @@ class ActionDispatch::PermissionsPolicy::Middleware
 
   private
 
-  def html_response?(headers); end
   def policy_empty?(policy); end
   def policy_present?(headers); end
 end

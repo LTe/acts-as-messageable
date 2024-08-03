@@ -26,7 +26,9 @@ module Concurrent
   class << self
     def abort_transaction; end
     def atomically; end
+    def available_processor_count; end
     def call_dataflow(method, executor, *inputs, &block); end
+    def cpu_quota; end
     def create_simple_logger(level = T.unsafe(nil), output = T.unsafe(nil)); end
     def create_stdlib_logger(level = T.unsafe(nil), output = T.unsafe(nil)); end
     def dataflow(*inputs, &block); end
@@ -2340,13 +2342,17 @@ Concurrent::Utility::NativeInteger::MIN_VALUE = T.let(T.unsafe(nil), Integer)
 class Concurrent::Utility::ProcessorCounter
   def initialize; end
 
+  def available_processor_count; end
+  def cpu_quota; end
   def physical_processor_count; end
   def processor_count; end
 
   private
 
+  def compute_cpu_quota; end
   def compute_physical_processor_count; end
   def compute_processor_count; end
+  def run(command); end
 end
 
 Concurrent::VERSION = T.let(T.unsafe(nil), String)
