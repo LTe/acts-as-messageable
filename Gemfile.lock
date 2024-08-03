@@ -116,6 +116,7 @@ GEM
     method_source (1.0.0)
     mime-types (2.99.3)
     minitest (5.22.3)
+    mize (0.6.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.3.0)
@@ -289,6 +290,7 @@ DEPENDENCIES
   coveralls_reborn
   jeweler
   kramdown
+  mize
   pg
   pry
   railties
