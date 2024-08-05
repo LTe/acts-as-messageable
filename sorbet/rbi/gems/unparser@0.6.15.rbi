@@ -55,7 +55,6 @@ Unparser::AST::FIRST_CHILD = T.let(T.unsafe(nil), Proc)
 Unparser::AST::INHERIT_NODES = T.let(T.unsafe(nil), Array)
 
 class Unparser::AST::LocalVariableScope
-  include ::Unparser::Equalizer::Methods
   include ::Unparser::Adamantium
   include ::Unparser::Adamantium::InstanceMethods
   include ::Enumerable
@@ -1073,8 +1072,6 @@ class Unparser::Emitter::MatchPattern < ::Unparser::Emitter
   def target; end
 end
 
-Unparser::Emitter::MatchPattern::SYMBOL = T.let(T.unsafe(nil), String)
-
 class Unparser::Emitter::MatchPatternP < ::Unparser::Emitter
   private
 
@@ -1154,9 +1151,13 @@ end
 class Unparser::Emitter::Pair < ::Unparser::Emitter
   private
 
-  def colon?(key); end
+  def colon?; end
   def dispatch; end
+  def emit_colon; end
+  def implicit_value_lvar?; end
+  def implicit_value_send?; end
   def key; end
+  def key_value; end
   def remaining_children; end
   def value; end
 end
@@ -1523,6 +1524,7 @@ module Unparser::NodeHelpers
   def n_kwargs?(node); end
   def n_kwsplat?(node); end
   def n_lambda?(node); end
+  def n_lvar?(node); end
   def n_match_rest?(node); end
   def n_pair?(node); end
   def n_rescue?(node); end
