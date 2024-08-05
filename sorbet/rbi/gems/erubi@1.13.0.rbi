@@ -5,6 +5,10 @@
 # Please instead update this file by running `bin/tapioca gem erubi`.
 
 module Erubi
+  private
+
+  def h(_arg0); end
+
   class << self
     def h(_arg0); end
   end

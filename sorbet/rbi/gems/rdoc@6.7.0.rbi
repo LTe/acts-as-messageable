@@ -297,7 +297,7 @@ class RDoc::Context < ::RDoc::CodeObject
   def current_section=(_arg0); end
   def defined_in?(file); end
   def display(method_attr); end
-  def each_ancestor; end
+  def each_ancestor(&_); end
   def each_attribute; end
   def each_classmodule(&block); end
   def each_constant; end
@@ -1357,6 +1357,7 @@ class RDoc::Markup::ToBs < ::RDoc::Markup::ToRdoc
   def initialize(markup = T.unsafe(nil)); end
 
   def accept_heading(heading); end
+  def accept_list_item_start(list_item); end
   def annotate(tag); end
   def convert_regexp_handling(target); end
   def convert_string(string); end

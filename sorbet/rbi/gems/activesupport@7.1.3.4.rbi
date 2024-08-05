@@ -4291,6 +4291,7 @@ class Method
 end
 
 class Module
+  include ::Mize::CacheMethods
   include ::Module::Concerning
 
   def alias_attribute(new_name, old_name); end
