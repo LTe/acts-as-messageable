@@ -245,12 +245,12 @@ Gem::Specification.new do |s|
   s.homepage = 'http://github.com/LTe/acts-as-messageable'
   s.summary = 'Make user messageable!;-)'
 
-  s.add_runtime_dependency('activerecord', ['>= 0'])
-  s.add_runtime_dependency('activesupport', ['>= 0'])
-  s.add_runtime_dependency('ancestry', ['>= 0'])
-  s.add_runtime_dependency('railties', ['>= 0'])
-  s.add_runtime_dependency('sorbet-rails', ['>= 0'])
-  s.add_runtime_dependency('sorbet-static-and-runtime', ['>= 0'])
+  s.add_dependency('activerecord', ['>= 0'])
+  s.add_dependency('activesupport', ['>= 0'])
+  s.add_dependency('ancestry', ['>= 0'])
+  s.add_dependency('railties', ['>= 0'])
+  s.add_dependency('sorbet-rails', ['>= 0'])
+  s.add_dependency('sorbet-static-and-runtime', ['>= 0'])
   s.add_development_dependency('appraisal', ['>= 0'])
   s.add_development_dependency('coveralls_reborn', ['>= 0'])
   s.add_development_dependency('jeweler', ['>= 0'])
