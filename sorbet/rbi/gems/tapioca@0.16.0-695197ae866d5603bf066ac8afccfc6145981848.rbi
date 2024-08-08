@@ -2138,7 +2138,7 @@ class Tapioca::Runtime::GenericTypeRegistry::GenericType < ::T::Types::Simple
   sig { params(raw_type: ::Module, underlying_type: ::Module).void }
   def initialize(raw_type, underlying_type); end
 
-  sig { params(obj: T.untyped).returns(T::Boolean) }
+  sig { override.params(obj: T.untyped).returns(T::Boolean) }
   def valid?(obj); end
 end
 
