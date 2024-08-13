@@ -1194,6 +1194,9 @@ class Tapioca::Gem::Listeners::Methods < ::Tapioca::Gem::Listeners::Base
   sig { params(constant: ::Module).returns(T.nilable(::UnboundMethod)) }
   def initialize_method_for(constant); end
 
+  sig { params(method: ::UnboundMethod).returns(T.untyped) }
+  def lookup_signature_of(method); end
+
   sig { params(mod: ::Module).returns(T::Hash[::Symbol, T::Array[::Symbol]]) }
   def method_names_by_visibility(mod); end
 
@@ -1445,14 +1448,24 @@ class Tapioca::Gem::Pipeline
   include ::Tapioca::SorbetHelper
   include ::Tapioca::RBIHelper
 
-  sig { params(gem: ::Tapioca::Gemfile::GemSpec, include_doc: T::Boolean, include_loc: T::Boolean).void }
-  def initialize(gem, include_doc: T.unsafe(nil), include_loc: T.unsafe(nil)); end
+  sig do
+    params(
+      gem: ::Tapioca::Gemfile::GemSpec,
+      error_handler: T.proc.params(error: ::String).void,
+      include_doc: T::Boolean,
+      include_loc: T::Boolean
+    ).void
+  end
+  def initialize(gem, error_handler:, include_doc: T.unsafe(nil), include_loc: T.unsafe(nil)); end
 
   sig { returns(::RBI::Tree) }
   def compile; end
 
   sig { params(name: T.any(::String, ::Symbol)).returns(T::Boolean) }
   def constant_in_gem?(name); end
+
+  sig { returns(T.proc.params(error: ::String).void) }
+  def error_handler; end
 
   sig { returns(::Tapioca::Gemfile::GemSpec) }
   def gem; end
@@ -1844,7 +1857,6 @@ class Tapioca::Loaders::Loader
 
   private
 
-  sig { params(engine: T.class_of(Rails::Engine)).returns(T::Array[::String]) }
   def eager_load_paths(engine); end
 
   sig { void }
@@ -2217,6 +2229,9 @@ module Tapioca::Runtime::Reflection
   sig { params(method: T.any(::Method, ::UnboundMethod)).returns(T.untyped) }
   def signature_of(method); end
 
+  sig { params(method: T.any(::Method, ::UnboundMethod)).returns(T.untyped) }
+  def signature_of!(method); end
+
   sig { params(constant: ::Module).returns(T::Class[T.anything]) }
   def singleton_class_of(constant); end
 
@@ -2464,7 +2479,6 @@ module Tapioca::Static::SymbolLoader
 
     private
 
-    sig { returns(T::Array[T.class_of(Rails::Engine)]) }
     def engines; end
 
     sig { params(input: ::String, table_type: ::String).returns(::String) }

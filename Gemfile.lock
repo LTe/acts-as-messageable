@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/Shopify/tapioca.git
-  revision: 695197ae866d5603bf066ac8afccfc6145981848
+  revision: df6e272f4b4dcab5d1a21b2f9aabab1741743603
   specs:
     tapioca (0.16.0)
       bundler (>= 2.2.25)
@@ -132,7 +132,7 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
-    parallel (1.25.1)
+    parallel (1.26.2)
     parlour (5.0.0)
       commander (~> 4.5)
       parser
