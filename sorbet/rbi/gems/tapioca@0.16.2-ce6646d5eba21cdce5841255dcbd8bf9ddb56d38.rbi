@@ -116,6 +116,12 @@ class RBI::Tree < ::RBI::NodeWithComments
   def filter_versions!(version); end
 
   sig { void }
+  def flatten_singleton_methods!; end
+
+  sig { void }
+  def flatten_visibilities!; end
+
+  sig { void }
   def group_nodes!; end
 
   sig { returns(::RBI::Index) }
@@ -132,10 +138,13 @@ class RBI::Tree < ::RBI::NodeWithComments
   def merge(other, left_name: T.unsafe(nil), right_name: T.unsafe(nil), keep: T.unsafe(nil)); end
 
   sig { void }
-  def nest_non_public_methods!; end
+  def nest_non_public_members!; end
 
   sig { void }
   def nest_singleton_methods!; end
+
+  sig { void }
+  def nest_top_level_members!; end
 
   sig { returns(T::Array[::RBI::Node]) }
   def nodes; end
@@ -2379,9 +2388,9 @@ end
 
 class Tapioca::Runtime::Trackers::Mixin::Type < ::T::Enum
   enums do
-    Prepend = new
-    Include = new
     Extend = new
+    Include = new
+    Prepend = new
   end
 end
 
@@ -2551,9 +2560,9 @@ Tapioca::TypeVariableModule::DEFAULT_BOUNDS_PROC = T.let(T.unsafe(nil), Proc)
 
 class Tapioca::TypeVariableModule::Type < ::T::Enum
   enums do
+    HasAttachedClass = new
     Member = new
     Template = new
-    HasAttachedClass = new
   end
 end
 
