@@ -141,7 +141,7 @@ GEM
     parser (3.3.4.0)
       ast (~> 2.4.1)
       racc
-    pg (1.5.7)
+    pg (1.5.8)
     polyfill (1.9.0)
     prism (0.30.0)
     pry (0.14.2)
