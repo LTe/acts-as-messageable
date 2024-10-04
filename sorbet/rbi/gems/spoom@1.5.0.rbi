@@ -173,24 +173,24 @@ Spoom::Cli::Srb::Tc::SORT_LOC = T.let(T.unsafe(nil), String)
 
 class Spoom::Color < ::T::Enum
   enums do
-    CLEAR = new
-    BOLD = new
     BLACK = new
-    RED = new
-    GREEN = new
-    YELLOW = new
     BLUE = new
-    MAGENTA = new
+    BOLD = new
+    CLEAR = new
     CYAN = new
-    WHITE = new
+    GREEN = new
     LIGHT_BLACK = new
-    LIGHT_RED = new
-    LIGHT_GREEN = new
-    LIGHT_YELLOW = new
     LIGHT_BLUE = new
-    LIGHT_MAGENTA = new
     LIGHT_CYAN = new
+    LIGHT_GREEN = new
+    LIGHT_MAGENTA = new
+    LIGHT_RED = new
     LIGHT_WHITE = new
+    LIGHT_YELLOW = new
+    MAGENTA = new
+    RED = new
+    WHITE = new
+    YELLOW = new
   end
 
   sig { returns(::String) }
@@ -233,7 +233,7 @@ module Spoom::Context::Bundle
   sig { params(version: T.nilable(::String), capture_err: T::Boolean).returns(::Spoom::ExecResult) }
   def bundle_install!(version: T.unsafe(nil), capture_err: T.unsafe(nil)); end
 
-  sig { params(gem: ::String).returns(T.nilable(::String)) }
+  sig { params(gem: ::String).returns(T.nilable(::Gem::Version)) }
   def gem_version_from_gemfile_lock(gem); end
 
   sig { returns(T::Hash[::String, ::Bundler::LazySpecification]) }
@@ -2388,9 +2388,9 @@ end
 
 class Spoom::Model::Visibility < ::T::Enum
   enums do
-    Public = new
-    Protected = new
     Private = new
+    Protected = new
+    Public = new
   end
 end
 
