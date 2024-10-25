@@ -966,7 +966,6 @@ class PG::SimpleCoder < ::PG::Coder; end
 class PG::SimpleDecoder < ::PG::SimpleCoder; end
 class PG::SimpleEncoder < ::PG::SimpleCoder; end
 class PG::SingletonSqlJsonItemRequired < ::PG::DataException; end
-class PG::SnapshotTooOld < ::PG::ServerError; end
 class PG::SqlJsonArrayNotFound < ::PG::DataException; end
 class PG::SqlJsonItemCannotBeCastToTargetType < ::PG::DataException; end
 class PG::SqlJsonMemberNotFound < ::PG::DataException; end
@@ -1215,6 +1214,7 @@ class PG::TooManyJsonObjectMembers < ::PG::DataException; end
 class PG::TooManyRows < ::PG::PlpgsqlError; end
 class PG::TransactionResolutionUnknown < ::PG::ConnectionException; end
 class PG::TransactionRollback < ::PG::ServerError; end
+class PG::TransactionTimeout < ::PG::InvalidTransactionState; end
 class PG::TriggeredActionException < ::PG::ServerError; end
 class PG::TriggeredDataChangeViolation < ::PG::ServerError; end
 class PG::TrimError < ::PG::DataException; end
