@@ -29,6 +29,7 @@ group :development do
   gem 'jeweler', require: false
   gem 'kramdown', require: false
   gem 'mize', require: false
+  gem 'ostruct', require: false
   gem 'pg', require: false
   gem 'pry', require: false
   gem 'rake', require: false
