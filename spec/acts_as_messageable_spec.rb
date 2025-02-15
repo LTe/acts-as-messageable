@@ -322,10 +322,10 @@ describe 'ActsAsMessageable' do
     end
   end
 
-  describe 'mass assigment', rails: 4 do
+  describe 'mass assigment' do
     it 'allows to mass assign topic and body attributes' do
       @message = send_message(@bob, @alice, 'Example', 'Example Body')
-      @message.update_attributes!(topic: 'Changed topic', body: 'Changed body')
+      @message.update!(topic: 'Changed topic', body: 'Changed body')
 
       expect(@message.topic).to eq('Changed topic')
       expect(@message.body).to eq('Changed body')
@@ -348,7 +348,7 @@ describe 'ActsAsMessageable' do
     end
   end
 
-  describe 'user primary key is uuid type', rails: [5, 6, 7] do # GH#107
+  describe 'user primary key is uuid type' do # GH#107
     let(:bob) { UuidUser.create(id: SecureRandom.uuid, email: 'bob@example.com') }
     let(:alice) { UuidUser.create(id: SecureRandom.uuid, email: 'alice@example.com') }
 

@@ -44,12 +44,6 @@ RSpec.configure do |config|
   config.after(:each) do
     User.messages_class_name.destroy_all
   end
-
-  config.around(:each) do |example|
-    supported_rails = Array.wrap(example.metadata[:rails]).presence || [3, 4, 5, 6, 7]
-
-    example.run if supported_rails.include?(Rails::VERSION::MAJOR)
-  end
 end
 
 def establish_connection
