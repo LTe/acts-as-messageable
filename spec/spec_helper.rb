@@ -8,10 +8,7 @@ T::Configuration.enable_checking_for_sigs_marked_checked_tests
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rspec'
-require 'active_record/railtie'
-ActiveRecord::Base.logger = Logger.new($stderr)
-ActiveRecord::Base.logger.level = 3
-
+require 'active_record'
 require 'coveralls'
 Coveralls.wear!
 

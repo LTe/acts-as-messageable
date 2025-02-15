@@ -25,10 +25,12 @@ group :development do
   end
 
   gem 'appraisal', require: false
+  gem 'concurrent-ruby', '< 1.3.4'
   gem 'coveralls_reborn', require: false
   gem 'jeweler', require: false
   gem 'kramdown', require: false
   gem 'mize', require: false
+  gem 'mutex_m', require: false
   gem 'ostruct', require: false
   gem 'pg', require: false
   gem 'pry', require: false
