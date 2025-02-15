@@ -4,6 +4,7 @@
 module ActsAsMessageable
   module Model
     extend T::Sig
+    extend T::Helpers
 
     # @return [Object]
     # @param [Object] base
@@ -73,6 +74,8 @@ module ActsAsMessageable
         reflect_on_association(:received_messages_relation).active_record
       end
     end
+
+    mixes_in_class_methods(ClassMethods)
 
     module InstanceMethods
       extend T::Helpers
