@@ -4,10 +4,12 @@
 require 'spec_helper'
 
 def create_dummy_app
-  system <<-COMMAND
+  system(<<-COMMAND)
     bundle exec rails new dummy --skip-test-unit --skip-spring --skip-webpack-install --skip-bootsnap \
-    --skip-active-storage --skip-active-job --skip-action-cable --skip-javascript --skip-action-mailer -d sqlite3
+    --skip-active-storage --skip-active-job --skip-action-cable --skip-javascript --skip-action-mailer \
+    --skip-bundle -d sqlite3
   COMMAND
+  run_in_app("sed -i '/^ruby /d' Gemfile")
 end
 
 def add_gem_to_gemfile
@@ -15,6 +17,8 @@ def add_gem_to_gemfile
   run_in_app("echo gem \"'concurrent-ruby', '< 1.3.4'\" >> Gemfile")
   run_in_app("echo gem \"'bigdecimal'\" >> Gemfile")
   run_in_app("echo gem \"'mutex_m'\" >> Gemfile")
+  run_in_app("echo gem \"'benchmark'\" >> Gemfile")
+  run_in_app("echo gem \"'ostruct'\" >> Gemfile")
 end
 
 def run_bundler
