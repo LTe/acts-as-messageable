@@ -8,7 +8,7 @@ permissions:
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   rbi:
@@ -19,11 +19,9 @@ jobs:
           token: ${{ secrets.TOKEN }}
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2.2
           bundler-cache: true
-      - run : bundle exec tapioca gems
+      - run: bundle exec tapioca gems
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update RBIs [dependabot skip]
-          file_pattern: './sorbet'
-
+          file_pattern: "./sorbet"
