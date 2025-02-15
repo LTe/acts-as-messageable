@@ -38,7 +38,7 @@ def rollback_migrations
 end
 
 def run_in_app(command)
-  Bundler.clean_system("cd dummy; BUNDLE_GEMFILE=./Gemfile #{command}")
+  Bundler.unbundled_system("cd dummy; BUNDLE_GEMFILE=./Gemfile #{command}")
 end
 
 def remove_dummy_app

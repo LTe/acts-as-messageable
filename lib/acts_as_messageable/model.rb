@@ -94,8 +94,8 @@ module ActsAsMessageable
       # @return [ActiveRecord::Relation] returns all messages from inbox
       sig { returns(ActiveRecord::Relation) }
       def received_messages
-        result = ActsAsMessageable.rails_api.new(received_messages_relation)
-        result = T.unsafe(result).scoped.where(recipient_delete: false)
+        result = received_messages_relation
+        result = result.where(recipient_delete: false)
         result.relation_context = self
 
         result
@@ -104,8 +104,8 @@ module ActsAsMessageable
       # @return [ActiveRecord::Relation] returns all messages from outbox
       sig { returns(ActiveRecord::Relation) }
       def sent_messages
-        result = ActsAsMessageable.rails_api.new(sent_messages_relation)
-        result = T.unsafe(result).scoped.where(sender_delete: false)
+        result = sent_messages_relation
+        result = result.where(sender_delete: false)
         result.relation_context = self
 
         result
@@ -203,7 +203,7 @@ module ActsAsMessageable
           raise "#{current_user} can't delete this message"
         end
 
-        ActsAsMessageable.rails_api.new(message).update_attributes!(attribute => true)
+        message.update!(attribute => true)
       end
 
       # Mark message as restored
@@ -222,7 +222,7 @@ module ActsAsMessageable
           raise "#{current_user} can't restore this message"
         end
 
-        ActsAsMessageable.rails_api.new(message).update_attributes!(attribute => false)
+        message.update!(attribute => false)
       end
     end
   end
