@@ -11,7 +11,10 @@ def create_dummy_app
 end
 
 def add_gem_to_gemfile
-  run_in_app("echo gem \"'acts-as-messageable', path: '../'\" >> Gemfile; bundle")
+  run_in_app("echo gem \"'acts-as-messageable', path: '../'\" >> Gemfile")
+  run_in_app("echo gem \"'concurrent-ruby', '< 1.3.4'\" >> Gemfile")
+  run_in_app("echo gem \"'bigdecimal'\" >> Gemfile")
+  run_in_app("echo gem \"'mutex_m'\" >> Gemfile")
 end
 
 def run_bundler

@@ -11,7 +11,7 @@ gem 'ancestry', require: false
 gem 'sorbet-rails', require: false
 gem 'sorbet-static-and-runtime', require: false
 
-group :development do
+group :development do # rubocop:disable Metrics/BlockLength
   if rails_version == 'main'
     gem 'rails', github: 'rails/rails', branch: 'main'
   else
@@ -21,7 +21,7 @@ group :development do
   if rails_version == '7.0'
     gem 'sqlite3', '~> 1.4'
   else
-    gem 'sqlite3'
+    gem 'sqlite3' # rubocop:disable Gemspec/DevelopmentDependencies
   end
 
   gem 'appraisal', require: false
