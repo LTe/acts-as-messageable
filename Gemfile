@@ -24,7 +24,6 @@ group :development do # rubocop:disable Metrics/BlockLength
     gem 'sqlite3' # rubocop:disable Gemspec/DevelopmentDependencies
   end
 
-  gem 'appraisal', require: false
   gem 'concurrent-ruby', '< 1.3.4'
   gem 'coveralls_reborn', require: false
   gem 'jeweler', require: false
