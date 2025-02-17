@@ -16,7 +16,6 @@ module Kernel
 end
 
 class Module
-  include ::Mize::CacheMethods
   include ::Zeitwerk::ConstAdded
 end
 

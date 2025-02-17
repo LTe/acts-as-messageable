@@ -140,10 +140,6 @@ end
 
 class SignedGlobalID::ExpiredMessage < ::StandardError; end
 
-module URI
-  include ::URI::RFC2396_REGEXP
-end
-
 class URI::GID < ::URI::Generic
   def app; end
   def deconstruct_keys(_keys); end
@@ -183,4 +179,3 @@ URI::GID::COMPOSITE_MODEL_ID_DELIMITER = T.let(T.unsafe(nil), String)
 URI::GID::COMPOSITE_MODEL_ID_MAX_SIZE = T.let(T.unsafe(nil), Integer)
 class URI::GID::InvalidModelIdError < ::URI::InvalidComponentError; end
 class URI::GID::MissingModelIdError < ::URI::InvalidComponentError; end
-class URI::WSS < ::URI::WS; end

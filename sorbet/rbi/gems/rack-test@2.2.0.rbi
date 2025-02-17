@@ -8,7 +8,6 @@
 module Rack
   class << self
     def release; end
-    def version; end
   end
 end
 

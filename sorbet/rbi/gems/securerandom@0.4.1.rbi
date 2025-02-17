@@ -9,7 +9,6 @@ module SecureRandom
   extend ::Random::Formatter
 
   class << self
-    def alphanumeric(n = T.unsafe(nil), chars: T.unsafe(nil)); end
     def bytes(n); end
     def gen_random(n); end
 

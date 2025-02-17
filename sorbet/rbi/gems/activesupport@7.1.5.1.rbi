@@ -4174,7 +4174,7 @@ class IO::Buffer
   def get_string(*_arg0); end
   def get_value(_arg0, _arg1); end
   def get_values(_arg0, _arg1); end
-  def hexdump; end
+  def hexdump(*_arg0); end
   def inspect; end
   def internal?; end
   def locked; end
@@ -4184,6 +4184,7 @@ class IO::Buffer
   def null?; end
   def or!(_arg0); end
   def pread(*_arg0); end
+  def private?; end
   def pwrite(*_arg0); end
   def read(*_arg0); end
   def readonly?; end
@@ -4211,6 +4212,7 @@ class IO::Buffer
     def for(_arg0); end
     def map(*_arg0); end
     def size_of(_arg0); end
+    def string(_arg0); end
   end
 end
 
@@ -4266,10 +4268,6 @@ IO::READABLE = T.let(T.unsafe(nil), Integer)
 class IO::TimeoutError < ::IOError; end
 IO::WRITABLE = T.let(T.unsafe(nil), Integer)
 
-class IPAddr
-  def as_json(options = T.unsafe(nil)); end
-end
-
 class Integer < ::Numeric
   include ::ActiveSupport::NumericWithFormat
 
@@ -4297,16 +4295,7 @@ module Kernel
   end
 end
 
-class LoadError < ::ScriptError
-  include ::DidYouMean::Correctable
-end
-
-class Method
-  def duplicable?; end
-end
-
 class Module
-  include ::Mize::CacheMethods
   include ::Module::Concerning
 
   def alias_attribute(new_name, old_name); end
@@ -4482,14 +4471,8 @@ class Range
   def as_json(options = T.unsafe(nil)); end
   def each(&block); end
   def include?(value); end
-  def overlap?(other); end
-  def overlaps?(other); end
   def step(n = T.unsafe(nil), &block); end
   def sum(initial_value = T.unsafe(nil)); end
-
-  private
-
-  def _empty_range?(b, e, excl); end
 end
 
 class Regexp
@@ -4672,12 +4655,5 @@ class TrueClass
 end
 
 class URI::Generic
-  include ::URI::RFC2396_REGEXP
-  include ::URI
-
   def as_json(options = T.unsafe(nil)); end
-end
-
-class UnboundMethod
-  def duplicable?; end
 end

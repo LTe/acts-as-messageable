@@ -2472,32 +2472,6 @@ class RDoc::Require < ::RDoc::CodeObject
   def top_level; end
 end
 
-class RDoc::Servlet < ::WEBrick::HTTPServlet::AbstractServlet
-  def initialize(server, stores, cache, mount_path = T.unsafe(nil), extra_doc_dirs = T.unsafe(nil)); end
-
-  def asset(generator_name, req, res); end
-  def asset_dirs; end
-  def do_GET(req, res); end
-  def documentation_page(store, generator, path, req, res); end
-  def documentation_search(store, generator, req, res); end
-  def documentation_source(path); end
-  def error(exception, req, res); end
-  def generator_for(store); end
-  def if_modified_since(req, res, path = T.unsafe(nil)); end
-  def installed_docs; end
-  def not_found(generator, req, res, message = T.unsafe(nil)); end
-  def options; end
-  def ri_paths(&block); end
-  def root(req, res); end
-  def root_search(req, res); end
-  def show_documentation(req, res); end
-  def store_for(source_name); end
-
-  class << self
-    def get_instance(server, *options); end
-  end
-end
-
 class RDoc::SingleClass < ::RDoc::ClassModule
   def ancestors; end
   def aref_prefix; end

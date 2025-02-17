@@ -266,6 +266,7 @@ class Mail::CommonMessageIdField < ::Mail::NamedStructuredField
 end
 
 class Mail::Configuration
+  include ::Singleton::SingletonInstanceMethods
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 

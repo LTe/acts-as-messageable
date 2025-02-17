@@ -4440,7 +4440,7 @@ class ActionDispatch::Response
   def [](*_arg0, **_arg1, &_arg2); end
   def []=(*_arg0, **_arg1, &_arg2); end
   def _cache_control; end
-  def _cache_control=(v); end
+  def _cache_control=(value); end
   def abort; end
   def await_commit; end
   def await_sent; end
@@ -4554,8 +4554,8 @@ class ActionDispatch::Response::FileBody
   def to_path; end
 end
 
-ActionDispatch::Response::Header = Rack::Utils::HeaderHash
-ActionDispatch::Response::Headers = Rack::Utils::HeaderHash
+ActionDispatch::Response::Header = Rack::Headers
+ActionDispatch::Response::Headers = Rack::Headers
 ActionDispatch::Response::NO_CONTENT_CODES = T.let(T.unsafe(nil), Array)
 ActionDispatch::Response::NullContentTypeHeader = T.let(T.unsafe(nil), ActionDispatch::Response::ContentTypeHeader)
 
@@ -5349,6 +5349,7 @@ class ActionDispatch::ServerTiming
 end
 
 class ActionDispatch::ServerTiming::Subscriber
+  include ::Singleton::SingletonInstanceMethods
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 
@@ -5559,6 +5560,7 @@ end
 Mime::ALL = T.let(T.unsafe(nil), Mime::AllType)
 
 class Mime::AllType < ::Mime::Type
+  include ::Singleton::SingletonInstanceMethods
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 
@@ -5591,6 +5593,7 @@ class Mime::Mimes
 end
 
 class Mime::NullType
+  include ::Singleton::SingletonInstanceMethods
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 
@@ -5684,6 +5687,5 @@ Mime::Type::MIME_REGEXP = T.let(T.unsafe(nil), Regexp)
 module Rack
   class << self
     def release; end
-    def version; end
   end
 end

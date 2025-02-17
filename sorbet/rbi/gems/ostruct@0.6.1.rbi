@@ -52,5 +52,5 @@ class OpenStruct
   def update_to_values!(hash); end
 end
 
-OpenStruct::HAS_PERFORMANCE_WARNINGS = T.let(T.unsafe(nil), FalseClass)
+OpenStruct::HAS_PERFORMANCE_WARNINGS = T.let(T.unsafe(nil), TrueClass)
 OpenStruct::VERSION = T.let(T.unsafe(nil), String)

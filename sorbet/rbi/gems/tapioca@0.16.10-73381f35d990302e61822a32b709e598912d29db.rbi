@@ -25,8 +25,6 @@ class GitAttributes
 end
 
 class Module
-  include ::Mize::CacheMethods
-
   def append_features(constant); end
   def autoload(const_name, path); end
   def extend_object(obj); end

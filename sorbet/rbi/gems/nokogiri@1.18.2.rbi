@@ -578,6 +578,7 @@ Nokogiri::VERSION = T.let(T.unsafe(nil), String)
 Nokogiri::VERSION_INFO = T.let(T.unsafe(nil), Hash)
 
 class Nokogiri::VersionInfo
+  include ::Singleton::SingletonInstanceMethods
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 

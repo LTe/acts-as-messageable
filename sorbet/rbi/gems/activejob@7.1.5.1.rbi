@@ -641,6 +641,7 @@ class ActiveJob::Serializers::ModuleSerializer < ::ActiveJob::Serializers::Objec
 end
 
 class ActiveJob::Serializers::ObjectSerializer
+  include ::Singleton::SingletonInstanceMethods
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 

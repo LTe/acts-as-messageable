@@ -217,16 +217,8 @@ class Net::IMAP::ClientID < ::Net::IMAP::CommandData
 end
 
 class Net::IMAP::CommandData < ::Net::IMAP::DataLite
-  def data; end
   def send_data(imap, tag); end
   def validate; end
-
-  class << self
-    def [](*_arg0); end
-    def inspect; end
-    def members; end
-    def new(*_arg0); end
-  end
 end
 
 class Net::IMAP::Config

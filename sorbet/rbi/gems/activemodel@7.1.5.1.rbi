@@ -867,6 +867,7 @@ class ActiveModel::NestedError < ::ActiveModel::Error
 end
 
 class ActiveModel::NullMutationTracker
+  include ::Singleton::SingletonInstanceMethods
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 

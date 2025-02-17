@@ -118,8 +118,6 @@ class Insertion
 end
 
 class Module
-  include ::Mize::CacheMethods
-
   def class_name; end
 end
 
@@ -135,6 +133,27 @@ end
 
 RUBY18 = T.let(T.unsafe(nil), FalseClass)
 RUBY19 = T.let(T.unsafe(nil), TrueClass)
+
+class Rack::Request
+  def initialize(env); end
+
+  def delete_param(k); end
+  def params; end
+  def query; end
+  def update_param(k, v); end
+  def version_supplied; end
+  def version_supplied=(_arg0); end
+  def xhr?; end
+
+  class << self
+    def forwarded_priority; end
+    def forwarded_priority=(_arg0); end
+    def ip_filter; end
+    def ip_filter=(_arg0); end
+    def x_forwarded_proto_priority; end
+    def x_forwarded_proto_priority=(_arg0); end
+  end
+end
 
 class String
   include ::Comparable
@@ -157,12 +176,6 @@ class SymbolHash < ::Hash
   class << self
     def [](*hsh); end
   end
-end
-
-class WEBrick::HTTPRequest
-  def version_supplied; end
-  def version_supplied=(_arg0); end
-  def xhr?; end
 end
 
 module YARD
@@ -2397,7 +2410,7 @@ class YARD::Parser::Ruby::MethodCallNode < ::YARD::Parser::Ruby::AstNode
 end
 
 class YARD::Parser::Ruby::MethodDefinitionNode < ::YARD::Parser::Ruby::AstNode
-  def block(*_arg0); end
+  def block(n = T.unsafe(nil)); end
   def def?; end
   def kw?; end
   def method_name(name_only = T.unsafe(nil)); end
@@ -3322,6 +3335,25 @@ end
 
 class YARD::Server::NotFoundError < ::RuntimeError; end
 
+class YARD::Server::RackAdapter < ::YARD::Server::Adapter
+  include ::YARD::Server::HTTPUtils
+
+  def call(env); end
+  def start; end
+
+  private
+
+  def print_start_message(server); end
+end
+
+class YARD::Server::RackMiddleware
+  def initialize(app, opts = T.unsafe(nil)); end
+
+  def call(env); end
+end
+
+YARD::Server::RackServer = Rackup::Server
+
 class YARD::Server::Router
   include ::YARD::Server::StaticCaching
   include ::YARD::Server::Commands
@@ -3352,18 +3384,6 @@ end
 
 module YARD::Server::StaticCaching
   def check_static_cache; end
-end
-
-class YARD::Server::WebrickAdapter < ::YARD::Server::Adapter
-  def start; end
-end
-
-class YARD::Server::WebrickServlet < ::WEBrick::HTTPServlet::AbstractServlet
-  def initialize(server, adapter); end
-
-  def adapter; end
-  def adapter=(_arg0); end
-  def do_GET(request, response); end
 end
 
 class YARD::StubProxy
