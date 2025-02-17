@@ -6,13 +6,6 @@ module ActsAsMessageable
     extend T::Sig
     extend T::Helpers
 
-    # @return [Object]
-    # @param [Object] base
-    sig { params(base: Module).returns(T.untyped) }
-    def self.included(base)
-      base.extend ClassMethods
-    end
-
     module ClassMethods
       extend T::Helpers
       extend T::Sig

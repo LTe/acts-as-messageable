@@ -6,7 +6,6 @@ module ActsAsMessageable
     extend T::Sig
 
     include ActsAsMessageable::Scopes
-    include Ancestry::InstanceMethods
 
     has_ancestry
 
