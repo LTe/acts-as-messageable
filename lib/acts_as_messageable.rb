@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 require 'sorbet-runtime'
-require 'sorbet-rails'
 require 'ancestry'
 
 module ActsAsMessageable

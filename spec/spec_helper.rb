@@ -9,11 +9,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rspec'
 require 'active_record'
-require 'coveralls'
-Coveralls.wear!
-
 require 'timecop'
-
 require 'bundler/setup'
 Bundler.require(:default)
 
