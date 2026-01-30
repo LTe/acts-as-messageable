@@ -7,7 +7,7 @@ module ActsAsMessageable
 
     # @return [Object]
     # @param [Object] base
-    sig { params(base: Module).returns(T.untyped) }
+    sig { params(base: T::Module[T.anything]).returns(T.untyped) }
     def self.included(base)
       base.extend ClassMethods
     end

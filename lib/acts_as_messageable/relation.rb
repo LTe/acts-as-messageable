@@ -6,16 +6,16 @@ module ActsAsMessageable
     extend T::Sig
     extend T::Helpers
 
+    requires_ancestor { ActiveRecord::Relation }
+
     sig { returns(ActsAsMessageable::Model::InstanceMethods) }
     attr_accessor :relation_context
-
-    requires_ancestor { ActiveRecord::Relation }
 
     # @yield [ActsAsMessageable::Message] message
     # @param [ActiveRecord::Base] context of relation (most of the time current_user object)
     # @return [ActiveRecord::Relation]
-    sig { params(context: ActsAsMessageable::Model::InstanceMethods).returns(T.untyped) }
-    def process(context = relation_context)
+    sig { params(context: ActsAsMessageable::Model::InstanceMethods, blk: T.untyped).void }
+    def process(context = relation_context, &blk)
       relation = T.cast(self, ActiveRecord::Relation)
 
       relation.each do |message|
@@ -26,7 +26,7 @@ module ActsAsMessageable
     end
 
     # @return [Array<ActsAsMessageable::Message>]
-    # @return [ActiveRecord::Relation]
+    sig { returns(T::Array[ActsAsMessageable::Message]) }
     def conversations
       relation = T.cast(self, ActiveRecord::Relation)
       relation.map { |message| message.root.subtree.order('id desc').first }.uniq

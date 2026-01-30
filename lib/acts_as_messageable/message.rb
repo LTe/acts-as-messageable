@@ -90,7 +90,7 @@ module ActsAsMessageable
     end
 
     # @return [Object] conversation tree
-    sig { returns(T.untyped) }
+    sig { returns(ActiveRecord::Relation) }
     def conversation
       root.subtree
     end
@@ -128,7 +128,7 @@ module ActsAsMessageable
     # @return [Array<ActiveRecord::Base>] users
     sig { returns(T::Array[ActiveRecord::Base]) }
     def people
-      conversation.map(&:from).uniq!
+      conversation.map(&:from).uniq
     end
   end
 end
