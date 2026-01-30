@@ -47,8 +47,7 @@ module ActsAsMessageable
     # @return [Boolean] whether the message has been open
     sig { returns(T::Boolean) }
     def open
-      update!(opened_at: Time.current)
-      update!(opened: true)
+      update!(opened_at: Time.current, opened: true)
     end
 
     alias mark_as_read open
@@ -58,8 +57,7 @@ module ActsAsMessageable
     # @return [Boolean] whether the message has been closed
     sig { returns(T::Boolean) }
     def close
-      update!(opened_at: nil)
-      update!(opened: false)
+      update!(opened_at: nil, opened: false)
     end
 
     alias mark_as_unread close
