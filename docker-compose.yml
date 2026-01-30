@@ -30,3 +30,13 @@ services:
       - ./:/home/app
     environment:
       - BUNDLE_GEMFILE=gemfiles/rails_master.gemfile
+  ruby_latest_rails_master:
+    build:
+      context: '.'
+      args:
+        - RUBY_VERSION=latest
+        - GEMFILE=gemfiles/rails_master.gemfile
+    volumes:
+      - ./:/home/app
+    environment:
+      - BUNDLE_GEMFILE=gemfiles/rails_master.gemfile

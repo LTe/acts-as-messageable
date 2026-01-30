@@ -15,6 +15,7 @@ appraise 'rails-master' do
   gem 'activerecord', git: 'https://github.com/rails/rails.git'
   gem 'activesupport', git: 'https://github.com/rails/rails.git'
   gem 'railties', git: 'https://github.com/rails/rails.git'
+  gem 'ostruct'
 
   group :development do
     gem 'sqlite3'
