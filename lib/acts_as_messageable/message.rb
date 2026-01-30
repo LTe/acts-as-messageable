@@ -47,7 +47,7 @@ module ActsAsMessageable
     # @return [Boolean] whether the message has been open
     sig { returns(T::Boolean) }
     def open
-      update!(opened_at: DateTime.now)
+      update!(opened_at: Time.current)
       update!(opened: true)
     end
 

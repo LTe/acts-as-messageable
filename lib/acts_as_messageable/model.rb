@@ -60,7 +60,9 @@ module ActsAsMessageable
         messages_class_name.initialize_scopes(options[:search_scope])
 
         messages_class_name.required = Array.wrap(options[:required])
-        messages_class_name.validates_presence_of messages_class_name.required
+        messages_class_name.required.each do |attr|
+          messages_class_name.validates attr, presence: true
+        end
         self.group_messages = options[:group_messages]
 
         include ActsAsMessageable::Model::InstanceMethods
