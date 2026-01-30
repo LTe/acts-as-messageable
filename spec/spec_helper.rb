@@ -1,4 +1,4 @@
-# typed: ignore
+# typed: false
 # frozen_string_literal: true
 
 require 'sorbet-runtime'
@@ -49,7 +49,7 @@ RSpec.configure do |config|
   end
 
   config.around(:each) do |example|
-    supported_rails = Array.wrap(example.metadata[:rails]).presence || [3, 4, 5, 6, 7]
+    supported_rails = Array.wrap(example.metadata[:rails]).presence || [3, 4, 5, 6, 7, 8]
 
     example.run if supported_rails.include?(Rails::VERSION::MAJOR)
   end

@@ -1,83 +1,31 @@
-version: "3.7"
 services:
   development:
     build:
       context: '.'
       args:
-        - RUBY_VERSION=2.7
+        - RUBY_VERSION=3.2
         - GEMFILE=Gemfile
     volumes:
       - ./:/home/app
     environment:
       - BUNDLE_GEMFILE=Gemfile
-  ruby_2.3.8_rails_3.2:
+  ruby_3.2_rails_7.0:
     build:
       context: '.'
       args:
-        - RUBY_VERSION=2.7
-        - GEMFILE=rails_3.2.gemfile
-    environment:
-      - BUNDLE_GEMFILE=gemfiles/rails_3.2.gemfile
-    volumes:
-      - ./:/home/app
-  ruby_2.3.8_rails_4.2:
-    build:
-      context: '.'
-      args:
-        - RUBY_VERSION=2.7
-        - GEMFILE=rails_4.2.gemfile
+        - RUBY_VERSION=3.2
+        - GEMFILE=gemfiles/rails_7.0.gemfile
     volumes:
       - ./:/home/app
     environment:
-      - BUNDLE_GEMFILE=gemfiles/rails_4.2.gemfile
-  ruby_2.7_rails_5.2:
-    build:
-      context: '.'
-      args:
-        - RUBY_VERSION=2.7
-        - GEMFILE=rails_5.2.gemfile
-    volumes:
-      - ./:/home/app
-    environment:
-      - BUNDLE_GEMFILE=gemfiles/rails_5.2.gemfile
-  ruby_2.7_rails_6.0:
-    build:
-      context: '.'
-      args:
-        - RUBY_VERSION=2.7
-        - GEMFILE=rails_6.0.gemfile
-    volumes:
-      - ./:/home/app
-    environment:
-      - BUNDLE_GEMFILE=gemfiles/rails_6.0.gemfile
+      - BUNDLE_GEMFILE=gemfiles/rails_7.0.gemfile
       - RUN_GENERATORS=${RUN_GENERATORS-true}
-  ruby_3_rails_7.0:
+  ruby_3.3_rails_master:
     build:
       context: '.'
       args:
-        - RUBY_VERSION=3
-        - GEMFILE=rails_7.0.gemfile
-    volumes:
-      - ./:/home/app
-    environment:
-      - BUNDLE_GEMFILE=gemfiles/rails_6.0.gemfile
-      - RUN_GENERATORS=${RUN_GENERATORS-true}
-  ruby_3_rails_master:
-    build:
-      context: '.'
-      args:
-        - RUBY_VERSION=3
-        - GEMFILE=rails_master.gemfile
-    volumes:
-      - ./:/home/app
-    environment:
-      - BUNDLE_GEMFILE=gemfiles/rails_master.gemfile
-  ruby_latest_rails_master:
-    build:
-      context: '.'
-      args:
-        - RUBY_VERSION=latest
-        - GEMFILE=rails_master.gemfile
+        - RUBY_VERSION=3.3
+        - GEMFILE=gemfiles/rails_master.gemfile
     volumes:
       - ./:/home/app
     environment:

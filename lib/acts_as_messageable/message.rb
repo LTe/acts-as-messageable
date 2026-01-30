@@ -28,11 +28,7 @@ module ActsAsMessageable
       super
     end
 
-    ActsAsMessageable.rails_api.new(self).attr_accessible(
-      :topic, :body, :opened, :opened_at, :recipient_permanent_delete,
-      :recipient_delete, :sender_permanent_delete, :sender_delete
-    )
-    ActsAsMessageable.rails_api.new(self).default_scope('created_at desc')
+    default_scope { order('created_at desc') }
 
     # @return [Boolean] whether the message has been read
     sig { returns(T::Boolean) }
@@ -51,8 +47,8 @@ module ActsAsMessageable
     # @return [Boolean] whether the message has been open
     sig { returns(T::Boolean) }
     def open
-      ActsAsMessageable.rails_api.new(self).update_attributes!(opened_at: DateTime.now)
-      ActsAsMessageable.rails_api.new(self).update_attributes!(opened: true)
+      update!(opened_at: DateTime.now)
+      update!(opened: true)
     end
 
     alias mark_as_read open
@@ -62,8 +58,8 @@ module ActsAsMessageable
     # @return [Boolean] whether the message has been closed
     sig { returns(T::Boolean) }
     def close
-      ActsAsMessageable.rails_api.new(self).update_attributes!(opened_at: nil)
-      ActsAsMessageable.rails_api.new(self).update_attributes!(opened: false)
+      update!(opened_at: nil)
+      update!(opened: false)
     end
 
     alias mark_as_unread close

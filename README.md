@@ -13,8 +13,7 @@ users or other models is required.
 <!-- START_TOC -->
 * [ActsAsMessageable](#actsasmessageable)
 * [Usage](#usage)
-    * [Rails >= 3](#rails--3)
-    * [Rails 2](#rails-2)
+    * [Installation](#installation)
 * [Post installation](#post-installation)
 * [Usage](#usage-1)
 * [Upgrade](#upgrade)
@@ -55,20 +54,10 @@ users or other models is required.
 
 To use it, add it to your Gemfile:
 
-### Rails >= 3
+### Installation
 
 ```ruby
 gem 'acts-as-messageable', require: 'acts_as_messageable'
-```
-
-### Rails 2
-
-Use this [fork](http://github.com/openfirmware/acts-as-messageable)
-Thanks for [@openfirmware](http://github.com/openfirmware)
-
-```ruby
-gem 'acts-as-messageable', :git => 'git://github.com/openfirmware/acts-as-messageable.git',
-                           :branch => 'rails2.3.11_compatible'
 ```
 
 # Post installation
