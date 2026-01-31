@@ -311,39 +311,34 @@ RSpec.shared_examples 'acts_as_messageable' do |adapter:|
   end
 
   describe 'tree structure (ancestry)' do
-    let(:message_class) { adapter == :mongoid ? ActsAsMessageable::Mongoid::Message : ActsAsMessageable::Message }
-
-    before do
-      if adapter == :active_record
-        # Use clean version of Message class
-        ActsAsMessageable::Message.table_name = 'messages'
-        ActsAsMessageable::Message.required = []
-        ActsAsMessageable::Message.clear_validators! if ActsAsMessageable::Message.respond_to?(:clear_validators!)
-      end
+    it 'message without parent is its own root' do
+      expect(@message.root).to eq(@message)
     end
 
-    it 'returns root of the conversation' do
-      test_message = message_class.create!(topic: 'topic', body: 'body')
-      expect(test_message.conversation).to include(test_message)
+    it 'reply has original message as root' do
+      @reply_message = @alice.reply_to(@message, 'Re: Topic', 'Body')
+      expect(@reply_message.root).to eq(@message)
     end
 
-    it 'handles parent assignment' do
-      parent_message = message_class.create!(topic: 'parent', body: 'parent body')
-      child_message = message_class.create!(topic: 'child', body: 'child body')
-      child_message.parent = parent_message
-      child_message.save!
-
-      expect(child_message.parent).to eq(parent_message)
-      expect(child_message.root).to eq(parent_message)
+    it 'nested reply has original message as root' do
+      @reply_message = @alice.reply_to(@message, 'Re: Topic', 'Body')
+      @reply_reply_message = @bob.reply_to(@reply_message, 'Re: Re: Topic', 'Body')
+      expect(@reply_reply_message.root).to eq(@message)
     end
 
-    it 'handles subtree' do
-      parent_message = message_class.create!(topic: 'parent', body: 'parent body')
-      child_message = message_class.create!(topic: 'child', body: 'child body')
-      child_message.parent = parent_message
-      child_message.save!
+    it 'subtree includes all messages in conversation thread' do
+      @reply_message = @alice.reply_to(@message, 'Re: Topic', 'Body')
+      @reply_reply_message = @bob.reply_to(@reply_message, 'Re: Re: Topic', 'Body')
 
-      expect(parent_message.subtree.to_a).to include(parent_message, child_message)
+      subtree = @message.subtree.to_a
+      expect(subtree).to include(@message, @reply_message, @reply_reply_message)
+    end
+
+    it 'conversation returns messages in correct order (newest first)' do
+      @reply_message = @alice.reply_to(@message, 'Re: Topic', 'Body')
+      @reply_reply_message = @bob.reply_to(@reply_message, 'Re: Re: Topic', 'Body')
+
+      expect(@message.conversation.to_a).to eq([@reply_reply_message, @reply_message, @message])
     end
   end
 end
