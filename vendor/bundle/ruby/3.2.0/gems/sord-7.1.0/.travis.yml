@@ -1,6 +1,0 @@
-language: ruby
-dist: trusty
-before_install:
-  - gem install bundler
-rvm: 
-  - 2.6
