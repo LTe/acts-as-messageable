@@ -1,0 +1,228 @@
+#!/usr/bin/env ruby
+require 'parlour'
+require 'commander/import'
+require 'bundler'
+require 'rainbow'
+require 'yaml'
+
+program :name, 'parlour'
+program :version, Parlour::VERSION
+program :description, 'An RBI generator and plugin system'
+
+default_command :run
+command :run do |c|
+  c.syntax = 'parlour run'
+  c.description = 'Generates a signature file from your .parlour file'
+
+  c.action do |args, options|
+    working_dir = Dir.pwd
+    config_filename = File.join(working_dir, '.parlour')
+
+    if File.exist?(config_filename)
+      configuration = keys_to_symbols(YAML.load_file(config_filename))
+    else
+      configuration = {}
+    end
+
+    # Output file
+    if configuration[:output_file].is_a?(String)
+      assumed_format = \
+        if configuration[:output_file].end_with?('.rbi')
+          :rbi
+        elsif configuration[:output_file].end_with?('.rbs')
+          :rbs
+        else
+          raise 'invalid output file; please specify an RBI or RBS file'
+        end
+
+      unless $VERBOSE.nil?
+        print Rainbow("Parlour warning: ").yellow.dark.bold
+        print Rainbow("CLI: ").magenta.bright.bold
+        puts "Specifying output_file in .parlour as a string is deprecated."
+        puts "For now, generating an #{assumed_format.to_s.upcase} file based on the file extension."
+        puts "Please update your .parlour to use the new form:"
+        puts "  output_file:"
+        puts "    #{assumed_format}: #{configuration[:output_file]}"
+      end
+      configuration[:output_file] = {
+        assumed_format => configuration[:output_file]
+      }
+    end
+    configuration[:output_file] ||= {
+      rbi: "rbi/#{File.basename(working_dir)}.rbi"
+    }    
+
+    # Style defaults
+    configuration[:style] ||= {}
+    configuration[:style][:tab_size] ||= 2
+    configuration[:style][:break_params] ||= 4
+
+    # Parser defaults, set explicitly to false to not run parser
+    if configuration[:parser] != false
+      configuration[:parser] ||= {}
+
+      # Input/Output defaults
+      configuration[:parser][:root] ||= '.'
+
+      # Included/Excluded path defaults
+      configuration[:parser][:included_paths] ||= ['lib']
+      configuration[:parser][:excluded_paths] ||= ['sorbet', 'spec']
+
+      # Defaults can be overridden but we always want to exclude the output file
+      configuration[:parser][:excluded_paths] << configuration[:output_file][:rbi]
+    end
+
+    # Included/Excluded module defaults
+    configuration[:included_modules] ||= []
+    configuration[:excluded_modules] ||= []
+
+    # Require defaults
+    configuration[:requires] ||= []
+    configuration[:relative_requires] ||= []
+
+    # Plugin defaults
+    configuration[:plugins] ||= []
+
+    plugin_instances = []
+
+    configuration[:requires].each { |source| require(source) }
+    configuration[:relative_requires].each do |source|
+      Dir[File.join(Dir.pwd, source)].each do |file|
+        require_relative(file)
+      end
+    end
+
+    # Collect the instances of each plugin into an array
+    configuration[:plugins].each do |name, options|
+      plugin = Parlour::Plugin.registered_plugins[name.to_s]&.new(options)
+      raise "missing plugin #{name}" unless plugin
+      plugin_instances << plugin
+    end
+
+    # Create a generator instance and run all plugins on it
+    gen = Parlour::RbiGenerator.new(
+      break_params: configuration[:style][:break_params],
+      tab_size: configuration[:style][:tab_size]
+    )
+
+    if configuration[:parser]
+      Parlour::TypeLoader.load_project(
+        configuration[:parser][:root],
+        inclusions: configuration[:parser][:included_paths],
+        exclusions: configuration[:parser][:excluded_paths],
+        generator: gen,
+      )
+    end
+    Parlour::Plugin.run_plugins(plugin_instances, gen)
+
+    # Run a pass of the conflict resolver
+    Parlour::ConflictResolver.new.resolve_conflicts(gen.root) do |msg, candidates|
+      puts Rainbow('Conflict! ').red.bright.bold + Rainbow(msg).blue.bright
+      puts 'Multiple different definitions have been produced for the same object.'
+      puts 'They could not be merged automatically.'
+      puts Rainbow('What would you like to do?').bold + ' Type a choice and press Enter.'
+      puts
+      puts Rainbow('  [0] ').yellow + 'Remove ALL definitions'
+      puts
+      puts "Or select one definition to keep:"
+      puts
+      candidates.each.with_index do |candidate, i|
+        puts Rainbow("  [#{i + 1}] ").yellow + candidate.describe
+      end
+      puts
+      choice = ask("?  ", Integer) { |q| q.in = 0..candidates.length }
+      choice == 0 ? nil : candidates[choice - 1]
+    end
+
+    if !configuration[:included_modules].empty? || !configuration[:excluded_modules].empty?
+      remove_unwanted_modules(
+        gen.root,
+        included_modules: configuration[:included_modules],
+        excluded_modules: configuration[:excluded_modules],
+      )
+    end
+
+    # Figure out strictness levels
+    requested_strictness_levels = plugin_instances.map do |plugin|
+      s = plugin.strictness&.to_s
+      puts "WARNING: Plugin #{plugin.class.name} requested an invalid strictness #{s}" \
+        unless s && %w[ignore false true strict strong].include?(s)
+      s
+    end.compact
+    unique_strictness_levels = requested_strictness_levels.uniq
+    if unique_strictness_levels.empty?
+      # If no requests were made, just use the default
+      strictness = 'strong'
+    else
+      # Sort the strictnesses into "strictness order" and pick the weakest
+      strictness = unique_strictness_levels.min_by do |level|
+        %w[ignore false true strict strong].index(level) || Float::INFINITY
+      end
+      if unique_strictness_levels.one?
+        puts Rainbow('Note: ').yellow.bold + "All plugins specified the same strictness level, using it (#{strictness})"
+      else
+        puts Rainbow('Note: ').yellow.bold + "Plugins specified multiple strictness levels, chose the weakest (#{strictness})"
+      end
+    end
+
+    # Write the final files
+    if configuration[:output_file][:rbi]
+      FileUtils.mkdir_p(File.dirname(configuration[:output_file][:rbi]))
+      File.write(configuration[:output_file][:rbi], gen.rbi(strictness))
+    end
+    if configuration[:output_file][:rbs]
+      gen.root.generalize_from_rbi!
+      rbs_gen = Parlour::RbsGenerator.new
+
+      converter = Parlour::Conversion::RbiToRbs.new(rbs_gen)
+      gen.root.children.each do |child|
+        converter.convert_object(child, rbs_gen.root)
+      end
+
+      FileUtils.mkdir_p(File.dirname(configuration[:output_file][:rbs]))
+      File.write(configuration[:output_file][:rbs], rbs_gen.rbs)
+    end
+  end
+end
+
+private
+
+# Given a hash, converts its keys and any keys of child hashes to symbols.
+# @param [Hash] hash
+# @return [void]
+def keys_to_symbols(hash)
+  hash.map do |k, v|
+    [
+      k.to_sym,
+      case v
+      when Hash
+        keys_to_symbols(v)
+      when Array
+        v.map { |x| x.is_a?(Hash) ? keys_to_symbols(x) : x }
+      else
+        v
+      end
+    ]
+  end.to_h
+end
+
+def remove_unwanted_modules(root, included_modules:, excluded_modules:, prefix: nil)
+  root.children.select! do |child|
+    module_name = "#{prefix}#{child.name}"
+
+    if child.respond_to?(:children)
+      remove_unwanted_modules(
+        child,
+        included_modules: included_modules,
+        excluded_modules: excluded_modules,
+        prefix: "#{module_name}::",
+      )
+      has_included_children = !child.children.empty?
+    end
+
+    included = included_modules.empty? ? true : included_modules.any? { |m| module_name.start_with?(m) }
+    excluded = excluded_modules.empty? ? false : excluded_modules.any? { |m| module_name.start_with?(m) }
+
+    (included || has_included_children) && !excluded
+  end
+end
