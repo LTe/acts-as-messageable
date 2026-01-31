@@ -10,6 +10,7 @@ group :development do
   gem 'kramdown', require: false
   gem 'mize', require: false
   gem 'mongoid', require: false
+  gem 'mongoid-tree', require: false
   gem 'pg', require: false
   gem 'pry', require: false
   gem 'rake', require: false

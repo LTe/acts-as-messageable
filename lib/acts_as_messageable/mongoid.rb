@@ -1,6 +1,7 @@
 # typed: false
 # frozen_string_literal: true
 
+require_relative 'core'
 require_relative 'mongoid/scopes'
 require_relative 'mongoid/message'
 require_relative 'mongoid/model'

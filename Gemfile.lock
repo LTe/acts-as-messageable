@@ -121,6 +121,8 @@ GEM
       activemodel (>= 5.1, < 8.2, != 7.0.0)
       concurrent-ruby (>= 1.0.5, < 2.0)
       mongo (>= 2.18.0, < 3.0.0)
+    mongoid-tree (2.3.0)
+      mongoid (>= 4.0, < 10)
     netrc (0.11.0)
     nokogiri (1.19.0-x86_64-darwin)
       racc (~> 1.4)
@@ -309,6 +311,7 @@ DEPENDENCIES
   kramdown
   mize
   mongoid
+  mongoid-tree
   pg
   pry
   rake

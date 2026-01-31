@@ -7,6 +7,7 @@ module ActsAsMessageable
   module Mongoid
     module Scopes
       extend ActiveSupport::Concern
+      extend T::Sig
 
       included do
         scope :are_from, lambda { |user|
@@ -50,6 +51,9 @@ module ActsAsMessageable
       end
 
       module ClassMethods
+        extend T::Sig
+
+        sig { params(search_scope: T.any(String, Symbol)).void }
         def initialize_scopes(search_scope)
           return if search_scope == :search
 

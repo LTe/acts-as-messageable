@@ -1,14 +1,22 @@
 # typed: false
 # frozen_string_literal: true
 
+require_relative '../core'
+
 module ActsAsMessageable
   module Mongoid
     module Model
+      extend T::Sig
+
+      sig { params(base: T.untyped).returns(T.untyped) }
       def self.included(base)
         base.extend ClassMethods
       end
 
       module ClassMethods
+        extend T::Sig
+
+        sig { params(options: T::Hash[Symbol, T.untyped]).returns(T.untyped) }
         # Method make Mongoid::Document object messageable
         # @option options [String] :class_name message class name
         # @option options [Array, Symbol] :required required fields in message
@@ -49,6 +57,7 @@ module ActsAsMessageable
           include ActsAsMessageable::Mongoid::Model::InstanceMethods
         end
 
+        sig { returns(T.untyped) }
         # Method recognize real object class
         # @return [Class] class or relation object
         def resolve_mongoid_ancestor
@@ -57,127 +66,23 @@ module ActsAsMessageable
       end
 
       module InstanceMethods
-        # @return [Mongoid::Criteria] all messages connected with user
-        # @param [Boolean] trash Show deleted messages
-        def messages(trash = false)
-          result = self.class.messages_class_name.connected_with(self, trash)
-          result.relation_context = self
+        extend T::Sig
+        include ActsAsMessageable::Core::ModelBehavior
 
-          result
-        end
-
+        sig { returns(T.untyped) }
         # @return [Mongoid::Criteria] returns all messages from inbox
         def received_messages
-          result = received_messages_relation.where(recipient_delete: false)
+          result = T.unsafe(self).received_messages_relation.where(recipient_delete: false)
           result.relation_context = self
-
           result
         end
 
+        sig { returns(T.untyped) }
         # @return [Mongoid::Criteria] returns all messages from outbox
         def sent_messages
-          result = sent_messages_relation.where(sender_delete: false)
+          result = T.unsafe(self).sent_messages_relation.where(sender_delete: false)
           result.relation_context = self
-
           result
-        end
-
-        # @return [Mongoid::Criteria] returns all messages from trash
-        def deleted_messages
-          messages(true)
-        end
-
-        # Method sends message to another user
-        # @param [Object] to
-        # @param [Hash] args
-        # @option args [String] topic Topic of the message
-        # @option args [String] body Body of the message
-        # @return [ActsAsMessageable::Mongoid::Message] the message object
-        def send_message(to, *args)
-          message_attributes = {}
-
-          case args.first
-          when String
-            self.class.messages_class_name.required.each_with_index do |attribute, index|
-              message_attributes[attribute] = args[index]
-            end
-          when Hash
-            message_attributes = args.first
-          end
-
-          message = self.class.messages_class_name.new(message_attributes)
-          message.received_messageable = to
-          message.sent_messageable = self
-          message.save!
-
-          message
-        end
-
-        # Method send message to another user
-        # and raise exception in case of validation errors
-        # @param [Object] to
-        # @param [Hash] args
-        # @option [String] topic Topic of the message
-        # @option [String] body Body of the message
-        #
-        # @return [ActsAsMessageable::Mongoid::Message] the message object
-        def send_message!(to, *args)
-          send_message(to, *args).tap(&:save!)
-        end
-
-        # Reply to given message
-        # @param [ActsAsMessageable::Mongoid::Message] message
-        # @param [Hash] args
-        # @option args [String] topic Topic of the message
-        # @option args [String] body Body of the message
-        #
-        # @return [ActsAsMessageable::Mongoid::Message] a message that is a response to a given message
-        def reply_to(message, *args)
-          current_user = self
-
-          return unless message.participant?(current_user)
-
-          reply_message = send_message(message.real_receiver(current_user), *args)
-          reply_message.parent = message
-          reply_message.save
-
-          reply_message
-        end
-
-        # Mark message as deleted
-        # @param [ActsAsMessageable::Mongoid::Message] message to delete
-        # @return [Boolean] whether the message was deleted
-        def delete_message(message)
-          current_user = self
-
-          case current_user
-          when message.to
-            attribute = message.recipient_delete ? :recipient_permanent_delete : :recipient_delete
-          when message.from
-            attribute = message.sender_delete ? :sender_permanent_delete : :sender_delete
-          else
-            raise "#{current_user} can't delete this message"
-          end
-
-          message.update!(attribute => true)
-        end
-
-        # Mark message as restored
-        # @param [ActsAsMessageable::Mongoid::Message] message to restore
-        # @return [Boolean] whether the message was restored
-        def restore_message(message)
-          current_user = self
-
-          case current_user
-          when message.to
-            attribute = :recipient_delete
-          when message.from
-            attribute = :sender_delete
-          else
-            raise "#{current_user} can't restore this message"
-          end
-
-          message.update!(attribute => false)
         end
       end
     end
