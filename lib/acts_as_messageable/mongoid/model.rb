@@ -52,7 +52,6 @@ module ActsAsMessageable
         # Method recognize real object class
         # @return [Class] class or relation object
         def resolve_mongoid_ancestor
-          relations['received_messages_relation'].class_name.constantize
           self
         end
       end

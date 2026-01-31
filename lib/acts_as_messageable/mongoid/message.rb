@@ -133,12 +133,13 @@ module ActsAsMessageable
       end
 
       def subtree
+        escaped_id = Regexp.escape(_id.to_s)
         self.class.where(:$or => [
                            { _id: _id },
                            { ancestry: _id.to_s },
-                           { ancestry: /^#{_id}\// },
-                           { ancestry: /\/#{_id}$/ },
-                           { ancestry: /\/#{_id}\// }
+                           { ancestry: /^#{escaped_id}\// },
+                           { ancestry: /\/#{escaped_id}$/ },
+                           { ancestry: /\/#{escaped_id}\// }
                          ]).order(created_at: :desc)
       end
     end
