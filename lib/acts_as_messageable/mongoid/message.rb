@@ -39,7 +39,8 @@ module ActsAsMessageable
       # mongoid-tree provides: parent, parent=, root, ancestors, descendants, children
       # We need to provide subtree which includes self + descendants
       def subtree
-        self.class.where(:$or => [{ _id: _id }] + descendants.pluck(:_id).map { |id| { _id: id } })
+        descendant_ids = descendants.pluck(:_id)
+        self.class.where(:$or => [{ _id: _id }, { _id: { :$in => descendant_ids } }])
             .order(created_at: :desc)
       end
 

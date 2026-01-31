@@ -10,11 +10,11 @@ module ActsAsMessageable
       sig { returns(T.untyped) }
       attr_accessor :relation_context
 
-      sig { params(context: T.untyped, blk: T.untyped).void }
+      sig { params(context: T.untyped).void }
       # @yield [ActsAsMessageable::Mongoid::Message] message
       # @param [Object] context of relation (most of the time current_user object)
       # @return [Mongoid::Criteria]
-      def process(context = relation_context, &blk) # rubocop:disable Lint/UnusedMethodArgument
+      def process(context = relation_context)
         each do |message|
           yield(message) if block_given?
           context.delete_message(message) if message.removed

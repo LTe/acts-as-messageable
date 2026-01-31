@@ -55,7 +55,7 @@ module ActsAsMessageable
 
         sig { params(search_scope: T.any(String, Symbol)).void }
         def initialize_scopes(search_scope)
-          return if search_scope == :search
+          return nil if search_scope == :search
 
           scope search_scope, lambda { |text|
             where(:$or => [
@@ -63,6 +63,7 @@ module ActsAsMessageable
                     { topic: /#{Regexp.escape(text)}/i }
                   ])
           }
+          nil
         end
       end
     end
