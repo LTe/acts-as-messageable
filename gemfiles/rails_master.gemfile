@@ -7,9 +7,11 @@ source 'http://rubygems.org'
 gem 'activerecord', git: 'https://github.com/rails/rails.git'
 gem 'activesupport', git: 'https://github.com/rails/rails.git'
 gem 'ancestry', require: false
+gem 'ostruct'
 gem 'railties', git: 'https://github.com/rails/rails.git'
 gem 'sorbet-rails', require: false
 gem 'sorbet-static-and-runtime', require: false
+gem 'zeitwerk', require: false
 
 group :development do
   gem 'appraisal', require: false

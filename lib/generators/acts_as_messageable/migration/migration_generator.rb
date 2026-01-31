@@ -3,6 +3,7 @@
 
 require 'rails/generators/migration'
 require 'rails/generators/active_record'
+require 'sorbet-runtime'
 
 module ActsAsMessageable
   class MigrationGenerator < Rails::Generators::Base

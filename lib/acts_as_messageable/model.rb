@@ -7,7 +7,7 @@ module ActsAsMessageable
 
     # @return [Object]
     # @param [Object] base
-    sig { params(base: Module).returns(T.untyped) }
+    sig { params(base: T::Module[T.anything]).returns(T.untyped) }
     def self.included(base)
       base.extend ClassMethods
     end
@@ -60,7 +60,9 @@ module ActsAsMessageable
         messages_class_name.initialize_scopes(options[:search_scope])
 
         messages_class_name.required = Array.wrap(options[:required])
-        messages_class_name.validates_presence_of messages_class_name.required
+        messages_class_name.required.each do |attr|
+          messages_class_name.validates attr, presence: true
+        end
         self.group_messages = options[:group_messages]
 
         include ActsAsMessageable::Model::InstanceMethods
@@ -94,8 +96,7 @@ module ActsAsMessageable
       # @return [ActiveRecord::Relation] returns all messages from inbox
       sig { returns(ActiveRecord::Relation) }
       def received_messages
-        result = ActsAsMessageable.rails_api.new(received_messages_relation)
-        result = T.unsafe(result).scoped.where(recipient_delete: false)
+        result = received_messages_relation.scope.where(recipient_delete: false)
         result.relation_context = self
 
         result
@@ -104,8 +105,7 @@ module ActsAsMessageable
       # @return [ActiveRecord::Relation] returns all messages from outbox
       sig { returns(ActiveRecord::Relation) }
       def sent_messages
-        result = ActsAsMessageable.rails_api.new(sent_messages_relation)
-        result = T.unsafe(result).scoped.where(sender_delete: false)
+        result = sent_messages_relation.scope.where(sender_delete: false)
         result.relation_context = self
 
         result
@@ -175,12 +175,12 @@ module ActsAsMessageable
                args: T.any(String,
                            T::Hash[T.any(String, Symbol), String])).returns(T.nilable(ActsAsMessageable::Message))
       end
-      def reply_to(message, *args)
+      def reply_to(message, *args) # rubocop:disable Style/ArgumentsForwarding
         current_user = T.cast(self, ActiveRecord::Base)
 
         return unless message.participant?(current_user)
 
-        reply_message = T.unsafe(self).send_message(message.real_receiver(current_user), *args)
+        reply_message = T.unsafe(self).send_message(message.real_receiver(current_user), *args) # rubocop:disable Style/ArgumentsForwarding
         reply_message.parent = message
         reply_message.save
 
@@ -203,7 +203,7 @@ module ActsAsMessageable
           raise "#{current_user} can't delete this message"
         end
 
-        ActsAsMessageable.rails_api.new(message).update_attributes!(attribute => true)
+        message.update!(attribute => true)
       end
 
       # Mark message as restored
@@ -222,7 +222,7 @@ module ActsAsMessageable
           raise "#{current_user} can't restore this message"
         end
 
-        ActsAsMessageable.rails_api.new(message).update_attributes!(attribute => false)
+        message.update!(attribute => false)
       end
     end
   end

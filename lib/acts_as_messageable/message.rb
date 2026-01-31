@@ -1,6 +1,8 @@
 # typed: strict
 # frozen_string_literal: true
 
+require 'ancestry'
+
 module ActsAsMessageable
   class Message < ::ActiveRecord::Base
     extend T::Sig
@@ -26,11 +28,7 @@ module ActsAsMessageable
       super
     end
 
-    ActsAsMessageable.rails_api.new(self).attr_accessible(
-      :topic, :body, :opened, :opened_at, :recipient_permanent_delete,
-      :recipient_delete, :sender_permanent_delete, :sender_delete
-    )
-    ActsAsMessageable.rails_api.new(self).default_scope('created_at desc')
+    default_scope { order('created_at desc') }
 
     # @return [Boolean] whether the message has been read
     sig { returns(T::Boolean) }
@@ -49,8 +47,7 @@ module ActsAsMessageable
     # @return [Boolean] whether the message has been open
     sig { returns(T::Boolean) }
     def open
-      ActsAsMessageable.rails_api.new(self).update_attributes!(opened_at: DateTime.now)
-      ActsAsMessageable.rails_api.new(self).update_attributes!(opened: true)
+      update!(opened_at: Time.current, opened: true)
     end
 
     alias mark_as_read open
@@ -60,8 +57,7 @@ module ActsAsMessageable
     # @return [Boolean] whether the message has been closed
     sig { returns(T::Boolean) }
     def close
-      ActsAsMessageable.rails_api.new(self).update_attributes!(opened_at: nil)
-      ActsAsMessageable.rails_api.new(self).update_attributes!(opened: false)
+      update!(opened_at: nil, opened: false)
     end
 
     alias mark_as_unread close
@@ -92,7 +88,7 @@ module ActsAsMessageable
     end
 
     # @return [Object] conversation tree
-    sig { returns(T.untyped) }
+    sig { returns(ActiveRecord::Relation) }
     def conversation
       root.subtree
     end
@@ -122,15 +118,15 @@ module ActsAsMessageable
       params(args: T.any(T::Hash[String, String],
                          String)).returns(T.any(ActsAsMessageable::Message, T::Boolean, ActiveRecord::Base))
     end
-    def reply(*args)
-      T.unsafe(to).reply_to(self, *args)
+    def reply(*args) # rubocop:disable Style/ArgumentsForwarding
+      T.unsafe(to).reply_to(self, *args) # rubocop:disable Style/ArgumentsForwarding
     end
 
     # Method will return list of users in the conversation
     # @return [Array<ActiveRecord::Base>] users
     sig { returns(T::Array[ActiveRecord::Base]) }
     def people
-      conversation.map(&:from).uniq!
+      conversation.map(&:from).uniq
     end
   end
 end

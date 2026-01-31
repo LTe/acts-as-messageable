@@ -3,11 +3,13 @@ FROM ruby:${RUBY_VERSION}
 
 WORKDIR /home/app
 
-COPY Gemfile Gemfile.lock gemfiles ./
+COPY Gemfile Gemfile.lock ./
+COPY gemfiles ./gemfiles/
 
-ARG GEMFILE
+ENV BUNDLE_PATH=/usr/local/bundle
+ARG GEMFILE=Gemfile
 ENV BUNDLE_GEMFILE=${GEMFILE}
-RUN gem install bundler 
+RUN gem install bundler
 RUN bundle install
 
 CMD ["bundle", "exec", "rake"]

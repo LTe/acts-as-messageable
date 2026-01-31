@@ -7,7 +7,7 @@ inherit_mode:
 require: rubocop-sorbet
 
 AllCops:
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.2
   SuggestExtensions: false
   Exclude:
     - 'lib/generators/acts_as_messageable/migration/templates/*'

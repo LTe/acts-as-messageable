@@ -1,4 +1,4 @@
-# typed: ignore
+# typed: false
 # frozen_string_literal: true
 
 require 'sorbet-runtime'
@@ -21,9 +21,9 @@ require 'bundler/setup'
 Bundler.require(:default)
 
 require 'pry'
-require 'acts-as-messageable'
+require 'acts_as_messageable'
 
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each { |f| require f }
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 ActiveRecord::Migration.verbose = false
 
@@ -49,7 +49,7 @@ RSpec.configure do |config|
   end
 
   config.around(:each) do |example|
-    supported_rails = Array.wrap(example.metadata[:rails]).presence || [3, 4, 5, 6, 7]
+    supported_rails = Array.wrap(example.metadata[:rails]).presence || [3, 4, 5, 6, 7, 8]
 
     example.run if supported_rails.include?(Rails::VERSION::MAJOR)
   end

@@ -1,18 +1,12 @@
 # frozen_string_literal: true
 
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
-gem 'activerecord', require: false
-gem 'activesupport', require: false
-gem 'ancestry', require: false
-gem 'railties', require: false
-gem 'sorbet-rails', require: false
-gem 'sorbet-static-and-runtime', require: false
+gemspec
 
 group :development do
   gem 'appraisal', require: false
   gem 'coveralls_reborn', require: false
-  gem 'jeweler', require: false
   gem 'kramdown', require: false
   gem 'mize', require: false
   gem 'pg', require: false
