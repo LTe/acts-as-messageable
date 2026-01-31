@@ -1,10 +1,34 @@
 # typed: false
 # frozen_string_literal: true
 
-require 'mongoid_spec_helper'
+require 'spec_helper'
 
-describe 'ActsAsMessageable with Mongoid' do
+describe 'ActsAsMessageable with Mongoid', skip: !MONGOID_SPECS_ENABLED do
+  before(:all) do
+    next unless MONGOID_SPECS_ENABLED
+
+    # Clean and set up Mongoid database
+    Mongoid.purge!
+
+    @alice = MongoidUser.create!(email: 'alice@example.com')
+    @bob = MongoidUser.create!(email: 'bob@example.com')
+    @pat = MongoidUser.create!(email: 'pat@example.com')
+    @admin = MongoidAdmin.create!(email: 'admin@example.com')
+    @men = MongoidMen.create!(email: 'men@example.com')
+    @custom_search_user = MongoidCustomSearchUser.create!(email: 'custom@example.com')
+  end
+
+  after(:all) do
+    Mongoid.purge! if MONGOID_SPECS_ENABLED
+  end
+
+  after(:each) do
+    ActsAsMessageable::Mongoid::Message.destroy_all if MONGOID_SPECS_ENABLED
+  end
+
   before do
+    next unless MONGOID_SPECS_ENABLED
+
     MongoidUser.acts_as_messageable
     @message = send_mongoid_message
   end
