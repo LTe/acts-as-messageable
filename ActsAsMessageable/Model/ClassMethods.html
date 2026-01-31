@@ -6,7 +6,7 @@
 <title>
   Module: ActsAsMessageable::Model::ClassMethods
   
-    &mdash; Documentation by YARD 0.9.36
+    &mdash; Documentation by YARD 0.9.38
   
 </title>
 
@@ -206,7 +206,9 @@
 64
 65
 66
-67</pre>
+67
+68
+69</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 34</span>
@@ -240,7 +242,9 @@
   <span class='id identifier rubyid_messages_class_name'>messages_class_name</span><span class='period'>.</span><span class='id identifier rubyid_initialize_scopes'>initialize_scopes</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:search_scope</span><span class='rbracket'>]</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_messages_class_name'>messages_class_name</span><span class='period'>.</span><span class='id identifier rubyid_required'>required</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_wrap'>wrap</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:required</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_messages_class_name'>messages_class_name</span><span class='period'>.</span><span class='id identifier rubyid_validates_presence_of'>validates_presence_of</span> <span class='id identifier rubyid_messages_class_name'>messages_class_name</span><span class='period'>.</span><span class='id identifier rubyid_required'>required</span>
+  <span class='id identifier rubyid_messages_class_name'>messages_class_name</span><span class='period'>.</span><span class='id identifier rubyid_required'>required</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_attr'>attr</span><span class='op'>|</span>
+    <span class='id identifier rubyid_messages_class_name'>messages_class_name</span><span class='period'>.</span><span class='id identifier rubyid_validates'>validates</span> <span class='id identifier rubyid_attr'>attr</span><span class='comma'>,</span> <span class='label'>presence:</span> <span class='kw'>true</span>
+  <span class='kw'>end</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_group_messages'>group_messages</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:group_messages</span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_include'>include</span> <span class='const'><span class='object_link'><a href="../../ActsAsMessageable.html" title="ActsAsMessageable (module)">ActsAsMessageable</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Model.html" title="ActsAsMessageable::Model (module)">Model</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="InstanceMethods.html" title="ActsAsMessageable::Model::InstanceMethods (module)">InstanceMethods</a></span></span>
@@ -265,12 +269,12 @@
       <pre class="lines">
 
 
-72
-73
-74</pre>
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/model.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resolve_active_record_ancestor'>resolve_active_record_ancestor</span>
   <span class='id identifier rubyid_reflect_on_association'>reflect_on_association</span><span class='lparen'>(</span><span class='symbol'>:received_messages_relation</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_active_record'>active_record</span>
@@ -285,9 +289,9 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Dec 11 04:32:25 2024 by
+  Generated on Sat Jan 31 10:01:02 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.36 (ruby-3.2.2).
+  0.9.38 (ruby-3.2.2).
 </div>
 
     </div>

@@ -6,7 +6,7 @@
 <title>
   Module: ActsAsMessageable
   
-    &mdash; Documentation by YARD 0.9.36
+    &mdash; Documentation by YARD 0.9.38
   
 </title>
 
@@ -69,11 +69,6 @@
 
   
   
-  <dl>
-      <dt>Extended by:</dt>
-      <dd>T::Sig</dd>
-  </dl>
-  
   
   
   
@@ -84,7 +79,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/acts_as_messageable/model.rb<span class="defines">,<br />
-  lib/acts_as_messageable.rb,<br /> lib/acts_as_messageable/rails3.rb,<br /> lib/acts_as_messageable/rails4.rb,<br /> lib/acts_as_messageable/rails6.rb,<br /> lib/acts_as_messageable/scopes.rb,<br /> lib/acts_as_messageable/message.rb,<br /> lib/acts_as_messageable/railtie.rb,<br /> lib/acts_as_messageable/relation.rb,<br /> lib/generators/acts_as_messageable/migration/migration_generator.rb</span>
+  lib/acts_as_messageable.rb,<br /> lib/acts_as_messageable/scopes.rb,<br /> lib/acts_as_messageable/message.rb,<br /> lib/acts_as_messageable/railtie.rb,<br /> lib/acts_as_messageable/version.rb,<br /> lib/acts_as_messageable/relation.rb,<br /> lib/generators/acts_as_messageable/migration/migration_generator.rb</span>
 </dd>
   </dl>
   
@@ -109,107 +104,41 @@
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="ActsAsMessageable/Message.html" title="ActsAsMessageable::Message (class)">Message</a></span>, <span class='object_link'><a href="ActsAsMessageable/MigrationGenerator.html" title="ActsAsMessageable::MigrationGenerator (class)">MigrationGenerator</a></span>, <span class='object_link'><a href="ActsAsMessageable/Rails3.html" title="ActsAsMessageable::Rails3 (class)">Rails3</a></span>, <span class='object_link'><a href="ActsAsMessageable/Rails4.html" title="ActsAsMessageable::Rails4 (class)">Rails4</a></span>, <span class='object_link'><a href="ActsAsMessageable/Rails6.html" title="ActsAsMessageable::Rails6 (class)">Rails6</a></span>, <span class='object_link'><a href="ActsAsMessageable/Railtie.html" title="ActsAsMessageable::Railtie (class)">Railtie</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="ActsAsMessageable/Message.html" title="ActsAsMessageable::Message (class)">Message</a></span>, <span class='object_link'><a href="ActsAsMessageable/MigrationGenerator.html" title="ActsAsMessageable::MigrationGenerator (class)">MigrationGenerator</a></span>, <span class='object_link'><a href="ActsAsMessageable/Railtie.html" title="ActsAsMessageable::Railtie (class)">Railtie</a></span>
     
   
 </p>
 
-
-
-
-
-
-
   
     <h2>
-      Class Method Summary
-      <small><a href="#" class="summary_toggle">collapse</a></small>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
     </h2>
 
-    <ul class="summary">
+    <dl class="constants">
       
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#rails_api-class_method" title="rails_api (class method)">.<strong>rails_api</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
+        <dt id="VERSION-constant" class="">VERSION =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2.0.0</span><span class='tstring_end'>&#39;</span></span></pre></dd>
       
-    </ul>
+    </dl>
   
 
 
-  
-
-  <div id="class_method_details" class="method_details_list">
-    <h2>Class Method Details</h2>
-
-    
-      <div class="method_details first">
-  <h3 class="signature first" id="rails_api-class_method">
-  
-    .<strong>rails_api</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
 
 
-30
-31
-32
-33
-34
-35
-36
-37
-38</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/acts_as_messageable.rb', line 30</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_rails_api'>rails_api</span>
-  <span class='kw'>if</span> <span class='const'>Rails</span><span class='op'>::</span><span class='const'>VERSION</span><span class='op'>::</span><span class='const'>MAJOR</span> <span class='op'>&gt;=</span> <span class='int'>6</span>
-    <span class='const'><span class='object_link'><a href="ActsAsMessageable/Rails6.html" title="ActsAsMessageable::Rails6 (class)">Rails6</a></span></span>
-  <span class='kw'>elsif</span> <span class='const'>Rails</span><span class='op'>::</span><span class='const'>VERSION</span><span class='op'>::</span><span class='const'>MAJOR</span> <span class='op'>&gt;=</span> <span class='int'>4</span>
-    <span class='const'><span class='object_link'><a href="ActsAsMessageable/Rails4.html" title="ActsAsMessageable::Rails4 (class)">Rails4</a></span></span>
-  <span class='kw'>else</span>
-    <span class='const'><span class='object_link'><a href="ActsAsMessageable/Rails3.html" title="ActsAsMessageable::Rails3 (class)">Rails3</a></span></span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
+
+
+
 
 </div>
 
       <div id="footer">
-  Generated on Wed Dec 11 04:32:25 2024 by
+  Generated on Sat Jan 31 10:01:02 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.36 (ruby-3.2.2).
+  0.9.38 (ruby-3.2.2).
 </div>
 
     </div>
