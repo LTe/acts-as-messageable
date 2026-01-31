@@ -1,4 +1,0 @@
-fixes:
- # Ensure Codecov can follow files within symlinked directories
- - "spec/support/v*/app/controllers::spec/support/rails_shared/app/controllers"
- - "spec/support/v*/app/models::spec/support/rails_shared/app/models"
