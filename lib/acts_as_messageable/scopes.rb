@@ -19,6 +19,9 @@ module ActsAsMessageable
 
       sig { params(search_scope: T.any(String, Symbol)).void }
       def initialize_scopes(search_scope)
+        # Skip if scopes are already defined to avoid warnings in development mode
+        return if respond_to?(:are_from)
+
         scope :are_from, lambda { |*args|
           where(sent_messageable_id: args.first, sent_messageable_type: args.first.class.name)
         }
