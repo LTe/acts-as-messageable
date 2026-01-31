@@ -1,9 +1,14 @@
+# typed: false
 # frozen_string_literal: true
 
 require 'spec_helper'
 
 describe 'Scope Redefinition' do
-  it 'does not produce warnings when acts_as_messageable is called multiple times' do
+  before do
+    User.acts_as_messageable
+  end
+  
+  it 'does not produce warnings when initialize_scopes is called multiple times' do
     # Enable warnings to catch any scope redefinition warnings
     original_verbose = $VERBOSE
     $VERBOSE = true
