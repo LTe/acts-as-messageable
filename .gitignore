@@ -3,6 +3,7 @@
 *.sqlite3
 /pkg/*
 .bundle
+vendor/bundle
 spec/database.yml
 ./tags
 tags

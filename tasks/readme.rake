@@ -30,7 +30,7 @@ end
 
 desc('Updates the README file')
 task :readme do # rubocop:disable Metrics/BlockLength
-  def assert_synchronized(path)
+  assert_synchronized = lambda do |path|
     # Do not print diff and yield whether exit code was zero
     sh("test -z \"$(git status --porcelain #{path})\"") do |outcome, _|
       return if outcome
@@ -47,7 +47,7 @@ task :readme do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  def replace_section(contents, section_name, replacement)
+  replace_section = lambda do |contents, section_name, replacement|
     contents.sub(
       /(<!-- START_#{section_name} -->).+(<!-- END_#{section_name} -->)/m, <<~OUT.chomp
         \\1
@@ -57,20 +57,20 @@ task :readme do # rubocop:disable Metrics/BlockLength
     )
   end
 
-  def print_toc(contents)
+  print_toc = lambda do |contents|
     section = 'TOC'
 
     doc = Kramdown::Document.new(contents)
     toc = TocConverter.convert(doc, { auto_id: true, toc_levels: (1..6) })
 
-    replace_section(contents, section, toc.join("\n"))
+    replace_section.call(contents, section, toc.join("\n"))
   end
 
   path = "#{Dir.pwd}/README.md"
 
   contents = File.read(path)
-  contents = print_toc(contents)
+  contents = print_toc.call(contents)
   File.write(path, contents)
 
-  assert_synchronized(path)
+  assert_synchronized.call(path)
 end

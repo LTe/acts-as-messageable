@@ -3,6 +3,7 @@
 
 class CustomMessage < ActsAsMessageable::Message
   extend T::Sig
+
   sig { void }
   def custom_method; end
 end
