@@ -15,6 +15,32 @@ module ActsAsMessageable
 
       module ClassMethods
         extend T::Sig
+        include ActsAsMessageable::Core::ClassBehavior::ClassMethods
+
+        sig { returns(T::Hash[Symbol, T.untyped]) }
+        # Default options for Mongoid adapter
+        def messageable_default_options
+          {
+            class_name: 'ActsAsMessageable::Mongoid::Message',
+            required: %i[topic body],
+            dependent: :nullify,
+            group_messages: false,
+            search_scope: :search
+          }
+        end
+
+        sig { params(options: T::Hash[Symbol, T.untyped]).void }
+        # Define has_many associations for Mongoid
+        def define_messageable_associations(options)
+          has_many :received_messages_relation,
+                   as: :received_messageable,
+                   class_name: options[:class_name],
+                   dependent: options[:dependent]
+          has_many :sent_messages_relation,
+                   as: :sent_messageable,
+                   class_name: options[:class_name],
+                   dependent: options[:dependent]
+        end
 
         sig { params(options: T::Hash[Symbol, T.untyped]).returns(T.untyped) }
         # Method make Mongoid::Document object messageable
@@ -25,35 +51,7 @@ module ActsAsMessageable
         # @param [Hash] options
         # @return [Object]
         def acts_as_messageable(options = {})
-          default_options = {
-            class_name: 'ActsAsMessageable::Mongoid::Message',
-            required: %i[topic body],
-            dependent: :nullify,
-            group_messages: false,
-            search_scope: :search
-          }
-          options = default_options.merge(options)
-
-          cattr_accessor(:messages_class_name, :group_messages)
-
-          has_many :received_messages_relation,
-                   as: :received_messageable,
-                   class_name: options[:class_name],
-                   dependent: options[:dependent]
-          has_many :sent_messages_relation,
-                   as: :sent_messageable,
-                   class_name: options[:class_name],
-                   dependent: options[:dependent]
-
-          self.messages_class_name = options[:class_name].constantize
-          messages_class_name.initialize_scopes(options[:search_scope])
-
-          messages_class_name.required = Array.wrap(options[:required])
-          messages_class_name.required.each do |attr|
-            messages_class_name.validates attr, presence: true
-          end
-          self.group_messages = options[:group_messages]
-
+          setup_messageable(options)
           include ActsAsMessageable::Mongoid::Model::InstanceMethods
         end
 

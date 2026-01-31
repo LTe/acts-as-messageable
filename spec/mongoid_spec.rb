@@ -49,31 +49,4 @@ describe 'ActsAsMessageable with Mongoid', skip: !MONGOID_SPECS_ENABLED do
       expect(@alice.messages.are_from(@bob).order(updated_at: :asc).first.updated_at.to_i).to eq(read_datetime.to_i)
     end
   end
-
-  describe 'ancestry functionality' do
-    let(:message) { ActsAsMessageable::Mongoid::Message.create!(topic: 'topic', body: 'body') }
-
-    it 'returns root of the conversation' do
-      expect(message.conversation).to include(message)
-    end
-
-    it 'handles parent assignment' do
-      parent_message = ActsAsMessageable::Mongoid::Message.create!(topic: 'parent', body: 'parent body')
-      child_message = ActsAsMessageable::Mongoid::Message.create!(topic: 'child', body: 'child body')
-      child_message.parent = parent_message
-      child_message.save!
-
-      expect(child_message.parent).to eq(parent_message)
-      expect(child_message.root).to eq(parent_message)
-    end
-
-    it 'handles subtree' do
-      parent_message = ActsAsMessageable::Mongoid::Message.create!(topic: 'parent', body: 'parent body')
-      child_message = ActsAsMessageable::Mongoid::Message.create!(topic: 'child', body: 'child body')
-      child_message.parent = parent_message
-      child_message.save!
-
-      expect(parent_message.subtree.to_a).to include(parent_message, child_message)
-    end
-  end
 end

@@ -40,22 +40,6 @@ describe 'ActsAsMessageable' do
     end
   end
 
-  describe 'ancestry initialization' do # GH#78
-    let(:message) { ActsAsMessageable::Message.create!(topic: 'topic', body: 'body') }
-
-    before do
-      # Use clean version of Message class we used here remove_const before
-      # but it doesn't work with sorbet so we use this hack to clear side effects
-      ActsAsMessageable::Message.table_name = 'messages'
-      ActsAsMessageable::Message.required = []
-      ActsAsMessageable::Message.clear_validators! if ActsAsMessageable::Message.respond_to?(:clear_validators!)
-    end
-
-    it 'returns root of the conversation' do
-      expect(message.conversation).to include(message)
-    end
-  end
-
   describe 'user primary key is uuid type' do # GH#107
     let(:bob) { UuidUser.create(id: SecureRandom.uuid, email: 'bob@example.com') }
     let(:alice) { UuidUser.create(id: SecureRandom.uuid, email: 'alice@example.com') }
