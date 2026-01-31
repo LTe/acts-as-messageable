@@ -118,8 +118,8 @@ module ActsAsMessageable
       params(args: T.any(T::Hash[String, String],
                          String)).returns(T.any(ActsAsMessageable::Message, T::Boolean, ActiveRecord::Base))
     end
-    def reply(*args)
-      T.unsafe(to).reply_to(self, *args)
+    def reply(*args) # rubocop:disable Style/ArgumentsForwarding
+      T.unsafe(to).reply_to(self, *args) # rubocop:disable Style/ArgumentsForwarding
     end
 
     # Method will return list of users in the conversation

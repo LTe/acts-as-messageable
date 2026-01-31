@@ -175,12 +175,12 @@ module ActsAsMessageable
                args: T.any(String,
                            T::Hash[T.any(String, Symbol), String])).returns(T.nilable(ActsAsMessageable::Message))
       end
-      def reply_to(message, *args)
+      def reply_to(message, *args) # rubocop:disable Style/ArgumentsForwarding
         current_user = T.cast(self, ActiveRecord::Base)
 
         return unless message.participant?(current_user)
 
-        reply_message = T.unsafe(self).send_message(message.real_receiver(current_user), *args)
+        reply_message = T.unsafe(self).send_message(message.real_receiver(current_user), *args) # rubocop:disable Style/ArgumentsForwarding
         reply_message.parent = message
         reply_message.save
 

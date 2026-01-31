@@ -23,7 +23,7 @@ Bundler.require(:default)
 require 'pry'
 require 'acts_as_messageable'
 
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each { |f| require f }
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 ActiveRecord::Migration.verbose = false
 
