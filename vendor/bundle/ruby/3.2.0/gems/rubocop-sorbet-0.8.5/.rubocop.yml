@@ -1,0 +1,26 @@
+# This file strictly follows the rules defined in the Ruby style guide:
+#   http://shopify.github.io/ruby-style-guide/
+inherit_gem:
+  rubocop-shopify: rubocop.yml
+
+require:
+  - rubocop/cop/internal_affairs
+
+AllCops:
+  Exclude:
+    - vendor/**/*
+  NewCops: disable
+  SuggestExtensions: false
+
+InternalAffairs:
+  Enabled: true
+
+Naming/FileName:
+  Exclude:
+  - lib/rubocop-sorbet.rb
+
+Layout/LineLength:
+  IgnoreCopDirectives: true
+
+InternalAffairs/UndefinedConfig:
+  Enabled: false # Bug in implementation fails to find our configs
