@@ -31,16 +31,21 @@ module ActsAsMessageable
 
       sig { void }
       def initialize_scope_tracking
-        @initialized_search_scopes ||= T.let([], T::Array[T.any(String, Symbol)])
+        @initialized_search_scopes ||= T.let(nil, T.nilable(T::Array[T.any(String, Symbol)]))
+        @initialized_search_scopes = [] if @initialized_search_scopes.nil?
       end
 
       sig { params(search_scope: T.any(String, Symbol)).returns(T::Boolean) }
       def scope_already_initialized?(search_scope)
+        return false if @initialized_search_scopes.nil?
+
         respond_to?(:are_from) && @initialized_search_scopes.include?(search_scope)
       end
 
       sig { params(search_scope: T.any(String, Symbol)).void }
       def mark_scope_as_initialized(search_scope)
+        return if @initialized_search_scopes.nil?
+
         @initialized_search_scopes << search_scope unless @initialized_search_scopes.include?(search_scope)
       end
 
