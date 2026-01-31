@@ -35,7 +35,7 @@ describe 'Scope Redefinition' do
       end
 
       expect(scope_warnings).to be_empty,
-             "Expected no scope redefinition warnings, but got: #{scope_warnings.join("\n")}"
+                                     "Expected no scope redefinition warnings, but got: #{scope_warnings.join("\n")}"
     ensure
       # Restore original warn method
       Kernel.define_method(:warn, original_warn)
