@@ -1,16 +1,18 @@
 # typed: true
 
-# NOTE: This file was manually created due to a tapioca 0.17.10 limitation.
-# When running `bin/tapioca gem ancestry`, tapioca generates an empty RBI file
-# with "(empty output)" despite all Ancestry modules and methods being properly loaded.
+# NOTE: This file was manually created because tapioca cannot generate RBI files for ancestry.
+# 
+# INVESTIGATION (Feb 2026): Extensive bisection testing revealed:
+# - Tapioca v0.17.10 (released) generates empty RBI for both ancestry 4.3.3 AND 5.0.0
+# - Current main branch (9be2a7bc, Jan 2026) also generates empty RBI for both versions  
+# - All 48 commits between v0.17.10 and main tested - all produce empty output
+# - Older tapioca versions have sorbet compatibility issues
 #
-# This appears to be a bug in tapioca 0.17.10 (from main@9be2a7bc3c61) as:
-# - Ancestry 4.3.3 generated properly with the same gem structure
-# - All Ancestry modules (ClassMethods, InstanceMethods, MaterializedPath, etc.) are present
-# - Ancestry.singleton_methods and Ancestry.constants return expected values
+# ROOT CAUSE: Ancestry uses `ActiveSupport.on_load :active_record` for dynamic module
+# loading, which prevents tapioca from introspecting the gem at compile time.
 #
-# Until tapioca is fixed, this file provides type signatures for the `ancestry` gem.
-# To regenerate once fixed: bin/tapioca gem ancestry
+# SOLUTION: This manually created RBI file provides accurate type signatures.
+# See /tmp/TAPIOCA_BISECT_REPORT.md for full investigation details.
 
 
 module Ancestry
