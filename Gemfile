@@ -17,7 +17,7 @@ group :development do
   gem 'rubocop-sorbet', require: false
   gem 'sord', require: false
   gem 'sqlite3', require: false
-  gem 'tapioca', github: 'Shopify/tapioca', ref: 'v0.17.10', require: false
+  gem 'tapioca', github: 'Shopify/tapioca', require: false
   gem 'timecop', require: false
   gem 'unparser', require: false
   gem 'yard', require: false

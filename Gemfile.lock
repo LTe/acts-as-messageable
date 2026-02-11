@@ -1,7 +1,6 @@
 GIT
   remote: https://github.com/Shopify/tapioca.git
-  revision: 1c3689be8f98dc7f164687e1d1c30149a4cf3de3
-  ref: v0.17.10
+  revision: 9be2a7bc3c616f551950e3f2ac67eea2a04e87d2
   specs:
     tapioca (0.17.10)
       benchmark
@@ -13,6 +12,7 @@ GIT
       sorbet-static-and-runtime (>= 0.5.11087)
       spoom (>= 1.7.9)
       thor (>= 1.2.0)
+      tsort
       yard-sorbet
 
 PATH
@@ -21,7 +21,7 @@ PATH
     acts-as-messageable (2.0.0)
       activerecord
       activesupport
-      ancestry (= 4.3.3)
+      ancestry
       railties
       sorbet-rails
       sorbet-static-and-runtime
@@ -65,8 +65,9 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    ancestry (4.3.3)
+    ancestry (5.0.0)
       activerecord (>= 5.2.6)
+      logger
     appraisal (2.5.0)
       bundler
       rake
@@ -345,7 +346,7 @@ CHECKSUMS
   activerecord (8.1.2) sha256=acfbe0cadfcc50fa208011fe6f4eb01cae682ebae0ef57145ba45380c74bcc44
   activesupport (8.1.2) sha256=88842578ccd0d40f658289b0e8c842acfe9af751afee2e0744a7873f50b6fdae
   acts-as-messageable (2.0.0)
-  ancestry (4.3.3) sha256=af3f6bcf405c219af02eec5b9c8206e68cba8d7976fe5269559ef0986f5e7ca0
+  ancestry (5.0.0) sha256=f88dd5457e6c9756dc81752f98064cd93447f0230d0b8fe5f911e327c22cecab
   appraisal (2.5.0) sha256=36989221be127913b0dba8d114da2001e6b2dceea7bd4951200eaba764eed3ce
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b

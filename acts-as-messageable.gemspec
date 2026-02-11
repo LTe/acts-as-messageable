@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'activerecord', '>= 0'
   s.add_dependency 'activesupport', '>= 0'
-  s.add_dependency 'ancestry', '4.3.3'
+  s.add_dependency 'ancestry', '>= 0'
   s.add_dependency 'railties', '>= 0'
   s.add_dependency 'sorbet-rails', '>= 0'
   s.add_dependency 'sorbet-static-and-runtime', '>= 0'
