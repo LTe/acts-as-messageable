@@ -65,8 +65,9 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    ancestry (4.3.3)
+    ancestry (5.0.0)
       activerecord (>= 5.2.6)
+      logger
     appraisal (2.5.0)
       bundler
       rake
@@ -111,7 +112,8 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     method_source (1.1.0)
-    minitest (5.27.0)
+    minitest (6.0.1)
+      prism (~> 1.5)
     mize (0.6.1)
     netrc (0.11.0)
     nokogiri (1.19.0-x86_64-darwin)
