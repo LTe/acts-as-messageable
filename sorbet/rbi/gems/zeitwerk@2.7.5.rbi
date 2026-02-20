@@ -9,7 +9,7 @@ module Kernel
   private
 
   def require(path); end
-  def zeitwerk_original_require(_arg0); end
+  def zeitwerk_original_require(path); end
 
   class << self
     def require(path); end
@@ -116,6 +116,7 @@ class Zeitwerk::Loader
   def __autoloaded_dirs; end
   def __autoloads; end
   def __inceptions; end
+  def __log; end
   def __namespace_dirs; end
   def __shadowed_file?(file); end
   def __shadowed_files; end
@@ -140,10 +141,11 @@ class Zeitwerk::Loader
   def define_autoloads_for_dir(dir, parent); end
   def dirs_autoload_monitor; end
   def inceptions; end
+  def log; end
   def mutex; end
   def namespace_dirs; end
   def promote_namespace_from_implicit_to_explicit(dir:, file:, cref:); end
-  def raise_if_conflicting_directory(dir); end
+  def raise_if_conflicting_root_dir(root_dir); end
   def register_explicit_namespace(cref); end
   def register_inception(cref, abspath); end
   def run_on_unload_callbacks(cref, value, abspath); end
@@ -187,7 +189,9 @@ module Zeitwerk::Loader::Config
 
   def initialize; end
 
+  def __ignored_path?(abspath); end
   def __ignores?(abspath); end
+  def __root_dir?(dir); end
   def __roots; end
   def collapse(*glob_patterns); end
   def dirs(namespaces: T.unsafe(nil), ignored: T.unsafe(nil)); end
@@ -242,21 +246,30 @@ module Zeitwerk::Loader::EagerLoad
   def eager_load_child_namespace(child, child_name, root_dir, root_namespace); end
 end
 
+class Zeitwerk::Loader::FileSystem
+  def initialize(loader); end
+
+  def dir?(path); end
+  def hidden?(basename); end
+  def ls(dir); end
+  def rb_extension?(path); end
+  def supported_ftype?(abspath); end
+  def walk_up(abspath); end
+
+  private
+
+  def each_ruby_file_or_directory(dir); end
+  def has_at_least_one_ruby_file?(dir); end
+  def relevant_dir_entries(dir); end
+end
+
 module Zeitwerk::Loader::Helpers
   private
 
   def cname_for(basename, abspath); end
-  def dir?(path); end
-  def has_at_least_one_ruby_file?(dir); end
-  def hidden?(basename); end
-  def log(message); end
-  def ls(dir); end
-  def ruby?(path); end
-  def walk_up(abspath); end
 end
 
 module Zeitwerk::Loader::Helpers::CNAME_VALIDATOR; end
-Zeitwerk::Loader::MUTEX = T.let(T.unsafe(nil), Thread::Mutex)
 class Zeitwerk::NameError < ::NameError; end
 
 class Zeitwerk::NullInflector
@@ -272,6 +285,7 @@ Zeitwerk::RealModName::UNBOUND_METHOD_MODULE_NAME = T.let(T.unsafe(nil), Unbound
 module Zeitwerk::Registry
   class << self
     def autoloads; end
+    def conflicting_root_dir?(loader, new_root_dir); end
     def explicit_namespaces; end
     def gem_loaders_by_root_file; end
     def inceptions; end
@@ -315,7 +329,7 @@ class Zeitwerk::Registry::Loaders
   def initialize; end
 
   def clear; end
-  def each(&block); end
+  def each(&_arg0); end
   def register(loader); end
   def registered?(loader); end
   def unregister(loader); end
