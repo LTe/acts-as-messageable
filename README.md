@@ -16,6 +16,7 @@ users or other models is required.
     * [Installation](#installation)
 * [Post installation](#post-installation)
 * [Usage](#usage-1)
+* [Mongoid Support](#mongoid-support)
 * [Upgrade](#upgrade)
 * [Send message](#send-message)
   * [With hash](#with-hash)
@@ -102,6 +103,69 @@ class User < ActiveRecord::Base
                       :group_messages => true,              # default false
                       :search_scope => :custom_search       # default :search
 end
+```
+
+# Mongoid Support
+
+ActsAsMessageable also supports Mongoid as an alternative to ActiveRecord. To use it with Mongoid, add the mongoid gem to your Gemfile:
+
+```ruby
+gem 'mongoid'
+gem 'acts-as-messageable', require: 'acts_as_messageable'
+```
+
+No migrations are needed for Mongoid. Simply configure your model:
+
+```ruby
+class User
+  include Mongoid::Document
+  
+  field :email, type: String
+  
+  acts_as_messageable :required   => :body,                               # default [:topic, :body]
+                      :class_name => "ActsAsMessageable::Mongoid::Message", # default
+                      :dependent  => :destroy,                            # default :nullify
+                      :group_messages => true,                            # default false
+                      :search_scope => :custom_search                     # default :search
+end
+```
+
+All the same features are available as with ActiveRecord:
+
+```ruby
+@alice = User.first
+@bob   = User.last
+
+# Send a message
+@message = @alice.send_message(@bob, "Message topic", "Hi bob!")
+
+# Reply to a message
+@bob.reply_to(@message, "Re: Message topic", "Hi alice!")
+
+# Get messages
+@alice.received_messages
+@alice.sent_messages
+@alice.messages
+@alice.deleted_messages
+
+# Message operations
+@message.read
+@message.unread
+@alice.delete_message(@message)
+@alice.restore_message(@message)
+
+# Filters
+@alice.messages.are_from(@bob)
+@alice.messages.are_to(@bob)
+@alice.messages.readed
+@alice.messages.unreaded
+
+# Search
+@alice.messages.search("search text")
+
+# Conversations
+@message.conversation
+@alice.received_messages.conversations
 ```
 
 # Upgrade
