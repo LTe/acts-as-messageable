@@ -96,7 +96,7 @@ class Unparser::AST::LocalVariableScopeEnumerator
 
   def initialize(stack:); end
 
-  def each(node:, &block); end
+  def each(node:, &_arg1); end
 
   private
 
@@ -110,7 +110,7 @@ class Unparser::AST::LocalVariableScopeEnumerator
   def visit(node, &block); end
 
   class << self
-    def each(node:, stack:, &block); end
+    def each(node:, stack:, &_arg2); end
   end
 end
 
@@ -309,7 +309,7 @@ class Unparser::CLI
   def targets(file_name); end
 
   class << self
-    def run(*arguments); end
+    def run(*_arg0); end
   end
 end
 
@@ -357,7 +357,7 @@ class Unparser::Comments
   def initialize(comments); end
 
   def consume(node, source_part = T.unsafe(nil)); end
-  def source_range(*arguments); end
+  def source_range(*_arg0); end
   def take_all; end
   def take_before(node, source_part); end
   def take_eol_comments; end
