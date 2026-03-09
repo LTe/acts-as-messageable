@@ -1,12 +1,14 @@
 # typed: true
 
-# NOTE: This file was manually created because tapioca cannot generate RBI files for ancestry.
+# NOTE: This file was manually created because tapioca cannot generate RBI files for ancestry
+# without explicitly requiring the gem and triggering its ActiveSupport.on_load hooks.
 #
-# ROOT CAUSE: Ancestry uses `ActiveSupport.on_load :active_record` for dynamic module
-# loading, which prevents tapioca from introspecting the gem at compile time.
+# The file sorbet/tapioca/pre_require.rb now contains:
+#   require 'ancestry'
+#   ActiveSupport.run_load_hooks(:active_record, ActiveRecord::Base)
 #
-# SOLUTION: This manually created RBI file provides accurate type signatures.
-
+# Once confirmed that `bin/tapioca gem ancestry` generates a non-empty RBI, this file can
+# be replaced by the auto-generated output.
 
 module Ancestry
   class << self
