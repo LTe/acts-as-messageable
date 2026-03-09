@@ -5,28 +5,6 @@
 # Please instead update this file by running `bin/tapioca gem json`.
 
 
-class Array
-  include ::Enumerable
-  include ::JSON::Ext::Generator::GeneratorMethods::Array
-end
-
-class FalseClass
-  include ::JSON::Ext::Generator::GeneratorMethods::FalseClass
-end
-
-class Float < ::Numeric
-  include ::JSON::Ext::Generator::GeneratorMethods::Float
-end
-
-class Hash
-  include ::Enumerable
-  include ::JSON::Ext::Generator::GeneratorMethods::Hash
-end
-
-class Integer < ::Numeric
-  include ::JSON::Ext::Generator::GeneratorMethods::Integer
-end
-
 module JSON
   private
 
@@ -145,6 +123,10 @@ class JSON::GeneratorError < ::JSON::JSONError
   def invalid_object; end
 end
 
+module JSON::GeneratorMethods
+  def to_json(state = T.unsafe(nil), *_arg1); end
+end
+
 class JSON::GenericObject < ::OpenStruct
   def as_json(*_arg0); end
   def to_hash; end
@@ -194,21 +176,8 @@ module Kernel
   def jj(*objs); end
 end
 
-class NilClass
-  include ::JSON::Ext::Generator::GeneratorMethods::NilClass
-end
-
 class Object < ::BasicObject
   include ::Kernel
   include ::PP::ObjectMixin
-  include ::JSON::Ext::Generator::GeneratorMethods::Object
-end
-
-class String
-  include ::Comparable
-  include ::JSON::Ext::Generator::GeneratorMethods::String
-end
-
-class TrueClass
-  include ::JSON::Ext::Generator::GeneratorMethods::TrueClass
+  include ::JSON::GeneratorMethods
 end
