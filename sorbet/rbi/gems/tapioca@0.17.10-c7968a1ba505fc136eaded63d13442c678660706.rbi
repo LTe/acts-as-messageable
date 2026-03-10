@@ -843,9 +843,7 @@ class Tapioca::Dsl::Compiler
   extend T::Generic
   include ::Tapioca::SorbetHelper
   include ::Tapioca::RBIHelper
-  include ::Tapioca::Runtime::AttachedClassOf
   include ::Tapioca::Runtime::Reflection
-  extend ::Tapioca::Runtime::AttachedClassOf
   extend ::Tapioca::Runtime::Reflection
 
   abstract!
@@ -1101,7 +1099,6 @@ class Tapioca::Gem::Listeners::Base
 end
 
 class Tapioca::Gem::Listeners::DynamicMixins < ::Tapioca::Gem::Listeners::Base
-  include ::Tapioca::Runtime::AttachedClassOf
   include ::Tapioca::Runtime::Reflection
 
   private
@@ -1114,7 +1111,6 @@ class Tapioca::Gem::Listeners::DynamicMixins < ::Tapioca::Gem::Listeners::Base
 end
 
 class Tapioca::Gem::Listeners::ForeignConstants < ::Tapioca::Gem::Listeners::Base
-  include ::Tapioca::Runtime::AttachedClassOf
   include ::Tapioca::Runtime::Reflection
 
   private
@@ -1132,7 +1128,6 @@ end
 class Tapioca::Gem::Listeners::Methods < ::Tapioca::Gem::Listeners::Base
   include ::Tapioca::SorbetHelper
   include ::Tapioca::RBIHelper
-  include ::Tapioca::Runtime::AttachedClassOf
   include ::Tapioca::Runtime::Reflection
 
   private
@@ -1187,7 +1182,6 @@ class Tapioca::Gem::Listeners::Methods < ::Tapioca::Gem::Listeners::Base
 end
 
 class Tapioca::Gem::Listeners::Mixins < ::Tapioca::Gem::Listeners::Base
-  include ::Tapioca::Runtime::AttachedClassOf
   include ::Tapioca::Runtime::Reflection
 
   private
@@ -1222,7 +1216,6 @@ class Tapioca::Gem::Listeners::Mixins < ::Tapioca::Gem::Listeners::Base
 end
 
 class Tapioca::Gem::Listeners::RemoveEmptyPayloadScopes < ::Tapioca::Gem::Listeners::Base
-  include ::Tapioca::Runtime::AttachedClassOf
   include ::Tapioca::Runtime::Reflection
 
   private
@@ -1245,7 +1238,6 @@ class Tapioca::Gem::Listeners::SorbetEnums < ::Tapioca::Gem::Listeners::Base
 end
 
 class Tapioca::Gem::Listeners::SorbetHelpers < ::Tapioca::Gem::Listeners::Base
-  include ::Tapioca::Runtime::AttachedClassOf
   include ::Tapioca::Runtime::Reflection
 
   private
@@ -1281,7 +1273,6 @@ class Tapioca::Gem::Listeners::SorbetRequiredAncestors < ::Tapioca::Gem::Listene
 end
 
 class Tapioca::Gem::Listeners::SorbetSignatures < ::Tapioca::Gem::Listeners::Base
-  include ::Tapioca::Runtime::AttachedClassOf
   include ::Tapioca::Runtime::Reflection
   include ::Tapioca::SorbetHelper
   include ::Tapioca::RBIHelper
@@ -1304,7 +1295,6 @@ end
 Tapioca::Gem::Listeners::SorbetSignatures::TYPE_PARAMETER_MATCHER = T.let(T.unsafe(nil), Regexp)
 
 class Tapioca::Gem::Listeners::SorbetTypeVariables < ::Tapioca::Gem::Listeners::Base
-  include ::Tapioca::Runtime::AttachedClassOf
   include ::Tapioca::Runtime::Reflection
 
   private
@@ -1339,7 +1329,6 @@ class Tapioca::Gem::Listeners::SourceLocation < ::Tapioca::Gem::Listeners::Base
 end
 
 class Tapioca::Gem::Listeners::Subconstants < ::Tapioca::Gem::Listeners::Base
-  include ::Tapioca::Runtime::AttachedClassOf
   include ::Tapioca::Runtime::Reflection
 
   private
@@ -1419,7 +1408,6 @@ class Tapioca::Gem::NodeAdded < ::Tapioca::Gem::Event
 end
 
 class Tapioca::Gem::Pipeline
-  include ::Tapioca::Runtime::AttachedClassOf
   include ::Tapioca::Runtime::Reflection
   include ::Tapioca::SorbetHelper
   include ::Tapioca::RBIHelper
@@ -2096,12 +2084,7 @@ module Tapioca::Runtime
   end
 end
 
-module Tapioca::Runtime::AttachedClassOf
-  def attached_class_of(singleton_class); end
-end
-
 class Tapioca::Runtime::DynamicMixinCompiler
-  include ::Tapioca::Runtime::AttachedClassOf
   include ::Tapioca::Runtime::Reflection
 
   def initialize(constant); end
@@ -2145,13 +2128,12 @@ end
 Tapioca::Runtime::NOOP_METHOD = T.let(T.unsafe(nil), Proc)
 
 module Tapioca::Runtime::Reflection
-  include ::Tapioca::Runtime::AttachedClassOf
-  extend ::Tapioca::Runtime::AttachedClassOf
   extend ::Tapioca::Runtime::Reflection
 
   def abstract_type_of(constant); end
   def ancestors_of(constant); end
   def are_equal?(object, other); end
+  def attached_class_of(singleton_class); end
   def class_of(object); end
   def const_source_location(constant_name); end
   def constant_defined?(constant); end
@@ -2236,7 +2218,6 @@ end
 
 module Tapioca::Runtime::Trackers::ConstantDefinition
   extend ::Tapioca::Runtime::Trackers::Tracker
-  extend ::Tapioca::Runtime::AttachedClassOf
   extend ::Tapioca::Runtime::Reflection
 
   class << self
@@ -2353,7 +2334,6 @@ end
 
 module Tapioca::Static::SymbolLoader
   extend ::Tapioca::SorbetHelper
-  extend ::Tapioca::Runtime::AttachedClassOf
   extend ::Tapioca::Runtime::Reflection
 
   class << self
