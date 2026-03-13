@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/Shopify/tapioca.git
-  revision: c7968a1ba505fc136eaded63d13442c678660706
+  revision: 849f91e91a29cc3dac850bef5c966a246ecfeee7
   specs:
     tapioca (0.17.10)
       benchmark
@@ -237,8 +237,8 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.2)
     simplecov_json_formatter (0.1.4)
-    sorbet (0.6.13001)
-      sorbet-static (= 0.6.13001)
+    sorbet (0.6.13011)
+      sorbet-static (= 0.6.13011)
     sorbet-coerce (0.7.0)
       polyfill (~> 1.8)
       safe_type (~> 1.1, >= 1.1.1)
@@ -249,12 +249,12 @@ GEM
       parser (>= 2.7)
       sorbet-coerce (>= 0.2.6)
       sorbet-runtime (>= 0.5.9892)
-    sorbet-runtime (0.6.13001)
-    sorbet-static (0.6.13001-universal-darwin)
-    sorbet-static (0.6.13001-x86_64-linux)
-    sorbet-static-and-runtime (0.6.13001)
-      sorbet (= 0.6.13001)
-      sorbet-runtime (= 0.6.13001)
+    sorbet-runtime (0.6.13011)
+    sorbet-static (0.6.13011-universal-darwin)
+    sorbet-static (0.6.13011-x86_64-linux)
+    sorbet-static-and-runtime (0.6.13011)
+      sorbet (= 0.6.13011)
+      sorbet-runtime (= 0.6.13011)
     sord (7.1.0)
       commander (~> 5.0)
       parlour (~> 9.1)
