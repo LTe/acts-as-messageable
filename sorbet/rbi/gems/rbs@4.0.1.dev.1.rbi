@@ -424,6 +424,23 @@ class RBS::AST::Ruby::Annotations::Base
   def prefix_location; end
 end
 
+class RBS::AST::Ruby::Annotations::BlockParamTypeAnnotation < ::RBS::AST::Ruby::Annotations::Base
+  def initialize(location:, prefix_location:, ampersand_location:, name_location:, colon_location:, question_location:, type_location:, type:, comment_location:); end
+
+  def ampersand_location; end
+  def colon_location; end
+  def comment_location; end
+  def map_type_name(&block); end
+  def name; end
+  def name_location; end
+  def optional?; end
+  def question_location; end
+  def required?; end
+  def type; end
+  def type_fingerprint; end
+  def type_location; end
+end
+
 class RBS::AST::Ruby::Annotations::ClassAliasAnnotation < ::RBS::AST::Ruby::Annotations::AliasAnnotation
   def type_fingerprint; end
 end
@@ -434,6 +451,18 @@ class RBS::AST::Ruby::Annotations::ColonMethodTypeAnnotation < ::RBS::AST::Ruby:
   def annotations; end
   def map_type_name; end
   def method_type; end
+  def type_fingerprint; end
+end
+
+class RBS::AST::Ruby::Annotations::DoubleSplatParamTypeAnnotation < ::RBS::AST::Ruby::Annotations::Base
+  def initialize(location:, prefix_location:, star2_location:, name_location:, colon_location:, param_type:, comment_location:); end
+
+  def colon_location; end
+  def comment_location; end
+  def map_type_name(&block); end
+  def name_location; end
+  def param_type; end
+  def star2_location; end
   def type_fingerprint; end
 end
 
@@ -450,8 +479,9 @@ class RBS::AST::Ruby::Annotations::InstanceVariableAnnotation < ::RBS::AST::Ruby
 end
 
 class RBS::AST::Ruby::Annotations::MethodTypesAnnotation < ::RBS::AST::Ruby::Annotations::Base
-  def initialize(location:, prefix_location:, overloads:, vertical_bar_locations:); end
+  def initialize(location:, prefix_location:, overloads:, vertical_bar_locations:, dot3_location:); end
 
+  def dot3_location; end
   def map_type_name(&block); end
   def overloads; end
   def type_fingerprint; end
@@ -472,6 +502,17 @@ class RBS::AST::Ruby::Annotations::NodeTypeAssertion < ::RBS::AST::Ruby::Annotat
   def type_fingerprint; end
 end
 
+class RBS::AST::Ruby::Annotations::ParamTypeAnnotation < ::RBS::AST::Ruby::Annotations::Base
+  def initialize(location:, prefix_location:, name_location:, colon_location:, param_type:, comment_location:); end
+
+  def colon_location; end
+  def comment_location; end
+  def map_type_name(&block); end
+  def name_location; end
+  def param_type; end
+  def type_fingerprint; end
+end
+
 class RBS::AST::Ruby::Annotations::ReturnTypeAnnotation < ::RBS::AST::Ruby::Annotations::Base
   def initialize(location:, prefix_location:, return_location:, colon_location:, return_type:, comment_location:); end
 
@@ -488,6 +529,18 @@ class RBS::AST::Ruby::Annotations::SkipAnnotation < ::RBS::AST::Ruby::Annotation
 
   def comment_location; end
   def skip_location; end
+  def type_fingerprint; end
+end
+
+class RBS::AST::Ruby::Annotations::SplatParamTypeAnnotation < ::RBS::AST::Ruby::Annotations::Base
+  def initialize(location:, prefix_location:, star_location:, name_location:, colon_location:, param_type:, comment_location:); end
+
+  def colon_location; end
+  def comment_location; end
+  def map_type_name(&block); end
+  def name_location; end
+  def param_type; end
+  def star_location; end
   def type_fingerprint; end
 end
 
@@ -703,23 +756,40 @@ class RBS::AST::Ruby::Members::MethodTypeAnnotation
 
   def empty?; end
   def map_type_name(&block); end
+  def overloading?; end
   def overloads; end
   def type_annotations; end
   def type_fingerprint; end
 
   class << self
-    def build(leading_block, trailing_block, variables); end
+    def build(leading_block, trailing_block, variables, node); end
   end
 end
 
 class RBS::AST::Ruby::Members::MethodTypeAnnotation::DocStyle
   def initialize; end
 
+  def all_param_annotations; end
+  def block; end
+  def block=(_arg0); end
   def map_type_name(&block); end
   def method_type; end
+  def optional_keywords; end
+  def optional_positionals; end
+  def required_keywords; end
+  def required_positionals; end
+  def rest_keywords; end
+  def rest_keywords=(_arg0); end
+  def rest_positionals; end
+  def rest_positionals=(_arg0); end
   def return_type_annotation; end
   def return_type_annotation=(_arg0); end
+  def trailing_positionals; end
   def type_fingerprint; end
+
+  class << self
+    def build(param_type_annotations, return_type_annotation, node); end
+  end
 end
 
 class RBS::AST::Ruby::Members::MixinMember < ::RBS::AST::Ruby::Members::Base
@@ -1296,6 +1366,7 @@ class RBS::DefinitionBuilder
   def singleton0_cache; end
   def singleton_cache; end
   def source_location(source, decl); end
+  def special_accessibility(is_instance, method_name); end
   def tapp_subst(name, args); end
   def try_cache(type_name, cache:); end
   def update(env:, except:, ancestor_builder:); end
@@ -2056,16 +2127,17 @@ class RBS::Parser
     def _parse_inline_trailing_annotation(_arg0, _arg1, _arg2, _arg3); end
     def _parse_method_type(_arg0, _arg1, _arg2, _arg3, _arg4); end
     def _parse_signature(_arg0, _arg1, _arg2); end
-    def _parse_type(_arg0, _arg1, _arg2, _arg3, _arg4, _arg5, _arg6); end
+    def _parse_type(_arg0, _arg1, _arg2, _arg3, _arg4, _arg5, _arg6, _arg7); end
     def _parse_type_params(_arg0, _arg1, _arg2, _arg3); end
     def buffer(source); end
+    def byte_range(char_range, content); end
     def lex(source); end
     def magic_comment(buf); end
     def parse_inline_leading_annotation(source, range, variables: T.unsafe(nil)); end
     def parse_inline_trailing_annotation(source, range, variables: T.unsafe(nil)); end
-    def parse_method_type(source, range: T.unsafe(nil), variables: T.unsafe(nil), require_eof: T.unsafe(nil)); end
+    def parse_method_type(source, range: T.unsafe(nil), byte_range: T.unsafe(nil), variables: T.unsafe(nil), require_eof: T.unsafe(nil)); end
     def parse_signature(source); end
-    def parse_type(source, range: T.unsafe(nil), variables: T.unsafe(nil), require_eof: T.unsafe(nil), void_allowed: T.unsafe(nil), self_allowed: T.unsafe(nil)); end
+    def parse_type(source, range: T.unsafe(nil), byte_range: T.unsafe(nil), variables: T.unsafe(nil), require_eof: T.unsafe(nil), void_allowed: T.unsafe(nil), self_allowed: T.unsafe(nil), classish_allowed: T.unsafe(nil)); end
     def parse_type_params(source, module_type_params: T.unsafe(nil)); end
   end
 end
@@ -2109,6 +2181,7 @@ module RBS::Prototype::Helpers
   def each_child(node, &block); end
   def each_node(nodes); end
   def keyword_hash?(node); end
+  def parse_comments(string, include_trailing:); end
   def symbol_literal_node?(node); end
   def untyped; end
 end
@@ -2715,23 +2788,19 @@ class RBS::Types::ClassInstance
 end
 
 class RBS::Types::ClassSingleton
-  include ::RBS::Types::NoFreeVariables
-  include ::RBS::Types::NoSubst
-  include ::RBS::Types::EmptyEachType
+  include ::RBS::Types::Application
 
-  def initialize(name:, location:); end
+  def initialize(name:, location:, args: T.unsafe(nil)); end
 
   def ==(other); end
   def eql?(other); end
-  def has_classish_type?; end
-  def has_self_type?; end
   def hash; end
   def location; end
-  def map_type_name(&_arg0); end
-  def name; end
+  def map_type(&block); end
+  def map_type_name(&block); end
+  def sub(s); end
   def to_json(state = T.unsafe(nil)); end
   def to_s(level = T.unsafe(nil)); end
-  def with_nonreturn_void?; end
 end
 
 module RBS::Types::EmptyEachType
@@ -3100,14 +3169,6 @@ class RBS::Vendorer
   def ensure_dir; end
   def loader; end
   def vendor_dir; end
-end
-
-class RBS::WillSyntaxError < ::RBS::DefinitionError
-  include ::RBS::DetailedMessageable
-
-  def initialize(message, location:); end
-
-  def location; end
 end
 
 class RBS::Writer

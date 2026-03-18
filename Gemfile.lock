@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/Shopify/tapioca.git
-  revision: c7968a1ba505fc136eaded63d13442c678660706
+  revision: daa4f71223e267dda073233cbb37647934409710
   specs:
-    tapioca (0.17.10)
+    tapioca (0.18.0)
       benchmark
       bundler (>= 2.2.25)
       netrc (>= 0.11.0)
@@ -182,9 +182,9 @@ GEM
     rbi (0.3.9)
       prism (~> 1.0)
       rbs (>= 3.4.4)
-    rbs (4.0.0.dev.5)
+    rbs (4.0.1.dev.1)
       logger
-      prism (>= 1.3.0)
+      prism (>= 1.6.0)
       tsort
     rdoc (7.1.0)
       erb
