@@ -9592,7 +9592,7 @@ class ActiveRecord::UnmodifiableRelation < ::ActiveRecord::ActiveRecordError; en
 module ActiveRecord::VERSION; end
 ActiveRecord::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActiveRecord::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
-ActiveRecord::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
+ActiveRecord::VERSION::PRE = T.let(T.unsafe(nil), String)
 ActiveRecord::VERSION::STRING = T.let(T.unsafe(nil), String)
 ActiveRecord::VERSION::TINY = T.let(T.unsafe(nil), Integer)
 
