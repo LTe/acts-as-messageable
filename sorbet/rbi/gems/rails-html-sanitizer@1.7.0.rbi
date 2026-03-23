@@ -221,6 +221,7 @@ class Rails::HTML::Sanitizer
   def remove_xpaths(node, xpaths); end
 
   class << self
+    def allowed_uri?(uri_string); end
     def best_supported_vendor; end
     def html5_support?; end
   end
