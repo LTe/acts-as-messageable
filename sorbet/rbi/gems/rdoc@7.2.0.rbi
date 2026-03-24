@@ -337,6 +337,7 @@ class RDoc::Context < ::RDoc::CodeObject
   def find_symbol_module(symbol); end
   def full_name; end
   def fully_documented?; end
+  def get_module_named(name); end
   def http_url; end
   def in_files; end
   def includes; end
@@ -383,26 +384,29 @@ class RDoc::Context::Section
   include ::RDoc::Text
   include ::RDoc::Generator::Markup
 
-  def initialize(parent, title, comment); end
+  def initialize(parent, title, comment, store = T.unsafe(nil)); end
 
   def ==(other); end
   def add_comment(comment); end
   def aref; end
   def comment; end
   def comments; end
+  def description; end
   def eql?(other); end
   def extract_comment(comment); end
   def hash; end
   def in_files; end
   def inspect; end
+  def language; end
   def legacy_aref; end
   def marshal_dump; end
   def marshal_load(array); end
   def parent; end
-  def parse; end
   def plain_html; end
   def remove_comment(target_comment); end
+  def store; end
   def title; end
+  def to_document; end
 end
 
 class RDoc::CrossReference
@@ -933,6 +937,8 @@ class RDoc::Markdown
   def pos=(_arg0); end
   def position_line_offsets; end
   def raise_error; end
+  def rdoc_escape(text); end
+  def rdoc_link_url_escape(text); end
   def reference(label, link); end
   def result; end
   def result=(_arg0); end
@@ -1090,84 +1096,15 @@ class RDoc::Markdown::RuleInfo
 end
 
 class RDoc::Markup
-  def initialize(attribute_manager = T.unsafe(nil)); end
+  def initialize; end
 
-  def add_html(tag, name); end
   def add_regexp_handling(pattern, name); end
-  def add_word_pair(start, stop, name); end
-  def attribute_manager; end
   def convert(input, formatter); end
+  def regexp_handlings; end
 
   class << self
     def parse(str); end
   end
-end
-
-class RDoc::Markup::AttrChanger < ::Struct
-  def inspect; end
-  def to_s; end
-  def turn_off; end
-  def turn_off=(_); end
-  def turn_on; end
-  def turn_on=(_); end
-
-  class << self
-    def [](*_arg0); end
-    def inspect; end
-    def keyword_init?; end
-    def members; end
-    def new(*_arg0); end
-  end
-end
-
-class RDoc::Markup::AttrSpan
-  def initialize(length, exclusive); end
-
-  def [](n); end
-  def set_attrs(start, length, bits); end
-end
-
-class RDoc::Markup::AttributeManager
-  def initialize; end
-
-  def add_html(tag, name, exclusive = T.unsafe(nil)); end
-  def add_regexp_handling(pattern, name, exclusive = T.unsafe(nil)); end
-  def add_word_pair(start, stop, name, exclusive = T.unsafe(nil)); end
-  def attribute(turn_on, turn_off); end
-  def attributes; end
-  def change_attribute(current, new); end
-  def changed_attribute_by_name(current_set, new_set); end
-  def convert_attrs(str, attrs, exclusive = T.unsafe(nil)); end
-  def convert_attrs_matching_word_pairs(str, attrs, exclusive); end
-  def convert_attrs_word_pair_map(str, attrs, exclusive); end
-  def convert_html(str, attrs, exclusive = T.unsafe(nil)); end
-  def convert_regexp_handlings(str, attrs, exclusive = T.unsafe(nil)); end
-  def copy_string(start_pos, end_pos); end
-  def display_attributes; end
-  def exclusive?(attr); end
-  def exclusive_bitmap; end
-  def flow(str); end
-  def html_tags; end
-  def mask_protected_sequences; end
-  def matching_word_pairs; end
-  def protect_code_markup; end
-  def protectable; end
-  def regexp_handlings; end
-  def split_into_flow; end
-  def unmask_protected_sequences; end
-  def word_pair_map; end
-end
-
-RDoc::Markup::AttributeManager::NON_PRINTING_END = T.let(T.unsafe(nil), String)
-RDoc::Markup::AttributeManager::NON_PRINTING_START = T.let(T.unsafe(nil), String)
-
-class RDoc::Markup::Attributes
-  def initialize; end
-
-  def as_string(bitmap); end
-  def bitmap_for(name); end
-  def each_name_of(bitmap); end
-  def regexp_handling; end
 end
 
 class RDoc::Markup::BlankLine < ::RDoc::Markup::Element
@@ -1216,21 +1153,26 @@ class RDoc::Markup::Formatter
 
   def accept_document(document); end
   def add_regexp_handling_RDOCLINK; end
-  def add_regexp_handling_TIDYLINK; end
-  def add_tag(name, start, stop); end
   def annotate(tag); end
+  def apply_regexp_handling(text); end
   def convert(content); end
-  def convert_flow(flow); end
-  def convert_regexp_handling(target); end
   def convert_string(string); end
-  def each_attr_tag(attr_mask, reverse = T.unsafe(nil)); end
+  def handle_BOLD(nodes); end
+  def handle_BOLD_WORD(word); end
+  def handle_EM(nodes); end
+  def handle_EM_WORD(word); end
+  def handle_HARD_BREAK; end
+  def handle_PLAIN_TEXT(text); end
+  def handle_REGEXP_HANDLING_TEXT(text); end
+  def handle_STRIKE(nodes); end
+  def handle_TEXT(text); end
+  def handle_TIDYLINK(label_part, url); end
+  def handle_TT(code); end
+  def handle_inline(text); end
   def ignore(*node); end
-  def in_tt?; end
-  def off_tags(res, item); end
-  def on_tags(res, item); end
   def parse_url(url); end
+  def traverse_inline_nodes(nodes); end
   def tt?(tag); end
-  def tt_tag?(attr_mask, reverse = T.unsafe(nil)); end
 
   class << self
     def gen_relative_url(path, target); end
@@ -1305,6 +1247,33 @@ class RDoc::Markup::IndentedParagraph < ::RDoc::Markup::Raw
   def indent; end
   def text(hard_break = T.unsafe(nil)); end
 end
+
+class RDoc::Markup::InlineParser
+  def initialize(string); end
+
+  def current; end
+  def parse; end
+
+  private
+
+  def compact_string(nodes); end
+  def invalidate_open_tidylinks; end
+  def read_tidylink_url; end
+  def scan_token; end
+  def stack_pop; end
+  def stack_push(delimiter, token); end
+  def strscan(pattern, negative_cache: T.unsafe(nil)); end
+end
+
+RDoc::Markup::InlineParser::CODEBLOCK_REGEXPS = T.let(T.unsafe(nil), Hash)
+RDoc::Markup::InlineParser::CODEBLOCK_TAGS = T.let(T.unsafe(nil), Array)
+RDoc::Markup::InlineParser::ESCAPING_CHARS = T.let(T.unsafe(nil), String)
+RDoc::Markup::InlineParser::SCANNER_REGEXP = T.let(T.unsafe(nil), Regexp)
+RDoc::Markup::InlineParser::STANDALONE_TAGS = T.let(T.unsafe(nil), Hash)
+RDoc::Markup::InlineParser::TAGS = T.let(T.unsafe(nil), Hash)
+RDoc::Markup::InlineParser::TOKENS = T.let(T.unsafe(nil), Hash)
+RDoc::Markup::InlineParser::WORD_PAIRS = T.let(T.unsafe(nil), Hash)
+RDoc::Markup::InlineParser::WORD_REGEXPS = T.let(T.unsafe(nil), Hash)
 
 class RDoc::Markup::LinkLabelToHtml < ::RDoc::Markup::ToHtml
   def initialize(options, from_path = T.unsafe(nil)); end
@@ -1423,17 +1392,6 @@ class RDoc::Markup::Raw
   def text; end
 end
 
-class RDoc::Markup::RegexpHandling
-  def initialize(type, text); end
-
-  def ==(o); end
-  def inspect; end
-  def text; end
-  def text=(_arg0); end
-  def to_s; end
-  def type; end
-end
-
 class RDoc::Markup::Rule < ::Struct
   def accept(visitor); end
   def pretty_print(q); end
@@ -1458,21 +1416,24 @@ class RDoc::Markup::ToAnsi < ::RDoc::Markup::ToRdoc
 
   def accept_list_item_end(list_item); end
   def accept_list_item_start(list_item); end
+  def add_text(text); end
+  def apply_attributes(attributes); end
   def calculate_text_width(text); end
-  def init_tags; end
+  def handle_inline(text); end
   def start_accepting; end
 end
+
+RDoc::Markup::ToAnsi::ANSI_STYLE_CODES_OFF = T.let(T.unsafe(nil), Hash)
+RDoc::Markup::ToAnsi::ANSI_STYLE_CODES_ON = T.let(T.unsafe(nil), Hash)
 
 class RDoc::Markup::ToBs < ::RDoc::Markup::ToRdoc
   def initialize(markup = T.unsafe(nil)); end
 
   def accept_heading(heading); end
   def accept_list_item_start(list_item); end
-  def annotate(tag); end
+  def add_text(text); end
   def calculate_text_width(text); end
-  def convert_regexp_handling(target); end
-  def convert_string(string); end
-  def init_tags; end
+  def handle_inline(text); end
 end
 
 class RDoc::Markup::ToHtml < ::RDoc::Markup::Formatter
@@ -1492,23 +1453,36 @@ class RDoc::Markup::ToHtml < ::RDoc::Markup::Formatter
   def accept_rule(rule); end
   def accept_table(header, body, aligns); end
   def accept_verbatim(verbatim); end
+  def apply_tidylink_label_special_handling(label, url); end
   def code_object; end
   def code_object=(_arg0); end
   def convert_string(text); end
+  def deduplicate_heading_id(id); end
+  def emit_inline(text); end
   def end_accepting; end
   def from_path; end
   def from_path=(_arg0); end
   def gen_url(url, text); end
+  def handle_BOLD(nodes); end
+  def handle_BOLD_WORD(word); end
+  def handle_EM(nodes); end
+  def handle_EM_WORD(word); end
+  def handle_HARD_BREAK; end
+  def handle_PLAIN_TEXT(text); end
   def handle_RDOCLINK(url); end
-  def handle_regexp_HARD_BREAK(target); end
-  def handle_regexp_HYPERLINK(target); end
-  def handle_regexp_RDOCLINK(target); end
-  def handle_regexp_TIDYLINK(target); end
+  def handle_REGEXP_HANDLING_TEXT(text); end
+  def handle_STRIKE(nodes); end
+  def handle_TIDYLINK(label_part, url); end
+  def handle_TT(code); end
+  def handle_inline(text); end
+  def handle_regexp_HYPERLINK(text); end
+  def handle_regexp_RDOCLINK(text); end
+  def handle_regexp_SUPPRESSED_CROSSREF(text); end
   def html_list_name(list_type, open_tag); end
   def in_list_entry; end
+  def in_tidylink_label?; end
   def init_link_notation_regexp_handlings; end
   def init_regexp_handlings; end
-  def init_tags; end
   def list; end
   def list_end_for(list_type); end
   def list_item_start(list_item, list_type); end
@@ -1516,47 +1490,27 @@ class RDoc::Markup::ToHtml < ::RDoc::Markup::Formatter
   def res; end
   def start_accepting; end
   def to_html(item); end
-
-  private
-
-  def append_flow_fragment(res, fragment); end
-  def append_to_tidy_label(fragment); end
-  def convert_complete_tidy_link(text); end
-  def convert_flow(flow_items); end
-  def emit_tidy_link_fragment(res, fragment); end
-  def extract_tidy_link_parts(text); end
-  def finish_tidy_link(text); end
-  def off_tags(res, item); end
-  def on_tags(res, item); end
-  def render_tidy_link_label(label); end
-  def start_tidy_link(text); end
-  def tidy_link_capturing?; end
 end
 
-RDoc::Markup::ToHtml::TIDY_LINK_SINGLE_WORD = T.let(T.unsafe(nil), Regexp)
-RDoc::Markup::ToHtml::TIDY_LINK_WITH_BRACES = T.let(T.unsafe(nil), Regexp)
-RDoc::Markup::ToHtml::TIDY_LINK_WITH_BRACES_TAIL = T.let(T.unsafe(nil), Regexp)
 RDoc::Markup::ToHtml::URL_CHARACTERS_REGEXP_STR = T.let(T.unsafe(nil), String)
 
 class RDoc::Markup::ToHtmlCrossref < ::RDoc::Markup::ToHtml
   def initialize(options, from_path, context, markup = T.unsafe(nil)); end
 
+  def apply_tidylink_label_special_handling(label, url); end
   def context; end
   def context=(_arg0); end
-  def convert_flow(flow_items, &block); end
   def cross_reference(name, text = T.unsafe(nil), code = T.unsafe(nil), rdoc_ref: T.unsafe(nil)); end
   def gen_url(url, text); end
-  def handle_regexp_CROSSREF(target); end
-  def handle_regexp_HYPERLINK(target); end
-  def handle_regexp_RDOCLINK(target); end
+  def handle_TT(code); end
+  def handle_regexp_CROSSREF(name); end
+  def handle_regexp_HYPERLINK(url); end
+  def handle_regexp_RDOCLINK(url); end
   def init_link_notation_regexp_handlings; end
   def link(name, text, code = T.unsafe(nil), rdoc_ref: T.unsafe(nil)); end
   def show_hash; end
   def show_hash=(_arg0); end
-
-  private
-
-  def convert_tt_crossref(flow_items, index); end
+  def tt_cross_reference(code); end
 end
 
 class RDoc::Markup::ToHtmlSnippet < ::RDoc::Markup::ToHtml
@@ -1574,19 +1528,28 @@ class RDoc::Markup::ToHtmlSnippet < ::RDoc::Markup::ToHtml
   def character_limit; end
   def characters; end
   def convert(content); end
-  def convert_flow(flow); end
   def gen_url(url, text); end
-  def handle_regexp_CROSSREF(target); end
-  def handle_regexp_HARD_BREAK(target); end
+  def handle_BOLD(nodes); end
+  def handle_BOLD_WORD(word); end
+  def handle_EM(nodes); end
+  def handle_EM_WORD(word); end
+  def handle_HARD_BREAK; end
+  def handle_PLAIN_TEXT(text); end
+  def handle_REGEXP_HANDLING_TEXT(text); end
+  def handle_STRIKE(nodes); end
+  def handle_TIDYLINK(label_part, url); end
+  def handle_TT(code); end
+  def handle_inline(text); end
+  def handle_regexp_CROSSREF(text); end
   def html_list_name(list_type, open_tag); end
+  def inline_limit_reached?; end
   def list_item_start(list_item, list_type); end
   def mask; end
-  def off_tags(res, item); end
-  def on_tags(res, item); end
   def paragraph_limit; end
   def paragraphs; end
   def start_accepting; end
-  def truncate(text); end
+  def to_html(item); end
+  def truncate(text, limit); end
 end
 
 class RDoc::Markup::ToJoinedParagraph < ::RDoc::Markup::Formatter
@@ -1624,9 +1587,11 @@ class RDoc::Markup::ToLabel < ::RDoc::Markup::Formatter
   def convert(text); end
   def convert_legacy(text); end
   def end_accepting(*node); end
-  def handle_regexp_CROSSREF(target); end
-  def handle_regexp_HARD_BREAK(*node); end
-  def handle_regexp_TIDYLINK(target); end
+  def extract_plaintext(text); end
+  def handle_PLAIN_TEXT(text); end
+  def handle_REGEXP_HANDLING_TEXT(text); end
+  def handle_TT(text); end
+  def handle_regexp_CROSSREF(text); end
   def res; end
   def start_accepting(*node); end
 end
@@ -1640,12 +1605,19 @@ class RDoc::Markup::ToMarkdown < ::RDoc::Markup::ToRdoc
   def accept_list_start(list); end
   def accept_rule(rule); end
   def accept_verbatim(verbatim); end
+  def add_tag(tag, simple_tag, content); end
   def gen_url(url, text); end
+  def handle_BOLD(nodes); end
+  def handle_BOLD_WORD(word); end
+  def handle_EM(nodes); end
+  def handle_EM_WORD(word); end
+  def handle_HARD_BREAK; end
+  def handle_STRIKE(nodes); end
+  def handle_TIDYLINK(label_part, url); end
+  def handle_TT(text); end
   def handle_rdoc_link(url); end
-  def handle_regexp_HARD_BREAK(target); end
-  def handle_regexp_RDOCLINK(target); end
-  def handle_regexp_TIDYLINK(target); end
-  def init_tags; end
+  def handle_regexp_RDOCLINK(text); end
+  def handle_tag(nodes, simple_tag, tag); end
 end
 
 class RDoc::Markup::ToRdoc < ::RDoc::Markup::Formatter
@@ -1664,17 +1636,30 @@ class RDoc::Markup::ToRdoc < ::RDoc::Markup::Formatter
   def accept_rule(rule); end
   def accept_table(header, body, aligns); end
   def accept_verbatim(verbatim); end
+  def add_text(text); end
   def attributes(text); end
   def calculate_text_width(text); end
+  def emit_inline(text); end
   def end_accepting; end
-  def handle_regexp_HARD_BREAK(target); end
-  def handle_regexp_SUPPRESSED_CROSSREF(target); end
+  def handle_BOLD(target); end
+  def handle_BOLD_WORD(word); end
+  def handle_EM(target); end
+  def handle_EM_WORD(word); end
+  def handle_HARD_BREAK; end
+  def handle_PLAIN_TEXT(text); end
+  def handle_REGEXP_HANDLING_TEXT(text); end
+  def handle_STRIKE(target); end
+  def handle_TIDYLINK(label_part, url); end
+  def handle_TT(code); end
+  def handle_inline(text, initial_attributes = T.unsafe(nil)); end
+  def handle_regexp_SUPPRESSED_CROSSREF(text); end
   def indent; end
   def indent=(_arg0); end
-  def init_tags; end
   def list_index; end
   def list_type; end
   def list_width; end
+  def off(attr); end
+  def on(attr); end
   def prefix; end
   def res; end
   def start_accepting; end
@@ -1727,6 +1712,8 @@ class RDoc::Markup::ToTest < ::RDoc::Markup::Formatter
   def accept_rule(rule); end
   def accept_verbatim(verbatim); end
   def end_accepting; end
+  def handle_PLAIN_TEXT(text); end
+  def handle_REGEXP_HANDLING_TEXT(text); end
   def start_accepting; end
 end
 
@@ -2810,14 +2797,17 @@ module RDoc::Text
   def strip_newlines(text); end
   def strip_stars(text); end
   def to_html(text); end
+  def to_html_characters(text); end
   def wrap(txt, line_len = T.unsafe(nil)); end
 
   private
 
+  def decode_legacy_label(label); end
   def expand_tabs(text); end
   def to_anchor(text); end
 
   class << self
+    def decode_legacy_label(label); end
     def encode_fallback(character, encoding, fallback); end
     def expand_tabs(text); end
     def to_anchor(text); end
@@ -2877,6 +2867,7 @@ class RDoc::TopLevel < ::RDoc::Context
   def find_local_symbol(symbol); end
   def find_module_named(name); end
   def full_name; end
+  def get_module_named(name); end
   def hash; end
   def http_url; end
   def inspect; end
