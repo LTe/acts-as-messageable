@@ -9462,8 +9462,6 @@ class ActiveRecord::Type::Json < ::ActiveModel::Type::Value
   def type; end
 end
 
-ActiveRecord::Type::Json::JSON_ENCODER = T.let(T.unsafe(nil), ActiveSupport::JSON::Encoding::JSONGemCoderEncoder)
-
 class ActiveRecord::Type::Registration
   def initialize(name, block, adapter: T.unsafe(nil), override: T.unsafe(nil)); end
 
@@ -9508,6 +9506,7 @@ class ActiveRecord::Type::Serialized
 
   def default_value?(value); end
   def encoded(value); end
+  def instance_variables_to_inspect; end
 end
 
 ActiveRecord::Type::String = ActiveModel::Type::String
@@ -9592,7 +9591,7 @@ class ActiveRecord::UnmodifiableRelation < ::ActiveRecord::ActiveRecordError; en
 module ActiveRecord::VERSION; end
 ActiveRecord::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActiveRecord::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
-ActiveRecord::VERSION::PRE = T.let(T.unsafe(nil), String)
+ActiveRecord::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
 ActiveRecord::VERSION::STRING = T.let(T.unsafe(nil), String)
 ActiveRecord::VERSION::TINY = T.let(T.unsafe(nil), Integer)
 
