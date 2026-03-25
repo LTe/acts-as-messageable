@@ -2970,7 +2970,7 @@ end
 module ActionView::VERSION; end
 ActionView::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActionView::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
-ActionView::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
+ActionView::VERSION::PRE = T.let(T.unsafe(nil), String)
 ActionView::VERSION::STRING = T.let(T.unsafe(nil), String)
 ActionView::VERSION::TINY = T.let(T.unsafe(nil), Integer)
 
