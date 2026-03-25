@@ -1667,6 +1667,7 @@ module ActiveSupport::ExecutionContext
     def after_change(&block); end
     def clear; end
     def current_attributes_instances; end
+    def flush; end
     def nestable; end
     def nestable=(_arg0); end
     def pop; end
@@ -1684,6 +1685,7 @@ class ActiveSupport::ExecutionContext::Record
   def initialize; end
 
   def current_attributes_instances; end
+  def flush; end
   def pop; end
   def push; end
   def store; end
@@ -3921,7 +3923,7 @@ end
 module ActiveSupport::VERSION; end
 ActiveSupport::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActiveSupport::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
-ActiveSupport::VERSION::PRE = T.let(T.unsafe(nil), String)
+ActiveSupport::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
 ActiveSupport::VERSION::STRING = T.let(T.unsafe(nil), String)
 ActiveSupport::VERSION::TINY = T.let(T.unsafe(nil), Integer)
 
