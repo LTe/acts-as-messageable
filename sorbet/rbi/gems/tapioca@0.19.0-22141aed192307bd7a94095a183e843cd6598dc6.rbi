@@ -1098,6 +1098,33 @@ class Tapioca::Gem::Listeners::Base
   def on_scope(event); end
 end
 
+class Tapioca::Gem::Listeners::Documentation < ::Tapioca::Gem::Listeners::Base
+  sig { params(pipeline: ::Tapioca::Gem::Pipeline, gem_graph: ::Rubydex::Graph).void }
+  def initialize(pipeline, gem_graph); end
+
+  private
+
+  sig { params(name: ::String, sigs: T::Array[::RBI::Sig]).returns(T::Array[::RBI::Comment]) }
+  def documentation_comments(name, sigs: T.unsafe(nil)); end
+
+  sig { override.params(event: ::Tapioca::Gem::NodeAdded).returns(T::Boolean) }
+  def ignore?(event); end
+
+  sig { override.params(event: ::Tapioca::Gem::ConstNodeAdded).void }
+  def on_const(event); end
+
+  sig { override.params(event: ::Tapioca::Gem::MethodNodeAdded).void }
+  def on_method(event); end
+
+  sig { override.params(event: ::Tapioca::Gem::ScopeNodeAdded).void }
+  def on_scope(event); end
+
+  sig { params(line: ::String).returns(T::Boolean) }
+  def rbs_comment?(line); end
+end
+
+Tapioca::Gem::Listeners::Documentation::IGNORED_COMMENTS = T.let(T.unsafe(nil), Array)
+
 class Tapioca::Gem::Listeners::DynamicMixins < ::Tapioca::Gem::Listeners::Base
   include ::Tapioca::Runtime::Reflection
 
@@ -1339,34 +1366,6 @@ class Tapioca::Gem::Listeners::Subconstants < ::Tapioca::Gem::Listeners::Base
   sig { override.params(event: ::Tapioca::Gem::ScopeNodeAdded).void }
   def on_scope(event); end
 end
-
-class Tapioca::Gem::Listeners::YardDoc < ::Tapioca::Gem::Listeners::Base
-  sig { params(pipeline: ::Tapioca::Gem::Pipeline).void }
-  def initialize(pipeline); end
-
-  private
-
-  sig { params(name: ::String, sigs: T::Array[::RBI::Sig]).returns(T::Array[::RBI::Comment]) }
-  def documentation_comments(name, sigs: T.unsafe(nil)); end
-
-  sig { override.params(event: ::Tapioca::Gem::NodeAdded).returns(T::Boolean) }
-  def ignore?(event); end
-
-  sig { override.params(event: ::Tapioca::Gem::ConstNodeAdded).void }
-  def on_const(event); end
-
-  sig { override.params(event: ::Tapioca::Gem::MethodNodeAdded).void }
-  def on_method(event); end
-
-  sig { override.params(event: ::Tapioca::Gem::ScopeNodeAdded).void }
-  def on_scope(event); end
-
-  sig { params(line: ::String).returns(T::Boolean) }
-  def rbs_comment?(line); end
-end
-
-Tapioca::Gem::Listeners::YardDoc::IGNORED_COMMENTS = T.let(T.unsafe(nil), Array)
-Tapioca::Gem::Listeners::YardDoc::IGNORED_SIG_TAGS = T.let(T.unsafe(nil), Array)
 
 class Tapioca::Gem::MethodNodeAdded < ::Tapioca::Gem::NodeAdded
   sig do
@@ -1697,9 +1696,6 @@ class Tapioca::Gemfile::GemSpec
 
   sig { returns(::String) }
   def name; end
-
-  sig { void }
-  def parse_yard_docs; end
 
   sig { returns(::String) }
   def rbi_file_name; end
@@ -2342,6 +2338,9 @@ module Tapioca::Static::SymbolLoader
 
     sig { params(gem: ::Tapioca::Gemfile::GemSpec).returns(T::Set[::String]) }
     def gem_symbols(gem); end
+
+    sig { params(paths: T::Array[::Pathname]).returns(::Rubydex::Graph) }
+    def graph_from_paths(paths); end
 
     sig { returns(T::Set[::String]) }
     def payload_symbols; end
