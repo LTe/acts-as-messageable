@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/Shopify/tapioca.git
-  revision: 333df089f82bc35b108b601e21c4573db05ee141
+  revision: c467a36be6ae3927a8ea79979db9f488b867362e
   specs:
     tapioca (0.19.0)
       benchmark
@@ -221,8 +221,8 @@ GEM
       lint_roller
       rubocop (>= 1.75.2)
     ruby-progressbar (1.13.0)
-    rubydex (0.1.0.beta10)
-    rubydex (0.1.0.beta10-x86_64-linux)
+    rubydex (0.1.0.beta11)
+    rubydex (0.1.0.beta11-x86_64-linux)
     safe_type (1.1.1)
     securerandom (0.4.1)
     simplecov (0.22.0)
