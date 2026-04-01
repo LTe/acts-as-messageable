@@ -43,6 +43,8 @@ class Rubydex::ConstantReference < ::Rubydex::Reference
   def name; end
 end
 
+class Rubydex::ConstantVisibilityDefinition < ::Rubydex::Definition; end
+
 class Rubydex::Declaration
   def initialize(_arg0, _arg1); end
 
@@ -64,7 +66,7 @@ class Rubydex::Declaration
   class << self
     private
 
-    def new(*_arg0); end
+    def new(*args); end
   end
 end
 
@@ -89,7 +91,7 @@ class Rubydex::Definition
   class << self
     private
 
-    def new(*_arg0); end
+    def new(*args); end
   end
 end
 
@@ -130,7 +132,7 @@ class Rubydex::Document
   class << self
     private
 
-    def new(*_arg0); end
+    def new(*args); end
   end
 end
 
@@ -152,7 +154,8 @@ class Rubydex::Graph
   sig { params(workspace_path: T.nilable(String)).void }
   def initialize(workspace_path: T.unsafe(nil)); end
 
-  def [](_arg0); end
+  sig { params(fully_qualified_name: String).returns(T.nilable(Rubydex::Declaration)) }
+  def [](fully_qualified_name); end
 
   sig { returns(T::Array[Rubydex::Failure]) }
   def check_integrity; end
@@ -163,7 +166,8 @@ class Rubydex::Graph
   sig { returns(T::Enumerable[Rubydex::Declaration]) }
   def declarations; end
 
-  def delete_document(_arg0); end
+  sig { params(uri: String).returns(T.nilable(Rubydex::Document)) }
+  def delete_document(uri); end
 
   sig { returns(T::Array[Rubydex::Diagnostic]) }
   def diagnostics; end
@@ -171,10 +175,17 @@ class Rubydex::Graph
   sig { returns(T::Enumerable[Rubydex::Document]) }
   def documents; end
 
-  def encoding=(_arg0); end
-  def fuzzy_search(_arg0); end
-  def index_all(_arg0); end
-  def index_source(_arg0, _arg1, _arg2); end
+  sig { params(encoding: String).void }
+  def encoding=(encoding); end
+
+  sig { params(query: String).returns(T::Enumerable[Rubydex::Declaration]) }
+  def fuzzy_search(query); end
+
+  sig { params(file_paths: T::Array[String]).returns(T::Array[String]) }
+  def index_all(file_paths); end
+
+  sig { params(uri: String, source: String, language_id: String).void }
+  def index_source(uri, source, language_id); end
 
   # Index all files and dependencies of the workspace that exists in `@workspace_path`
   sig { returns(T::Array[String]) }
@@ -183,19 +194,26 @@ class Rubydex::Graph
   sig { returns(T::Enumerable[Rubydex::MethodReference]) }
   def method_references; end
 
-  def require_paths(_arg0); end
+  sig { params(load_paths: T::Array[String]).returns(T::Array[String]) }
+  def require_paths(load_paths); end
 
   sig { returns(T.self_type) }
   def resolve; end
 
-  def resolve_constant(_arg0, _arg1); end
-  def resolve_require_path(_arg0, _arg1); end
-  def search(_arg0); end
+  sig { params(name: String, nesting: T::Array[String]).returns(T.nilable(Rubydex::Declaration)) }
+  def resolve_constant(name, nesting); end
+
+  sig { params(require_path: String, load_paths: T::Array[String]).returns(T.nilable(Rubydex::Document)) }
+  def resolve_require_path(require_path, load_paths); end
+
+  sig { params(query: String).returns(T::Enumerable[Rubydex::Declaration]) }
+  def search(query); end
 
   sig { returns(String) }
   def workspace_path; end
 
-  def workspace_path=(_arg0); end
+  sig { params(workspace_path: String).returns(String) }
+  def workspace_path=(workspace_path); end
 
   sig { returns(T::Array[String]) }
   def workspace_paths; end
@@ -277,7 +295,9 @@ class Rubydex::Namespace < ::Rubydex::Declaration
   def descendants; end
 
   def find_member(*_arg0); end
-  def member(_arg0); end
+
+  sig { params(name: String).returns(T.nilable(Rubydex::Declaration)) }
+  def member(name); end
 
   sig { returns(T::Enumerable[Rubydex::Declaration]) }
   def members; end
@@ -292,7 +312,7 @@ class Rubydex::Reference
   class << self
     private
 
-    def new(*_arg0); end
+    def new(*args); end
   end
 end
 
