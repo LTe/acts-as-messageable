@@ -63,11 +63,10 @@ class RBI::Tree < ::RBI::NodeWithComments
       class_method: T::Boolean,
       visibility: ::RBI::Visibility,
       comments: T::Array[::RBI::Comment],
-      type_params: T::Array[::String],
       block: T.nilable(T.proc.params(node: ::RBI::Method).void)
     ).void
   end
-  def create_method(name, parameters: T.unsafe(nil), return_type: T.unsafe(nil), class_method: T.unsafe(nil), visibility: T.unsafe(nil), comments: T.unsafe(nil), type_params: T.unsafe(nil), &block); end
+  def create_method(name, parameters: T.unsafe(nil), return_type: T.unsafe(nil), class_method: T.unsafe(nil), visibility: T.unsafe(nil), comments: T.unsafe(nil), &block); end
 
   sig { params(name: ::String).void }
   def create_mixes_in_class_methods(name); end
@@ -2230,6 +2229,9 @@ module Tapioca::SorbetHelper
 
   sig { params(feature: ::Symbol, version: T.nilable(::Gem::Version)).returns(T::Boolean) }
   def sorbet_supports?(feature, version: T.unsafe(nil)); end
+
+  sig { params(source: ::String, rbi_mode: T::Boolean, on_failure: T.proc.params(stderr: ::String).void).void }
+  def sorbet_syntax_check!(source, rbi_mode:, &on_failure); end
 end
 
 Tapioca::SorbetHelper::FEATURE_REQUIREMENTS = T.let(T.unsafe(nil), Hash)
