@@ -48,7 +48,12 @@ end
 class Parallel::Break < ::StandardError
   def initialize(value = T.unsafe(nil)); end
 
+  def _dump(_depth); end
   def value; end
+
+  class << self
+    def _load(data); end
+  end
 end
 
 class Parallel::DeadWorker < ::StandardError; end
