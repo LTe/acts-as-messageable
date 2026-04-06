@@ -679,6 +679,7 @@ end
 Rack::Multipart::Parser::CHARSET = T.let(T.unsafe(nil), String)
 Rack::Multipart::Parser::CONTENT_DISPOSITION_MAX_BYTES = T.let(T.unsafe(nil), Integer)
 Rack::Multipart::Parser::CONTENT_DISPOSITION_MAX_PARAMS = T.let(T.unsafe(nil), Integer)
+Rack::Multipart::Parser::CONTENT_DISPOSITION_QUOTED_ESCAPES_LIMIT = T.let(T.unsafe(nil), Integer)
 
 class Rack::Multipart::Parser::Collector
   include ::Enumerable
@@ -727,6 +728,8 @@ class Rack::Multipart::Parser::MultipartInfo < ::Struct
   end
 end
 
+Rack::Multipart::Parser::OBS_UNFOLD = T.let(T.unsafe(nil), Regexp)
+Rack::Multipart::Parser::PARSER_BYTESIZE_LIMIT = T.let(T.unsafe(nil), Integer)
 Rack::Multipart::Parser::REENCODE_DUMMY_ENCODINGS = T.let(T.unsafe(nil), Hash)
 Rack::Multipart::Parser::TEMPFILE_FACTORY = T.let(T.unsafe(nil), Proc)
 Rack::Multipart::Parser::TEXT_PLAIN = T.let(T.unsafe(nil), String)
@@ -1267,7 +1270,7 @@ module Rack::Utils
   def best_q_match(q_value_header, available_mimes); end
   def build_nested_query(value, prefix = T.unsafe(nil)); end
   def build_query(params); end
-  def byte_ranges(env, size); end
+  def byte_ranges(env, size, max_ranges: T.unsafe(nil)); end
   def clean_path_info(path_info); end
   def clock_time; end
   def delete_cookie_header!(headers, key, value = T.unsafe(nil)); end
@@ -1277,7 +1280,7 @@ module Rack::Utils
   def escape_html(_arg0); end
   def escape_path(s); end
   def forwarded_values(forwarded_header); end
-  def get_byte_ranges(http_range, size); end
+  def get_byte_ranges(http_range, size, max_ranges: T.unsafe(nil)); end
   def parse_cookies(env); end
   def parse_cookies_header(value); end
   def parse_nested_query(qs, d = T.unsafe(nil)); end
@@ -1297,7 +1300,7 @@ module Rack::Utils
     def best_q_match(q_value_header, available_mimes); end
     def build_nested_query(value, prefix = T.unsafe(nil)); end
     def build_query(params); end
-    def byte_ranges(env, size); end
+    def byte_ranges(env, size, max_ranges: T.unsafe(nil)); end
     def clean_path_info(path_info); end
     def clock_time; end
     def default_query_parser; end
@@ -1309,7 +1312,7 @@ module Rack::Utils
     def escape_html(_arg0); end
     def escape_path(s); end
     def forwarded_values(forwarded_header); end
-    def get_byte_ranges(http_range, size); end
+    def get_byte_ranges(http_range, size, max_ranges: T.unsafe(nil)); end
     def multipart_file_limit; end
     def multipart_file_limit=(_arg0); end
     def multipart_part_limit; end
@@ -1335,6 +1338,7 @@ module Rack::Utils
   end
 end
 
+Rack::Utils::ALLOWED_FORWARED_PARAMS = T.let(T.unsafe(nil), Hash)
 Rack::Utils::COMMON_SEP = T.let(T.unsafe(nil), Hash)
 
 class Rack::Utils::Context
