@@ -1037,7 +1037,6 @@ class Spoom::Deadcode::ERB < ::Erubi::Engine
   sig { override.params(indicator: T.untyped, code: T.untyped).void }
   def add_expression(indicator, code); end
 
-  sig { override.params(_: T.untyped).void }
   def add_postamble(_); end
 
   sig { override.params(text: T.untyped).void }

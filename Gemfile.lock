@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/Shopify/tapioca.git
-  revision: 041ad585c879a3a715b6e3013e978f87070d0769
+  revision: 6bf3d315723b79fe1dd056aa2dc4106ae42286f1
   specs:
     tapioca (0.19.0)
       benchmark
@@ -122,7 +122,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.2-x86_64-linux-gnu)
       racc (~> 1.4)
-    parallel (1.27.0)
+    parallel (1.28.0)
     parlour (9.1.2)
       commander (~> 5.0)
       parser
@@ -256,11 +256,11 @@ GEM
       rbs (>= 3.0, < 5)
       sorbet-runtime
       yard
-    spoom (1.7.11)
+    spoom (1.7.12)
       erubi (>= 1.10.0)
       prism (>= 0.28.0)
       rbi (>= 0.3.3)
-      rbs (>= 4.0.0.dev.4)
+      rbs (>= 4.0.0.dev.5)
       rexml (>= 3.2.6)
       sorbet-static-and-runtime (>= 0.5.10187)
       thor (>= 0.19.2)
