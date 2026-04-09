@@ -98,6 +98,25 @@ jobs:
           bundler-cache: true
       - run: psql -c 'create database ci_test;' -U postgres -h localhost
       - run: bundle exec rake
+  test-mongoid:
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:6.0
+        ports:
+          - 27017:27017
+    env:
+      MONGOID_SPECS: 'true'
+      MONGODB_HOST: 'localhost:27017'
+      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get install libyaml-dev
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+          bundler-cache: true
+      - run: bundle exec rspec spec/mongoid_spec.rb
   readme:
     runs-on: ubuntu-latest
     steps:

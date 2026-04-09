@@ -23,9 +23,34 @@ Bundler.require(:default)
 require 'pry'
 require 'acts_as_messageable'
 
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+# Load ActiveRecord support files (excluding mongoid_models which is loaded conditionally)
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].reject { |f| f.include?('mongoid_models') }.each { |f| require f }
 
 ActiveRecord::Migration.verbose = false
+
+# Check if Mongoid specs should be enabled
+MONGOID_SPECS_ENABLED = ENV['MONGOID_SPECS'] == 'true'
+
+if MONGOID_SPECS_ENABLED
+  require 'mongoid'
+  require 'acts_as_messageable/mongoid'
+
+  # Configure Mongoid for testing
+  Mongoid.configure do |config|
+    config.clients.default = {
+      hosts: [ENV.fetch('MONGODB_HOST', 'localhost:27017')],
+      database: 'acts_as_messageable_test'
+    }
+    config.log_level = :warn
+  end
+
+  # Include Mongoid model support
+  Mongoid::Document::ClassMethods.include ActsAsMessageable::Mongoid::Model
+  Mongoid::Criteria.include ActsAsMessageable::Mongoid::Relation
+
+  # Load Mongoid test models
+  require_relative 'support/mongoid_models'
+end
 
 RSpec.configure do |config|
   config.before(:all) do
