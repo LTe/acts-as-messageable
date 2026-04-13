@@ -58,8 +58,8 @@ class Time
 
   class << self
     def mock_time; end
-    def new(*args, **_arg1); end
-    def new_with_mock_time(*args, **_arg1); end
+    def new(*args, **kwargs); end
+    def new_with_mock_time(*args, **kwargs); end
     def new_without_mock_time(*_arg0); end
     def now; end
     def now_with_mock_time; end
