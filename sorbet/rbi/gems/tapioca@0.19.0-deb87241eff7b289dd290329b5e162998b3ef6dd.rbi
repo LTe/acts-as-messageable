@@ -132,6 +132,16 @@ module T::Private::Methods
   end
 end
 
+class T::Private::Methods::DeclBuilder
+  def finalize!; end
+  def void; end
+end
+
+module T::Private::Methods::DeclBuilderPatch
+  def finalize!; end
+  def void; end
+end
+
 module T::Private::Methods::ProcBindPatch
   def finalize_proc(decl); end
 end
