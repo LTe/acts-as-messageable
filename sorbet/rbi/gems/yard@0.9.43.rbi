@@ -1167,6 +1167,55 @@ class YARD::Handlers::Processor
   end
 end
 
+module YARD::Handlers::RBS; end
+
+class YARD::Handlers::RBS::AttributeHandler < ::YARD::Handlers::RBS::Base
+  private
+
+  def apply_tag_types(obj, tag_name, types, tag_param_name = T.unsafe(nil)); end
+  def register_existing_attribute_method(attr_name, meth_name, type, scope); end
+  def register_reader(name, types, scope); end
+  def register_writer(name, types, scope); end
+end
+
+class YARD::Handlers::RBS::Base < ::YARD::Handlers::Base
+  def parse_block(opts = T.unsafe(nil)); end
+
+  class << self
+    def handles?(statement, _processor); end
+  end
+end
+
+class YARD::Handlers::RBS::ConstantHandler < ::YARD::Handlers::RBS::Base
+  private
+
+  def rbs_types(type_str); end
+end
+
+class YARD::Handlers::RBS::MethodHandler < ::YARD::Handlers::RBS::Base
+  private
+
+  def add_overload_tag(obj, meth_name, sig); end
+  def add_param_return_tags(obj, sig); end
+  def add_yield_tags(obj, blk); end
+  def apply_signature_tags(obj, sigs); end
+  def extract_type_and_name(str); end
+  def find_matching(str, start, open, close); end
+  def parse_block_type(inner); end
+  def parse_function_type(sig); end
+  def parse_params_list(str); end
+  def parse_single_param(param); end
+  def split_by_comma(str); end
+
+  class << self
+    def bracket_depth(str); end
+    def rbs_type_to_yard_types(rbs); end
+    def split_on_pipe(str); end
+  end
+end
+
+class YARD::Handlers::RBS::MixinHandler < ::YARD::Handlers::RBS::Base; end
+class YARD::Handlers::RBS::NamespaceHandler < ::YARD::Handlers::RBS::Base; end
 module YARD::Handlers::Ruby; end
 class YARD::Handlers::Ruby::AliasHandler < ::YARD::Handlers::Ruby::Base; end
 
@@ -1722,6 +1771,44 @@ class YARD::Parser::OrderedParser
 end
 
 class YARD::Parser::ParserSyntaxError < ::YARD::Parser::UndocumentableError; end
+module YARD::Parser::RBS; end
+
+class YARD::Parser::RBS::RbsParser < ::YARD::Parser::Base
+  def initialize(source, filename); end
+
+  def enumerator; end
+  def parse; end
+  def tokenize; end
+
+  private
+
+  def parse_attr(type, lines, i, docs, crange); end
+  def parse_body(lines, start, stop_at_end); end
+  def parse_method_def(sanitized, lines, i, docs, crange); end
+  def parse_namespace(type, lines, i, docs, crange); end
+  def parse_statement(lines, i, comments, comment_start_1); end
+  def sanitized_statement_lines(lines, start_index); end
+  def strip_inline_comment(line); end
+end
+
+class YARD::Parser::RBS::Statement
+  def initialize(attrs = T.unsafe(nil)); end
+
+  def attr_rbs_type; end
+  def block; end
+  def comments; end
+  def comments_hash_flag; end
+  def comments_range; end
+  def line; end
+  def mixin_name; end
+  def name; end
+  def show; end
+  def signatures; end
+  def source; end
+  def superclass; end
+  def type; end
+  def visibility; end
+end
 
 module YARD::Parser::Ruby
   def s(*args); end
@@ -2458,7 +2545,6 @@ class YARD::Parser::Ruby::RipperParser < ::Ripper
   def on_args_add_star(list, item); end
   def on_args_forward(*args); end
   def on_args_new(*args); end
-  def on_aryptn(*args); end
   def on_assign(*args); end
   def on_assign_error(*args); end
   def on_assoc_splat(*args); end
@@ -2497,13 +2583,11 @@ class YARD::Parser::Ruby::RipperParser < ::Ripper
   def on_fcall(*args); end
   def on_field(*args); end
   def on_float(tok); end
-  def on_fndptn(*args); end
   def on_for(*args); end
   def on_gvar(tok); end
   def on_heredoc_beg(tok); end
   def on_heredoc_dedent(*args); end
   def on_heredoc_end(tok); end
-  def on_hshptn(*args); end
   def on_ident(tok); end
   def on_if(*args); end
   def on_if_mod(*args); end
@@ -2549,7 +2633,6 @@ class YARD::Parser::Ruby::RipperParser < ::Ripper
   def on_qwords_beg(tok); end
   def on_qwords_new(*args); end
   def on_rational(tok); end
-  def on_rbrace(tok); end
   def on_redo(*args); end
   def on_regexp_add(list, item); end
   def on_regexp_beg(tok); end
@@ -2623,6 +2706,7 @@ class YARD::Parser::Ruby::RipperParser < ::Ripper
   def on_aref(*args); end
   def on_aref_field(*args); end
   def on_array(other); end
+  def on_aryptn(*args); end
   def on_assoc_new(*args); end
   def on_assoclist_from_args(*args); end
   def on_bare_assoc_hash(*args); end
@@ -2634,13 +2718,16 @@ class YARD::Parser::Ruby::RipperParser < ::Ripper
   def on_embdoc(text); end
   def on_embdoc_beg(text); end
   def on_embdoc_end(text); end
+  def on_fndptn(*args); end
   def on_hash(*args); end
+  def on_hshptn(*args); end
   def on_label(data); end
   def on_lambda(*args); end
   def on_lbracket(tok); end
   def on_params(*args); end
   def on_parse_error(msg); end
   def on_program(*args); end
+  def on_rbrace(tok); end
   def on_rbracket(tok); end
   def on_rescue(exc, *args); end
   def on_sp(tok); end
@@ -3823,7 +3910,171 @@ module YARD::Templates::Helpers::HtmlSyntaxHighlightHelper
   def html_syntax_highlight_ruby_ripper(source); end
 end
 
+YARD::Templates::Helpers::HtmlSyntaxHighlightHelper::ALREADY_HIGHLIGHTED_RE = T.let(T.unsafe(nil), Regexp)
 module YARD::Templates::Helpers::Markup; end
+
+class YARD::Templates::Helpers::Markup::HybridMarkdown
+  def initialize(text, options = T.unsafe(nil)); end
+
+  def from_path; end
+  def from_path=(_arg0); end
+  def to_html; end
+
+  private
+
+  def append_folded_codepoint(buffer, codepoint); end
+  def ascii_only_compat?(text); end
+  def ascii_punctuation_char?(char); end
+  def autolink_urls(text); end
+  def available_delimiter_length(token); end
+  def blank_line?(line); end
+  def block_boundary?(line); end
+  def blockquote_open_fence?(quoted_lines); end
+  def blockquote_paragraph_context?(quoted_lines); end
+  def blockquote_start?(line); end
+  def code_block(text, lang = T.unsafe(nil)); end
+  def colon_indented_code_block_start?(lines, index); end
+  def consume_columns(text, columns, start_column = T.unsafe(nil), normalize_remaining = T.unsafe(nil)); end
+  def contains_nested_link?(label, placeholders); end
+  def decode_entities(text); end
+  def decode_entity(entity); end
+  def delimiter_flags(text, run_start, run_end, char); end
+  def each_char_compat(text); end
+  def escape_autolink_url(url); end
+  def escape_list_marker_text(line); end
+  def escape_url(url); end
+  def extract_codeblock_language(text, lang = T.unsafe(nil)); end
+  def extract_reference_definitions(text); end
+  def fence_closer?(line, char, min_length); end
+  def fenced_code_start?(line); end
+  def find_braced_text_link_label_end(text, index); end
+  def find_closing_bracket(text, open_index); end
+  def find_matching_backtick_run(text, index, length); end
+  def find_reference_label_end(text); end
+  def format_emphasis(text); end
+  def format_inline(text); end
+  def format_strikethrough(text); end
+  def h(text); end
+  def heading_id(text); end
+  def html_block_end?(type, line); end
+  def html_block_start?(line, interrupt_paragraph = T.unsafe(nil)); end
+  def html_block_type(line, interrupt_paragraph = T.unsafe(nil)); end
+  def image_html(label, dest, title = T.unsafe(nil)); end
+  def indented_code_block_start?(lines, index, previous_block_type = T.unsafe(nil)); end
+  def indented_code_start?(line); end
+  def indented_to?(line, indent); end
+  def inside_angle_autolink_candidate?(text, index); end
+  def labeled_list_start?(lines, index); end
+  def lazy_blockquote_continuation?(quoted_lines, line); end
+  def leading_columns(line); end
+  def link_html(label, dest, title = T.unsafe(nil)); end
+  def list_item_padding(marker); end
+  def list_start?(line, interrupt_paragraph = T.unsafe(nil)); end
+  def loose_list_item_continuation?(item_lines); end
+  def normalize_code_span(code); end
+  def normalize_heading_line(line); end
+  def normalize_paragraph_line(line); end
+  def normalize_reference_label(label); end
+  def odd_match_disallowed?(opener, closer); end
+  def open_fence_in_lines?(lines); end
+  def parse_atx_heading(line); end
+  def parse_blockquote(lines, index); end
+  def parse_blocks(lines, index); end
+  def parse_fence_opener(line); end
+  def parse_fenced_code(lines, index); end
+  def parse_heading(line); end
+  def parse_html_block(lines, index); end
+  def parse_indented_code(lines, index); end
+  def parse_inline_destination(text, index, placeholders = T.unsafe(nil)); end
+  def parse_labeled_list(lines, index); end
+  def parse_labeled_list_line(line); end
+  def parse_list(lines, index); end
+  def parse_list_marker(line); end
+  def parse_paragraph(lines, index); end
+  def parse_reference_definition(label, definition); end
+  def parse_reference_definition_block(lines, index, previous_line); end
+  def parse_setext_heading(lines, index); end
+  def parse_table(lines, index); end
+  def parse_text_link_destination(text, index); end
+  def parse_yard_indented_code(lines, index); end
+  def percent_encode_url(text, allowed_re); end
+  def plain_text(text); end
+  def protect_autolinks(text, placeholders); end
+  def protect_braced_text_links(text, placeholders); end
+  def protect_code_spans(text, placeholders); end
+  def protect_entities(text, placeholders); end
+  def protect_escaped_characters(text, placeholders); end
+  def protect_hard_breaks(text, placeholders); end
+  def protect_inline_images(text, placeholders); end
+  def protect_inline_links(text, placeholders); end
+  def protect_raw_html(text, placeholders); end
+  def protect_rdoc_images(text, placeholders); end
+  def protect_reference_images(text, placeholders); end
+  def protect_reference_links(text, placeholders); end
+  def protect_single_word_text_links(text, placeholders); end
+  def protect_yard_links(text, placeholders); end
+  def punctuation_char?(char); end
+  def reference_definition_context?(previous_line); end
+  def reference_definition_continuation?(line); end
+  def reference_definition_replacement_line(line, prefix); end
+  def reference_image_html(alt, ref); end
+  def reference_link_html(label, ref); end
+  def replace_inline_constructs(text, placeholders, prefix); end
+  def restore_placeholders(text, placeholders); end
+  def same_list_type?(base, other); end
+  def scan_leading_columns(text); end
+  def scan_padding_columns(text, index, start_column); end
+  def scan_reference_constructs(text, placeholders, kind); end
+  def setext_underline_line?(line); end
+  def split_blockquote_prefix(line); end
+  def split_lines(text); end
+  def split_reference_container_prefix(line); end
+  def split_table_row(line); end
+  def store_placeholder(placeholders, html); end
+  def strip_blockquote_marker(line); end
+  def strip_fenced_indent(line, indent); end
+  def strip_list_item_indent(line, content_indent); end
+  def strip_trailing_punctuation(url); end
+  def table_alignment(cell); end
+  def table_row?(line); end
+  def table_start?(lines, index); end
+  def thematic_break?(line); end
+  def unclosed_reference_title?(text); end
+  def unescape_markdown_punctuation(text); end
+  def unicode_casefold_compat(text); end
+  def unicode_symbol_char?(char); end
+  def unindent(lines); end
+  def unindent_indented_code(lines); end
+  def utf8_bytes(char); end
+  def whitespace_char?(char); end
+  def yard_indented_code_start?(lines, index); end
+end
+
+YARD::Templates::Helpers::Markup::HybridMarkdown::ATX_HEADING_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::AUTOLINK_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::BLOCKQUOTE_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::CODE_LANG_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::ENTITY_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::ESCAPABLE_CHARS_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::FENCE_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::HTML_BLOCK_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::HTML_BLOCK_TAGS = T.let(T.unsafe(nil), Array)
+YARD::Templates::Helpers::Markup::HybridMarkdown::HTML_TAG_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::LABEL_LIST_BRACKET_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::LABEL_LIST_COLON_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::NAMED_ENTITIES = T.let(T.unsafe(nil), Hash)
+YARD::Templates::Helpers::Markup::HybridMarkdown::ORDERED_LIST_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::PLACEHOLDER_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::RDOC_ESCAPED_CAPITALIZED_CROSSREF_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::RDOC_HEADING_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::RDOC_ORDERED_LIST_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::REFERENCE_DEF_START_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::SETEXT_HEADING_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::TABLE_SEPARATOR_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::TAB_WIDTH = T.let(T.unsafe(nil), Integer)
+YARD::Templates::Helpers::Markup::HybridMarkdown::THEMATIC_BREAK_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::UNORDERED_LIST_RE = T.let(T.unsafe(nil), Regexp)
+YARD::Templates::Helpers::Markup::HybridMarkdown::YARD_LINK_RE = T.let(T.unsafe(nil), Regexp)
 
 class YARD::Templates::Helpers::Markup::RDocMarkdown < ::YARD::Templates::Helpers::Markup::RDocMarkup
   def initialize(text); end
