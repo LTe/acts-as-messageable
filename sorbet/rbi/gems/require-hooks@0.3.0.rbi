@@ -17,15 +17,24 @@ module RequireHooks
 end
 
 class RequireHooks::Context
-  def initialize(around_load, source_transform, hijack_load); end
+  def initialize(patterns: T.unsafe(nil), exclude_patterns: T.unsafe(nil)); end
 
+  def around_load; end
   def empty?; end
+  def exclude_patterns; end
   def hijack?; end
+  def hijack_load; end
+  def match?(path); end
+  def patterns; end
   def perform_source_transform(path); end
   def run_around_load_callbacks(path); end
+  def source_transform; end
   def source_transform?; end
+  def to_key; end
   def try_hijack_load(path, source); end
 end
+
+RequireHooks::EMPTY_ISEQ = T.let(T.unsafe(nil), RubyVM::InstructionSequence)
 
 module RequireHooks::LoadIseq
   def load_iseq(path); end
