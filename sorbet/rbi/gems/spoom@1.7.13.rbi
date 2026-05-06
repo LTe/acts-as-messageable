@@ -2609,10 +2609,6 @@ class Spoom::Sorbet::Config
 
   def allowed_extensions; end
   def allowed_extensions=(_arg0); end
-
-  sig { returns(::Spoom::Sorbet::Config) }
-  def copy; end
-
   def ignore; end
   def ignore=(_arg0); end
 
@@ -2629,6 +2625,11 @@ class Spoom::Sorbet::Config
 
   def paths=(_arg0); end
 
+  private
+
+  sig { params(source: ::Spoom::Sorbet::Config).void }
+  def initialize_copy(source); end
+
   class << self
     sig { params(sorbet_config_path: ::String).returns(::Spoom::Sorbet::Config) }
     def parse_file(sorbet_config_path); end
@@ -2637,6 +2638,9 @@ class Spoom::Sorbet::Config
     def parse_string(sorbet_config); end
 
     private
+
+    sig { params(line: ::String).returns(T::Boolean) }
+    def parse_bool_option(line); end
 
     sig { params(line: ::String).returns(::String) }
     def parse_option(line); end
