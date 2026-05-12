@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/Shopify/tapioca.git
-  revision: 6bf3d315723b79fe1dd056aa2dc4106ae42286f1
+  revision: 1ddd99b06baa6c0484c46900c22ef718189cfb90
   specs:
-    tapioca (0.19.0)
+    tapioca (0.19.1)
       benchmark
       bundler (>= 2.2.25)
       netrc (>= 0.11.0)
@@ -10,8 +10,8 @@ GIT
       rbi (>= 0.3.7)
       require-hooks (>= 0.2.2)
       rubydex (>= 0.1.0.beta10)
-      sorbet-static-and-runtime (>= 0.5.11087)
-      spoom (>= 1.7.9)
+      sorbet-static-and-runtime (>= 0.6.12698)
+      spoom (>= 1.7.14)
       thor (>= 1.2.0)
       tsort
 
@@ -188,7 +188,7 @@ GEM
     regexp_parser (2.11.3)
     reline (0.6.3)
       io-console (~> 0.5)
-    require-hooks (0.2.3)
+    require-hooks (0.4.0)
     rexml (3.4.4)
     rspec (3.13.2)
       rspec-core (~> 3.13.0)
@@ -221,8 +221,8 @@ GEM
       lint_roller
       rubocop (>= 1.75.2)
     ruby-progressbar (1.13.0)
-    rubydex (0.1.0.beta11)
-    rubydex (0.1.0.beta11-x86_64-linux)
+    rubydex (0.2.3-x86_64-darwin)
+    rubydex (0.2.3-x86_64-linux)
     safe_type (1.1.1)
     securerandom (0.4.1)
     simplecov (0.22.0)
@@ -231,8 +231,8 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.2)
     simplecov_json_formatter (0.1.4)
-    sorbet (0.6.13096)
-      sorbet-static (= 0.6.13096)
+    sorbet (0.6.13214)
+      sorbet-static (= 0.6.13214)
     sorbet-coerce (0.7.0)
       polyfill (~> 1.8)
       safe_type (~> 1.1, >= 1.1.1)
@@ -243,12 +243,12 @@ GEM
       parser (>= 2.7)
       sorbet-coerce (>= 0.2.6)
       sorbet-runtime (>= 0.5.9892)
-    sorbet-runtime (0.6.13096)
-    sorbet-static (0.6.13096-universal-darwin)
-    sorbet-static (0.6.13096-x86_64-linux)
-    sorbet-static-and-runtime (0.6.13096)
-      sorbet (= 0.6.13096)
-      sorbet-runtime (= 0.6.13096)
+    sorbet-runtime (0.6.13214)
+    sorbet-static (0.6.13214-universal-darwin)
+    sorbet-static (0.6.13214-x86_64-linux)
+    sorbet-static-and-runtime (0.6.13214)
+      sorbet (= 0.6.13214)
+      sorbet-runtime (= 0.6.13214)
     sord (7.1.0)
       commander (~> 5.0)
       parlour (~> 9.1)
@@ -256,7 +256,7 @@ GEM
       rbs (>= 3.0, < 5)
       sorbet-runtime
       yard
-    spoom (1.7.12)
+    spoom (1.7.14)
       erubi (>= 1.10.0)
       prism (>= 0.28.0)
       rbi (>= 0.3.3)
