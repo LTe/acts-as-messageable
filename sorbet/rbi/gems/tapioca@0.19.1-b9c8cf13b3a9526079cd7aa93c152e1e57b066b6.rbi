@@ -613,6 +613,9 @@ class Tapioca::Commands::DslCompilerList < ::Tapioca::Commands::AbstractDsl
 end
 
 class Tapioca::Commands::DslGenerate < ::Tapioca::Commands::AbstractDsl
+  sig { params(only_bootsnap_rbs_cache: T::Boolean, kwargs: T.untyped).void }
+  def initialize(only_bootsnap_rbs_cache: T.unsafe(nil), **kwargs); end
+
   private
 
   sig { override.void }
@@ -1983,6 +1986,14 @@ module Tapioca::RBIHelper
 end
 
 Tapioca::RBIHelper::TYPE_PARAMETER_MATCHER = T.let(T.unsafe(nil), Regexp)
+module Tapioca::RBS; end
+
+module Tapioca::RBS::BootsnapGuard
+  sig { params(_kwargs: T.untyped).void }
+  def setup(**_kwargs); end
+end
+
+class Tapioca::RBS::HostBootsnapSetupError < ::StandardError; end
 
 class Tapioca::RepoIndex
   sig { void }
