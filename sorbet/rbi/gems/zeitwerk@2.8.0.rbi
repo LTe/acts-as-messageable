@@ -28,6 +28,10 @@ module Zeitwerk
   end
 end
 
+class Zeitwerk::ConflictingNamespaceDefinitionError < ::Zeitwerk::Error
+  def initialize(cpath, location:, conflicting_file:); end
+end
+
 module Zeitwerk::ConstAdded
   def const_added(cname); end
 end
@@ -42,6 +46,7 @@ class Zeitwerk::Cref
   def cname; end
   def defined?; end
   def get; end
+  def location; end
   def mod; end
   def path; end
   def remove; end
@@ -121,6 +126,7 @@ class Zeitwerk::Loader
   def __shadowed_file?(file); end
   def __shadowed_files; end
   def __to_unload; end
+  def __unload; end
   def all_expected_cpaths; end
   def cpath_expected_at(path); end
   def reload; end
@@ -132,13 +138,11 @@ class Zeitwerk::Loader
 
   private
 
-  def autoload_file(cref, file); end
   def autoload_path_set_by_me_for?(cref); end
-  def autoload_subdir(cref, subdir); end
   def autoloaded_dirs; end
   def autoloads; end
   def define_autoload(cref, abspath); end
-  def define_autoloads_for_dir(dir, parent); end
+  def define_autoloads_for_dir(dir, mod, external:); end
   def dirs_autoload_monitor; end
   def inceptions; end
   def log; end
@@ -156,6 +160,8 @@ class Zeitwerk::Loader
   def unload_cref(cref); end
   def unregister_explicit_namespaces; end
   def unregister_inceptions; end
+  def visit_file(cref, file); end
+  def visit_subdir(cref, subdir, external:); end
 
   class << self
     def all_dirs; end
@@ -189,6 +195,8 @@ module Zeitwerk::Loader::Config
 
   def initialize; end
 
+  def __collapse?(dir); end
+  def __collapse_parent?(dir); end
   def __ignored_path?(abspath); end
   def __ignores?(abspath); end
   def __root_dir?(dir); end
@@ -203,6 +211,8 @@ module Zeitwerk::Loader::Config
   def log!; end
   def logger; end
   def logger=(_arg0); end
+  def nsfile; end
+  def nsfile=(nsfile); end
   def on_load(cpath = T.unsafe(nil), &block); end
   def on_setup(&block); end
   def on_unload(cpath = T.unsafe(nil), &block); end
@@ -217,6 +227,8 @@ module Zeitwerk::Loader::Config
   def collapse?(dir); end
   def collapse_dirs; end
   def collapse_glob_patterns; end
+  def collapse_parent?(dir); end
+  def collapse_parents; end
   def eager_load_exclusions; end
   def excluded_from_eager_load?(abspath); end
   def expand_glob_patterns(glob_patterns); end
@@ -229,6 +241,7 @@ module Zeitwerk::Loader::Config
   def on_setup_callbacks; end
   def on_unload_callbacks; end
   def recompute_collapse_dirs; end
+  def recompute_collapse_parents; end
   def recompute_ignored_paths; end
   def root_dir?(dir); end
   def roots; end
@@ -250,8 +263,9 @@ class Zeitwerk::Loader::FileSystem
   def initialize(loader); end
 
   def dir?(path); end
+  def has_exactly_one_nsfile?(cref, dir); end
   def hidden?(basename); end
-  def ls(dir); end
+  def ls(dir, collapse: T.unsafe(nil), &_arg2); end
   def rb_extension?(path); end
   def supported_ftype?(abspath); end
   def walk_up(abspath); end
