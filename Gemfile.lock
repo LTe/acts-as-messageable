@@ -291,7 +291,7 @@ GEM
     uri (1.1.1)
     useragent (0.16.11)
     yard (0.9.38)
-    zeitwerk (2.7.5)
+    zeitwerk (2.8.0)
 
 PLATFORMS
   x86_64-darwin-19
