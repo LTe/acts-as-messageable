@@ -555,6 +555,7 @@ Nokogiri::HTML5::QuirksMode::NO_QUIRKS = T.let(T.unsafe(nil), Integer)
 Nokogiri::HTML5::QuirksMode::QUIRKS = T.let(T.unsafe(nil), Integer)
 Nokogiri::LIBXML2_PATCHES = T.let(T.unsafe(nil), Array)
 Nokogiri::LIBXML_COMPILED_VERSION = T.let(T.unsafe(nil), String)
+Nokogiri::LIBXML_HTTP_ENABLED = T.let(T.unsafe(nil), TrueClass)
 Nokogiri::LIBXML_ICONV_ENABLED = T.let(T.unsafe(nil), TrueClass)
 Nokogiri::LIBXML_LOADED_VERSION = T.let(T.unsafe(nil), String)
 Nokogiri::LIBXML_MEMORY_MANAGEMENT = T.let(T.unsafe(nil), String)
@@ -586,7 +587,9 @@ class Nokogiri::VersionInfo
   def engine; end
   def jruby?; end
   def libxml2?; end
+  def libxml2_has_http?; end
   def libxml2_has_iconv?; end
+  def libxml2_has_zlib?; end
   def libxml2_precompiled?; end
   def libxml2_using_packaged?; end
   def libxml2_using_system?; end
@@ -941,7 +944,7 @@ class Nokogiri::XML::Node
   def default_namespace=(url); end
   def delete(name); end
   def description; end
-  def do_xinclude(options = T.unsafe(nil)); end
+  def do_xinclude(options = T.unsafe(nil), safe_copy: T.unsafe(nil)); end
   def document; end
   def document?; end
   def dup(level = T.unsafe(nil), new_parent_doc = T.unsafe(nil)); end
@@ -1032,6 +1035,7 @@ class Nokogiri::XML::Node
 
   def coerce(data); end
   def initialize_copy_with_args(_arg0, _arg1, _arg2); end
+  def safe_process_xinclude(_arg0); end
 
   private
 
@@ -1123,6 +1127,8 @@ Nokogiri::XML::Node::SaveOptions::NO_EMPTY_TAGS = T.let(T.unsafe(nil), Integer)
 Nokogiri::XML::Node::SaveOptions::NO_XHTML = T.let(T.unsafe(nil), Integer)
 Nokogiri::XML::Node::TEXT_NODE = T.let(T.unsafe(nil), Integer)
 Nokogiri::XML::Node::XINCLUDE_END = T.let(T.unsafe(nil), Integer)
+Nokogiri::XML::Node::XINCLUDE_NAMESPACES = T.let(T.unsafe(nil), Hash)
+Nokogiri::XML::Node::XINCLUDE_QUERY = T.let(T.unsafe(nil), String)
 Nokogiri::XML::Node::XINCLUDE_START = T.let(T.unsafe(nil), Integer)
 
 class Nokogiri::XML::NodeSet
