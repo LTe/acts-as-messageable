@@ -6,13 +6,13 @@
 <title>
   Module: ActsAsMessageable::Relation
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.44
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "ActsAsMessageable::Relation";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -83,7 +85,8 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/acts_as_messageable/relation.rb</dd>
+    <dd>lib/acts_as_messageable/relation.rb
+</dd>
   </dl>
   
 </div>
@@ -115,9 +118,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute relation_context.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute relation_context.</p></div></span>
   
 </li>
 
@@ -174,14 +175,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>rubocop:disable Naming/BlockForwarding, Lint/UnusedMethodArgument.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>rubocop:disable Naming/BlockForwarding.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 
@@ -203,9 +203,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the value of attribute relation_context.</p>
-
+    <p>Returns the value of attribute relation_context.</p>
 
   </div>
 </div>
@@ -283,9 +281,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>rubocop:disable Naming/BlockForwarding, Lint/UnusedMethodArgument</p>
-
+    <p>rubocop:disable Naming/BlockForwarding</p>
 
   </div>
 </div>
@@ -311,7 +307,7 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/acts_as_messageable/relation.rb', line 18</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='id identifier rubyid_relation_context'>relation_context</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span> <span class='comment'># rubocop:disable Naming/BlockForwarding, Lint/UnusedMethodArgument
+<span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='id identifier rubyid_relation_context'>relation_context</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span> <span class='comment'># rubocop:disable Naming/BlockForwarding
 </span>  <span class='id identifier rubyid_relation'>relation</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_cast'>cast</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Relation</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_relation'>relation</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_message'>message</span><span class='op'>|</span>
@@ -330,9 +326,9 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Jul 23 06:27:53 2026 by
+  Generated on Sat Oct 31 09:01:52 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.2.2).
+  0.9.44 (ruby-4.0.9).
 </div>
 
     </div>
