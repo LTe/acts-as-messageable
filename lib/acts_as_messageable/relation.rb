@@ -15,7 +15,7 @@ module ActsAsMessageable
     # @param [ActiveRecord::Base] context of relation (most of the time current_user object)
     # @return [ActiveRecord::Relation]
     sig { params(context: ActsAsMessageable::Model::InstanceMethods, blk: T.untyped).void }
-    def process(context = relation_context, &blk) # rubocop:disable Naming/BlockForwarding, Lint/UnusedMethodArgument
+    def process(context = relation_context, &blk) # rubocop:disable Naming/BlockForwarding
       relation = T.cast(self, ActiveRecord::Relation)
 
       relation.each do |message|

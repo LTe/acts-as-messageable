@@ -1842,7 +1842,7 @@ class Spoom::LSP::Hover < ::T::Struct
   include ::Spoom::LSP::PrintableSymbol
 
   const :contents, ::String
-  const :range, T.nilable(T::Range[T.untyped])
+  const :range, T.nilable(::Spoom::LSP::Range)
 
   sig { override.params(printer: ::Spoom::LSP::SymbolPrinter).void }
   def accept_printer(printer); end
@@ -2609,10 +2609,6 @@ class Spoom::Sorbet::Config
 
   def allowed_extensions; end
   def allowed_extensions=(_arg0); end
-
-  sig { returns(::Spoom::Sorbet::Config) }
-  def copy; end
-
   def ignore; end
   def ignore=(_arg0); end
 
@@ -2629,6 +2625,11 @@ class Spoom::Sorbet::Config
 
   def paths=(_arg0); end
 
+  private
+
+  sig { params(source: ::Spoom::Sorbet::Config).void }
+  def initialize_copy(source); end
+
   class << self
     sig { params(sorbet_config_path: ::String).returns(::Spoom::Sorbet::Config) }
     def parse_file(sorbet_config_path); end
@@ -2637,6 +2638,9 @@ class Spoom::Sorbet::Config
     def parse_string(sorbet_config); end
 
     private
+
+    sig { params(line: ::String).returns(T::Boolean) }
+    def parse_bool_option(line); end
 
     sig { params(line: ::String).returns(::String) }
     def parse_option(line); end
@@ -2825,6 +2829,9 @@ module Spoom::Sorbet::Sigils
     sig { params(path_list: T::Array[::String], new_strictness: ::String).returns(T::Array[::String]) }
     def change_sigil_in_files(path_list, new_strictness); end
 
+    sig { params(content: ::String).returns(T::Boolean) }
+    def contains_valid_sigil?(content); end
+
     sig { params(path: T.any(::Pathname, ::String)).returns(T.nilable(::String)) }
     def file_strictness(path); end
 
@@ -2940,7 +2947,18 @@ class Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs < ::Spoom::Sorbet::Trans
 
   sig { params(node: ::Prism::CallNode).void }
   def visit_attr(node); end
+
+  class << self
+    sig { params(source: ::String).returns(T::Boolean) }
+    def contains_rbs_syntax?(source); end
+
+    sig { params(ruby_contents: ::String, file: ::String, max_line_length: T.nilable(::Integer)).returns(::String) }
+    def rewrite_if_needed(ruby_contents, file:, max_line_length: T.unsafe(nil)); end
+  end
 end
+
+Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::RBS_ANNOTATION_MARKERS = T.let(T.unsafe(nil), Array)
+Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::RBS_REWRITE_PATTERN = T.let(T.unsafe(nil), Regexp)
 
 class Spoom::Sorbet::Translate::SorbetAssertionsToRBSComments < ::Spoom::Sorbet::Translate::Translator
   sig do
