@@ -291,7 +291,7 @@ end
 Unparser::Buffer::INDENT_SPACE = T.let(T.unsafe(nil), String)
 Unparser::Buffer::NL = T.let(T.unsafe(nil), String)
 
-class Unparser::Builder < ::Parser::Builders::Default
+class Unparser::Builder < ::Prism::Translation::Parser::Builder
   def initialize; end
 end
 
@@ -1563,8 +1563,9 @@ module Unparser::NodeHelpers
   def n_xstr?(node); end
 end
 
-class Unparser::PARSER_CLASS < ::Parser::Ruby32
+class Unparser::PARSER_CLASS < ::Prism::Translation::Parser40
   def declare_local_variable(local_variable); end
+  def prism_options; end
 end
 
 module Unparser::RequireBlock
