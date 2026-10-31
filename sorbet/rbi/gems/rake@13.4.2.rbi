@@ -17,7 +17,7 @@ module FileUtils
 
   def create_shell_runner(cmd); end
   def set_verbose_option(options); end
-  def sh_show_command(cmd); end
+  def sh_show_command(cmd, options = T.unsafe(nil)); end
 end
 
 FileUtils::LN_SUPPORTED = T.let(T.unsafe(nil), Array)
@@ -580,6 +580,49 @@ class Rake::NameSpace
   def tasks; end
 end
 
+class Rake::Options
+  def always_multitask; end
+  def always_multitask=(_arg0); end
+  def backtrace; end
+  def backtrace=(_arg0); end
+  def build_all; end
+  def build_all=(_arg0); end
+  def dryrun; end
+  def dryrun=(_arg0); end
+  def ignore_deprecate; end
+  def ignore_deprecate=(_arg0); end
+  def ignore_system; end
+  def ignore_system=(_arg0); end
+  def job_stats; end
+  def job_stats=(_arg0); end
+  def load_system; end
+  def load_system=(_arg0); end
+  def nosearch; end
+  def nosearch=(_arg0); end
+  def rakelib; end
+  def rakelib=(_arg0); end
+  def show_all_tasks; end
+  def show_all_tasks=(_arg0); end
+  def show_prereqs; end
+  def show_prereqs=(_arg0); end
+  def show_task_pattern; end
+  def show_task_pattern=(_arg0); end
+  def show_tasks; end
+  def show_tasks=(_arg0); end
+  def silent; end
+  def silent=(_arg0); end
+  def suppress_backtrace_pattern; end
+  def suppress_backtrace_pattern=(_arg0); end
+  def thread_pool_size; end
+  def thread_pool_size=(_arg0); end
+  def trace; end
+  def trace=(_arg0); end
+  def trace_output; end
+  def trace_output=(_arg0); end
+  def trace_rules; end
+  def trace_rules=(_arg0); end
+end
+
 module Rake::PrivateReader
   mixes_in_class_methods ::Rake::PrivateReader::ClassMethods
 
@@ -836,13 +879,10 @@ Rake::Version::OTHER = T.let(T.unsafe(nil), Array)
 
 module Rake::Win32
   class << self
-    def normalize(path); end
-    def win32_system_dir; end
     def windows?; end
   end
 end
 
-class Rake::Win32::Win32HomeError < ::RuntimeError; end
 RakeFileUtils = Rake::FileUtilsExt
 
 class String

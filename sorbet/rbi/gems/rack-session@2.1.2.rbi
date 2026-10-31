@@ -180,20 +180,58 @@ class Rack::Session::Encryptor
 
   private
 
-  def cipher_secret_from_message_secret(message_secret); end
-  def compute_signature(data); end
-  def deserialized_message(data); end
-  def new_cipher; end
-  def new_message_and_cipher_secret; end
-  def serialize_payload(message); end
-  def serializer; end
-  def set_cipher_key(cipher, key); end
-  def verify_authenticity!(data, signature); end
+  def guess_decryptor(base64_data); end
+  def v1; end
+  def v2; end
 end
 
 class Rack::Session::Encryptor::Error < ::StandardError; end
 class Rack::Session::Encryptor::InvalidMessage < ::Rack::Session::Encryptor::Error; end
 class Rack::Session::Encryptor::InvalidSignature < ::Rack::Session::Encryptor::Error; end
+
+module Rack::Session::Encryptor::Serializable
+  private
+
+  def deserialized_message(data); end
+  def serialize_payload(message); end
+  def serializer; end
+end
+
+class Rack::Session::Encryptor::V1
+  include ::Rack::Session::Encryptor::Serializable
+
+  def initialize(secret, opts = T.unsafe(nil)); end
+
+  def decrypt(base64_data); end
+  def encrypt(message); end
+
+  private
+
+  def cipher_secret_from_message_secret(message_secret); end
+  def compute_signature(data); end
+  def new_cipher; end
+  def new_message_and_cipher_secret; end
+  def set_cipher_key(cipher, key); end
+  def verify_authenticity!(data, signature); end
+end
+
+class Rack::Session::Encryptor::V2
+  include ::Rack::Session::Encryptor::Serializable
+
+  def initialize(secret, opts = T.unsafe(nil)); end
+
+  def decrypt(base64_data); end
+  def encrypt(message); end
+
+  private
+
+  def auth_tag_from(cipher); end
+  def message_secret_from_salt(salt); end
+  def new_cipher; end
+  def new_salt_and_message_secret; end
+  def set_cipher_key(cipher, key); end
+end
+
 Rack::Session::RACK_SESSION = T.let(T.unsafe(nil), String)
 Rack::Session::RACK_SESSION_OPTIONS = T.let(T.unsafe(nil), String)
 Rack::Session::RACK_SESSION_UNPACKED_COOKIE_DATA = T.let(T.unsafe(nil), String)

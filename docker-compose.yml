@@ -3,28 +3,28 @@ services:
     build:
       context: '.'
       args:
-        - RUBY_VERSION=3.2
+        - RUBY_VERSION=4.0
         - GEMFILE=Gemfile
     volumes:
       - ./:/home/app
     environment:
       - BUNDLE_GEMFILE=Gemfile
-  ruby_3.2_rails_7.0:
-    build:
-      context: '.'
-      args:
-        - RUBY_VERSION=3.2
-        - GEMFILE=gemfiles/rails_7.0.gemfile
-    volumes:
-      - ./:/home/app
-    environment:
-      - BUNDLE_GEMFILE=gemfiles/rails_7.0.gemfile
-      - RUN_GENERATORS=${RUN_GENERATORS-true}
-  ruby_3.3_rails_master:
+  ruby_3.3_rails_7.2:
     build:
       context: '.'
       args:
         - RUBY_VERSION=3.3
+        - GEMFILE=gemfiles/rails_7.2.gemfile
+    volumes:
+      - ./:/home/app
+    environment:
+      - BUNDLE_GEMFILE=gemfiles/rails_7.2.gemfile
+      - RUN_GENERATORS=${RUN_GENERATORS-true}
+  ruby_4.0_rails_master:
+    build:
+      context: '.'
+      args:
+        - RUBY_VERSION=4.0
         - GEMFILE=gemfiles/rails_master.gemfile
     volumes:
       - ./:/home/app

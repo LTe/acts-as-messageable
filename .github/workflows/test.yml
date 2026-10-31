@@ -10,34 +10,37 @@ on:
 
 jobs:
   static:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2.2
+          ruby-version: '4.0'
           bundler-cache: true
       - run : bundle exec rake rubocop
   rbi-check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2.2
+          ruby-version: '4.0'
           bundler-cache: true
       - run : bundle exec tapioca gem --verify
   typecheck:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2.2
+          ruby-version: '4.0'
           bundler-cache: true
       - run : bundle exec srb
   test:
-    runs-on: ubuntu-latest
+    name: Ruby ${{ matrix.ruby }} / Rails ${{ matrix.rails }}
+    runs-on: ubuntu-24.04
+    # Rails main is an early warning for the next release.
+    continue-on-error: ${{ matrix.gemfile == 'gemfiles/rails_master.gemfile' }}
     services:
       postgres:
         image: postgres
@@ -53,69 +56,71 @@ jobs:
           - 5432:5432
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}
-      RUN_GENERATORS: ${{ matrix.run_generators }}
+      RUN_GENERATORS: ${{ matrix.run_generators || 'false' }}
       PGPASSWORD: password
-      DATABASE_ADAPTER: ${{ matrix.database_adapter }}
-      DATABASE_NAME: ${{ matrix.database_name }}
-      DATABASE_PASSWORD: ${{ matrix.database_password }}
+      DATABASE_ADAPTER: sqlite3
+      DATABASE_NAME: ":memory:"
+      DATABASE_PASSWORD: password
       COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
     strategy:
       fail-fast: false
       matrix:
-        rvm: ["3.2.2"]
-        gemfile: ["Gemfile"]
-        bundler: ['default']
-        run_generators: ["false"]
-        database_adapter: ['sqlite3']
-        database_name: [":memory:"]
-        database_password: ["password"]
         include:
-          - rvm: ruby-head
+          - ruby: '3.3'
+            rails: '7.2'
+            gemfile: gemfiles/rails_7.2.gemfile
+            run_generators: 'true'
+          - ruby: '3.4'
+            rails: '8.1'
+            gemfile: Gemfile
+          - ruby: '4.0'
+            rails: '8.1'
+            gemfile: Gemfile
+          - ruby: '4.0'
+            rails: main
             gemfile: gemfiles/rails_master.gemfile
-            bundler: 'default'
-            run_generators: "false"
-            database_adapter: 'sqlite3'
-            database_name: ":memory:"
-          - rvm: 3.2
-            gemfile: gemfiles/rails_7.0.gemfile
-            bundler: 'default'
-            run_generators: "true"
-            database_adapter: 'sqlite3'
-            database_name: ":memory:"
-          - rvm: 3.3
+          - ruby: ruby-head
+            rails: main
             gemfile: gemfiles/rails_master.gemfile
-            bundler: 'default'
-            run_generators: "false"
-            database_adapter: 'sqlite3'
-            database_name: ":memory:"
     steps:
       - uses: actions/checkout@v4
       - run: sudo apt-get install libyaml-dev
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ${{ matrix.rvm }}
-          bundler: ${{ matrix.bundler }}
+          ruby-version: ${{ matrix.ruby }}
+          bundler: default
           bundler-cache: true
       - run: psql -c 'create database ci_test;' -U postgres -h localhost
       - run: bundle exec rake
+      - name: Report Rails main incompatibility
+        if: ${{ failure() && matrix.gemfile == 'gemfiles/rails_master.gemfile' }}
+        run: |
+          echo "::warning::Rails main compatibility checks failed; investigate before the next Rails release."
+          cat >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          ### Rails main compatibility
+
+          This experimental check failed. It does not block the build, but indicates
+          a compatibility issue to investigate before the next Rails release.
+          See the failed steps above for details.
+          EOF
   readme:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2.2
+          ruby-version: '4.0'
           bundler-cache: true
       - run: 'bundle exec rake readme'
   documentation:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: ['test', 'static']
     if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2.2
+          ruby-version: '4.0'
           bundler-cache: true
       - run: 'bundle exec yard doc --private'
       - uses: JamesIves/github-pages-deploy-action@v4.4.1
