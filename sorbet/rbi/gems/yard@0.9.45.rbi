@@ -1474,7 +1474,11 @@ module YARD::Handlers::Ruby::StructHandlerMethods
   def create_writer(klass, member); end
   def member_tag_for_member(klass, member, type = T.unsafe(nil)); end
   def members_from_tags(klass); end
+  def parameter_tag_for_member(klass, member); end
+  def register_docstring(object, docstring = T.unsafe(nil), stmt = T.unsafe(nil)); end
+  def register_struct_member_method(method, &block); end
   def return_type_from_tag(member_tag); end
+  def type_tag_for_member(klass, member, type = T.unsafe(nil)); end
 end
 
 class YARD::Handlers::Ruby::TestNodeWrapper < ::YARD::Handlers::Ruby::HandlesExtension
@@ -2486,7 +2490,7 @@ class YARD::Parser::Ruby::MethodCallNode < ::YARD::Parser::Ruby::AstNode
 end
 
 class YARD::Parser::Ruby::MethodDefinitionNode < ::YARD::Parser::Ruby::AstNode
-  def block(*_arg0); end
+  def block(n = T.unsafe(nil)); end
   def def?; end
   def kw?; end
   def method_name(name_only = T.unsafe(nil)); end
@@ -3055,6 +3059,7 @@ end
 
 module YARD::Server
   class << self
+    def clean_path(path); end
     def register_static_path(path); end
   end
 end
@@ -3780,6 +3785,7 @@ class YARD::Tags::TypesExplainer::Parser
 
   def create_type(name); end
   def parse_hash_collection(name); end
+  def parse_until(until_tokens); end
   def parse_with_handlers; end
 
   class << self
