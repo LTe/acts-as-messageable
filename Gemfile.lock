@@ -88,7 +88,7 @@ GEM
       term-ansicolor (~> 1.7)
       thor (~> 1.2)
       tins (~> 1.32)
-    crass (1.0.6)
+    crass (1.0.8)
     date (3.5.1)
     diff-lcs (1.6.2)
     docile (1.4.1)
