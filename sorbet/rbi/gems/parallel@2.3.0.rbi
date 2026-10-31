@@ -34,6 +34,11 @@ module Parallel
     def instrument_start(item, index, options); end
     def physical_processor_count_windows; end
     def process_incoming_jobs(read, write, job_factory, options, &block); end
+    def ractor_block(options); end
+    def ractor_build(use_port); end
+    def ractor_result(item, index, result, results, results_mutex, options); end
+    def ractor_send(ractor, callback, job, options); end
+    def ractor_stop(ractor); end
     def replace_worker(job_factory, workers, index, options, blk); end
     def run(command); end
     def with_instrumentation(item, index, options); end
@@ -79,6 +84,20 @@ class Parallel::JobFactory
 end
 
 class Parallel::Kill < ::Parallel::Break; end
+module Parallel::Serializer; end
+
+class Parallel::Serializer::Hmac
+  def initialize(inner: T.unsafe(nil), secret: T.unsafe(nil)); end
+
+  def dump(data, io); end
+  def inspect; end
+  def load(io); end
+end
+
+Parallel::Serializer::Hmac::LENGTH_BYTES = T.let(T.unsafe(nil), Integer)
+Parallel::Serializer::Hmac::LENGTH_FORMAT = T.let(T.unsafe(nil), String)
+Parallel::Serializer::Hmac::MAC_BYTES = T.let(T.unsafe(nil), Integer)
+Parallel::Serializer::Marshal = Marshal
 Parallel::Stop = T.let(T.unsafe(nil), Object)
 
 class Parallel::UndumpableException < ::StandardError
@@ -104,7 +123,7 @@ Parallel::VERSION = T.let(T.unsafe(nil), String)
 Parallel::Version = T.let(T.unsafe(nil), String)
 
 class Parallel::Worker
-  def initialize(read, write, pid); end
+  def initialize(read, write, pid, serializer); end
 
   def close_pipes; end
   def pid; end
