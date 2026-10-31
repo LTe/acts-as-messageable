@@ -292,7 +292,7 @@ GEM
       prism (>= 1.5.1)
     uri (1.1.1)
     useragent (0.16.11)
-    yard (0.9.44)
+    yard (0.9.45)
     zeitwerk (2.8.0)
 
 PLATFORMS
