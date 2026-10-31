@@ -38,6 +38,8 @@ jobs:
       - run : bundle exec srb
   test:
     runs-on: ubuntu-24.04
+    # Rails main is an early warning for the next release.
+    continue-on-error: ${{ matrix.gemfile == 'gemfiles/rails_master.gemfile' }}
     services:
       postgres:
         image: postgres
@@ -98,6 +100,17 @@ jobs:
           bundler-cache: true
       - run: psql -c 'create database ci_test;' -U postgres -h localhost
       - run: bundle exec rake
+      - name: Report Rails main incompatibility
+        if: ${{ failure() && matrix.gemfile == 'gemfiles/rails_master.gemfile' }}
+        run: |
+          echo "::warning::Rails main compatibility checks failed; investigate before the next Rails release."
+          cat >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          ### Rails main compatibility
+
+          This experimental check failed. It does not block the build, but indicates
+          a compatibility issue to investigate before the next Rails release.
+          See the failed steps above for details.
+          EOF
   readme:
     runs-on: ubuntu-24.04
     steps:
