@@ -28,34 +28,34 @@ class Pry
   def backtrace=(_arg0); end
   def binding_stack; end
   def binding_stack=(_arg0); end
-  def color(*args, **_arg1, &block); end
-  def color=(*args, **_arg1, &block); end
-  def commands(*args, **_arg1, &block); end
-  def commands=(*args, **_arg1, &block); end
+  def color(*_arg0, **_arg1, &_arg2); end
+  def color=(*_arg0, **_arg1, &_arg2); end
+  def commands(*_arg0, **_arg1, &_arg2); end
+  def commands=(*_arg0, **_arg1, &_arg2); end
   def complete(str); end
   def config; end
   def current_binding; end
   def current_context; end
   def custom_completions; end
   def custom_completions=(_arg0); end
-  def editor(*args, **_arg1, &block); end
-  def editor=(*args, **_arg1, &block); end
+  def editor(*_arg0, **_arg1, &_arg2); end
+  def editor=(*_arg0, **_arg1, &_arg2); end
   def eval(line, options = T.unsafe(nil)); end
   def eval_string; end
   def eval_string=(_arg0); end
   def evaluate_ruby(code); end
-  def exception_handler(*args, **_arg1, &block); end
-  def exception_handler=(*args, **_arg1, &block); end
+  def exception_handler(*_arg0, **_arg1, &_arg2); end
+  def exception_handler=(*_arg0, **_arg1, &_arg2); end
   def exec_hook(name, *args, &block); end
   def exit_value; end
-  def extra_sticky_locals(*args, **_arg1, &block); end
-  def extra_sticky_locals=(*args, **_arg1, &block); end
-  def hooks(*args, **_arg1, &block); end
-  def hooks=(*args, **_arg1, &block); end
+  def extra_sticky_locals(*_arg0, **_arg1, &_arg2); end
+  def extra_sticky_locals=(*_arg0, **_arg1, &_arg2); end
+  def hooks(*_arg0, **_arg1, &_arg2); end
+  def hooks=(*_arg0, **_arg1, &_arg2); end
   def inject_local(name, value, binding); end
   def inject_sticky_locals!; end
-  def input(*args, **_arg1, &block); end
-  def input=(*args, **_arg1, &block); end
+  def input(*_arg0, **_arg1, &_arg2); end
+  def input=(*_arg0, **_arg1, &_arg2); end
   def input_ring; end
   def last_dir; end
   def last_dir=(_arg0); end
@@ -69,13 +69,13 @@ class Pry
   def memory_size; end
   def memory_size=(size); end
   def output; end
-  def output=(*args, **_arg1, &block); end
+  def output=(*_arg0, **_arg1, &_arg2); end
   def output_ring; end
   def pager; end
-  def pager=(*args, **_arg1, &block); end
+  def pager=(*_arg0, **_arg1, &_arg2); end
   def pop_prompt; end
-  def print(*args, **_arg1, &block); end
-  def print=(*args, **_arg1, &block); end
+  def print(*_arg0, **_arg1, &_arg2); end
+  def print=(*_arg0, **_arg1, &_arg2); end
   def process_command(val); end
   def process_command_safely(val); end
   def prompt; end
@@ -113,10 +113,10 @@ class Pry
     def binding_for(target); end
     def cli; end
     def cli=(_arg0); end
-    def color(*args, **_arg1, &block); end
-    def color=(*args, **_arg1, &block); end
-    def commands(*args, **_arg1, &block); end
-    def commands=(*args, **_arg1, &block); end
+    def color(*_arg0, **_arg1, &_arg2); end
+    def color=(*_arg0, **_arg1, &_arg2); end
+    def commands(*_arg0, **_arg1, &_arg2); end
+    def commands=(*_arg0, **_arg1, &_arg2); end
     def config; end
     def config=(_arg0); end
     def configure; end
@@ -126,25 +126,25 @@ class Pry
     def current_line=(_arg0); end
     def custom_completions; end
     def custom_completions=(_arg0); end
-    def editor(*args, **_arg1, &block); end
-    def editor=(*args, **_arg1, &block); end
+    def editor(*_arg0, **_arg1, &_arg2); end
+    def editor=(*_arg0, **_arg1, &_arg2); end
     def eval_path; end
     def eval_path=(_arg0); end
-    def exception_handler(*args, **_arg1, &block); end
-    def exception_handler=(*args, **_arg1, &block); end
-    def extra_sticky_locals(*args, **_arg1, &block); end
-    def extra_sticky_locals=(*args, **_arg1, &block); end
+    def exception_handler(*_arg0, **_arg1, &_arg2); end
+    def exception_handler=(*_arg0, **_arg1, &_arg2); end
+    def extra_sticky_locals(*_arg0, **_arg1, &_arg2); end
+    def extra_sticky_locals=(*_arg0, **_arg1, &_arg2); end
     def final_session_setup; end
-    def history(*args, **_arg1, &block); end
-    def history=(*args, **_arg1, &block); end
-    def hooks(*args, **_arg1, &block); end
-    def hooks=(*args, **_arg1, &block); end
+    def history(*_arg0, **_arg1, &_arg2); end
+    def history=(*_arg0, **_arg1, &_arg2); end
+    def hooks(*_arg0, **_arg1, &_arg2); end
+    def hooks=(*_arg0, **_arg1, &_arg2); end
     def in_critical_section?; end
     def init; end
     def initial_session?; end
     def initial_session_setup; end
-    def input(*args, **_arg1, &block); end
-    def input=(*args, **_arg1, &block); end
+    def input(*_arg0, **_arg1, &_arg2); end
+    def input=(*_arg0, **_arg1, &_arg2); end
     def last_internal_error; end
     def last_internal_error=(_arg0); end
     def line_buffer; end
@@ -157,16 +157,16 @@ class Pry
     def load_traps; end
     def load_win32console; end
     def main; end
-    def memory_size(*args, **_arg1, &block); end
-    def memory_size=(*args, **_arg1, &block); end
-    def output(*args, **_arg1, &block); end
-    def output=(*args, **_arg1, &block); end
-    def pager(*args, **_arg1, &block); end
-    def pager=(*args, **_arg1, &block); end
-    def print(*args, **_arg1, &block); end
-    def print=(*args, **_arg1, &block); end
-    def prompt(*args, **_arg1, &block); end
-    def prompt=(*args, **_arg1, &block); end
+    def memory_size(*_arg0, **_arg1, &_arg2); end
+    def memory_size=(*_arg0, **_arg1, &_arg2); end
+    def output(*_arg0, **_arg1, &_arg2); end
+    def output=(*_arg0, **_arg1, &_arg2); end
+    def pager(*_arg0, **_arg1, &_arg2); end
+    def pager=(*_arg0, **_arg1, &_arg2); end
+    def print(*_arg0, **_arg1, &_arg2); end
+    def print=(*_arg0, **_arg1, &_arg2); end
+    def prompt(*_arg0, **_arg1, &_arg2); end
+    def prompt=(*_arg0, **_arg1, &_arg2); end
     def quiet; end
     def quiet=(_arg0); end
     def rc_files_to_load; end
@@ -817,8 +817,8 @@ class Pry::Command::Ls::Config
 
   def initialize(config); end
 
-  def [](*args, **_arg1, &block); end
-  def []=(*args, **_arg1, &block); end
+  def [](*_arg0, **_arg1, &_arg2); end
+  def []=(*_arg0, **_arg1, &_arg2); end
   def builtin_global_color; end
   def builtin_global_color=(value); end
   def ceiling; end
@@ -829,8 +829,8 @@ class Pry::Command::Ls::Config
   def class_var_color=(value); end
   def constant_color; end
   def constant_color=(value); end
-  def each(*args, **_arg1, &block); end
-  def each_pair(*args, **_arg1, &block); end
+  def each(*_arg0, **_arg1, &_arg2); end
+  def each_pair(*_arg0, **_arg1, &_arg2); end
   def exception_constant_color; end
   def exception_constant_color=(value); end
   def global_var_color; end
@@ -839,7 +839,7 @@ class Pry::Command::Ls::Config
   def heading_color=(value); end
   def instance_var_color; end
   def instance_var_color=(value); end
-  def keys(*args, **_arg1, &block); end
+  def keys(*_arg0, **_arg1, &_arg2); end
   def local_var_color; end
   def local_var_color=(value); end
   def method_missing_color; end
@@ -856,10 +856,10 @@ class Pry::Command::Ls::Config
   def public_method_color=(value); end
   def separator; end
   def separator=(value); end
-  def to_a(*args, **_arg1, &block); end
+  def to_a(*_arg0, **_arg1, &_arg2); end
   def unloaded_constant_color; end
   def unloaded_constant_color=(value); end
-  def values(*args, **_arg1, &block); end
+  def values(*_arg0, **_arg1, &_arg2); end
 
   class << self
     def default; end
@@ -1986,10 +1986,10 @@ class Pry::Method
   def name; end
   def name_with_owner; end
   def original_name; end
-  def owner(*args, **_arg1, &block); end
-  def parameters(*args, **_arg1, &block); end
+  def owner(*_arg0, **_arg1, &_arg2); end
+  def parameters(*_arg0, **_arg1, &_arg2); end
   def pry_method?; end
-  def receiver(*args, **_arg1, &block); end
+  def receiver(*_arg0, **_arg1, &_arg2); end
   def redefine(source); end
   def respond_to?(method_name, include_all = T.unsafe(nil)); end
   def signature; end
@@ -2195,7 +2195,7 @@ class Pry::Pager::PageTracker
 end
 
 class Pry::Pager::SimplePager < ::Pry::Pager::NullPager
-  def initialize(*_arg0); end
+  def initialize(out, input = T.unsafe(nil)); end
 
   def write(str); end
 end
@@ -2243,8 +2243,8 @@ class Pry::REPL
 
   def initialize(pry, options = T.unsafe(nil)); end
 
-  def input(*args, **_arg1, &block); end
-  def output(*args, **_arg1, &block); end
+  def input(*_arg0, **_arg1, &_arg2); end
+  def output(*_arg0, **_arg1, &_arg2); end
   def pry; end
   def pry=(_arg0); end
   def start; end
@@ -2530,18 +2530,18 @@ class Pry::WrappedModule::Candidate
 
   def initialize(wrapper, rank); end
 
-  def class?(*args, **_arg1, &block); end
+  def class?(*_arg0, **_arg1, &_arg2); end
   def doc; end
   def file; end
   def line; end
-  def module?(*args, **_arg1, &block); end
-  def nonblank_name(*args, **_arg1, &block); end
-  def number_of_candidates(*args, **_arg1, &block); end
+  def module?(*_arg0, **_arg1, &_arg2); end
+  def nonblank_name(*_arg0, **_arg1, &_arg2); end
+  def number_of_candidates(*_arg0, **_arg1, &_arg2); end
   def source; end
   def source_file; end
   def source_line; end
   def source_location; end
-  def wrapped(*args, **_arg1, &block); end
+  def wrapped(*_arg0, **_arg1, &_arg2); end
 
   private
 
