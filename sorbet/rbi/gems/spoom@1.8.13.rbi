@@ -92,6 +92,8 @@ module Spoom::Cli::Helper
   def yellow(string); end
 end
 
+Spoom::Cli::Helper::HIGHLIGHT_COLOR = T.let(T.unsafe(nil), Spoom::Color)
+
 class Spoom::Cli::Main < ::Thor
   include ::Spoom::Colorize
   include ::Spoom::Cli::Helper
@@ -133,9 +135,11 @@ class Spoom::Cli::Srb::Bump < ::Thor
   sig { params(directory: ::String).void }
   def bump(directory = T.unsafe(nil)); end
 
+  sig { params(context: ::Spoom::Context, files: T::Array[::String], strictness: ::String).returns(::Tempfile) }
+  def create_typed_override_file(context, files, strictness); end
+
   def help(command = T.unsafe(nil), subcommand = T.unsafe(nil)); end
   def print_changes(files, command:, from: T.unsafe(nil), to: T.unsafe(nil), dry: T.unsafe(nil), path: T.unsafe(nil)); end
-  def undo_changes(files, from_strictness); end
 end
 
 class Spoom::Cli::Srb::Coverage < ::Thor
@@ -219,31 +223,32 @@ Spoom::Cli::Srb::Tc::SORT_CODE = T.let(T.unsafe(nil), String)
 Spoom::Cli::Srb::Tc::SORT_ENUM = T.let(T.unsafe(nil), Array)
 Spoom::Cli::Srb::Tc::SORT_LOC = T.let(T.unsafe(nil), String)
 
-class Spoom::Color < ::T::Enum
-  enums do
-    BLACK = new
-    BLUE = new
-    BOLD = new
-    CLEAR = new
-    CYAN = new
-    GREEN = new
-    LIGHT_BLACK = new
-    LIGHT_BLUE = new
-    LIGHT_CYAN = new
-    LIGHT_GREEN = new
-    LIGHT_MAGENTA = new
-    LIGHT_RED = new
-    LIGHT_WHITE = new
-    LIGHT_YELLOW = new
-    MAGENTA = new
-    RED = new
-    WHITE = new
-    YELLOW = new
-  end
+class Spoom::Color
+  sig { params(ansi_code: ::String).void }
+  def initialize(ansi_code); end
 
   sig { returns(::String) }
   def ansi_code; end
 end
+
+Spoom::Color::BLACK = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::BLUE = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::BOLD = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::CLEAR = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::CYAN = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::GREEN = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::LIGHT_BLACK = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::LIGHT_BLUE = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::LIGHT_CYAN = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::LIGHT_GREEN = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::LIGHT_MAGENTA = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::LIGHT_RED = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::LIGHT_WHITE = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::LIGHT_YELLOW = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::MAGENTA = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::RED = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::WHITE = T.let(T.unsafe(nil), Spoom::Color)
+Spoom::Color::YELLOW = T.let(T.unsafe(nil), Spoom::Color)
 
 module Spoom::Colorize
   sig { params(string: ::String, color: ::Spoom::Color).returns(::String) }
@@ -616,6 +621,11 @@ class Spoom::Coverage::D3::Base
   sig { returns(::String) }
   def tooltip; end
 
+  private
+
+  sig { params(value: T.untyped).returns(::String) }
+  def js_literal(value); end
+
   class << self
     sig { returns(::String) }
     def header_script; end
@@ -625,6 +635,7 @@ class Spoom::Coverage::D3::Base
   end
 end
 
+Spoom::Coverage::D3::Base::JS_LITERAL_ESCAPES = T.let(T.unsafe(nil), Hash)
 Spoom::Coverage::D3::COLOR_FALSE = T.let(T.unsafe(nil), String)
 Spoom::Coverage::D3::COLOR_IGNORE = T.let(T.unsafe(nil), String)
 Spoom::Coverage::D3::COLOR_STRICT = T.let(T.unsafe(nil), String)
@@ -659,12 +670,47 @@ class Spoom::Coverage::D3::CircleMap::Sigils < ::Spoom::Coverage::D3::CircleMap
   def tree_node_to_json(node); end
 end
 
-class Spoom::Coverage::D3::ColorPalette < ::T::Struct
-  prop :ignore, ::String
-  prop :false, ::String
-  prop :true, ::String
-  prop :strict, ::String
-  prop :strong, ::String
+class Spoom::Coverage::D3::ColorPalette
+  sig do
+    params(
+      ignore_color: ::String,
+      false_color: ::String,
+      true_color: ::String,
+      strict_color: ::String,
+      strong_color: ::String
+    ).void
+  end
+  def initialize(ignore_color:, false_color:, true_color:, strict_color:, strong_color:); end
+
+  sig { returns(::String) }
+  def false_color; end
+
+  sig { params(false_color: ::String).returns(::String) }
+  def false_color=(false_color); end
+
+  sig { returns(::String) }
+  def ignore_color; end
+
+  sig { params(ignore_color: ::String).returns(::String) }
+  def ignore_color=(ignore_color); end
+
+  sig { returns(::String) }
+  def strict_color; end
+
+  sig { params(strict_color: ::String).returns(::String) }
+  def strict_color=(strict_color); end
+
+  sig { returns(::String) }
+  def strong_color; end
+
+  sig { params(strong_color: ::String).returns(::String) }
+  def strong_color=(strong_color); end
+
+  sig { returns(::String) }
+  def true_color; end
+
+  sig { params(true_color: ::String).returns(::String) }
+  def true_color=(true_color); end
 end
 
 class Spoom::Coverage::D3::Pie < ::Spoom::Coverage::D3::Base
@@ -882,32 +928,154 @@ class Spoom::Coverage::Report < ::Spoom::Coverage::Page
   def header_html; end
 end
 
-class Spoom::Coverage::Snapshot < ::T::Struct
-  prop :timestamp, ::Integer, default: T.unsafe(nil)
-  prop :version_static, T.nilable(::String), default: T.unsafe(nil)
-  prop :version_runtime, T.nilable(::String), default: T.unsafe(nil)
-  prop :duration, ::Integer, default: T.unsafe(nil)
-  prop :commit_sha, T.nilable(::String), default: T.unsafe(nil)
-  prop :commit_timestamp, T.nilable(::Integer), default: T.unsafe(nil)
-  prop :files, ::Integer, default: T.unsafe(nil)
-  prop :rbi_files, ::Integer, default: T.unsafe(nil)
-  prop :modules, ::Integer, default: T.unsafe(nil)
-  prop :classes, ::Integer, default: T.unsafe(nil)
-  prop :singleton_classes, ::Integer, default: T.unsafe(nil)
-  prop :methods_without_sig, ::Integer, default: T.unsafe(nil)
-  prop :methods_with_sig, ::Integer, default: T.unsafe(nil)
-  prop :calls_untyped, ::Integer, default: T.unsafe(nil)
-  prop :calls_typed, ::Integer, default: T.unsafe(nil)
-  prop :sigils, T::Hash[::String, ::Integer], default: T.unsafe(nil)
-  prop :methods_with_sig_excluding_rbis, ::Integer, default: T.unsafe(nil)
-  prop :methods_without_sig_excluding_rbis, ::Integer, default: T.unsafe(nil)
-  prop :sigils_excluding_rbis, T::Hash[::String, ::Integer], default: T.unsafe(nil)
+class Spoom::Coverage::Snapshot
+  sig do
+    params(
+      timestamp: ::Integer,
+      version_static: T.nilable(::String),
+      version_runtime: T.nilable(::String),
+      duration: ::Integer,
+      commit_sha: T.nilable(::String),
+      commit_timestamp: T.nilable(::Integer),
+      files: ::Integer,
+      rbi_files: ::Integer,
+      modules: ::Integer,
+      classes: ::Integer,
+      singleton_classes: ::Integer,
+      methods_without_sig: ::Integer,
+      methods_with_sig: ::Integer,
+      calls_untyped: ::Integer,
+      calls_typed: ::Integer,
+      sigils: T::Hash[::String, ::Integer],
+      methods_with_sig_excluding_rbis: ::Integer,
+      methods_without_sig_excluding_rbis: ::Integer,
+      sigils_excluding_rbis: T::Hash[::String, ::Integer]
+    ).void
+  end
+  def initialize(timestamp: T.unsafe(nil), version_static: T.unsafe(nil), version_runtime: T.unsafe(nil), duration: T.unsafe(nil), commit_sha: T.unsafe(nil), commit_timestamp: T.unsafe(nil), files: T.unsafe(nil), rbi_files: T.unsafe(nil), modules: T.unsafe(nil), classes: T.unsafe(nil), singleton_classes: T.unsafe(nil), methods_without_sig: T.unsafe(nil), methods_with_sig: T.unsafe(nil), calls_untyped: T.unsafe(nil), calls_typed: T.unsafe(nil), sigils: T.unsafe(nil), methods_with_sig_excluding_rbis: T.unsafe(nil), methods_without_sig_excluding_rbis: T.unsafe(nil), sigils_excluding_rbis: T.unsafe(nil)); end
+
+  sig { returns(::Integer) }
+  def calls_typed; end
+
+  sig { params(calls_typed: ::Integer).returns(::Integer) }
+  def calls_typed=(calls_typed); end
+
+  sig { returns(::Integer) }
+  def calls_untyped; end
+
+  sig { params(calls_untyped: ::Integer).returns(::Integer) }
+  def calls_untyped=(calls_untyped); end
+
+  sig { returns(::Integer) }
+  def classes; end
+
+  sig { params(classes: ::Integer).returns(::Integer) }
+  def classes=(classes); end
+
+  sig { returns(T.nilable(::String)) }
+  def commit_sha; end
+
+  sig { params(commit_sha: T.nilable(::String)).returns(T.nilable(::String)) }
+  def commit_sha=(commit_sha); end
+
+  sig { returns(T.nilable(::Integer)) }
+  def commit_timestamp; end
+
+  sig { params(commit_timestamp: T.nilable(::Integer)).returns(T.nilable(::Integer)) }
+  def commit_timestamp=(commit_timestamp); end
+
+  sig { returns(::Integer) }
+  def duration; end
+
+  sig { params(duration: ::Integer).returns(::Integer) }
+  def duration=(duration); end
+
+  sig { returns(::Integer) }
+  def files; end
+
+  sig { params(files: ::Integer).returns(::Integer) }
+  def files=(files); end
+
+  sig { returns(::Integer) }
+  def methods_with_sig; end
+
+  sig { params(methods_with_sig: ::Integer).returns(::Integer) }
+  def methods_with_sig=(methods_with_sig); end
+
+  sig { returns(::Integer) }
+  def methods_with_sig_excluding_rbis; end
+
+  sig { params(methods_with_sig_excluding_rbis: ::Integer).returns(::Integer) }
+  def methods_with_sig_excluding_rbis=(methods_with_sig_excluding_rbis); end
+
+  sig { returns(::Integer) }
+  def methods_without_sig; end
+
+  sig { params(methods_without_sig: ::Integer).returns(::Integer) }
+  def methods_without_sig=(methods_without_sig); end
+
+  sig { returns(::Integer) }
+  def methods_without_sig_excluding_rbis; end
+
+  sig { params(methods_without_sig_excluding_rbis: ::Integer).returns(::Integer) }
+  def methods_without_sig_excluding_rbis=(methods_without_sig_excluding_rbis); end
+
+  sig { returns(::Integer) }
+  def modules; end
+
+  sig { params(modules: ::Integer).returns(::Integer) }
+  def modules=(modules); end
 
   sig { params(out: T.any(::IO, ::StringIO), colors: T::Boolean, indent_level: ::Integer).void }
   def print(out: T.unsafe(nil), colors: T.unsafe(nil), indent_level: T.unsafe(nil)); end
 
+  sig { returns(::Integer) }
+  def rbi_files; end
+
+  sig { params(rbi_files: ::Integer).returns(::Integer) }
+  def rbi_files=(rbi_files); end
+
+  sig { returns(T::Hash[::String, ::Integer]) }
+  def sigils; end
+
+  sig { params(sigils: T::Hash[::String, ::Integer]).returns(T::Hash[::String, ::Integer]) }
+  def sigils=(sigils); end
+
+  sig { returns(T::Hash[::String, ::Integer]) }
+  def sigils_excluding_rbis; end
+
+  sig { params(sigils_excluding_rbis: T::Hash[::String, ::Integer]).returns(T::Hash[::String, ::Integer]) }
+  def sigils_excluding_rbis=(sigils_excluding_rbis); end
+
+  sig { returns(::Integer) }
+  def singleton_classes; end
+
+  sig { params(singleton_classes: ::Integer).returns(::Integer) }
+  def singleton_classes=(singleton_classes); end
+
+  sig { returns(::Integer) }
+  def timestamp; end
+
+  sig { params(timestamp: ::Integer).returns(::Integer) }
+  def timestamp=(timestamp); end
+
+  sig { returns(T::Hash[::String, T.untyped]) }
+  def to_h; end
+
   sig { params(arg: T.untyped).returns(::String) }
   def to_json(*arg); end
+
+  sig { returns(T.nilable(::String)) }
+  def version_runtime; end
+
+  sig { params(version_runtime: T.nilable(::String)).returns(T.nilable(::String)) }
+  def version_runtime=(version_runtime); end
+
+  sig { returns(T.nilable(::String)) }
+  def version_static; end
+
+  sig { params(version_static: T.nilable(::String)).returns(T.nilable(::String)) }
+  def version_static=(version_static); end
 
   class << self
     sig { params(json: ::String).returns(::Spoom::Coverage::Snapshot) }
@@ -915,9 +1083,15 @@ class Spoom::Coverage::Snapshot < ::T::Struct
 
     sig { params(obj: T::Hash[::String, T.untyped]).returns(::Spoom::Coverage::Snapshot) }
     def from_obj(obj); end
+
+    private
+
+    sig { params(obj: T::Hash[::String, T.untyped], key: ::String, default: ::Integer).returns(::Integer) }
+    def integer_field(obj, key, default: T.unsafe(nil)); end
   end
 end
 
+class Spoom::Coverage::Snapshot::Error < ::Spoom::Error; end
 Spoom::Coverage::Snapshot::STRICTNESSES = T.let(T.unsafe(nil), Array)
 
 class Spoom::Coverage::SnapshotPrinter < ::Spoom::Printer
@@ -962,12 +1136,17 @@ end
 Spoom::Deadcode::DEFAULT_CUSTOM_PLUGINS_PATH = T.let(T.unsafe(nil), String)
 Spoom::Deadcode::DEFAULT_PLUGINS = T.let(T.unsafe(nil), Set)
 
-class Spoom::Deadcode::Definition < ::T::Struct
-  const :kind, ::Spoom::Deadcode::Definition::Kind
-  const :name, ::String
-  const :full_name, ::String
-  const :location, ::Spoom::Location
-  const :status, ::Spoom::Deadcode::Definition::Status, default: T.unsafe(nil)
+class Spoom::Deadcode::Definition
+  sig do
+    params(
+      kind: ::Spoom::Deadcode::Definition::Kind,
+      name: ::String,
+      full_name: ::String,
+      location: ::Spoom::Location,
+      status: ::Spoom::Deadcode::Definition::Status
+    ).void
+  end
+  def initialize(kind:, name:, full_name:, location:, status: T.unsafe(nil)); end
 
   sig { void }
   def alive!; end
@@ -990,11 +1169,20 @@ class Spoom::Deadcode::Definition < ::T::Struct
   sig { returns(T::Boolean) }
   def dead?; end
 
+  sig { returns(::String) }
+  def full_name; end
+
   sig { void }
   def ignored!; end
 
   sig { returns(T::Boolean) }
   def ignored?; end
+
+  sig { returns(::Spoom::Deadcode::Definition::Kind) }
+  def kind; end
+
+  sig { returns(::Spoom::Location) }
+  def location; end
 
   sig { returns(T::Boolean) }
   def method?; end
@@ -1002,32 +1190,41 @@ class Spoom::Deadcode::Definition < ::T::Struct
   sig { returns(T::Boolean) }
   def module?; end
 
+  sig { returns(::String) }
+  def name; end
+
+  sig { returns(::Spoom::Deadcode::Definition::Status) }
+  def status; end
+
   sig { params(args: T.untyped).returns(::String) }
   def to_json(*args); end
 end
 
-class Spoom::Deadcode::Definition::Kind < ::T::Enum
-  enums do
-    AttrReader = new
-    AttrWriter = new
-    Class = new
-    Constant = new
-    Method = new
-    Module = new
-  end
+class Spoom::Deadcode::Definition::Kind
+  sig { params(name: ::String).void }
+  def initialize(name); end
+
+  sig { override.returns(::String) }
+  def to_s; end
 end
 
-class Spoom::Deadcode::Definition::Status < ::T::Enum
-  enums do
-    ALIVE = new
-    DEAD = new
-    IGNORED = new
-  end
-end
+Spoom::Deadcode::Definition::Kind::AttrReader = T.let(T.unsafe(nil), Spoom::Deadcode::Definition::Kind)
+Spoom::Deadcode::Definition::Kind::AttrWriter = T.let(T.unsafe(nil), Spoom::Deadcode::Definition::Kind)
+Spoom::Deadcode::Definition::Kind::Class = T.let(T.unsafe(nil), Spoom::Deadcode::Definition::Kind)
+Spoom::Deadcode::Definition::Kind::Constant = T.let(T.unsafe(nil), Spoom::Deadcode::Definition::Kind)
+Spoom::Deadcode::Definition::Kind::Method = T.let(T.unsafe(nil), Spoom::Deadcode::Definition::Kind)
+Spoom::Deadcode::Definition::Kind::Module = T.let(T.unsafe(nil), Spoom::Deadcode::Definition::Kind)
+class Spoom::Deadcode::Definition::Status; end
+Spoom::Deadcode::Definition::Status::ALIVE = T.let(T.unsafe(nil), Spoom::Deadcode::Definition::Status)
+Spoom::Deadcode::Definition::Status::DEAD = T.let(T.unsafe(nil), Spoom::Deadcode::Definition::Status)
+Spoom::Deadcode::Definition::Status::IGNORED = T.let(T.unsafe(nil), Spoom::Deadcode::Definition::Status)
 
 class Spoom::Deadcode::ERB < ::Erubi::Engine
   sig { params(input: T.untyped, properties: T.untyped).void }
   def initialize(input, properties = T.unsafe(nil)); end
+
+  sig { returns(::String) }
+  def wrapped_src; end
 
   private
 
@@ -1037,6 +1234,7 @@ class Spoom::Deadcode::ERB < ::Erubi::Engine
   sig { override.params(indicator: T.untyped, code: T.untyped).void }
   def add_expression(indicator, code); end
 
+  sig { override.params(_: T.untyped).void }
   def add_postamble(_); end
 
   sig { override.params(text: T.untyped).void }
@@ -1156,7 +1354,14 @@ Spoom::Deadcode::Plugins::ActiveJob::CALLBACKS = T.let(T.unsafe(nil), Array)
 class Spoom::Deadcode::Plugins::ActiveModel < ::Spoom::Deadcode::Plugins::Base
   sig { override.params(send: ::Spoom::Deadcode::Send).void }
   def on_send(send); end
+
+  private
+
+  sig { params(hash_node: ::Prism::HashNode, location: ::Spoom::Location).void }
+  def reference_nested_symbol_options(hash_node, location); end
 end
+
+Spoom::Deadcode::Plugins::ActiveModel::NESTED_METHOD_REFERENCE_KEYS = T.let(T.unsafe(nil), Array)
 
 class Spoom::Deadcode::Plugins::ActiveRecord < ::Spoom::Deadcode::Plugins::Base
   sig { override.params(send: ::Spoom::Deadcode::Send).void }
@@ -1281,7 +1486,21 @@ end
 class Spoom::Deadcode::Plugins::GraphQL < ::Spoom::Deadcode::Plugins::Base
   sig { override.params(send: ::Spoom::Deadcode::Send).void }
   def on_send(send); end
+
+  private
+
+  sig { params(send: ::Spoom::Deadcode::Send).void }
+  def on_argument(send); end
+
+  sig { params(send: ::Spoom::Deadcode::Send).void }
+  def on_builds(send); end
+
+  sig { params(send: ::Spoom::Deadcode::Send).void }
+  def on_field(send); end
 end
+
+Spoom::Deadcode::Plugins::GraphQL::ARGUMENT_SYMBOL_OPTION_KEYS = T.let(T.unsafe(nil), Array)
+Spoom::Deadcode::Plugins::GraphQL::FIELD_SYMBOL_OPTION_KEYS = T.let(T.unsafe(nil), Array)
 
 class Spoom::Deadcode::Plugins::Minitest < ::Spoom::Deadcode::Plugins::Base
   sig { override.params(definition: ::Spoom::Model::Method).void }
@@ -1401,7 +1620,8 @@ class Spoom::Deadcode::Remover::NodeContext
   sig { returns(T::Array[::Prism::Node]) }
   def nesting; end
 
-  def nesting=(_arg0); end
+  sig { params(nesting: T::Array[::Prism::Node]).returns(T::Array[::Prism::Node]) }
+  def nesting=(nesting); end
 
   sig { returns(T.nilable(::Prism::Node)) }
   def next_node; end
@@ -1480,6 +1700,9 @@ class Spoom::Deadcode::Remover::NodeRemover
 
   private
 
+  sig { params(node: ::Prism::Node, name: ::Symbol).returns(T::Boolean) }
+  def constant_visibility_call?(node, name); end
+
   sig { params(context: ::Spoom::Deadcode::Remover::NodeContext).void }
   def delete_attr_accessor(context); end
 
@@ -1495,6 +1718,12 @@ class Spoom::Deadcode::Remover::NodeRemover
   sig { params(context: ::Spoom::Deadcode::Remover::NodeContext).void }
   def delete_node_and_comments_and_sigs(context); end
 
+  sig { params(context: ::Spoom::Deadcode::Remover::NodeContext, name: ::Symbol).void }
+  def delete_symbol_argument(context, name); end
+
+  sig { params(node: ::Prism::Node).returns(T.nilable(::Integer)) }
+  def heredoc_terminator_line(node); end
+
   sig do
     params(
       node: ::Prism::Node,
@@ -1503,6 +1732,15 @@ class Spoom::Deadcode::Remover::NodeRemover
     ).void
   end
   def insert_accessor(node, send_context, was_removed:); end
+
+  sig { params(def_node: ::Prism::DefNode).returns(T.nilable(::Spoom::Deadcode::Remover::NodeContext)) }
+  def modifier_call_context(def_node); end
+
+  sig { params(node: T.any(::Prism::Comment, ::Prism::Node)).returns(::Integer) }
+  def node_end_line(node); end
+
+  sig { params(context: ::Spoom::Deadcode::Remover::NodeContext).void }
+  def remove_constant_visibility_call(context); end
 
   sig { params(start_char: ::Integer, end_char: ::Integer, replacement: ::String).void }
   def replace_chars(start_char, end_char, replacement); end
@@ -1517,13 +1755,24 @@ class Spoom::Deadcode::Remover::NodeRemover
   def transform_sig(node, name:, kind:); end
 end
 
-class Spoom::Deadcode::Send < ::T::Struct
-  const :node, ::Prism::CallNode
-  const :name, ::String
-  const :recv, T.nilable(::Prism::Node), default: T.unsafe(nil)
-  const :args, T::Array[::Prism::Node], default: T.unsafe(nil)
-  const :block, T.nilable(::Prism::Node), default: T.unsafe(nil)
-  const :location, ::Spoom::Location
+class Spoom::Deadcode::Send
+  sig do
+    params(
+      node: ::Prism::CallNode,
+      name: ::String,
+      location: ::Spoom::Location,
+      recv: T.nilable(::Prism::Node),
+      args: T::Array[::Prism::Node],
+      block: T.nilable(::Prism::Node)
+    ).void
+  end
+  def initialize(node:, name:, location:, recv: T.unsafe(nil), args: T.unsafe(nil), block: T.unsafe(nil)); end
+
+  sig { returns(T::Array[::Prism::Node]) }
+  def args; end
+
+  sig { returns(T.nilable(::Prism::Node)) }
+  def block; end
 
   sig do
     type_parameters(:T)
@@ -1536,15 +1785,37 @@ class Spoom::Deadcode::Send < ::T::Struct
 
   sig { params(block: T.proc.params(key: ::Prism::Node, value: T.nilable(::Prism::Node)).void).void }
   def each_arg_assoc(&block); end
+
+  sig { returns(::Spoom::Location) }
+  def location; end
+
+  sig { returns(::String) }
+  def name; end
+
+  sig { returns(::Prism::CallNode) }
+  def node; end
+
+  sig { returns(T.nilable(::Prism::Node)) }
+  def recv; end
 end
 
 class Spoom::Error < ::StandardError; end
 
-class Spoom::ExecResult < ::T::Struct
-  const :out, ::String
-  const :err, T.nilable(::String)
-  const :status, T::Boolean
-  const :exit_code, ::Integer
+class Spoom::ExecResult
+  sig { params(out: ::String, status: T::Boolean, exit_code: ::Integer, err: T.nilable(::String)).void }
+  def initialize(out:, status:, exit_code:, err: T.unsafe(nil)); end
+
+  sig { returns(T.nilable(::String)) }
+  def err; end
+
+  sig { returns(::Integer) }
+  def exit_code; end
+
+  sig { returns(::String) }
+  def out; end
+
+  sig { returns(T::Boolean) }
+  def status; end
 
   sig { returns(::String) }
   def to_s; end
@@ -1660,10 +1931,24 @@ class Spoom::FileTree::CollectStrictnesses < ::Spoom::FileTree::Visitor
   def visit_node(node); end
 end
 
-class Spoom::FileTree::Node < ::T::Struct
-  const :parent, T.nilable(::Spoom::FileTree::Node)
-  const :name, ::String
-  const :children, T::Hash[::String, ::Spoom::FileTree::Node], default: T.unsafe(nil)
+class Spoom::FileTree::Node
+  sig do
+    params(
+      name: ::String,
+      parent: T.nilable(::Spoom::FileTree::Node),
+      children: T::Hash[::String, ::Spoom::FileTree::Node]
+    ).void
+  end
+  def initialize(name:, parent: T.unsafe(nil), children: T.unsafe(nil)); end
+
+  sig { returns(T::Hash[::String, ::Spoom::FileTree::Node]) }
+  def children; end
+
+  sig { returns(::String) }
+  def name; end
+
+  sig { returns(T.nilable(::Spoom::FileTree::Node)) }
+  def parent; end
 
   sig { returns(::String) }
   def path; end
@@ -1703,9 +1988,15 @@ end
 
 module Spoom::Git; end
 
-class Spoom::Git::Commit < ::T::Struct
-  const :sha, ::String
-  const :time, ::Time
+class Spoom::Git::Commit
+  sig { params(sha: ::String, time: ::Time).void }
+  def initialize(sha:, time:); end
+
+  sig { returns(::String) }
+  def sha; end
+
+  sig { returns(::Time) }
+  def time; end
 
   sig { returns(::Integer) }
   def timestamp; end
@@ -1772,16 +2063,26 @@ class Spoom::LSP::Client
   def type_definitions(uri, line, column); end
 end
 
-class Spoom::LSP::Diagnostic < ::T::Struct
+class Spoom::LSP::Diagnostic
   include ::Spoom::LSP::PrintableSymbol
 
-  const :range, ::Spoom::LSP::Range
-  const :code, ::Integer
-  const :message, ::String
-  const :information, ::Object
+  sig { params(range: ::Spoom::LSP::Range, code: ::Integer, message: ::String, information: ::Object).void }
+  def initialize(range:, code:, message:, information:); end
 
   sig { override.params(printer: ::Spoom::LSP::SymbolPrinter).void }
   def accept_printer(printer); end
+
+  sig { returns(::Integer) }
+  def code; end
+
+  sig { returns(::Object) }
+  def information; end
+
+  sig { returns(::String) }
+  def message; end
+
+  sig { returns(::Spoom::LSP::Range) }
+  def range; end
 
   sig { returns(::String) }
   def to_s; end
@@ -1792,24 +2093,55 @@ class Spoom::LSP::Diagnostic < ::T::Struct
   end
 end
 
-class Spoom::LSP::DocumentSymbol < ::T::Struct
+class Spoom::LSP::DocumentSymbol
   include ::Spoom::LSP::PrintableSymbol
 
-  const :name, ::String
-  const :detail, T.nilable(::String)
-  const :kind, ::Integer
-  const :location, T.nilable(::Spoom::LSP::Location)
-  const :range, T.nilable(::Spoom::LSP::Range)
-  const :children, T::Array[::Spoom::LSP::DocumentSymbol]
+  sig do
+    params(
+      name: ::String,
+      kind: ::Integer,
+      children: T::Array[::Spoom::LSP::DocumentSymbol],
+      detail: T.nilable(::String),
+      location: T.nilable(::Spoom::LSP::Location),
+      range: T.nilable(::Spoom::LSP::Range)
+    ).void
+  end
+  def initialize(name:, kind:, children:, detail: T.unsafe(nil), location: T.unsafe(nil), range: T.unsafe(nil)); end
 
   sig { override.params(printer: ::Spoom::LSP::SymbolPrinter).void }
   def accept_printer(printer); end
 
+  sig { returns(T::Array[::Spoom::LSP::DocumentSymbol]) }
+  def children; end
+
+  sig { returns(T.nilable(::String)) }
+  def detail; end
+
+  sig { returns(::Integer) }
+  def kind; end
+
   sig { returns(::String) }
   def kind_string; end
 
+  sig { returns(T.nilable(::Spoom::LSP::Location)) }
+  def location; end
+
+  sig { returns(::String) }
+  def name; end
+
+  sig { returns(T.nilable(::Spoom::LSP::Range)) }
+  def range; end
+
   sig { returns(::String) }
   def to_s; end
+
+  protected
+
+  sig { returns(T::Array[T.untyped]) }
+  def deduplication_key; end
+
+  sig { params(range: T.nilable(::Spoom::LSP::Range)).returns(T.nilable(T::Array[::Integer])) }
+  def range_key(range); end
 
   class << self
     sig { params(json: T::Hash[T.untyped, T.untyped]).returns(::Spoom::LSP::DocumentSymbol) }
@@ -1838,14 +2170,20 @@ class Spoom::LSP::Error::Diagnostics < ::Spoom::LSP::Error
   end
 end
 
-class Spoom::LSP::Hover < ::T::Struct
+class Spoom::LSP::Hover
   include ::Spoom::LSP::PrintableSymbol
 
-  const :contents, ::String
-  const :range, T.nilable(::Spoom::LSP::Range)
+  sig { params(contents: ::String, range: T.nilable(::Spoom::LSP::Range)).void }
+  def initialize(contents:, range: T.unsafe(nil)); end
 
   sig { override.params(printer: ::Spoom::LSP::SymbolPrinter).void }
   def accept_printer(printer); end
+
+  sig { returns(::String) }
+  def contents; end
+
+  sig { returns(T.nilable(::Spoom::LSP::Range)) }
+  def range; end
 
   sig { returns(::String) }
   def to_s; end
@@ -1856,17 +2194,23 @@ class Spoom::LSP::Hover < ::T::Struct
   end
 end
 
-class Spoom::LSP::Location < ::T::Struct
+class Spoom::LSP::Location
   include ::Spoom::LSP::PrintableSymbol
 
-  const :uri, ::String
-  const :range, ::Spoom::LSP::Range
+  sig { params(uri: ::String, range: ::Spoom::LSP::Range).void }
+  def initialize(uri:, range:); end
 
   sig { override.params(printer: ::Spoom::LSP::SymbolPrinter).void }
   def accept_printer(printer); end
 
+  sig { returns(::Spoom::LSP::Range) }
+  def range; end
+
   sig { returns(::String) }
   def to_s; end
+
+  sig { returns(::String) }
+  def uri; end
 
   class << self
     sig { params(json: T::Hash[T.untyped, T.untyped]).returns(::Spoom::LSP::Location) }
@@ -1896,14 +2240,20 @@ class Spoom::LSP::Notification < ::Spoom::LSP::Message
   def params; end
 end
 
-class Spoom::LSP::Position < ::T::Struct
+class Spoom::LSP::Position
   include ::Spoom::LSP::PrintableSymbol
 
-  const :line, ::Integer
-  const :char, ::Integer
+  sig { params(line: ::Integer, char: ::Integer).void }
+  def initialize(line:, char:); end
 
   sig { override.params(printer: ::Spoom::LSP::SymbolPrinter).void }
   def accept_printer(printer); end
+
+  sig { returns(::Integer) }
+  def char; end
+
+  sig { returns(::Integer) }
+  def line; end
 
   sig { returns(::String) }
   def to_s; end
@@ -1921,14 +2271,20 @@ module Spoom::LSP::PrintableSymbol
   def accept_printer(printer); end
 end
 
-class Spoom::LSP::Range < ::T::Struct
+class Spoom::LSP::Range
   include ::Spoom::LSP::PrintableSymbol
 
-  const :start, ::Spoom::LSP::Position
-  const :end, ::Spoom::LSP::Position
+  sig { params(start_pos: ::Spoom::LSP::Position, end_pos: ::Spoom::LSP::Position).void }
+  def initialize(start_pos:, end_pos:); end
 
   sig { override.params(printer: ::Spoom::LSP::SymbolPrinter).void }
   def accept_printer(printer); end
+
+  sig { returns(::Spoom::LSP::Position) }
+  def end_pos; end
+
+  sig { returns(::Spoom::LSP::Position) }
+  def start_pos; end
 
   sig { returns(::String) }
   def to_s; end
@@ -1966,15 +2322,23 @@ class Spoom::LSP::ResponseError < ::Spoom::LSP::Error
   end
 end
 
-class Spoom::LSP::SignatureHelp < ::T::Struct
+class Spoom::LSP::SignatureHelp
   include ::Spoom::LSP::PrintableSymbol
 
-  const :label, T.nilable(::String)
-  const :doc, ::Object
-  const :params, T::Array[T.untyped]
+  sig { params(doc: ::Object, params: T::Array[T.untyped], label: T.nilable(::String)).void }
+  def initialize(doc:, params:, label: T.unsafe(nil)); end
 
   sig { override.params(printer: ::Spoom::LSP::SymbolPrinter).void }
   def accept_printer(printer); end
+
+  sig { returns(::Object) }
+  def doc; end
+
+  sig { returns(T.nilable(::String)) }
+  def label; end
+
+  sig { returns(T::Array[T.untyped]) }
+  def params; end
 
   sig { returns(::String) }
   def to_s; end
@@ -2002,7 +2366,8 @@ class Spoom::LSP::SymbolPrinter < ::Spoom::Printer
   sig { returns(T.nilable(::String)) }
   def prefix; end
 
-  def prefix=(_arg0); end
+  sig { params(prefix: T.nilable(::String)).returns(T.nilable(::String)) }
+  def prefix=(prefix); end
 
   sig { params(objects: T::Array[::Spoom::LSP::PrintableSymbol]).void }
   def print_list(objects); end
@@ -2013,7 +2378,7 @@ class Spoom::LSP::SymbolPrinter < ::Spoom::Printer
   sig { params(objects: T::Array[::Spoom::LSP::PrintableSymbol]).void }
   def print_objects(objects); end
 
-  sig { returns(T::Set[::Integer]) }
+  sig { returns(T::Set[T::Array[T.untyped]]) }
   def seen; end
 end
 
@@ -2162,7 +2527,8 @@ class Spoom::Model::Class < ::Spoom::Model::Namespace
   sig { returns(T.nilable(::String)) }
   def superclass_name; end
 
-  def superclass_name=(_arg0); end
+  sig { params(superclass_name: T.nilable(::String)).returns(T.nilable(::String)) }
+  def superclass_name=(superclass_name); end
 end
 
 class Spoom::Model::Comment
@@ -2263,16 +2629,24 @@ class Spoom::Model::Property < ::Spoom::Model::SymbolDef
   def visibility; end
 end
 
-class Spoom::Model::Reference < ::T::Struct
-  const :kind, ::Spoom::Model::Reference::Kind
-  const :name, ::String
-  const :location, ::Spoom::Location
+class Spoom::Model::Reference
+  sig { params(kind: ::Spoom::Model::Reference::Kind, name: ::String, location: ::Spoom::Location).void }
+  def initialize(kind:, name:, location:); end
 
   sig { returns(T::Boolean) }
   def constant?; end
 
+  sig { returns(::Spoom::Model::Reference::Kind) }
+  def kind; end
+
+  sig { returns(::Spoom::Location) }
+  def location; end
+
   sig { returns(T::Boolean) }
   def method?; end
+
+  sig { returns(::String) }
+  def name; end
 
   class << self
     sig { params(name: ::String, location: ::Spoom::Location).returns(::Spoom::Model::Reference) }
@@ -2283,12 +2657,16 @@ class Spoom::Model::Reference < ::T::Struct
   end
 end
 
-class Spoom::Model::Reference::Kind < ::T::Enum
-  enums do
-    Constant = new
-    Method = new
-  end
+class Spoom::Model::Reference::Kind
+  sig { params(name: ::String).void }
+  def initialize(name); end
+
+  sig { returns(::String) }
+  def to_s; end
 end
+
+Spoom::Model::Reference::Kind::Constant = T.let(T.unsafe(nil), Spoom::Model::Reference::Kind)
+Spoom::Model::Reference::Kind::Method = T.let(T.unsafe(nil), Spoom::Model::Reference::Kind)
 
 class Spoom::Model::ReferencesVisitor < ::Spoom::Visitor
   sig { params(file: ::String).void }
@@ -2439,14 +2817,22 @@ class Spoom::Model::UnresolvedSymbol < ::Spoom::Model::Symbol
   def to_s; end
 end
 
-class Spoom::Model::Visibility < ::T::Enum
-  enums do
-    Private = new
-    Protected = new
-    Public = new
+class Spoom::Model::Visibility
+  sig { params(name: ::String).void }
+  def initialize(name); end
+
+  sig { override.returns(::String) }
+  def to_s; end
+
+  class << self
+    sig { params(name: ::String).returns(::Spoom::Model::Visibility) }
+    def from_string(name); end
   end
 end
 
+Spoom::Model::Visibility::Private = T.let(T.unsafe(nil), Spoom::Model::Visibility)
+Spoom::Model::Visibility::Protected = T.let(T.unsafe(nil), Spoom::Model::Visibility)
+Spoom::Model::Visibility::Public = T.let(T.unsafe(nil), Spoom::Model::Visibility)
 class Spoom::ParseError < ::Spoom::Error; end
 
 class Spoom::Poset
@@ -2539,7 +2925,8 @@ class Spoom::Printer
   sig { returns(T.any(::IO, ::StringIO)) }
   def out; end
 
-  def out=(_arg0); end
+  sig { params(out: T.any(::IO, ::StringIO)).returns(T.any(::IO, ::StringIO)) }
+  def out=(out); end
 
   sig { params(string: T.nilable(::String)).void }
   def print(string); end
@@ -2557,12 +2944,21 @@ class Spoom::Printer
   def printt; end
 end
 
+module Spoom::PrismTypes; end
+Spoom::PrismTypes::AnyScopeNode = T.type_alias { T.any(::Prism::ClassNode, ::Prism::ModuleNode, ::Prism::SingletonClassNode) }
 module Spoom::RBS; end
-class Spoom::RBS::Annotation < ::Spoom::RBS::Comment; end
+
+class Spoom::RBS::Annotation < ::Spoom::RBS::Comment
+  sig { returns(T::Boolean) }
+  def abstract?; end
+end
 
 class Spoom::RBS::Comment
   sig { params(string: ::String, location: ::Prism::Location).void }
   def initialize(string, location); end
+
+  sig { returns(T::Array[::String]) }
+  def inner_comments; end
 
   sig { returns(::Prism::Location) }
   def location; end
@@ -2596,7 +2992,20 @@ module Spoom::RBS::ExtractRBSComments
   def node_rbs_comments(node); end
 end
 
-class Spoom::RBS::Signature < ::Spoom::RBS::Comment; end
+class Spoom::RBS::Signature < ::Spoom::RBS::Comment
+  sig do
+    params(
+      string: ::String,
+      location: ::Prism::Location,
+      continuation_locations: T::Array[::Prism::Location]
+    ).void
+  end
+  def initialize(string, location, continuation_locations: T.unsafe(nil)); end
+
+  sig { returns(T::Array[::Prism::Location]) }
+  def continuation_locations; end
+end
+
 class Spoom::RBS::TypeAlias < ::Spoom::RBS::Comment; end
 Spoom::SPOOM_PATH = T.let(T.unsafe(nil), String)
 module Spoom::Sorbet; end
@@ -2615,7 +3024,8 @@ class Spoom::Sorbet::Config
   sig { returns(T::Boolean) }
   def no_stdlib; end
 
-  def no_stdlib=(_arg0); end
+  sig { params(no_stdlib: T::Boolean).returns(T::Boolean) }
+  def no_stdlib=(no_stdlib); end
 
   sig { returns(::String) }
   def options_string; end
@@ -2623,7 +3033,11 @@ class Spoom::Sorbet::Config
   sig { returns(T::Array[::String]) }
   def paths; end
 
-  def paths=(_arg0); end
+  sig { params(paths: T::Array[::String]).returns(T::Array[::String]) }
+  def paths=(paths); end
+
+  def typed_overrides; end
+  def typed_overrides=(_arg0); end
 
   private
 
@@ -2712,6 +3126,17 @@ class Spoom::Sorbet::Errors::Error
   def to_s; end
 end
 
+class Spoom::Sorbet::Errors::ParseResult
+  sig { params(errors: T::Array[::Spoom::Sorbet::Errors::Error], warnings: T::Array[::String]).void }
+  def initialize(errors, warnings); end
+
+  sig { returns(T::Array[::Spoom::Sorbet::Errors::Error]) }
+  def errors; end
+
+  sig { returns(T::Array[::String]) }
+  def warnings; end
+end
+
 class Spoom::Sorbet::Errors::Parser
   sig { params(error_url_base: ::String).void }
   def initialize(error_url_base: T.unsafe(nil)); end
@@ -2719,10 +3144,16 @@ class Spoom::Sorbet::Errors::Parser
   sig { params(output: ::String).returns(T::Array[::Spoom::Sorbet::Errors::Error]) }
   def parse(output); end
 
+  sig { params(output: ::String).returns(::Spoom::Sorbet::Errors::ParseResult) }
+  def parse_result(output); end
+
   private
 
   sig { params(line: ::String).void }
   def append_error(line); end
+
+  sig { params(warning: ::String).void }
+  def append_warning(warning); end
 
   sig { void }
   def close_error; end
@@ -2737,6 +3168,9 @@ class Spoom::Sorbet::Errors::Parser
   def open_error(error); end
 
   class << self
+    sig { params(output: ::String, error_url_base: ::String).returns(::Spoom::Sorbet::Errors::ParseResult) }
+    def parse_result(output, error_url_base: T.unsafe(nil)); end
+
     sig { params(output: ::String, error_url_base: ::String).returns(T::Array[::Spoom::Sorbet::Errors::Error]) }
     def parse_string(output, error_url_base: T.unsafe(nil)); end
   end
@@ -2835,6 +3269,9 @@ module Spoom::Sorbet::Sigils
     sig { params(path: T.any(::Pathname, ::String)).returns(T.nilable(::String)) }
     def file_strictness(path); end
 
+    sig { params(content: ::String, strictness: ::String).returns(T::Boolean) }
+    def satisfies_minimum_strictness?(content, strictness); end
+
     sig { params(strictness: ::String).returns(::String) }
     def sigil_string(strictness); end
 
@@ -2860,8 +3297,17 @@ Spoom::Sorbet::Sigils::VALID_STRICTNESS = T.let(T.unsafe(nil), Array)
 
 module Spoom::Sorbet::Translate
   class << self
-    sig { params(ruby_contents: ::String, file: ::String, max_line_length: T.nilable(::Integer)).returns(::String) }
-    def rbs_comments_to_sorbet_sigs(ruby_contents, file:, max_line_length: T.unsafe(nil)); end
+    sig do
+      params(
+        ruby_contents: ::String,
+        file: ::String,
+        max_line_length: T.nilable(::Integer),
+        overloads_strategy: ::Symbol,
+        erase_generic_types: T::Boolean,
+        force: T::Boolean
+      ).returns(::String)
+    end
+    def rbs_comments_to_sorbet_sigs(ruby_contents, file:, max_line_length: T.unsafe(nil), overloads_strategy: T.unsafe(nil), erase_generic_types: T.unsafe(nil), force: T.unsafe(nil)); end
 
     sig do
       params(
@@ -2881,13 +3327,14 @@ module Spoom::Sorbet::Translate
         ruby_contents: ::String,
         file: ::String,
         positional_names: T::Boolean,
+        preserve_multiline_signatures: T::Boolean,
         max_line_length: T.nilable(::Integer),
         translate_generics: T::Boolean,
         translate_helpers: T::Boolean,
         translate_abstract_methods: T::Boolean
       ).returns(::String)
     end
-    def sorbet_sigs_to_rbs_comments(ruby_contents, file:, positional_names: T.unsafe(nil), max_line_length: T.unsafe(nil), translate_generics: T.unsafe(nil), translate_helpers: T.unsafe(nil), translate_abstract_methods: T.unsafe(nil)); end
+    def sorbet_sigs_to_rbs_comments(ruby_contents, file:, positional_names: T.unsafe(nil), preserve_multiline_signatures: T.unsafe(nil), max_line_length: T.unsafe(nil), translate_generics: T.unsafe(nil), translate_helpers: T.unsafe(nil), translate_abstract_methods: T.unsafe(nil)); end
 
     sig { params(ruby_contents: ::String, file: ::String).returns(::String) }
     def strip_sorbet_sigs(ruby_contents, file:); end
@@ -2896,11 +3343,75 @@ end
 
 class Spoom::Sorbet::Translate::Error < ::Spoom::Error; end
 
-class Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs < ::Spoom::Sorbet::Translate::Translator
+class Spoom::Sorbet::Translate::LandmarkFinder < ::Prism::Visitor
+  sig { void }
+  def initialize; end
+
+  sig { returns(T::Hash[::String, T::Array[::Integer]]) }
+  def landmarks; end
+
+  sig { override.params(node: ::Prism::ClassNode).void }
+  def visit_class_node(node); end
+
+  sig { override.params(node: ::Prism::DefNode).void }
+  def visit_def_node(node); end
+
+  sig { override.params(node: ::Prism::ModuleNode).void }
+  def visit_module_node(node); end
+
+  sig { override.params(node: ::Prism::SingletonClassNode).void }
+  def visit_singleton_class_node(node); end
+
+  sig { override.params(node: ::Prism::SourceLineNode).void }
+  def visit_source_line_node(node); end
+
+  private
+
+  sig { params(landmark_id: ::String, node: ::Prism::Node).void }
+  def record(landmark_id, node); end
+
+  class << self
+    sig { params(source: ::String).returns(T::Hash[::String, T::Array[::Integer]]) }
+    def find_landmarks_in(source); end
+  end
+end
+
+module Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs
+  class << self
+    sig { params(ruby_contents: ::String).returns(T::Boolean) }
+    def contains_rbs_syntax?(ruby_contents); end
+
+    sig do
+      params(
+        ruby_contents: ::String,
+        file: ::String,
+        max_line_length: T.nilable(::Integer),
+        overloads_strategy: ::Symbol,
+        erase_generic_types: T::Boolean,
+        force: T::Boolean
+      ).returns(::String)
+    end
+    def rewrite_if_needed(ruby_contents, file:, max_line_length: T.unsafe(nil), overloads_strategy: T.unsafe(nil), erase_generic_types: T.unsafe(nil), force: T.unsafe(nil)); end
+  end
+end
+
+class Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::BaseRBIFormat
+  abstract!
+end
+
+class Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::BaseTranslator < ::Spoom::Sorbet::Translate::Translator
   include ::Spoom::RBS::ExtractRBSComments
 
-  sig { params(ruby_contents: ::String, file: ::String, max_line_length: T.nilable(::Integer)).void }
-  def initialize(ruby_contents, file:, max_line_length: T.unsafe(nil)); end
+  abstract!
+
+  sig do
+    params(
+      ruby_contents: ::String,
+      file: ::String,
+      options: ::Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::Options
+    ).void
+  end
+  def initialize(ruby_contents, file:, options: T.unsafe(nil)); end
 
   sig { override.params(node: ::Prism::CallNode).void }
   def visit_call_node(node); end
@@ -2923,18 +3434,35 @@ class Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs < ::Spoom::Sorbet::Trans
   private
 
   sig do
-    params(
-      node: T.any(::Prism::ClassNode, ::Prism::ModuleNode, ::Prism::SingletonClassNode),
-      constant_regex: ::Regexp
-    ).returns(T::Boolean)
+    abstract
+      .params(
+        annotation: ::Spoom::RBS::Annotation,
+        parent_node: T.any(::Prism::ClassNode, ::Prism::ModuleNode, ::Prism::SingletonClassNode),
+        insert_pos: ::Integer,
+        sorbet_replacement: T.nilable(::String)
+      ).void
   end
-  def already_extends?(node, constant_regex); end
+  def apply_class_annotation(annotation, parent_node:, insert_pos:, sorbet_replacement:); end
 
   sig { params(node: T.any(::Prism::ClassNode, ::Prism::ModuleNode, ::Prism::SingletonClassNode)).void }
   def apply_class_annotations(node); end
 
-  sig { params(annotations: T::Array[::Spoom::RBS::Annotation], sig: ::RBI::Sig).void }
+  sig do
+    params(
+      annotations: T::Array[::Spoom::RBS::Annotation],
+      sig: ::RBI::Sig
+    ).returns(T::Array[::Spoom::RBS::Annotation])
+  end
   def apply_member_annotations(annotations, sig); end
+
+  sig do
+    params(
+      signatures: T::Array[::Spoom::RBS::Signature],
+      method_name: ::String,
+      location: ::String
+    ).returns(T::Array[::Spoom::RBS::Signature])
+  end
+  def apply_overloads_strategy(signatures, method_name:, location:); end
 
   sig { params(comments: T::Array[::Prism::Comment]).void }
   def apply_type_aliases(comments); end
@@ -2942,23 +3470,181 @@ class Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs < ::Spoom::Sorbet::Trans
   sig { params(comments: T::Array[::Prism::Comment]).returns(T::Array[::Spoom::RBS::TypeAlias]) }
   def collect_type_aliases(comments); end
 
+  sig do
+    abstract
+      .params(
+        mixin_name: ::String,
+        into: T.any(::Prism::ClassNode, ::Prism::ModuleNode, ::Prism::SingletonClassNode),
+        at: ::Integer
+      ).void
+  end
+  def extend_with(mixin_name, into:, at:); end
+
+  sig do
+    abstract
+      .params(
+        type_member: ::String,
+        parent_node: T.any(::Prism::ClassNode, ::Prism::ModuleNode, ::Prism::SingletonClassNode),
+        insert_pos: ::Integer
+      ).void
+  end
+  def insert_type_member(type_member, parent_node:, insert_pos:); end
+
+  sig { overridable.params(of: ::String, to_height_of: ::Spoom::RBS::Comment).returns(::String) }
+  def pad_out_line_count(of:, to_height_of:); end
+
+  sig { overridable.params(replacement: ::String, from: ::Spoom::RBS::Comment).returns(::String) }
+  def preserve_comments(replacement, from:); end
+
+  sig { overridable.params(annotation: ::Spoom::RBS::Annotation, is_known: T::Boolean).void }
+  def rewrite_annotation(annotation, is_known:); end
+
   sig { params(def_node: ::Prism::DefNode, comments: ::Spoom::RBS::Comments).void }
   def rewrite_def(def_node, comments); end
 
+  sig { abstract.params(signature: ::Spoom::RBS::Signature).void }
+  def rewrite_discarded_overload(signature); end
+
+  sig { params(annotations: T::Array[::Spoom::RBS::Annotation], known: T::Array[::Spoom::RBS::Annotation]).void }
+  def rewrite_member_annotations(annotations, known:); end
+
+  sig { abstract.params(signature: ::Spoom::RBS::Signature, type_params: T::Array[::RBS::AST::TypeParam]).void }
+  def rewrite_type_params_signature(signature, type_params:); end
+
   sig { params(node: ::Prism::CallNode).void }
   def visit_attr(node); end
+end
+
+class Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::HumanReadableRBIFormat < ::Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::BaseRBIFormat
+  sig { params(max_line_length: T.nilable(::Integer)).void }
+  def initialize(max_line_length: T.unsafe(nil)); end
+
+  sig { returns(T.nilable(::Integer)) }
+  def max_line_length; end
 
   class << self
-    sig { params(source: ::String).returns(T::Boolean) }
-    def contains_rbs_syntax?(source); end
-
-    sig { params(ruby_contents: ::String, file: ::String, max_line_length: T.nilable(::Integer)).returns(::String) }
-    def rewrite_if_needed(ruby_contents, file:, max_line_length: T.unsafe(nil)); end
+    sig { returns(::Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::HumanReadableRBIFormat) }
+    def default; end
   end
 end
 
-Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::RBS_ANNOTATION_MARKERS = T.let(T.unsafe(nil), Array)
-Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::RBS_REWRITE_PATTERN = T.let(T.unsafe(nil), Regexp)
+class Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::HumanReadableTranslator < ::Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::BaseTranslator
+  private
+
+  sig do
+    override
+      .params(
+        annotation: ::Spoom::RBS::Annotation,
+        parent_node: T.any(::Prism::ClassNode, ::Prism::ModuleNode, ::Prism::SingletonClassNode),
+        insert_pos: ::Integer,
+        sorbet_replacement: T.nilable(::String)
+      ).void
+  end
+  def apply_class_annotation(annotation, parent_node:, insert_pos:, sorbet_replacement:); end
+
+  sig { override.params(mixin_name: ::String, into: ::Prism::Node, at: ::Integer).void }
+  def extend_with(mixin_name, into:, at:); end
+
+  sig do
+    override
+      .params(
+        type_member: ::String,
+        parent_node: T.any(::Prism::ClassNode, ::Prism::ModuleNode, ::Prism::SingletonClassNode),
+        insert_pos: ::Integer
+      ).void
+  end
+  def insert_type_member(type_member, parent_node:, insert_pos:); end
+
+  sig { override.params(replacement: ::String, from: ::Spoom::RBS::Comment).returns(::String) }
+  def preserve_comments(replacement, from:); end
+
+  sig { override.params(signature: ::Spoom::RBS::Signature).void }
+  def rewrite_discarded_overload(signature); end
+
+  sig { override.params(signature: ::Spoom::RBS::Signature, type_params: T::Array[::RBS::AST::TypeParam]).void }
+  def rewrite_type_params_signature(signature, type_params:); end
+end
+
+class Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::LineMatchedRBIFormat < ::Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::BaseRBIFormat
+  class << self
+    sig { returns(::Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::LineMatchedRBIFormat) }
+    def default; end
+  end
+end
+
+class Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::LineMatchingTranslator < ::Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::BaseTranslator
+  private
+
+  sig do
+    override
+      .params(
+        annotation: ::Spoom::RBS::Annotation,
+        parent_node: T.any(::Prism::ClassNode, ::Prism::ModuleNode, ::Prism::SingletonClassNode),
+        insert_pos: ::Integer,
+        sorbet_replacement: T.nilable(::String)
+      ).void
+  end
+  def apply_class_annotation(annotation, parent_node:, insert_pos:, sorbet_replacement:); end
+
+  sig { override.params(mixin_name: ::String, into: ::Prism::Node, at: ::Integer).void }
+  def extend_with(mixin_name, into:, at:); end
+
+  sig do
+    override
+      .params(
+        type_member: ::String,
+        parent_node: T.any(::Prism::ClassNode, ::Prism::ModuleNode, ::Prism::SingletonClassNode),
+        insert_pos: ::Integer
+      ).void
+  end
+  def insert_type_member(type_member, parent_node:, insert_pos:); end
+
+  sig { override.params(of: ::String, to_height_of: ::Spoom::RBS::Comment).returns(::String) }
+  def pad_out_line_count(of:, to_height_of:); end
+
+  sig { override.params(annotation: ::Spoom::RBS::Annotation, is_known: T::Boolean).void }
+  def rewrite_annotation(annotation, is_known:); end
+
+  sig { override.params(signature: ::Spoom::RBS::Signature).void }
+  def rewrite_discarded_overload(signature); end
+
+  sig { override.params(signature: ::Spoom::RBS::Signature, type_params: T::Array[::RBS::AST::TypeParam]).void }
+  def rewrite_type_params_signature(signature, type_params:); end
+end
+
+class Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::Options
+  sig do
+    params(
+      overloads_strategy: ::Symbol,
+      erase_generic_types: T::Boolean,
+      output_format: ::Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::BaseRBIFormat,
+      translate_abstract_methods: T::Boolean
+    ).void
+  end
+  def initialize(overloads_strategy: T.unsafe(nil), erase_generic_types: T.unsafe(nil), output_format: T.unsafe(nil), translate_abstract_methods: T.unsafe(nil)); end
+
+  sig { returns(T::Boolean) }
+  def erase_generic_types; end
+
+  sig { returns(::Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::BaseRBIFormat) }
+  def output_format; end
+
+  sig { returns(::Symbol) }
+  def overloads_strategy; end
+
+  sig { returns(::RBI::RBS::MethodTypeTranslator::Options) }
+  def rbi_options; end
+
+  sig { returns(T::Boolean) }
+  def translate_abstract_methods; end
+
+  class << self
+    sig { returns(::Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::Options) }
+    def default; end
+  end
+end
+
+Spoom::Sorbet::Translate::RBSCommentsToSorbetSigs::Options::ALLOWED_OVERLOAD_STRATEGIES = T.let(T.unsafe(nil), Array)
 
 class Spoom::Sorbet::Translate::SorbetAssertionsToRBSComments < ::Spoom::Sorbet::Translate::Translator
   sig do
@@ -2997,8 +3683,17 @@ class Spoom::Sorbet::Translate::SorbetAssertionsToRBSComments < ::Spoom::Sorbet:
   sig { params(node: ::Prism::Node).returns(T::Boolean) }
   def has_rbs_annotation?(node); end
 
+  sig { params(node: ::Prism::Node, replace_end_offset: ::Integer).returns(T.nilable(::String)) }
+  def heredoc_body_within_range(node, replace_end_offset); end
+
+  sig { params(node: ::Prism::Node).returns(T::Array[::Integer]) }
+  def heredoc_end_offsets(node); end
+
   sig { params(node: ::Prism::Node).returns(T::Boolean) }
   def maybe_translate_assertion(node); end
+
+  sig { params(node: ::Prism::Node).returns(T::Boolean) }
+  def string_literal?(node); end
 
   sig { params(node: T.nilable(::Prism::Node)).returns(T::Boolean) }
   def t?(node); end
@@ -3015,13 +3710,14 @@ class Spoom::Sorbet::Translate::SorbetSigsToRBSComments < ::Spoom::Sorbet::Trans
       ruby_contents: ::String,
       file: ::String,
       positional_names: T::Boolean,
+      preserve_multiline_signatures: T::Boolean,
       max_line_length: T.nilable(::Integer),
       translate_generics: T::Boolean,
       translate_helpers: T::Boolean,
       translate_abstract_methods: T::Boolean
     ).void
   end
-  def initialize(ruby_contents, file:, positional_names:, max_line_length: T.unsafe(nil), translate_generics: T.unsafe(nil), translate_helpers: T.unsafe(nil), translate_abstract_methods: T.unsafe(nil)); end
+  def initialize(ruby_contents, file:, positional_names:, preserve_multiline_signatures: T.unsafe(nil), max_line_length: T.unsafe(nil), translate_generics: T.unsafe(nil), translate_helpers: T.unsafe(nil), translate_abstract_methods: T.unsafe(nil)); end
 
   sig { override.params(node: ::Prism::CallNode).void }
   def visit_call_node(node); end
@@ -3066,8 +3762,14 @@ class Spoom::Sorbet::Translate::SorbetSigsToRBSComments < ::Spoom::Sorbet::Trans
   sig { void }
   def delete_extend_t_helpers; end
 
-  sig { params(indent: ::Integer, block: T.proc.params(arg0: ::RBI::RBSPrinter).void).returns(::String) }
-  def rbs_print(indent, &block); end
+  sig do
+    params(
+      indent: ::Integer,
+      preserve_multiline_signatures: T::Boolean,
+      block: T.proc.params(arg0: ::RBI::RBSPrinter).void
+    ).returns(::String)
+  end
+  def rbs_print(indent, preserve_multiline_signatures:, &block); end
 
   sig { params(node: ::Prism::CallNode).void }
   def visit_attr(node); end
@@ -3116,6 +3818,52 @@ class Spoom::Sorbet::Translate::Translator < ::Spoom::Visitor
   def sorbet_sig?(node); end
 end
 
+class Spoom::Sorbet::Translate::ValidationResult
+  sig do
+    params(
+      missing_from_rewritten_output: T::Array[{landmark_id: ::String, line: ::Integer}],
+      excess_in_rewritten_output: T::Array[{landmark_id: ::String, line: ::Integer}],
+      on_wrong_line: T::Array[{landmark_id: ::String, expected: T::Array[::Integer], actual: T::Array[::Integer]}]
+    ).void
+  end
+  def initialize(missing_from_rewritten_output:, excess_in_rewritten_output:, on_wrong_line:); end
+
+  sig { returns(T::Array[::String]) }
+  def errors; end
+
+  sig { returns(T::Array[{landmark_id: ::String, line: ::Integer}]) }
+  def excess_in_rewritten_output; end
+
+  sig { returns(T::Array[{landmark_id: ::String, line: ::Integer}]) }
+  def missing_from_rewritten_output; end
+
+  sig { returns(T::Array[{landmark_id: ::String, expected: T::Array[::Integer], actual: T::Array[::Integer]}]) }
+  def on_wrong_line; end
+
+  sig { params(printer: T.untyped).void }
+  def pretty_print(printer); end
+
+  sig { returns(T::Boolean) }
+  def valid?; end
+
+  private
+
+  sig { params(lines: T::Array[::Integer]).returns(::String) }
+  def format_lines(lines); end
+end
+
+Spoom::Sorbet::Translate::ValidationResult::LandmarkLocation = T.type_alias { {landmark_id: ::String, line: ::Integer} }
+Spoom::Sorbet::Translate::ValidationResult::MovedLandmark = T.type_alias { {landmark_id: ::String, expected: T::Array[::Integer], actual: T::Array[::Integer]} }
+
+module Spoom::Sorbet::Translate::Validator
+  class << self
+    sig { params(original: ::String, rewritten: ::String).returns(::Spoom::Sorbet::Translate::ValidationResult) }
+    def validate(original, rewritten); end
+  end
+end
+
+Spoom::Sorbet::Translate::Validator::LandmarkID = T.type_alias { ::String }
+Spoom::Sorbet::Translate::Validator::Landmarks = T.type_alias { T::Hash[::String, T::Array[::Integer]] }
 module Spoom::Source; end
 
 class Spoom::Source::Delete < ::Spoom::Source::Edit
