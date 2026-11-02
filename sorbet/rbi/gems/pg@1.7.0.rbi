@@ -37,6 +37,8 @@ class PG::BasicTypeMapBasedOnResult < ::PG::TypeMapByOid
   include ::PG::BasicTypeRegistry::Checker
 
   def initialize(connection_or_coder_maps, registry: T.unsafe(nil)); end
+
+  def coder_maps_bundle; end
 end
 
 class PG::BasicTypeMapForQueries < ::PG::TypeMapByClass
@@ -44,6 +46,7 @@ class PG::BasicTypeMapForQueries < ::PG::TypeMapByClass
 
   def initialize(connection_or_coder_maps, registry: T.unsafe(nil), if_undefined: T.unsafe(nil)); end
 
+  def coder_maps_bundle; end
   def encode_array_as; end
   def encode_array_as=(pg_type); end
 
@@ -73,6 +76,8 @@ class PG::BasicTypeMapForResults < ::PG::TypeMapByOid
   include ::PG::BasicTypeRegistry::Checker
 
   def initialize(connection_or_coder_maps, registry: T.unsafe(nil)); end
+
+  def coder_maps_bundle; end
 end
 
 class PG::BasicTypeMapForResults::WarningTypeMap < ::PG::TypeMapInRuby
@@ -480,6 +485,7 @@ class PG::Connection
   def describe_portal(_arg0); end
   def describe_prepared(_arg0); end
   def discard_results; end
+  def embed_params(sql, params, type_map: T.unsafe(nil)); end
   def encoder_for_put_copy_data; end
   def encoder_for_put_copy_data=(_arg0); end
   def encrypt_password(password, username, algorithm = T.unsafe(nil)); end
@@ -500,6 +506,7 @@ class PG::Connection
   def finish; end
   def finished?; end
   def flush; end
+  def full_protocol_version; end
   def get_client_encoding; end
   def get_copy_data(async = T.unsafe(nil), decoder = T.unsafe(nil)); end
   def get_last_result; end
@@ -619,6 +626,7 @@ class PG::Connection
 
   def async_connect_or_reset(poll_meth); end
   def flush_data=(_arg0); end
+  def quote_type_name(name); end
   def reset_start2(_arg0); end
 
   class << self
@@ -659,6 +667,7 @@ end
 
 PG::Connection::BinarySignature = T.let(T.unsafe(nil), String)
 PG::Connection::CONNECT_ARGUMENT_ORDER = T.let(T.unsafe(nil), Array)
+PG::Connection::PLACEHOLDER_RE = T.let(T.unsafe(nil), Regexp)
 PG::Connection::PROGRAM_NAME = T.let(T.unsafe(nil), String)
 
 module PG::Connection::Pollable
@@ -668,6 +677,7 @@ module PG::Connection::Pollable
   def remove_current_host(iopts); end
 end
 
+PG::Connection::SAFE_TYPE_NAME_PART_RE = T.let(T.unsafe(nil), Regexp)
 class PG::ConnectionBad < ::PG::Error; end
 class PG::ConnectionDoesNotExist < ::PG::ConnectionException; end
 class PG::ConnectionException < ::PG::ServerError; end
@@ -979,6 +989,7 @@ class PG::Result
   def column_values(_arg0); end
   def each; end
   def each_row; end
+  def each_tuple; end
   def error_field(_arg0); end
   def error_message; end
   def fformat(_arg0); end
@@ -1319,7 +1330,9 @@ class PG::Tuple
   def marshal_load(_arg0); end
 end
 
-class PG::TypeMap; end
+class PG::TypeMap
+  def query_param_encoders(_arg0); end
+end
 
 module PG::TypeMap::DefaultTypeMappable
   def default_type_map; end
