@@ -112,9 +112,14 @@ class Nokogiri::CSS::Parser < ::Racc::Parser
   def next_token; end
   def on_error(error_token_id, error_value, value_stack); end
   def parse(string); end
-  def unescape_css_identifier(identifier); end
-  def unescape_css_string(str); end
+  def unescape_css_element_name(identifier); end
   def xpath_for(selector, visitor); end
+
+  class << self
+    def unescape_css_code_point(hex); end
+    def unescape_css_identifier(identifier); end
+    def unescape_css_string(str); end
+  end
 end
 
 Nokogiri::CSS::Parser::Racc_arg = T.let(T.unsafe(nil), Array)
@@ -180,7 +185,11 @@ class Nokogiri::CSS::XPathVisitor
   def is_of_type_pseudo_class?(node); end
   def nth(node, options = T.unsafe(nil)); end
   def read_a_and_positive_b(values); end
+  def validate_xpath_element_name(name); end
   def validate_xpath_function_name(name); end
+  def xpath_function_argument(arg); end
+  def xpath_name?(name); end
+  def xpath_string_literal(string); end
 end
 
 module Nokogiri::CSS::XPathVisitor::BuiltinsConfig; end
@@ -194,6 +203,7 @@ Nokogiri::CSS::XPathVisitor::DoctypeConfig::HTML5 = T.let(T.unsafe(nil), Symbol)
 Nokogiri::CSS::XPathVisitor::DoctypeConfig::VALUES = T.let(T.unsafe(nil), Array)
 Nokogiri::CSS::XPathVisitor::DoctypeConfig::XML = T.let(T.unsafe(nil), Symbol)
 Nokogiri::CSS::XPathVisitor::WILDCARD_NAMESPACES = T.let(T.unsafe(nil), TrueClass)
+Nokogiri::CSS::XPathVisitor::XPATH_NAME = T.let(T.unsafe(nil), Regexp)
 
 module Nokogiri::ClassResolver
   def related_class(class_name); end
@@ -507,6 +517,8 @@ class Nokogiri::HTML5::Document < ::Nokogiri::HTML4::Document
   def initialize(*args); end
 
   def fragment(markup = T.unsafe(nil)); end
+  def parse_noscript_content_as_text; end
+  def parse_noscript_content_as_text=(_arg0); end
   def quirks_mode; end
   def to_xml(options = T.unsafe(nil), &block); end
   def url; end
@@ -533,6 +545,10 @@ class Nokogiri::HTML5::DocumentFragment < ::Nokogiri::HTML4::DocumentFragment
   def extract_params(params); end
   def quirks_mode; end
   def serialize(options = T.unsafe(nil), &block); end
+
+  private
+
+  def noscript_parsing_mode(doc, options); end
 
   class << self
     def parse(input, encoding_ = T.unsafe(nil), positional_options_hash = T.unsafe(nil), encoding: T.unsafe(nil), **options); end
@@ -579,6 +595,7 @@ Nokogiri::VERSION = T.let(T.unsafe(nil), String)
 Nokogiri::VERSION_INFO = T.let(T.unsafe(nil), Hash)
 
 class Nokogiri::VersionInfo
+  include ::Singleton::SingletonInstanceMethods
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 
@@ -652,7 +669,7 @@ class Nokogiri::XML::Builder
   def initialize(options = T.unsafe(nil), root = T.unsafe(nil), &block); end
 
   def <<(string); end
-  def [](ns); end
+  def [](ns_prefix); end
   def arity; end
   def arity=(_arg0); end
   def cdata(string); end
@@ -669,6 +686,7 @@ class Nokogiri::XML::Builder
 
   private
 
+  def bind_ns(node); end
   def insert(node, &block); end
 
   class << self
@@ -1047,7 +1065,7 @@ class Nokogiri::XML::Node
   def compare(_arg0); end
   def dump_html; end
   def get(_arg0); end
-  def html_standard_serialize(_arg0); end
+  def html_standard_serialize(_arg0, _arg1); end
   def in_context(_arg0, _arg1); end
   def inspect_attributes; end
   def keywordify(keywords); end

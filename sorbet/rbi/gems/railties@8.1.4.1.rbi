@@ -300,7 +300,7 @@ class Rails::Application::RoutesReloader
   extend ::ActiveSupport::Callbacks::ClassMethods
   extend ::ActiveSupport::DescendantsTracker
 
-  def initialize; end
+  def initialize(file_watcher: T.unsafe(nil)); end
 
   def __callbacks; end
   def eager_load; end
@@ -310,11 +310,10 @@ class Rails::Application::RoutesReloader
   def execute_unless_loaded; end
   def external_routes; end
   def loaded; end
-  def loaded=(_arg0); end
   def paths; end
   def reload!; end
   def route_sets; end
-  def run_after_load_paths=(_arg0); end
+  def run_once_after_load_paths=(_arg0); end
   def updated?(*_arg0, **_arg1, &_arg2); end
 
   private
@@ -323,7 +322,7 @@ class Rails::Application::RoutesReloader
   def finalize!; end
   def load_paths; end
   def revert; end
-  def run_after_load_paths; end
+  def run_after_load_paths_callback; end
   def updater; end
 
   class << self
@@ -549,9 +548,11 @@ class Rails::Engine::LazyRouteSet < ::ActionDispatch::Routing::RouteSet
   def initialize(config = T.unsafe(nil)); end
 
   def call(req); end
+  def define_mounted_helper(name, script_namer = T.unsafe(nil)); end
   def draw(&block); end
   def generate_extras(options, recall = T.unsafe(nil)); end
   def generate_url_helpers(supports_path); end
+  def mounted_helpers; end
   def polymorphic_mappings; end
   def recognize_path(path, environment = T.unsafe(nil)); end
   def recognize_path_with_request(*_arg0, **_arg1, &_arg2); end
@@ -560,6 +561,32 @@ class Rails::Engine::LazyRouteSet < ::ActionDispatch::Routing::RouteSet
   private
 
   def method_missing_module; end
+end
+
+module Rails::Engine::LazyRouteSet::MountedHelpers
+  extend ::ActiveSupport::Concern
+  include GeneratedInstanceMethods
+  include ::ActionDispatch::Routing::UrlFor
+  include ::ActionDispatch::Routing::RouteSet::MountedHelpers
+
+  mixes_in_class_methods GeneratedClassMethods
+
+  private
+
+  def method_missing(method_name, *_arg1, **_arg2, &_arg3); end
+  def respond_to_missing?(method_name, include_private = T.unsafe(nil)); end
+
+  module GeneratedClassMethods
+    def default_url_options; end
+    def default_url_options=(value); end
+    def default_url_options?; end
+  end
+
+  module GeneratedInstanceMethods
+    def default_url_options; end
+    def default_url_options=(value); end
+    def default_url_options?; end
+  end
 end
 
 class Rails::Engine::LazyRouteSet::NamedRouteCollection < ::ActionDispatch::Routing::RouteSet::NamedRouteCollection
@@ -1288,7 +1315,7 @@ class Rails::TestUnitRailtie < ::Rails::Railtie; end
 module Rails::VERSION; end
 Rails::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 Rails::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
-Rails::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
+Rails::VERSION::PRE = T.let(T.unsafe(nil), String)
 Rails::VERSION::STRING = T.let(T.unsafe(nil), String)
 Rails::VERSION::TINY = T.let(T.unsafe(nil), Integer)
 

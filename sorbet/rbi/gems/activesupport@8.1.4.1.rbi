@@ -1828,6 +1828,7 @@ class ActiveSupport::HashWithIndifferentAccess < ::Hash
   def extractable_options?; end
   def fetch(key, *extras); end
   def fetch_values(*indices, &block); end
+  def filter(*args, &block); end
   def has_key?(key); end
   def include?(key); end
   def key?(key); end
@@ -1917,7 +1918,6 @@ module ActiveSupport::Inflector
   private
 
   def apply_inflections(word, rules, locale = T.unsafe(nil)); end
-  def const_regexp(camel_cased_word); end
 end
 
 ActiveSupport::Inflector::ALLOWED_ENCODINGS_FOR_TRANSLITERATE = T.let(T.unsafe(nil), Array)
@@ -2832,8 +2832,6 @@ class ActiveSupport::NumberHelper::NumberToDelimitedConverter < ::ActiveSupport:
   end
 end
 
-ActiveSupport::NumberHelper::NumberToDelimitedConverter::DEFAULT_DELIMITER_REGEX = T.let(T.unsafe(nil), Regexp)
-
 class ActiveSupport::NumberHelper::NumberToHumanConverter < ::ActiveSupport::NumberHelper::NumberConverter
   def convert; end
 
@@ -2904,7 +2902,6 @@ class ActiveSupport::NumberHelper::NumberToPhoneConverter < ::ActiveSupport::Num
   def delimiter; end
   def phone_ext(ext); end
   def regexp_pattern(default_pattern); end
-  def start_with_delimiter?(number); end
 end
 
 class ActiveSupport::NumberHelper::NumberToRoundedConverter < ::ActiveSupport::NumberHelper::NumberConverter
@@ -3408,6 +3405,7 @@ class ActiveSupport::TestCase < ::Minitest::Test
     def parallelize_before_fork(&block); end
     def parallelize_setup(&block); end
     def parallelize_teardown(&block); end
+    def run_order; end
     def test_order; end
     def test_order=(new_order); end
 
@@ -3923,7 +3921,7 @@ end
 module ActiveSupport::VERSION; end
 ActiveSupport::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActiveSupport::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
-ActiveSupport::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
+ActiveSupport::VERSION::PRE = T.let(T.unsafe(nil), String)
 ActiveSupport::VERSION::STRING = T.let(T.unsafe(nil), String)
 ActiveSupport::VERSION::TINY = T.let(T.unsafe(nil), Integer)
 
@@ -4050,7 +4048,6 @@ class BigDecimal < ::Numeric
   include ::ActiveSupport::NumericWithFormat
 
   def as_json(options = T.unsafe(nil)); end
-  def to_s(format = T.unsafe(nil)); end
 end
 
 class Class < ::Module
@@ -4303,16 +4300,6 @@ Digest::UUID::OID_NAMESPACE = T.let(T.unsafe(nil), String)
 Digest::UUID::URL_NAMESPACE = T.let(T.unsafe(nil), String)
 Digest::UUID::X500_NAMESPACE = T.let(T.unsafe(nil), String)
 
-module ERB::Escape
-  private
-
-  def html_escape(_arg0); end
-
-  class << self
-    def html_escape(_arg0); end
-  end
-end
-
 module ERB::Util
   include ::ActiveSupport::CoreExt::ERBUtil
   include ::ActiveSupport::CoreExt::ERBUtilPrivate
@@ -4479,7 +4466,7 @@ class IO::Buffer
   def get_string(*_arg0); end
   def get_value(_arg0, _arg1); end
   def get_values(_arg0, _arg1); end
-  def hexdump; end
+  def hexdump(*_arg0); end
   def inspect; end
   def internal?; end
   def locked; end
@@ -4489,6 +4476,7 @@ class IO::Buffer
   def null?; end
   def or!(_arg0); end
   def pread(*_arg0); end
+  def private?; end
   def pwrite(*_arg0); end
   def read(*_arg0); end
   def readonly?; end
@@ -4516,6 +4504,7 @@ class IO::Buffer
     def for(_arg0); end
     def map(*_arg0); end
     def size_of(_arg0); end
+    def string(_arg0); end
   end
 end
 
@@ -4560,10 +4549,6 @@ IO::PRIORITY = T.let(T.unsafe(nil), Integer)
 IO::READABLE = T.let(T.unsafe(nil), Integer)
 IO::WRITABLE = T.let(T.unsafe(nil), Integer)
 
-class IPAddr
-  def as_json(options = T.unsafe(nil)); end
-end
-
 class Integer < ::Numeric
   include ::ActiveSupport::NumericWithFormat
 
@@ -4589,10 +4574,6 @@ module Kernel
     def suppress(*exception_classes); end
     def with_warnings(flag); end
   end
-end
-
-class Method
-  def duplicable?; end
 end
 
 class Module
@@ -4769,14 +4750,9 @@ class Range
   def ===(value); end
   def as_json(options = T.unsafe(nil)); end
   def include?(value); end
-  def overlap?(other); end
-  def overlaps?(other); end
+  def overlaps?(_arg0); end
   def sole; end
   def sum(initial_value = T.unsafe(nil)); end
-
-  private
-
-  def _empty_range?(b, e, excl); end
 end
 
 class Regexp
@@ -4922,7 +4898,7 @@ class Time
   def prev_day(days = T.unsafe(nil)); end
   def prev_month(months = T.unsafe(nil)); end
   def prev_year(years = T.unsafe(nil)); end
-  def rfc3339(fraction_digits = T.unsafe(nil)); end
+  def rfc3339(*_arg0); end
   def sec_fraction; end
   def seconds_since_midnight; end
   def seconds_until_end_of_day; end
@@ -4961,11 +4937,5 @@ class TrueClass
 end
 
 class URI::Generic
-  include ::URI
-
   def as_json(options = T.unsafe(nil)); end
-end
-
-class UnboundMethod
-  def duplicable?; end
 end
