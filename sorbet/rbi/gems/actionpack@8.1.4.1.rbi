@@ -1698,7 +1698,7 @@ class ActionController::Parameters
   def delete_if(&block); end
   def dig(*keys); end
   def each(&block); end
-  def each_key(*_arg0, **_arg1, &_arg2); end
+  def each_key(&block); end
   def each_pair(&block); end
   def each_value(&block); end
   def empty?(*_arg0, **_arg1, &_arg2); end
@@ -2293,6 +2293,13 @@ class ActionController::StructuredEventSubscriber < ::ActiveSupport::StructuredE
 
   def additions_for(payload); end
   def fragment_cache(method_name, event); end
+
+  class << self
+    private
+
+    def __class_attr_debug_methods; end
+    def __class_attr_debug_methods=(new_value); end
+  end
 end
 
 ActionController::StructuredEventSubscriber::INTERNAL_PARAMS = T.let(T.unsafe(nil), Array)
@@ -2773,6 +2780,7 @@ class ActionDispatch::Cookies::AbstractCookieJar
 
   def [](name); end
   def []=(name, options); end
+  def upgraded(name); end
 
   protected
 
@@ -2829,6 +2837,7 @@ class ActionDispatch::Cookies::CookieJar
   def to_header; end
   def update(other_hash); end
   def update_cookies_from_jar; end
+  def upgraded(name); end
   def write(response); end
 
   private
@@ -3355,6 +3364,7 @@ module ActionDispatch::Http::MimeNegotiation
   def should_apply_vary_header?; end
   def variant; end
   def variant=(variant); end
+  def vary_headers; end
 
   private
 
@@ -4223,11 +4233,7 @@ class ActionDispatch::Journey::Scanner
 end
 
 ActionDispatch::Journey::Scanner::STATIC_TOKENS = T.let(T.unsafe(nil), Array)
-
-class ActionDispatch::Journey::Scanner::Scanner < ::StringScanner
-  def peek_byte; end
-end
-
+class ActionDispatch::Journey::Scanner::Scanner < ::StringScanner; end
 module ActionDispatch::Journey::Visitors; end
 
 class ActionDispatch::Journey::Visitors::Dot < ::ActionDispatch::Journey::Visitors::FunctionalVisitor
@@ -4529,9 +4535,17 @@ class ActionDispatch::RemoteIp::GetIp
 
   private
 
+  def check_ip(client_ips, forwarded_ips); end
   def filter_proxies(ips); end
   def ips_from(header); end
+  def raise_spoofing_error; end
   def sanitize_ips(ips); end
+end
+
+class ActionDispatch::RemoteIp::GetIp::XForwardedForParser < ::Rack::Request
+  private
+
+  def forwarded_priority; end
 end
 
 class ActionDispatch::RemoteIp::IpSpoofAttackError < ::StandardError; end
@@ -5782,6 +5796,7 @@ class ActionDispatch::ServerTiming
 end
 
 class ActionDispatch::ServerTiming::Subscriber
+  include ::Singleton::SingletonInstanceMethods
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 
@@ -5834,15 +5849,19 @@ class ActionDispatch::Session::CacheStore < ::ActionDispatch::Session::AbstractS
   def initialize(app, options = T.unsafe(nil)); end
 
   def delete_session(env, sid, options); end
-  def find_session(env, sid); end
-  def write_session(env, sid, session, options); end
+  def find_session(req, sid); end
+  def write_session(req, sid, session, options); end
 
   private
 
   def cache_key(id); end
+  def destroyed_since_loaded?(req, sid); end
+  def exist_in_backend?(key); end
   def generate_sid; end
   def get_session_with_fallback(sid); end
 end
+
+ActionDispatch::Session::CacheStore::LOADED_SESSION_ID = T.let(T.unsafe(nil), String)
 
 module ActionDispatch::Session::Compatibility
   def initialize(app, options = T.unsafe(nil)); end
@@ -5854,6 +5873,8 @@ module ActionDispatch::Session::Compatibility
   def initialize_sid; end
   def make_request(env); end
 end
+
+ActionDispatch::Session::Compatibility::DEFAULT_SAME_SITE = T.let(T.unsafe(nil), Proc)
 
 class ActionDispatch::Session::CookieStore < ::ActionDispatch::Session::AbstractSecureStore
   def initialize(app, options = T.unsafe(nil)); end
@@ -5871,8 +5892,6 @@ class ActionDispatch::Session::CookieStore < ::ActionDispatch::Session::Abstract
   def unpacked_cookie_data(req); end
   def write_session(req, sid, session_data, options); end
 end
-
-ActionDispatch::Session::CookieStore::DEFAULT_SAME_SITE = T.let(T.unsafe(nil), Proc)
 
 class ActionDispatch::Session::CookieStore::SessionId
   def initialize(session_id, cookie_value = T.unsafe(nil)); end
@@ -5990,7 +6009,7 @@ end
 module ActionPack::VERSION; end
 ActionPack::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActionPack::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
-ActionPack::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
+ActionPack::VERSION::PRE = T.let(T.unsafe(nil), String)
 ActionPack::VERSION::STRING = T.let(T.unsafe(nil), String)
 ActionPack::VERSION::TINY = T.let(T.unsafe(nil), Integer)
 
@@ -6011,6 +6030,7 @@ end
 Mime::ALL = T.let(T.unsafe(nil), Mime::AllType)
 
 class Mime::AllType < ::Mime::Type
+  include ::Singleton::SingletonInstanceMethods
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 
@@ -6043,6 +6063,7 @@ class Mime::Mimes
 end
 
 class Mime::NullType
+  include ::Singleton::SingletonInstanceMethods
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 

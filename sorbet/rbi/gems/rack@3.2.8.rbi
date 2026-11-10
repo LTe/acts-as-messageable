@@ -441,14 +441,14 @@ class Rack::Lint::Wrapper::StreamWrapper
 
   def initialize(stream); end
 
-  def <<(*args, **_arg1, &block); end
-  def close(*args, **_arg1, &block); end
-  def close_read(*args, **_arg1, &block); end
-  def close_write(*args, **_arg1, &block); end
-  def closed?(*args, **_arg1, &block); end
-  def flush(*args, **_arg1, &block); end
-  def read(*args, **_arg1, &block); end
-  def write(*args, **_arg1, &block); end
+  def <<(*_arg0, **_arg1, &_arg2); end
+  def close(*_arg0, **_arg1, &_arg2); end
+  def close_read(*_arg0, **_arg1, &_arg2); end
+  def close_write(*_arg0, **_arg1, &_arg2); end
+  def closed?(*_arg0, **_arg1, &_arg2); end
+  def flush(*_arg0, **_arg1, &_arg2); end
+  def read(*_arg0, **_arg1, &_arg2); end
+  def write(*_arg0, **_arg1, &_arg2); end
 end
 
 Rack::Lint::Wrapper::StreamWrapper::REQUIRED_METHODS = T.let(T.unsafe(nil), Array)
@@ -740,7 +740,7 @@ class Rack::Multipart::UploadedFile
   def content_type; end
   def content_type=(_arg0); end
   def local_path; end
-  def method_missing(method_name, *args, &block); end
+  def method_missing(method_name, *args, **_arg2, &block); end
   def original_filename; end
   def path; end
 
@@ -1338,7 +1338,7 @@ module Rack::Utils
   end
 end
 
-Rack::Utils::ALLOWED_FORWARED_PARAMS = T.let(T.unsafe(nil), Hash)
+Rack::Utils::ALLOWED_FORWARDED_PARAMS = T.let(T.unsafe(nil), Hash)
 Rack::Utils::COMMON_SEP = T.let(T.unsafe(nil), Hash)
 
 class Rack::Utils::Context

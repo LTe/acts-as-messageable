@@ -22,7 +22,7 @@ module ActionView
     def eager_load!; end
     def gem_version; end
     def render_tracker; end
-    def render_tracker=(_arg0); end
+    def render_tracker=(value); end
     def version; end
   end
 end
@@ -2356,6 +2356,11 @@ class ActionView::StructuredEventSubscriber < ::ActiveSupport::StructuredEventSu
 
   class << self
     def attach_to(*_arg0); end
+
+    private
+
+    def __class_attr_debug_methods; end
+    def __class_attr_debug_methods=(new_value); end
   end
 end
 
@@ -2851,6 +2856,7 @@ module ActionView::TestCase::Behavior
 
   private
 
+  def _reset_rendered; end
   def _user_defined_ivars; end
   def _view; end
   def document_root_element; end
@@ -2970,7 +2976,7 @@ end
 module ActionView::VERSION; end
 ActionView::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActionView::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
-ActionView::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
+ActionView::VERSION::PRE = T.let(T.unsafe(nil), String)
 ActionView::VERSION::STRING = T.let(T.unsafe(nil), String)
 ActionView::VERSION::TINY = T.let(T.unsafe(nil), Integer)
 
@@ -3012,14 +3018,4 @@ class ActionView::WrongEncodingError < ::ActionView::EncodingError
   def initialize(string, encoding); end
 
   def message; end
-end
-
-module ERB::Escape
-  private
-
-  def html_escape(_arg0); end
-
-  class << self
-    def html_escape(_arg0); end
-  end
 end
