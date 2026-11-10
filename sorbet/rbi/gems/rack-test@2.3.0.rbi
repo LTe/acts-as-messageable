@@ -69,28 +69,28 @@ module Rack::Test::Methods
   extend ::Forwardable
 
   def _rack_test_current_session=(_arg0); end
-  def authorize(*args, **_arg1, &block); end
-  def basic_authorize(*args, **_arg1, &block); end
+  def authorize(*_arg0, **_arg1, &_arg2); end
+  def basic_authorize(*_arg0, **_arg1, &_arg2); end
   def build_rack_test_session(_name); end
-  def clear_cookies(*args, **_arg1, &block); end
+  def clear_cookies(*_arg0, **_arg1, &_arg2); end
   def current_session; end
-  def custom_request(*args, **_arg1, &block); end
-  def delete(*args, **_arg1, &block); end
-  def env(*args, **_arg1, &block); end
-  def follow_redirect!(*args, **_arg1, &block); end
-  def get(*args, **_arg1, &block); end
-  def head(*args, **_arg1, &block); end
-  def header(*args, **_arg1, &block); end
-  def last_request(*args, **_arg1, &block); end
-  def last_response(*args, **_arg1, &block); end
-  def options(*args, **_arg1, &block); end
-  def patch(*args, **_arg1, &block); end
-  def post(*args, **_arg1, &block); end
-  def put(*args, **_arg1, &block); end
+  def custom_request(*_arg0, **_arg1, &_arg2); end
+  def delete(*_arg0, **_arg1, &_arg2); end
+  def env(*_arg0, **_arg1, &_arg2); end
+  def follow_redirect!(*_arg0, **_arg1, &_arg2); end
+  def get(*_arg0, **_arg1, &_arg2); end
+  def head(*_arg0, **_arg1, &_arg2); end
+  def header(*_arg0, **_arg1, &_arg2); end
+  def last_request(*_arg0, **_arg1, &_arg2); end
+  def last_response(*_arg0, **_arg1, &_arg2); end
+  def options(*_arg0, **_arg1, &_arg2); end
+  def patch(*_arg0, **_arg1, &_arg2); end
+  def post(*_arg0, **_arg1, &_arg2); end
+  def put(*_arg0, **_arg1, &_arg2); end
   def rack_mock_session(name = T.unsafe(nil)); end
   def rack_test_session(name = T.unsafe(nil)); end
-  def request(*args, **_arg1, &block); end
-  def set_cookie(*args, **_arg1, &block); end
+  def request(*_arg0, **_arg1, &_arg2); end
+  def set_cookie(*_arg0, **_arg1, &_arg2); end
   def with_session(name); end
 
   private
@@ -135,6 +135,8 @@ class Rack::Test::Session
 
   def append_query_params(query_array, query_params); end
   def close_body(body); end
+  def convert_input_hash_to_string(value, prefix = T.unsafe(nil)); end
+  def default_input_content_type; end
   def env_for(uri, env); end
   def multipart_content_type(env); end
   def parse_uri(path, env); end
@@ -181,6 +183,11 @@ module Rack::Test::Utils
   def build_parts(buffer, parameters); end
   def build_primitive_part(buffer, parameter_name, value); end
   def normalize_multipart_params(params, first = T.unsafe(nil)); end
+
+  class << self
+    def override_build_nested_query; end
+    def override_build_nested_query=(_arg0); end
+  end
 end
 
 Rack::Test::VERSION = T.let(T.unsafe(nil), String)

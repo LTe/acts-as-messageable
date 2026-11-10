@@ -323,6 +323,9 @@ end
 Concurrent::AtomicReferenceImplementation = Concurrent::MutexAtomicReference
 
 class Concurrent::CRubySet < ::Set
+  include ::Set::SubclassCompatible
+  extend ::Set::SubclassCompatible::ClassMethods
+
   def initialize(*args, &block); end
 
   def &(*args); end
@@ -352,14 +355,14 @@ class Concurrent::CRubySet < ::Set
   def divide(*args); end
   def each(*args); end
   def empty?(*args); end
+  def encode_with(*args); end
   def eql?(*args); end
   def filter!(*args); end
   def flatten(*args); end
   def flatten!(*args); end
-  def flatten_merge(*args); end
-  def freeze(*args); end
   def hash(*args); end
   def include?(*args); end
+  def init_with(*args); end
   def inspect(*args); end
   def intersect?(*args); end
   def intersection(*args); end
@@ -1457,6 +1460,8 @@ class Concurrent::Promises::Future < ::Concurrent::Promises::AbstractEventFuture
   def run_test(v); end
   def wait_until_resolved!(timeout = T.unsafe(nil)); end
 end
+
+Concurrent::Promises::Future::SET_BACKTRACE_LOCATIONS_SUPPORTED = T.let(T.unsafe(nil), TrueClass)
 
 class Concurrent::Promises::FutureWrapperPromise < ::Concurrent::Promises::BlockedPromise
   def initialize(delayed, blockers_count, default_executor); end
