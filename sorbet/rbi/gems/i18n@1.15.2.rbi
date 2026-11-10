@@ -429,6 +429,7 @@ module I18n::Base
   def translate!(key, **options); end
   def transliterate(key, throw: T.unsafe(nil), raise: T.unsafe(nil), locale: T.unsafe(nil), replacement: T.unsafe(nil), **options); end
   def with_locale(tmp_locale = T.unsafe(nil)); end
+  def writable_config; end
 
   private
 
@@ -439,6 +440,8 @@ module I18n::Base
 end
 
 class I18n::Config
+  def initialize; end
+
   def available_locales; end
   def available_locales=(locales); end
   def available_locales_initialized?; end
@@ -462,6 +465,14 @@ class I18n::Config
   def locale=(locale); end
   def missing_interpolation_argument_handler; end
   def missing_interpolation_argument_handler=(exception_handler); end
+  def owned_by?(fiber); end
+  def owner=(fiber); end
+  def set!; end
+  def with(**attrs); end
+
+  private
+
+  def initialize_copy(other); end
 end
 
 I18n::DEFAULT_INTERPOLATION_PATTERNS = T.let(T.unsafe(nil), Array)

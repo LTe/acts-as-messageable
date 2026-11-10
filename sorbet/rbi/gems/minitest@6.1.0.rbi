@@ -22,6 +22,7 @@ module Minitest
     def info_signal; end
     def info_signal=(_arg0); end
     def init_plugins(options); end
+    def installed_at_exit?; end
     def load(*names); end
     def load_plugins; end
     def parallel_executor; end
@@ -59,7 +60,6 @@ Minitest::Assertion::RE = T.let(T.unsafe(nil), Regexp)
 
 module Minitest::Assertions
   def _synchronize; end
-  def _where; end
   def assert(test, msg = T.unsafe(nil)); end
   def assert_empty(obj, msg = T.unsafe(nil)); end
   def assert_equal(exp, act, msg = T.unsafe(nil)); end
@@ -117,6 +117,7 @@ module Minitest::Assertions
   end
 end
 
+Minitest::Assertions::NO_RE_MSG = T.let(T.unsafe(nil), String)
 Minitest::Assertions::UNDEFINED = T.let(T.unsafe(nil), Object)
 
 class Minitest::BacktraceFilter
@@ -310,6 +311,7 @@ class Minitest::Test < ::Minitest::Runnable
   def sanitize_exception(e); end
 
   class << self
+    def abstract_test_case!(klass = T.unsafe(nil)); end
     def i_suck_and_my_tests_are_order_dependent!; end
     def io_lock; end
     def io_lock=(_arg0); end

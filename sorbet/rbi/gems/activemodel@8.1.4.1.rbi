@@ -513,6 +513,7 @@ module ActiveModel::Attributes::Normalization
   private
 
   def normalize_changed_in_place_attributes; end
+  def normalized_attribute_changed_in_place?(attribute); end
 
   module GeneratedClassMethods
     def __callbacks; end
@@ -991,6 +992,7 @@ class ActiveModel::NestedError < ::ActiveModel::Error
 end
 
 class ActiveModel::NullMutationTracker
+  include ::Singleton::SingletonInstanceMethods
   include ::Singleton
   extend ::Singleton::SingletonClassMethods
 
@@ -1038,7 +1040,7 @@ end
 ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED = T.let(T.unsafe(nil), Integer)
 
 module ActiveModel::Serialization
-  def read_attribute_for_serialization(*_arg0); end
+  def read_attribute_for_serialization(key); end
   def serializable_hash(options = T.unsafe(nil)); end
 
   private
@@ -1406,7 +1408,7 @@ end
 module ActiveModel::VERSION; end
 ActiveModel::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActiveModel::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
-ActiveModel::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
+ActiveModel::VERSION::PRE = T.let(T.unsafe(nil), String)
 ActiveModel::VERSION::STRING = T.let(T.unsafe(nil), String)
 ActiveModel::VERSION::TINY = T.let(T.unsafe(nil), Integer)
 
@@ -1438,7 +1440,7 @@ module ActiveModel::Validations
   def errors; end
   def freeze; end
   def invalid?(context = T.unsafe(nil)); end
-  def read_attribute_for_validation(*_arg0); end
+  def read_attribute_for_validation(key); end
   def valid?(context = T.unsafe(nil)); end
   def validate(context = T.unsafe(nil)); end
   def validate!(context = T.unsafe(nil)); end
