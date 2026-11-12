@@ -103,6 +103,7 @@ Loofah::HTML5::SafeList::SVG_ALLOW_LOCAL_HREF = T.let(T.unsafe(nil), Set)
 Loofah::HTML5::SafeList::SVG_ATTRIBUTES = T.let(T.unsafe(nil), Set)
 Loofah::HTML5::SafeList::SVG_ATTR_VAL_ALLOWS_REF = T.let(T.unsafe(nil), Set)
 Loofah::HTML5::SafeList::SVG_ELEMENTS = T.let(T.unsafe(nil), Set)
+Loofah::HTML5::SafeList::SVG_HREF_ATTRIBUTES = T.let(T.unsafe(nil), Set)
 Loofah::HTML5::SafeList::TAGS_SAFE_WITH_LIBXML2 = T.let(T.unsafe(nil), Set)
 Loofah::HTML5::SafeList::VOID_ELEMENTS = T.let(T.unsafe(nil), Set)
 
@@ -112,13 +113,21 @@ module Loofah::HTML5::Scrub
     def allowed_uri?(uri_string); end
     def cdata_escape(node); end
     def cdata_needs_escaping?(node); end
+    def css_property_unsafe?(node); end
+    def decode_numeric_character_references(string); end
     def escape_tags(string); end
     def force_correct_attribute_escaping!(node); end
+    def prefixed_attribute_name(attr_node); end
     def scrub_attribute_that_allows_local_ref(attr_node); end
+    def scrub_attribute_value(node, attr_node, attr_name = T.unsafe(nil)); end
     def scrub_attributes(node); end
     def scrub_css(style); end
     def scrub_css_attribute(node); end
     def scrub_uri_attribute(attr_node); end
+
+    private
+
+    def data_uri_mediatype(uri_string); end
   end
 end
 
@@ -127,9 +136,15 @@ Loofah::HTML5::Scrub::CRASS_SEMICOLON = T.let(T.unsafe(nil), Hash)
 Loofah::HTML5::Scrub::CSS_IMPORTANT = T.let(T.unsafe(nil), String)
 Loofah::HTML5::Scrub::CSS_KEYWORDISH = T.let(T.unsafe(nil), Regexp)
 Loofah::HTML5::Scrub::CSS_PROPERTY_STRING_WITHOUT_EMBEDDED_QUOTES = T.let(T.unsafe(nil), Regexp)
+Loofah::HTML5::Scrub::CSS_URLISH_NODES = T.let(T.unsafe(nil), Array)
 Loofah::HTML5::Scrub::CSS_WHITESPACE = T.let(T.unsafe(nil), String)
 Loofah::HTML5::Scrub::DATA_ATTRIBUTE_NAME = T.let(T.unsafe(nil), Regexp)
+Loofah::HTML5::Scrub::DATA_URI_MEDIATYPE = T.let(T.unsafe(nil), Regexp)
+Loofah::HTML5::Scrub::DELIMITER_CHARACTER_REFERENCE = T.let(T.unsafe(nil), Regexp)
+Loofah::HTML5::Scrub::DELIMITER_CHARACTER_REFERENCES = T.let(T.unsafe(nil), Hash)
+Loofah::HTML5::Scrub::NUMERIC_CHARACTER_REFERENCE = T.let(T.unsafe(nil), Regexp)
 Loofah::HTML5::Scrub::URI_PROTOCOL_REGEX = T.let(T.unsafe(nil), Regexp)
+Loofah::HTML5::Scrub::WHITESPACE_CHARACTER_REFERENCES = T.let(T.unsafe(nil), Regexp)
 Loofah::HTML5::WhiteList = Loofah::HTML5::SafeList
 
 module Loofah::HtmlDocumentBehavior
