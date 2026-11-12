@@ -254,9 +254,12 @@ class ActiveRecord::Associations::Association
   def stale_target?; end
   def target; end
   def target=(target); end
+  def violates_strict_loading?; end
 
   private
 
+  def active_record_primary_key_values(record); end
+  def association_primary_key_values(record); end
   def association_scope; end
   def build_record(attributes); end
   def enqueue_destroy_association(options); end
@@ -265,18 +268,20 @@ class ActiveRecord::Associations::Association
   def find_target?; end
   def foreign_key_for?(record); end
   def foreign_key_present?; end
+  def foreign_key_values(record); end
   def inversable?(record); end
   def inverse_association_for(record); end
   def inverse_reflection_for(record); end
   def invertible_for?(record); end
   def matches_foreign_key?(record); end
+  def owner_foreign_key_matches_record?(record); end
   def raise_on_type_mismatch!(record); end
+  def record_foreign_key_matches_owner?(record); end
   def scope_for_create; end
   def skip_statement_cache?(scope); end
   def skip_strict_loading(&block); end
   def stale_state; end
   def target_scope; end
-  def violates_strict_loading?; end
 end
 
 class ActiveRecord::Associations::AssociationScope
@@ -693,6 +698,7 @@ class ActiveRecord::Associations::CollectionProxy < ::ActiveRecord::Relation
   def strict_loading_value(*_arg0, **_arg1, &_arg2); end
   def strict_loading_value=(arg); end
   def structurally_compatible?(*_arg0, **_arg1, &_arg2); end
+  def table_name_qualified_unscope_values(*_arg0, **_arg1, &_arg2); end
   def take(limit = T.unsafe(nil)); end
   def target; end
   def uniq!(*_arg0, **_arg1, &_arg2); end
@@ -2427,13 +2433,13 @@ class ActiveRecord::Coders::ColumnSerializer
 end
 
 class ActiveRecord::Coders::JSON
-  def initialize(options = T.unsafe(nil)); end
+  def initialize(encode_options: T.unsafe(nil), decode_options: T.unsafe(nil)); end
 
   def dump(obj); end
   def load(json); end
 end
 
-ActiveRecord::Coders::JSON::DEFAULT_OPTIONS = T.let(T.unsafe(nil), Hash)
+ActiveRecord::Coders::JSON::DEFAULT_ENCODE_OPTIONS = T.let(T.unsafe(nil), Hash)
 
 class ActiveRecord::Coders::YAMLColumn < ::ActiveRecord::Coders::ColumnSerializer
   def initialize(attr_name, object_class = T.unsafe(nil), permitted_classes: T.unsafe(nil), unsafe_load: T.unsafe(nil)); end
@@ -2520,6 +2526,7 @@ class ActiveRecord::ConnectionAdapters::AbstractAdapter
   def connection_retries; end
   def create(*_arg0, **_arg1, &_arg2); end
   def create_enum(*_arg0, **_arg1, &_arg2); end
+  def create_or_find_by_lock; end
   def create_virtual_table(*_arg0); end
   def database_exists?; end
   def database_version; end
@@ -2835,6 +2842,7 @@ class ActiveRecord::ConnectionAdapters::Column
   def auto_incremented_by_db?; end
   def auto_populated?; end
   def bigint?; end
+  def cast_type; end
   def collation; end
   def comment; end
   def default; end
@@ -2855,10 +2863,6 @@ class ActiveRecord::ConnectionAdapters::Column
   def sql_type_metadata; end
   def type(*_arg0, **_arg1, &_arg2); end
   def virtual?; end
-
-  protected
-
-  def cast_type; end
 
   private
 
@@ -3118,7 +3122,7 @@ class ActiveRecord::ConnectionAdapters::ConnectionPool::Lease
   def sticky=(_arg0); end
 end
 
-class ActiveRecord::ConnectionAdapters::ConnectionPool::LeaseRegistry < ::ActiveRecord::ConnectionAdapters::ConnectionPool::WeakThreadKeyMap
+class ActiveRecord::ConnectionAdapters::ConnectionPool::LeaseRegistry < ::ObjectSpace::WeakKeyMap
   def [](context); end
 end
 
@@ -3153,6 +3157,7 @@ class ActiveRecord::ConnectionAdapters::ConnectionPool::Reaper
   def run; end
 
   class << self
+    def discard_pool(pool); end
     def pools(refs = T.unsafe(nil)); end
     def register_pool(pool, frequency); end
 
@@ -3162,13 +3167,7 @@ class ActiveRecord::ConnectionAdapters::ConnectionPool::Reaper
   end
 end
 
-class ActiveRecord::ConnectionAdapters::ConnectionPool::WeakThreadKeyMap
-  def initialize; end
-
-  def [](key); end
-  def []=(key, value); end
-  def clear; end
-end
+ActiveRecord::ConnectionAdapters::ConnectionPool::WeakThreadKeyMap = ObjectSpace::WeakKeyMap
 
 class ActiveRecord::ConnectionAdapters::CreateIndexDefinition < ::Struct
   def algorithm; end
@@ -4960,6 +4959,7 @@ module ActiveRecord::Encryption::EncryptedFixtures
 
   private
 
+  def encrypt(model_class, attribute_name, clean_value); end
   def encrypt_fixture_data(fixture, model_class); end
   def process_preserved_original_columns(fixture, model_class); end
 end
@@ -5381,6 +5381,7 @@ module ActiveRecord::FinderMethods
 
   def _order_columns; end
   def apply_join_dependency(eager_loading: T.unsafe(nil)); end
+  def cast_primary_key(id); end
   def construct_relation_for_exists(conditions); end
   def find_last(limit); end
   def find_nth(index); end
@@ -5742,6 +5743,7 @@ module ActiveRecord::Inheritance::ClassMethods
   protected
 
   def compute_type(type_name); end
+  def reload_schema_from_cache(*_arg0); end
   def set_base_class; end
 
   private
@@ -6273,6 +6275,7 @@ class ActiveRecord::Migration::CommandRecorder
   private
 
   def invert_add_check_constraint(args); end
+  def invert_add_column(args); end
   def invert_add_foreign_key(args); end
   def invert_add_unique_constraint(args); end
   def invert_change_column_comment(args); end
@@ -7384,6 +7387,7 @@ module ActiveRecord::QueryMethods
   def strict_loading_value; end
   def strict_loading_value=(value); end
   def structurally_compatible?(other); end
+  def table_name_qualified_unscope_values; end
   def uniq!(name); end
   def unscope(*args); end
   def unscope!(*args); end
@@ -7433,6 +7437,7 @@ module ActiveRecord::QueryMethods
   def build_with_expression_from_value(value, nested = T.unsafe(nil)); end
   def build_with_join_node(name, kind = T.unsafe(nil)); end
   def build_with_value_from_hash(hash); end
+  def cast_values_for_in_order_of(values, type_caster); end
   def check_if_method_has_arguments!(method_name, args, message = T.unsafe(nil)); end
   def column_references(order_args); end
   def does_not_support_reverse?(order); end
@@ -7444,6 +7449,7 @@ module ActiveRecord::QueryMethods
   def preprocess_order_args(order_args); end
   def process_select_args(fields); end
   def process_with_args(args); end
+  def qualify_attribute_with_table_name(attr); end
   def resolve_arel_attributes(attrs); end
   def reverse_sql_order(order_query); end
   def sanitize_order_arguments(order_args); end
@@ -8829,6 +8835,13 @@ class ActiveRecord::StructuredEventSubscriber < ::ActiveSupport::StructuredEvent
   def filter(name, value); end
   def render_bind(attr, value); end
   def type_casted_binds(casted_binds); end
+
+  class << self
+    private
+
+    def __class_attr_debug_methods; end
+    def __class_attr_debug_methods=(new_value); end
+  end
 end
 
 ActiveRecord::StructuredEventSubscriber::IGNORE_PAYLOAD_NAMES = T.let(T.unsafe(nil), Array)
@@ -8889,6 +8902,7 @@ class ActiveRecord::Tasks::AbstractTasks
   def connection; end
   def db_config; end
   def establish_connection(config = T.unsafe(nil)); end
+  def filter_sensitive_args(args); end
   def run_cmd(cmd, *args, **opts); end
   def run_cmd_error(cmd, args); end
   def with_temporary_pool(db_config, migration_class, clobber: T.unsafe(nil)); end
@@ -9346,8 +9360,8 @@ module ActiveRecord::Transactions::ClassMethods
   private
 
   def assert_valid_transaction_action(actions); end
-  def prepend_option; end
-  def set_options_for_callbacks!(args, enforced_options = T.unsafe(nil)); end
+  def enforced_prepend_option(position, options); end
+  def set_options_for_callbacks!(position, args, enforced_options = T.unsafe(nil)); end
 end
 
 module ActiveRecord::Translation
@@ -9591,7 +9605,7 @@ class ActiveRecord::UnmodifiableRelation < ::ActiveRecord::ActiveRecordError; en
 module ActiveRecord::VERSION; end
 ActiveRecord::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActiveRecord::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
-ActiveRecord::VERSION::PRE = T.let(T.unsafe(nil), T.untyped)
+ActiveRecord::VERSION::PRE = T.let(T.unsafe(nil), String)
 ActiveRecord::VERSION::STRING = T.let(T.unsafe(nil), String)
 ActiveRecord::VERSION::TINY = T.let(T.unsafe(nil), Integer)
 
